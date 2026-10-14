@@ -1,15 +1,16 @@
 # Guia de Contribuição — CromoCard
 
 Este documento define como a equipe **CromoCard Team** trabalha neste repositório e nos
-repositórios de aplicação (`Backend-CromoCard`, `CromoCard-Frontend`). Objetivo: qualquer
+repositórios de aplicação (`cromocard-backend`, `cromocard-frontend`). Objetivo: qualquer
 integrante commitar de um jeito que os outros cinco entendam sem precisar perguntar no grupo.
 
 ## 1. Branches
 
 - **`development`** — branch de trabalho. Todo mundo commita/dá push aqui no dia a dia.
 - **`main`** — branch estável. Só recebe merge via Pull Request vindo de `development`.
-- Cada aplicação (`apps/Backend-CromoCard`, `apps/CromoCard-Frontend`) é um repositório Git
-  próprio — a mesma regra de branch vale dentro de cada um, independentemente.
+- Cada aplicação (`apps/cromocard-backend`, `apps/cromocard-frontend`) é um repositório Git
+  próprio, ligado a este como submódulo — a mesma regra de branch vale dentro de cada um,
+  independentemente.
 
 ## 2. Padrão de commits — Conventional Commits (em português)
 

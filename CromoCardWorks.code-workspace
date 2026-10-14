@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "apps/CromoCard-Frontend"
+			"path": "apps/cromocard-frontend"
 		},
 		{
-			"path": "apps/Backend-CromoCard"
+			"path": "apps/cromocard-backend"
 		}
 	],
 	"settings": {}
