@@ -23,19 +23,22 @@ ESCOLA-TI/                         (repo de documentação/workspace — branch 
 │       ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml (CCD001–CCD046)
 │       └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD066)
 ├── Azure-Devops/                  organização do board, mapa de artefatos por autor, board-cromocard.html
-├── apps/                          (não versionado neste repo — cada app é um repo git próprio)
-│   ├── Backend-CromoCard/         github.com/Danixzy/Backend-CromoCard   (esqueleto + domínio de exemplo `users`)
-│   └── CromoCard-Frontend/        github.com/Danixzy/CromoCard-Frontend  (ainda vazio: só README)
+├── apps/                          submódulos git (`.gitmodules`) — cada app é um repo git próprio
+│   ├── cromocard-backend/         github.com/codaqui/cromocard-backend   (esqueleto + domínio de exemplo `users` em `develop`)
+│   └── cromocard-frontend/        github.com/codaqui/cromocard-frontend  (ainda vazio: só README)
 ├── CromoCardWorks.code-workspace  workspace VS Code (raiz + os 2 apps)
 └── .mcp.json                      MCP do Azure DevOps (org/projeto `CromoCard`, PAT via $AZURE_DEVOPS_PAT)
 ```
 
-**Backend** (`apps/Backend-CromoCard`, Node 24 via `.nvmrc`): `npm run dev` · `npm run build` ·
+**Backend** (`apps/cromocard-backend`, Node 24 via `.nvmrc`): `npm run dev` · `npm run build` ·
 `npm run lint` · `npm run typecheck` · `npm test` · `npm run test:cov` · `npm run db:migrate`.
 O domínio `src/domains/users/` é o **modelo** para os demais. O frontend ainda está vazio.
 **Migrations: uma por tabela** (`npm run db:migrate -- --name create_<tabela>_table`). O `schema.prisma`
 só contém as tabelas já implementadas (hoje: `users`); as demais entram uma a uma, copiadas do DER.
-Ao executar git dentro de `apps/*`, lembre que são repositórios independentes do repo raiz.
+Ao executar git dentro de `apps/*`, lembre que são repositórios independentes do repo raiz, ligados
+como submódulos: o repo raiz guarda só a URL e o commit de cada app. Clone com
+`git clone --recurse-submodules` (ou `git submodule update --init` num clone existente); para
+apontar a raiz para um commit novo de um app, `git add apps/<app>` e commit na raiz.
 
 ## Arquitetura (C4 — fonte: `docs/Diagramas/Diagramas-C4/`)
 

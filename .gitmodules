@@ -1,0 +1,6 @@
+[submodule "apps/cromocard-backend"]
+	path = apps/cromocard-backend
+	url = https://github.com/codaqui/cromocard-backend.git
+[submodule "apps/cromocard-frontend"]
+	path = apps/cromocard-frontend
+	url = https://github.com/codaqui/cromocard-frontend.git
