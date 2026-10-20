@@ -53,6 +53,7 @@ ter o status `Substituído por ADR-XXX`.
 | [035](ADR-035-heranca-tipos-usuario-diagrama-classes.md) | Diagramas | Herança de tipos de usuário no diagrama de classes (Single Table Inheritance) | Proposto |
 | [036](ADR-036-granularidade-diagrama-classes.md) | Diagramas | Granularidade do diagrama de classes (1:1 com as 43 entidades do DER) | Proposto |
 | [037](ADR-037-notacao-relacionamento-diagrama-classes.md) | Diagramas | Notação de relacionamento no diagrama de classes (rótulo textual) | Proposto |
+| [047](ADR-047-desenvolvimento-orientado-a-especificacao.md) | Processo | SDD: spec, plano e tarefas por user story em `specs/` | Proposto |
 
 ## Modelo
 
