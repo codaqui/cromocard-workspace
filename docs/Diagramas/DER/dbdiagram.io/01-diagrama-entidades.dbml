@@ -161,6 +161,9 @@ Table users [headercolor: #3E5F8A] {
   terms_accepted boolean      [not null, default: false]
   oauth_provider varchar(30)
   oauth_id       varchar(120)
+  phone          varchar(20)
+  username       varchar(30)  [unique]
+  last_login_at  timestamptz
   created_at     timestamptz  [not null]
   updated_at     timestamptz  [not null]
   deleted_at     timestamptz
@@ -265,6 +268,8 @@ Table categories [headercolor: #2E7D5B] {
   type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
+  slug               varchar(100)  [not null, unique]
+  display_order      integer       [not null, default: 0]
   created_at         timestamptz   [not null]
   updated_at         timestamptz   [not null]
   deleted_at         timestamptz
@@ -693,6 +698,7 @@ Table catalog_requests [headercolor: #5A5A66] {
   data           jsonb                [not null]
   status         request_status       [not null, default: 'PENDING']
   reviewed_at    timestamptz
+  rejection_reason varchar(255)
   created_at     timestamptz          [not null]
   updated_at     timestamptz          [not null]
   deleted_at     timestamptz

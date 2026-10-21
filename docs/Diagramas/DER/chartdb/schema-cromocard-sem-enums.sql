@@ -33,6 +33,9 @@ CREATE TABLE users (
     terms_accepted BOOLEAN NOT NULL DEFAULT false,
     oauth_provider VARCHAR(30),
     oauth_id VARCHAR(120),
+    phone VARCHAR(20),
+    username VARCHAR(30) UNIQUE,
+    last_login_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ  -- soft delete (ADR-015)
@@ -134,6 +137,8 @@ CREATE TABLE categories (
     type VARCHAR(30) NOT NULL,  -- category_type: ALBUM, CARD
     description VARCHAR(255),
     is_default BOOLEAN NOT NULL DEFAULT false,
+    slug VARCHAR(100) NOT NULL UNIQUE,
+    display_order INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ
@@ -541,6 +546,7 @@ CREATE TABLE catalog_requests (
     data JSONB NOT NULL,
     status VARCHAR(30) NOT NULL DEFAULT 'PENDING',  -- request_status: PENDING, APPROVED, REJECTED
     reviewed_at TIMESTAMPTZ,
+    rejection_reason VARCHAR(255),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ

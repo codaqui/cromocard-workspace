@@ -162,6 +162,9 @@ Table users [headercolor: #3E5F8A] {
   terms_accepted boolean      [not null, default: false]
   oauth_provider varchar(30)
   oauth_id       varchar(120)
+  phone          varchar(20)  [note: 'Telefone com DDD (CCD059, ADR-038)']
+  username       varchar(30)  [unique, note: 'Nome de usuario (@) (CCD059, ADR-038)']
+  last_login_at  timestamptz  [note: 'Ultimo login bem-sucedido (CCD059, ADR-038)']
   created_at     timestamptz  [not null, default: `now()`]
   updated_at     timestamptz  [not null, default: `now()`, note: 'Atualizado pelo Prisma (@updatedAt)']
   deleted_at     timestamptz  [note: 'Soft delete (ADR-015)']
@@ -269,6 +272,8 @@ Table categories [headercolor: #2E7D5B] {
   type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
+  slug               varchar(100)  [not null, unique, note: 'Gerado a partir do nome (CCD066, ADR-038)']
+  display_order      integer       [not null, default: 0, note: 'Ordem de exibicao no menu e na vitrine (CCD066, ADR-038)']
   created_at         timestamptz   [not null, default: `now()`]
   updated_at         timestamptz   [not null, default: `now()`]
   deleted_at         timestamptz
@@ -700,6 +705,7 @@ Table catalog_requests [headercolor: #5A5A66] {
   data           jsonb                [not null, note: 'Payload com os dados sugeridos pelo usuario']
   status         request_status       [not null, default: 'PENDING']
   reviewed_at    timestamptz
+  rejection_reason varchar(255)       [note: 'Motivo informado ao solicitante quando REJECTED (CCD064, ADR-038)']
   created_at     timestamptz          [not null, default: `now()`]
   updated_at     timestamptz          [not null, default: `now()`]
   deleted_at     timestamptz

@@ -69,6 +69,9 @@ package "1. Usuarios, Perfil e Acesso" as M1 #E8EEF9 {
     * terms_accepted : boolean
     o oauth_provider : varchar(30)
     o oauth_id : varchar(120)
+    o phone : varchar(20)
+    o username : varchar(30) <<UQ>>
+    o last_login_at : timestamptz
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
@@ -187,6 +190,8 @@ package "2. Catalogo Global (Albuns e Cartas)" as M2 #E6F3EC {
     * type : enum
     o description : varchar(255)
     * is_default : boolean
+    * slug : varchar(100) <<UQ>>
+    * display_order : integer
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
@@ -676,6 +681,7 @@ package "8. Moderacao e Administracao" as M8 #ECECEF {
     * data : jsonb
     * status : enum
     o reviewed_at : timestamptz
+    o rejection_reason : varchar(255)
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
