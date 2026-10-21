@@ -33,9 +33,9 @@ a branch `develop` e siga o [fluxo de branches](.claude/rules/git.md).
 
 ## Claude Code e MCPs
 
-O repositório já traz os MCPs do time no `.mcp.json`: **Azure DevOps** (board) e **Figma**
-(protótipo). Cada pessoa faz o setup uma vez, com as **próprias contas**. Nunca compartilhe nem
-commite o seu token.
+O repositório já traz os MCPs do time no `.mcp.json`: **Azure DevOps** (board), **Figma**
+(protótipo) e **Playwright** (navegador para testar os apps). Cada pessoa faz o setup uma vez, com as
+**próprias contas**. Nunca compartilhe nem commite o seu token.
 
 ### 1. Token do Azure DevOps
 
@@ -89,14 +89,27 @@ Cuidados: deixe o Chrome **aberto** antes de rodar `/chrome` → *Reconnect* (se
 sozinho) e **não deixe o editor do Figma** (`/design/`) aberto numa aba enquanto o Claude usa o navegador — ele
 trava a extensão.
 
-### 4. Conferir
+### 4. Playwright (testar os apps no navegador)
+
+O MCP `playwright` abre um Chrome próprio, controlado pelo Claude, para navegar no frontend rodando
+(`npm run dev`), clicar, preencher formulários e ler o console e as requisições. Não precisa de conta nem
+de token: só do **Google Chrome** instalado (se faltar, rode `npx playwright install chrome`).
+
+- O navegador abre com perfil **isolado** (`--isolated`): começa sem login nem cookies a cada sessão e
+  não mexe no seu Chrome nem no Claude in Chrome.
+- Prints e arquivos gerados vão para `.playwright-mcp/`, que fica fora do git.
+- Use o Playwright para o **nosso app**; o Figma continua pelo Claude in Chrome (passo 3).
+
+### 5. Conferir
 
 Rode `claude` **na raiz do workspace** (não dentro de `apps/`) e aceite o aviso de confiança da
-pasta. O `/mcp` deve mostrar `azure-devops` e `figma` conectados. Para testar, peça *"liste meus
-work items no Azure"* e *"rode o whoami do Figma"*.
+pasta. O `/mcp` deve mostrar `azure-devops`, `figma` e `playwright` conectados. Para testar, peça
+*"liste meus work items no Azure"*, *"rode o whoami do Figma"* e *"abra o http://localhost:5173 no
+Playwright"* (com o frontend rodando).
 
 Leituras no board e no Figma são liberadas. Qualquer escrita (criar ou editar work item, mexer no
-arquivo do Figma) pede confirmação.
+arquivo do Figma) pede confirmação. No Playwright, navegar e interagir com a página é liberado; rodar
+JavaScript arbitrário ou enviar arquivo da sua máquina pede confirmação.
 
 ### Skills do time
 

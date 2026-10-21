@@ -30,7 +30,7 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 │   ├── rules/                     git (sempre) + regras por pasta: backend, frontend, modelagem de dados, casos de uso, specs, ADRs, diagramas
 │   ├── skills/                    /especificar, /planejar, /implementar, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-mcp, /revisar-codigo, /criar-pr
 │   └── agents/                    analista-requisitos, leitor-figma, revisor-codigo
-├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`) e `figma` (protótipo, OAuth via `/mcp`)
+├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`), `figma` (protótipo, OAuth via `/mcp`) e `playwright` (Chrome isolado para testar os apps rodando; o Figma segue pelo Claude in Chrome)
 ├── README.md                      como clonar (com submódulos) e o setup de cada pessoa (token do Azure, login no Figma)
 └── CromoCardWorks.code-workspace  workspace VS Code (raiz + os 2 apps)
 ```
