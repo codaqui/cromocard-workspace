@@ -1,6 +1,6 @@
 # ADR-038 — Ajustes no DER para o Painel Administrador do MVP
 
-- **Status:** Proposto
+- **Status:** Aceito (validado pelo PO em 21/10/2026)
 - **Data:** 2026-10-21
 - **Decisores:** Lucca Rocha (PO da Sprint 06), equipe CromoCard
 
