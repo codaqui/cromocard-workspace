@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "enabledMcpjsonServers": ["azure-devops", "figma", "playwright"],
+  "enabledMcpjsonServers": ["azure-devops", "figma", "playwright", "playwright-figma"],
   "permissions": {
     "allow": [
       "mcp__azure-devops__core_list_projects",
@@ -43,7 +43,15 @@
       "mcp__playwright__browser_resize",
       "mcp__playwright__browser_emulate_media",
       "mcp__playwright__browser_tabs",
-      "mcp__playwright__browser_close"
+      "mcp__playwright__browser_close",
+      "mcp__playwright-figma__browser_navigate",
+      "mcp__playwright-figma__browser_wait_for",
+      "mcp__playwright-figma__browser_find",
+      "mcp__playwright-figma__browser_snapshot",
+      "mcp__playwright-figma__browser_resize",
+      "mcp__playwright-figma__browser_take_screenshot",
+      "mcp__playwright-figma__browser_tabs",
+      "mcp__playwright-figma__browser_close"
     ],
     "ask": [
       "mcp__azure-devops__wit_work_item_write",

@@ -98,14 +98,19 @@ de token: só do **Google Chrome** instalado (se faltar, rode `npx playwright in
 - O navegador abre com perfil **isolado** (`--isolated`): começa sem login nem cookies a cada sessão e
   não mexe no seu Chrome nem no Claude in Chrome.
 - Prints e arquivos gerados vão para `.playwright-mcp/`, que fica fora do git.
-- Use o Playwright para o **nosso app**; o Figma continua pelo Claude in Chrome (passo 3).
+
+O MCP `playwright-figma` é um segundo Chrome do Playwright, só para o Figma (skill `/analisar-figma-playwright`).
+Ele guarda um perfil próprio, então o login no Figma é feito **uma vez**: na primeira análise o Claude avisa, você
+entra com a sua conta na janela do Chrome que ele abriu (se o Google bloquear o navegador automatizado, use
+*Continuar com o e-mail*) e o login fica salvo. É uma alternativa ao Claude in Chrome (passo 3) que não depende da
+extensão e traz os textos exatos de cada tela.
 
 ### 5. Conferir
 
 Rode `claude` **na raiz do workspace** (não dentro de `apps/`) e aceite o aviso de confiança da
-pasta. O `/mcp` deve mostrar `azure-devops`, `figma` e `playwright` conectados. Para testar, peça
-*"liste meus work items no Azure"*, *"rode o whoami do Figma"* e *"abra o http://localhost:5173 no
-Playwright"* (com o frontend rodando).
+pasta. O `/mcp` deve mostrar `azure-devops`, `figma`, `playwright` e `playwright-figma` conectados. Para
+testar, peça *"liste meus work items no Azure"*, *"rode o whoami do Figma"* e *"abra o
+http://localhost:5173 no Playwright"* (com o frontend rodando).
 
 Leituras no board e no Figma são liberadas. Qualquer escrita (criar ou editar work item, mexer no
 arquivo do Figma) pede confirmação. No Playwright, navegar e interagir com a página é liberado; rodar
@@ -127,6 +132,7 @@ Cada user story passa pelo SDD ([ADR-047](docs/ADR/ADR-047-desenvolvimento-orien
 | `/implementar CCD014 backend` | Executa as tarefas no app, uma por vez, com os testes dos critérios de aceite |
 | `/conferir-tarefa CCD014 <link do frame>` | Antes de implementar uma tela: confere se o Figma cobre o que a documentação pede e aponta onde está errado |
 | `/analisar-figma-chrome <nome da tela ou link>` | Analisa uma tela do Figma por prints no Chrome e lista o que tem nela (sem gastar a cota do MCP) |
+| `/analisar-figma-playwright <nome da tela ou link>` | Mesma análise pelo Playwright: print da tela inteira e os textos exatos, sem a extensão do Chrome (sem gastar a cota do MCP) |
 | `/analisar-figma-mcp <nome da tela ou link>` | Mesma análise pelo MCP do Figma, para medidas e tokens (gasta a cota) |
 | `/revisar-codigo` | Antes do PR: revisa a branch nos padrões do projeto e no que a tarefa pedia |
 | `/criar-pr` | Abre o PR no padrão: commits com `AB#`, checagens do repo, push e template preenchido |
