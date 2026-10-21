@@ -36,8 +36,8 @@ ter o status `Substituído por ADR-XXX`.
 | [018](ADR-018-configuracao-e-ambientes.md) | Backend | Configuração e ambientes (local, test, homolog, produção; `.env`; segredos) | Proposto |
 | [019](ADR-019-logs-e-observabilidade.md) | Backend | Logs e observabilidade (pino, `requestId`, redaction, health check) | Proposto |
 | [020](ADR-020-estrutura-src-sem-infra.md) | Backend | Estrutura do `src` sem a pasta `infra` (pastas na raiz do `src`) | Aceito |
-| [021](ADR-021-separacao-de-clientes-por-plataforma.md) | Frontend | Separação das aplicações cliente por plataforma (Web, Mobile, BackOffice) | Proposto |
-| [022](ADR-022-stack-frontend-web-backoffice-react-vite.md) | Frontend | Stack de frontend para Web e BackOffice: React + Vite | Proposto |
+| [021](ADR-021-separacao-de-clientes-por-plataforma.md) | Frontend | Separação das aplicações cliente por plataforma (Web, Mobile, BackOffice) | Substituído parcialmente por ADR-038 |
+| [022](ADR-022-stack-frontend-web-backoffice-react-vite.md) | Frontend | Stack de frontend para Web e BackOffice: React + Vite | Substituído por ADR-039 |
 | [023](ADR-023-stack-mobile-react-native.md) | Frontend | Stack do aplicativo mobile: React Native | Proposto |
 | [024](ADR-024-integracao-gateway-pagamento.md) | Integrações | Integração com gateway de pagamento externo via HTTPS/Webhook | Proposto |
 | [025](ADR-025-integracao-transportadora.md) | Integrações | Integração com transportadora terceirizada para entrega física | Proposto |
@@ -53,6 +53,15 @@ ter o status `Substituído por ADR-XXX`.
 | [035](ADR-035-heranca-tipos-usuario-diagrama-classes.md) | Diagramas | Herança de tipos de usuário no diagrama de classes (Single Table Inheritance) | Proposto |
 | [036](ADR-036-granularidade-diagrama-classes.md) | Diagramas | Granularidade do diagrama de classes (1:1 com as 43 entidades do DER) | Proposto |
 | [037](ADR-037-notacao-relacionamento-diagrama-classes.md) | Diagramas | Notação de relacionamento no diagrama de classes (rótulo textual) | Proposto |
+| [038](ADR-038-spa-unico-web-e-backoffice.md) | Frontend | Web e BackOffice num único SPA, separados por rota e papel | Aceito |
+| [039](ADR-039-stack-frontend-react-typescript-vite.md) | Frontend | Stack do frontend web: React 19 + TypeScript + Vite + React Router | Aceito |
+| [040](ADR-040-estrutura-frontend-por-feature.md) | Frontend | Estrutura de pastas do frontend por feature | Aceito |
+| [041](ADR-041-comunicacao-api-estado-servidor.md) | Frontend | Comunicação com a API e estado do servidor: cliente HTTP único + TanStack Query | Aceito |
+| [042](ADR-042-formularios-react-hook-form-zod.md) | Frontend | Formulários e validação: React Hook Form + Zod | Aceito |
+| [043](ADR-043-sessao-e-controle-de-acesso-no-frontend.md) | Frontend | Sessão e controle de acesso no frontend (token em memória, guards por papel) | Aceito |
+| [044](ADR-044-estilos-css-modules-e-tokens.md) | Frontend | Estilos: CSS Modules + design tokens, sem biblioteca de componentes | Aceito |
+| [045](ADR-045-configuracao-runtime-e-imagem-docker-frontend.md) | Frontend | Configuração em runtime e imagem Docker do frontend (uma imagem para todos os ambientes) | Aceito |
+| [046](ADR-046-qualidade-frontend-lint-testes.md) | Frontend | Qualidade do frontend: ESLint, Prettier, `tsc` e Vitest + Testing Library | Aceito |
 
 ## Modelo
 

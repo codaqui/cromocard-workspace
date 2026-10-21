@@ -1,6 +1,6 @@
 # ADR-022 — Stack de frontend para Web e BackOffice: React + Vite
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Substituído por ADR-039
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 
