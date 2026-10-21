@@ -28,9 +28,9 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 ├── .claude/
 │   ├── settings.json              aprova os MCPs, libera leituras e pede confirmação nas escritas
 │   ├── rules/                     git (sempre) + regras por pasta: backend, frontend, modelagem de dados, casos de uso, specs, ADRs, diagramas
-│   ├── skills/                    /especificar, /planejar, /implementar, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-mcp, /revisar-codigo, /criar-pr
+│   ├── skills/                    /especificar, /planejar, /implementar, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-playwright, /analisar-figma-mcp, /revisar-codigo, /criar-pr
 │   └── agents/                    analista-requisitos, leitor-figma, revisor-codigo
-├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`) e `figma` (protótipo, OAuth via `/mcp`)
+├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`), `figma` (protótipo, OAuth via `/mcp`), `playwright` (Chrome isolado para testar os apps rodando) e `playwright-figma` (Chrome com perfil próprio, logado no Figma, para a `/analisar-figma-playwright`)
 ├── README.md                      como clonar (com submódulos) e o setup de cada pessoa (token do Azure, login no Figma)
 └── CromoCardWorks.code-workspace  workspace VS Code (raiz + os 2 apps)
 ```
@@ -162,6 +162,9 @@ critérios de aceite `CA`, telas, lacunas), `plano.md` (como: dados, contrato da
   `/analisar-figma-chrome`.
 - **Analise telas pelo Claude in Chrome** (skill `/analisar-figma-chrome`, agent `leitor-figma`): prints no modo
   protótipo, só leitura, sem cota. **Nunca abra o editor** (`/design/`) no Chrome: ele trava a extensão.
+- Alternativa sem a extensão: skill `/analisar-figma-playwright` (MCP `playwright-figma`), quando o usuário pedir o
+  Playwright, quando o Claude in Chrome não conectar ou quando precisar dos textos exatos da tela. Também só no modo
+  protótipo e sem cota.
 - **A documentação é a fonte da verdade** (casos de uso, user stories, DER, ADRs); o Figma é o design
   a seguir na implementação. O Figma foi feito a partir da documentação: se ele divergir dela ou
   deixar algum requisito de fora, aponte onde (tela/frame) em vez de seguir o Figma ou omitir o requisito.
@@ -184,6 +187,7 @@ um ADR aceito. Detalhes em `.claude/rules/adrs.md`.
 | `/implementar <CCDnnn> <backend\|frontend> [T<n>]` | SDD passo 3: executa as tarefas no app, uma por vez, sem sair da spec |
 | `/conferir-tarefa <#id ou CCDnnn> [link do frame]` | Antes de implementar uma tela: confere se o Figma cobre a documentação e aponta onde está errado |
 | `/analisar-figma-chrome <link ou nome da tela>` | Analisa uma tela do Figma por prints no Chrome (modo protótipo, sem cota) e devolve o inventário dela |
+| `/analisar-figma-playwright <link ou nome da tela>` | Mesma análise pelo Playwright (MCP `playwright-figma`, sem a extensão e sem cota): print da tela inteira em tamanho real e os textos exatos de cada camada |
 | `/analisar-figma-mcp <link ou nome da tela> [o que precisa]` | Mesma análise pelo MCP do Figma (gasta cota): estrutura, tokens, contexto de implementação e regenerar o índice de telas |
 | `/revisar-codigo [repo] [base] [#id]` | Antes do PR: revisão em dois eixos, padrões e spec |
 | `/criar-pr [repo] [#id]` | Abre o PR no padrão: branch, commits com `AB#`, checagens, push e template |

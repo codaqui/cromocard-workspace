@@ -36,8 +36,9 @@ localização de cada requisito. Ele lê pelo Claude in Chrome, no modo protóti
 Várias telas vão na mesma chamada (ele usa uma aba só).
 
 Se o agent voltar dizendo que o Chrome não está conectado, peça ao usuário para abrir o Chrome e rodar `/chrome` →
-*Reconnect extension* (com o Chrome já aberto) e chame o agent de novo. Se o usuário pedir o MCP do Figma, use a skill
-`/analisar-figma-mcp` no lugar do agent.
+*Reconnect extension* (com o Chrome já aberto) e chame o agent de novo. Se o usuário pedir o Playwright, ou se o
+Chrome continuar sem conectar, use a skill `/analisar-figma-playwright` no lugar do agent. Se o usuário pedir o MCP do
+Figma, use a skill `/analisar-figma-mcp`.
 
 ## 4. Comparar
 

@@ -33,9 +33,9 @@ a branch `develop` e siga o [fluxo de branches](.claude/rules/git.md).
 
 ## Claude Code e MCPs
 
-O repositório já traz os MCPs do time no `.mcp.json`: **Azure DevOps** (board) e **Figma**
-(protótipo). Cada pessoa faz o setup uma vez, com as **próprias contas**. Nunca compartilhe nem
-commite o seu token.
+O repositório já traz os MCPs do time no `.mcp.json`: **Azure DevOps** (board), **Figma**
+(protótipo) e **Playwright** (navegador para testar os apps). Cada pessoa faz o setup uma vez, com as
+**próprias contas**. Nunca compartilhe nem commite o seu token.
 
 ### 1. Token do Azure DevOps
 
@@ -89,14 +89,32 @@ Cuidados: deixe o Chrome **aberto** antes de rodar `/chrome` → *Reconnect* (se
 sozinho) e **não deixe o editor do Figma** (`/design/`) aberto numa aba enquanto o Claude usa o navegador — ele
 trava a extensão.
 
-### 4. Conferir
+### 4. Playwright (testar os apps no navegador)
+
+O MCP `playwright` abre um Chrome próprio, controlado pelo Claude, para navegar no frontend rodando
+(`npm run dev`), clicar, preencher formulários e ler o console e as requisições. Não precisa de conta nem
+de token: só do **Google Chrome** instalado (se faltar, rode `npx playwright install chrome`).
+
+- O navegador abre com perfil **isolado** (`--isolated`): começa sem login nem cookies a cada sessão e
+  não mexe no seu Chrome nem no Claude in Chrome.
+- Prints e arquivos gerados vão para `.playwright-mcp/`, que fica fora do git.
+
+O MCP `playwright-figma` é um segundo Chrome do Playwright, só para o Figma (skill `/analisar-figma-playwright`).
+Ele guarda um perfil próprio, então o login no Figma é feito **uma vez**: na primeira análise o Claude avisa, você
+entra com a sua conta na janela do Chrome que ele abriu (se o Google bloquear o navegador automatizado, use
+*Continuar com o e-mail*) e o login fica salvo. É uma alternativa ao Claude in Chrome (passo 3) que não depende da
+extensão e traz os textos exatos de cada tela.
+
+### 5. Conferir
 
 Rode `claude` **na raiz do workspace** (não dentro de `apps/`) e aceite o aviso de confiança da
-pasta. O `/mcp` deve mostrar `azure-devops` e `figma` conectados. Para testar, peça *"liste meus
-work items no Azure"* e *"rode o whoami do Figma"*.
+pasta. O `/mcp` deve mostrar `azure-devops`, `figma`, `playwright` e `playwright-figma` conectados. Para
+testar, peça *"liste meus work items no Azure"*, *"rode o whoami do Figma"* e *"abra o
+http://localhost:5173 no Playwright"* (com o frontend rodando).
 
 Leituras no board e no Figma são liberadas. Qualquer escrita (criar ou editar work item, mexer no
-arquivo do Figma) pede confirmação.
+arquivo do Figma) pede confirmação. No Playwright, navegar e interagir com a página é liberado; rodar
+JavaScript arbitrário ou enviar arquivo da sua máquina pede confirmação.
 
 ### Skills do time
 
@@ -114,6 +132,7 @@ Cada user story passa pelo SDD ([ADR-047](docs/ADR/ADR-047-desenvolvimento-orien
 | `/implementar CCD014 backend` | Executa as tarefas no app, uma por vez, com os testes dos critérios de aceite |
 | `/conferir-tarefa CCD014 <link do frame>` | Antes de implementar uma tela: confere se o Figma cobre o que a documentação pede e aponta onde está errado |
 | `/analisar-figma-chrome <nome da tela ou link>` | Analisa uma tela do Figma por prints no Chrome e lista o que tem nela (sem gastar a cota do MCP) |
+| `/analisar-figma-playwright <nome da tela ou link>` | Mesma análise pelo Playwright: print da tela inteira e os textos exatos, sem a extensão do Chrome (sem gastar a cota do MCP) |
 | `/analisar-figma-mcp <nome da tela ou link>` | Mesma análise pelo MCP do Figma, para medidas e tokens (gasta a cota) |
 | `/revisar-codigo` | Antes do PR: revisa a branch nos padrões do projeto e no que a tarefa pedia |
 | `/criar-pr` | Abre o PR no padrão: commits com `AB#`, checagens do repo, push e template preenchido |

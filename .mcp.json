@@ -23,6 +23,27 @@
     "figma": {
       "type": "http",
       "url": "https://mcp.figma.com/mcp"
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@0.0.83",
+        "--isolated",
+        "--output-dir",
+        ".playwright-mcp"
+      ]
+    },
+    "playwright-figma": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@0.0.83",
+        "--output-dir",
+        ".playwright-mcp"
+      ]
     }
   }
 }
