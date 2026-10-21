@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "enabledMcpjsonServers": ["azure-devops", "figma"],
+  "permissions": {
+    "allow": [
+      "mcp__azure-devops__core_list_projects",
+      "mcp__azure-devops__core_list_project_teams",
+      "mcp__azure-devops__core_get_identity_ids",
+      "mcp__azure-devops__wit_work_item",
+      "mcp__azure-devops__wit_query",
+      "mcp__azure-devops__work",
+      "mcp__azure-devops__search_workitem",
+      "mcp__azure-devops__search_wiki",
+      "mcp__azure-devops__wiki",
+      "mcp__figma__whoami",
+      "mcp__figma__create_session",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_metadata",
+      "mcp__figma__get_screenshot",
+      "mcp__figma__get_variable_defs",
+      "mcp__figma__get_code_connect_map",
+      "mcp__figma__get_libraries",
+      "mcp__figma__search_design_system",
+      "mcp__figma__get_figjam"
+    ],
+    "ask": [
+      "mcp__azure-devops__wit_work_item_write",
+      "mcp__azure-devops__wit_work_item_comment_write",
+      "mcp__azure-devops__wit_work_item_link_write",
+      "mcp__azure-devops__wit_backlog",
+      "mcp__azure-devops__work_iteration_write",
+      "mcp__azure-devops__work_capacity_write",
+      "mcp__azure-devops__wiki_upsert_page",
+      "mcp__figma__use_figma",
+      "mcp__figma__generate_figma_design",
+      "mcp__figma__html_to_figma",
+      "mcp__figma__send_code_to_figma",
+      "mcp__figma__upload_assets",
+      "mcp__figma__create_new_file",
+      "mcp__figma__add_code_connect_map",
+      "mcp__figma__generate_diagram",
+      "mcp__figma__generate_image"
+    ]
+  }
+}

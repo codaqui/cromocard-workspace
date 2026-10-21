@@ -11,10 +11,9 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 ## Estrutura do repositório
 
 ```
-ESCOLA-TI/                         (repo de documentação/workspace — branch de trabalho: development, principal: main)
-├── docs/
-│   ├── ADR/                       ADR-001…037 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend
-│   ├── Padroes/                   CONTRIBUTING.md e template de PR (fonte para os repos de código)
+cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
+├── docs/                          documentação — a fonte da verdade; só guarda documentação
+│   ├── ADR/                       ADR-001…046 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–93), user-stories.md, resumo-user-stories.md, CromoCard 1.xlsx
 │   ├── Diagrama-de-Classe/        cromocard-diagrama-classes.v2.c4 (LikeC4, atual) + .v1.c4 (histórico) + README.md — 43 classes, 1:1 com o DER
 │   └── Diagramas/
@@ -22,19 +21,33 @@ ESCOLA-TI/                         (repo de documentação/workspace — branch 
 │       ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
 │       ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml (CCD001–CCD046)
 │       └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD066)
-├── Azure-Devops/                  organização do board, mapa de artefatos por autor, board-cromocard.html
+├── specs/                         SDD (ADR-047): README.md (fluxo e índice), template/ e uma pasta CCDnnn-nome/ por user story
 ├── apps/                          submódulos git (`.gitmodules`) — cada app é um repo git próprio
 │   ├── cromocard-backend/         github.com/codaqui/cromocard-backend   (esqueleto + domínio de exemplo `users` em `develop`)
-│   └── cromocard-frontend/        github.com/codaqui/cromocard-frontend  (ainda vazio: só README)
-├── CromoCardWorks.code-workspace  workspace VS Code (raiz + os 2 apps)
-└── .mcp.json                      MCP do Azure DevOps (org/projeto `CromoCard`, PAT via $AZURE_DEVOPS_PAT)
+│   └── cromocard-frontend/        github.com/codaqui/cromocard-frontend  (esqueleto + feature de exemplo `users` em `develop`)
+├── .claude/
+│   ├── settings.json              aprova os MCPs, libera leituras e pede confirmação nas escritas
+│   ├── rules/                     git (sempre) + regras por pasta: backend, frontend, modelagem de dados, casos de uso, specs, ADRs, diagramas
+│   ├── skills/                    /especificar, /planejar, /implementar, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-mcp, /revisar-codigo, /criar-pr
+│   └── agents/                    analista-requisitos, leitor-figma, revisor-codigo
+├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`) e `figma` (protótipo, OAuth via `/mcp`)
+├── README.md                      como clonar (com submódulos) e o setup de cada pessoa (token do Azure, login no Figma)
+└── CromoCardWorks.code-workspace  workspace VS Code (raiz + os 2 apps)
 ```
 
-**Backend** (`apps/cromocard-backend`, Node 24 via `.nvmrc`): `npm run dev` · `npm run build` ·
-`npm run lint` · `npm run typecheck` · `npm test` · `npm run test:cov` · `npm run db:migrate`.
-O domínio `src/domains/users/` é o **modelo** para os demais. O frontend ainda está vazio.
-**Migrations: uma por tabela** (`npm run db:migrate -- --name create_<tabela>_table`). O `schema.prisma`
-só contém as tabelas já implementadas (hoje: `users`); as demais entram uma a uma, copiadas do DER.
+**`docs/` é a fonte da verdade e só guarda documentação:** casos de uso, user stories, DER, diagramas e ADRs. O que
+deriva dela ou é material de trabalho fica fora de `docs/` (as specs do SDD ficam em `specs/`).
+
+## Apps
+
+| App | Caminho | Stack | Modelo a copiar | Regras |
+|---|---|---|---|---|
+| Backend | `apps/cromocard-backend` | Node 24 + TypeScript + Express 5 + Prisma/PostgreSQL (ADRs 001–020) | domínio `src/domains/users/` | `.claude/rules/backend.md` |
+| Frontend | `apps/cromocard-frontend` | React 19 + TypeScript + Vite, SPA único para Web e BackOffice (ADRs 038–046) | feature `src/features/users/` | `.claude/rules/frontend.md` |
+
+As rules de cada app (comandos, estrutura, regras e qualidade) carregam quando você lê ou edita arquivos do app.
+Os dois usam a branch base `develop` e Node 24 (`.nvmrc`).
+
 Ao executar git dentro de `apps/*`, lembre que são repositórios independentes do repo raiz, ligados
 como submódulos: o repo raiz guarda só a URL e o commit de cada app. Clone com
 `git clone --recurse-submodules` (ou `git submodule update --init` num clone existente); para
@@ -55,6 +68,9 @@ No diagrama de casos de uso também existe "Administrador do Grupo" (herda de Cl
 | Mensageria em Tempo Real | Node.js + WebSocket | Chat pessoal e de grupo, conexão autenticada via JWT |
 | Banco de Dados | PostgreSQL (via Prisma ORM) | Todos os dados |
 
+Na implementação, Aplicação Web e Painel BackOffice são **um único SPA** (`cromocard-frontend`, BackOffice
+em `/backoffice`) — ADR-038. O C4 nível 2 ainda mostra os dois containers separados.
+
 **Sistemas externos:** Gateway de Pagamento (Stripe/Mercado Pago, HTTPS/Webhook) e Transportadora.
 
 **Componentes da API** (organize o backend por esses módulos):
@@ -63,23 +79,9 @@ Notificações e Favoritos · Pagamentos e Pedidos · Administração.
 
 ## Modelo de dados (DER — fonte: `docs/Diagramas/DER/`)
 
-- **Fonte da verdade:** `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml`. Os `.sql` em
-  `chartdb/` e os `.puml` são derivados dele — **mantenha os três formatos sincronizados** ao
-  alterar o modelo (44 tabelas, 77 FKs, 22 enums). Os `.svg` estão desatualizados (pré-tradução).
-- **Identificadores em inglês** (ADR-003): tabelas `snake_case` no **plural** (`users`, `orders`,
-  `groups` — singular colide com palavras reservadas do PostgreSQL), colunas/enums no singular,
-  valores de enum em MAIÚSCULAS, datas `*_at`. Comentários e notas continuam em português.
-  Glossário PT → EN no `README.md` do DER — use-o ao ler casos de uso que citam nomes antigos.
-- PK `id` **UUID v7** (`uuidv7()`, PostgreSQL 18+), FKs `uuid` (ADR-014) · associativas N:N com PK composta (`user_achievements`,
-  `poll_votes`, `conversation_participants`) · FKs em `ALTER TABLE` no fim do SQL (`fk_<tabela>_<coluna>`).
-- **Alvos polimórficos:** `favorites` (`type` + `album_id`/`card_id`/`group_id`, exatamente
-  um preenchido) e `reports` (`target_type` + `listing_id`/`target_user_id`/`group_message_id`).
-- `cards.album_id` nulo = carta avulsa (portfólio). `catalog_requests.data` é `jsonb`.
-- **Tempo** (ADR-016): toda tabela termina com `created_at`, `updated_at`, `deleted_at` — todos `timestamptz`.
-- `refresh_tokens` guarda só o hash do refresh token (ADR-005).
-- **Soft delete** (ADR-015): excluir = `deleted_at = now()`, restaurar = `NULL`. Nunca `DELETE` em dado de
-  negócio (exceção: tokens expirados, limpos por cron). Todo repository filtra `deletedAt: null`
-  explicitamente; re-adicionar item excluído restaura a linha (upsert). `DELETED` não existe nos enums de status.
+**Fonte da verdade:** `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml` (44 tabelas, 77 FKs, 22 enums).
+As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos polimórficos, sincronia dos três
+formatos) estão em `.claude/rules/modelagem-de-dados.md`.
 
 **8 módulos:**
 | # | Módulo | Entidades |
@@ -101,10 +103,8 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 
 ## Requisitos: casos de uso e user stories
 
-- Código dos casos de uso: **`CCDnnn`** (CCD001…). Arquivos em `docs/Casos-De-Uso/NN-nome.md`.
-- Formato de cada caso de uso (tabelas Markdown): Nome · Finalidade/Objetivo · Atores ·
-  Pré-condições · **Fluxo Principal** (Ações do Ator | Ações do Sistema) · **Fluxo Alternativo**.
-  Siga esse formato ao criar novos.
+- Código dos casos de uso: **`CCDnnn`** = número do arquivo (`CCD014` → `docs/Casos-De-Uso/14-*.md`). No Azure,
+  a user story tem o título `CCD014 - <Nome>`. Formato de um caso de uso: `.claude/rules/casos-de-uso.md`.
 - User stories: `docs/Casos-De-Uso/user-stories.md` — narrativa "Como <ator> preciso/quero … para …".
 - **Escopo / fases** (legenda das user stories):
   - sem marcador → **MVP** (tag `mvp`)
@@ -122,10 +122,29 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 - O diagrama de casos de uso (`.puml`) cobre só CCD001–CCD046; o de atividades vai até CCD066;
   os arquivos `.md` vão até 93 (marketplace e painel do vendedor).
 
+## SDD — da user story ao código (ADR-047)
+
+Cada user story ganha uma pasta em `specs/CCDnnn-<nome>/` com `spec.md` (o quê: requisitos `R` com origem,
+critérios de aceite `CA`, telas, lacunas), `plano.md` (como: dados, contrato da API, arquivos, testes) e
+`tarefas.md` (em que ordem, com o `AB#` de cada Task). Fluxo e índice em `specs/README.md`; regras em
+`.claude/rules/specs.md`.
+
+```
+/especificar CCDnnn → spec Rascunho → PO aprova → /planejar → /implementar <app> → /revisar-codigo → /criar-pr
+```
+
+- Fontes: **documentação → spec → código**. A spec não cria requisito; lacuna decidida volta para o caso de uso
+  (regra de negócio) ou vira ADR (decisão técnica).
+- A spec deriva da documentação, por isso fica em `specs/` e nunca em `docs/`.
+- Só o usuário confirma uma spec como `Aprovada` (validação do PO), como nos ADRs.
+- Antes de implementar uma user story, procure a spec dela. Sem spec, ofereça o `/especificar`; com spec, o código
+  segue o plano e o contrato da API, e um desvio corrige a spec ou o plano antes do código.
+
 ## Azure DevOps (board da disciplina)
 
-- Org/projeto `CromoCard`, time `CromoCard Team`. Acesso via MCP `azure-devops` (`.mcp.json`).
-- **Nunca altere work items no Azure sem pedido explícito** — os docs em `Azure-Devops/` são leituras/propostas.
+- Org/projeto `CromoCard`, time `CromoCard Team`. Acesso via MCP `azure-devops` (`.mcp.json`);
+  as ferramentas de escrita pedem confirmação (`.claude/settings.json`).
+- **Nunca altere work items no Azure sem pedido explícito.**
 - Hierarquia desejada: Epic (produto ou processo) → Feature (área funcional) → User Story
   (`CCD0xx - Verbo + objeto`) → Task (ação técnica, ex.: `Criar endpoint GET /albuns`).
 - `#84 Documentacao - CromoCard` é o épico de **processo** (sprints, cerimônias, diagramas); o
@@ -136,61 +155,48 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 - Equipe: Daniel Andrade (usuário), Felipe Consulim, Lucas Oliveira Lima, Felipe Broetto Araujo,
   Gabriel Nascimento, Lucca Rocha.
 
-## Diagramas — dicas práticas
+## Figma (protótipo)
 
-- PlantUML: exporte em **SVG, não PNG** (o servidor público corta PNG em 4096px).
-- Diagramas DER 02 e 03 usam `left to right direction` — mantenha.
-- Nas legendas `.puml`, escreva `|` como `&#124;`.
-- C4 usa `!include` do C4-PlantUML via GitHub raw.
+- Arquivo: https://www.figma.com/design/43K7rTPJQNIOroQ4j09YTP (fileKey `43K7rTPJQNIOroQ4j09YTP`),
+  mantido por Gabriel Nascimento. Uma página só (`Page 1`); o índice das 44 telas (nome → `node-id`) fica na skill
+  `/analisar-figma-chrome`.
+- **Analise telas pelo Claude in Chrome** (skill `/analisar-figma-chrome`, agent `leitor-figma`): prints no modo
+  protótipo, só leitura, sem cota. **Nunca abra o editor** (`/design/`) no Chrome: ele trava a extensão.
+- **A documentação é a fonte da verdade** (casos de uso, user stories, DER, ADRs); o Figma é o design
+  a seguir na implementação. O Figma foi feito a partir da documentação: se ele divergir dela ou
+  deixar algum requisito de fora, aponte onde (tela/frame) em vez de seguir o Figma ou omitir o requisito.
+- O MCP `figma` tem cota (cerca de 20 chamadas por mês no plano Starter): só pela skill `/analisar-figma-mcp`, quando
+  o usuário pedir, para medidas/tokens ou para regenerar o índice de telas.
+- Não edite o arquivo do Figma sem pedido explícito.
 
-## Arquitetura do backend (decidida — ver `docs/ADR/`)
-
-- **Monólito modular** (ADR-001): um repo, um banco, módulos por domínio em `src/domains/<dominio>`.
-- **Stack** (ADR-002/003): Node 24 LTS + TypeScript strict + Express 5 + Prisma/PostgreSQL;
-  schema e migrations em `database/` (não `prisma/`).
-- **Arquivos por domínio** (ADR-004): `<d>.routes.ts`, `.controller.ts`, `.service.ts`,
-  `.repository.ts`, `.validator.ts` (Zod), `.errors.ts`, `.swagger.ts`, `.module.ts`
-  (composition root — monta dependências e exporta router + service), `.service.spec.ts`.
-  Fluxo: rota → middlewares → controller → service → repository. Service dentro do domínio.
-  Um domínio **nunca** importa o repository de outro — só a service exportada pelo `.module.ts`.
-  Dependências sempre injetadas pelo construtor. `shared/` = reutilizável sem regra de negócio.
-- **Estrutura do `src`** (ADR-020, sem pasta `infra`): `app.ts`, `server.ts`, `routes.ts` na raiz;
-  `config/` (env, logger, swagger), `lib/` (prisma, jwt, zod), `domains/`, `shared/`
-  (errors, middlewares, utils, types), `providers/`, `jobs/`, `socket/`.
-- **Código sem comentários** (pedido do usuário): nomes claros no lugar de comentários.
-- **Auth** (ADR-005): access JWT 15 min (`sub`, `role`) + refresh token opaco rotativo (hash em
-  `refresh_tokens`); Google via `id_token` validado com `google-auth-library` (não é servidor OAuth2).
-- **Validação/erros** (ADR-006): Zod gera validação, tipos e Swagger; erros `{ error, message, details? }`
-  via `AppError` + `errorHandler` global.
-- **API** (ADR-011): `/api/v1`, recursos plural kebab-case, `/me` para o usuário logado, ações via `POST /:id/<acao>`;
-  resposta `{ data }` / `{ data, meta }`, JSON camelCase, datas ISO UTC, dinheiro como string decimal;
-  `422` para regra de negócio, `409` conflito; paginação offset (`page`/`pageSize`) e cursor para chat/notificações.
-- **Tempo real** (ADR-007/012): Socket.IO neste mesmo repo (`src/realtime.ts`), reusa services de chat/community;
-  rooms `user:<id>`, `group:<id>`, `conversation:<id>`; eventos `dominio:acao`; persiste antes de emitir.
-- **Qualidade** (ADR-008): ESLint + Prettier + `tsc --noEmit` + husky; testes `.spec.ts` com **Vitest**,
-  cobertura mínima 80% nas services.
-- **Providers** (ADR-009): CEP (ViaCEP/BrasilAPI), e-mail (Nodemailer + Ethereal em dev), storage
-  (local/MinIO em dev, S3 depois), pagamento e transportadora — sempre via interface.
-- **Cron** (ADR-010): `node-cron` em `infra/jobs/`, só com `JOBS_ENABLED=true`.
-- Ações administrativas geram registro em `audit_logs`.
-- **Convenções** (ADR-017): comentários em **pt-BR**, código em inglês; **npm** (`npm ci` no CI); imports com
-  alias `@/`; sem `console.log`. Guia completo em `docs/Padroes/CONTRIBUTING.md`, template de PR em
-  `docs/Padroes/pull_request_template.md` (copiar para cada repo de código).
-- **Config** (ADR-018, proposto): só variáveis de ambiente, lidas/validadas em `src/config/env.ts`;
-  ambientes local · test · homolog · produção (`APP_ENV`); segredos fora do repo.
-- **Logs** (ADR-019, proposto): pino JSON, `requestId` por requisição, redaction de tokens/dados pessoais,
-  `/health` e `/health/ready`, shutdown gracioso.
-- Critério de code review: Clean Code, SOLID, Object Calisthenics (skill `code-review-daniel`).
+## ADRs
 
 Ao tomar uma nova decisão de arquitetura, registre um ADR novo em `docs/ADR/`, com o próximo número e o
-modelo do `README.md` da pasta (não edite um ADR aceito).
+modelo do `README.md` da pasta. Todo ADR nasce `Proposto` e só muda de status com a validação do PO; não edite
+um ADR aceito. Detalhes em `.claude/rules/adrs.md`.
+
+## Skills e agents do time
+
+| Skill | Quando usar |
+|---|---|
+| `/especificar <CCDnnn ou #id> [link do frame]` | SDD passo 1: cria ou atualiza o `spec.md` da user story a partir da documentação e do Figma |
+| `/planejar <CCDnnn>` | SDD passo 2, com a spec aprovada: gera `plano.md` e `tarefas.md` e oferece criar as Tasks no Azure |
+| `/implementar <CCDnnn> <backend\|frontend> [T<n>]` | SDD passo 3: executa as tarefas no app, uma por vez, sem sair da spec |
+| `/conferir-tarefa <#id ou CCDnnn> [link do frame]` | Antes de implementar uma tela: confere se o Figma cobre a documentação e aponta onde está errado |
+| `/analisar-figma-chrome <link ou nome da tela>` | Analisa uma tela do Figma por prints no Chrome (modo protótipo, sem cota) e devolve o inventário dela |
+| `/analisar-figma-mcp <link ou nome da tela> [o que precisa]` | Mesma análise pelo MCP do Figma (gasta cota): estrutura, tokens, contexto de implementação e regenerar o índice de telas |
+| `/revisar-codigo [repo] [base] [#id]` | Antes do PR: revisão em dois eixos, padrões e spec |
+| `/criar-pr [repo] [#id]` | Abre o PR no padrão: branch, commits com `AB#`, checagens, push e template |
+
+| Agent | Faz |
+|---|---|
+| `analista-requisitos` | Lista os requisitos de uma tarefa com a origem de cada um (spec salva, caso de uso, user story, work item, DER); no modo revisão, marca o que o diff implementou e confere o contrato da API |
+| `leitor-figma` | Inventário de telas do Figma pelo Chrome (segue a `/analisar-figma-chrome`), fora da conversa principal |
+| `revisor-codigo` | Revisa um diff contra ADRs, rules, Clean Code, SOLID e Object Calisthenics |
+
+Critério de code review do projeto: Clean Code, SOLID e Object Calisthenics, aplicado pelo `revisor-codigo`.
 
 ## Git (ADR-013)
 
-- Git Flow: `main` (produção, tag `vX.Y.Z`) ← `homolog` ← `development` ← `feature/<id-azure>-<descricao>`.
-  `fix/*` sai de `development`; `hotfix/*` sai de `main` e volta para `homolog` e `development`.
-- Nunca push direto nas branches fixas: sempre PR com 1 aprovação + CI verde.
-- Conventional Commits em português com escopo do domínio: `feat(collection): marca carta como possuo`,
-  rodapé `AB#<id>` para ligar ao Azure Boards.
-- Neste repo de documentação: trabalho em `development`, PR para `main`. Guia completo de commits
-  (tipos, escopo, exemplos, PRs) em `CONTRIBUTING.md`.
+Branches, commits (Conventional Commits em pt-BR com rodapé `AB#<id>`) e PRs estão em `.claude/rules/git.md`,
+que carrega em toda sessão. Nunca faça push direto em `main`, `homolog`, `develop` ou `development`.

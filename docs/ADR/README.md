@@ -62,6 +62,7 @@ ter o status `Substituído por ADR-XXX`.
 | [044](ADR-044-estilos-css-modules-e-tokens.md) | Frontend | Estilos: CSS Modules + design tokens, sem biblioteca de componentes | Aceito |
 | [045](ADR-045-configuracao-runtime-e-imagem-docker-frontend.md) | Frontend | Configuração em runtime e imagem Docker do frontend (uma imagem para todos os ambientes) | Aceito |
 | [046](ADR-046-qualidade-frontend-lint-testes.md) | Frontend | Qualidade do frontend: ESLint, Prettier, `tsc` e Vitest + Testing Library | Aceito |
+| [047](ADR-047-desenvolvimento-orientado-a-especificacao.md) | Processo | SDD: spec, plano e tarefas por user story em `specs/` | Proposto |
 
 ## Modelo
 
