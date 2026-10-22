@@ -119,7 +119,7 @@ não estiver aqui, o arquivo mudou: peça o link do frame ou regenere o índice 
 - administração - notificação enviada: `277-2982`
 
 **Sem nome (camadas importadas de HTML)**
-- Html → Body: `252-1723`, `252-2837`, `278-3246`
+- Html → Body: `252-1723` e `252-2837` (dossiê do vendedor, estados Em análise e Aprovado), `278-3246` (cadastrar carta)
 
 Fora do índice: slides da apresentação (`Slide 16:9 - N`), componentes soltos e a captura de referência do OpenSea
 (`59-1639`).

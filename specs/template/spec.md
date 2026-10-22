@@ -1,7 +1,7 @@
 # CCDnnn — <Nome do caso de uso>
 
 - **Status:** Rascunho
-- **Fase:** MVP | Futuro | Futuro Marketplace
+- **Fase:** MVP | Futuro | Futuro Marketplace | Escopo Adicional
 - **User story:** #<id> `CCDnnn - <Nome>` <!-- ou: não encontrada no board -->
 - **Caso de uso:** [NN-<nome>.md](../../docs/Casos-De-Uso/NN-<nome>.md)
 - **Atores:** <…> · **Pré-condições:** <…>

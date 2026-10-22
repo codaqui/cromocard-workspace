@@ -24,7 +24,7 @@ Responda em português.
    atores, pré-condições, fluxo principal e fluxo alternativo. Confira as inconsistências conhecidas do `CLAUDE.md`
    (ex.: `10-buscar-album.md` é, na verdade, Solicitar Álbum).
 3. **User story**: a linha da tarefa em `docs/Casos-De-Uso/user-stories.md`. `**` = Futuro, `***` = Futuro
-   Marketplace, sem marcador = MVP.
+   Marketplace, `++` = Escopo Adicional (`escopo-adicional.md`), sem marcador = MVP.
 4. **Dados**: entidades envolvidas pela rastreabilidade em `docs/Diagramas/DER/README.md` e detalhes (colunas,
    enums, obrigatoriedade, unicidade) no `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml`.
 5. **Fluxo**: `docs/Diagramas/Diagrama-Atividades/Diagrama_Atividades.c4`, quando cobrir o CCD (vai até CCD066).
@@ -52,7 +52,7 @@ tela num diff do backend). Liste também o que o diff faz e nenhum requisito ped
 
 ```
 ## Tarefa
-CCDnnn — <Nome> · work item #<id> (<tipo>, <estado>) · fase: MVP | Futuro | Futuro Marketplace
+CCDnnn — <Nome> · work item #<id> (<tipo>, <estado>) · fase: MVP | Futuro | Futuro Marketplace | Escopo Adicional
 Atores: … · Pré-condições: …
 
 Spec: specs/<pasta>/spec.md (<status>) | sem spec

@@ -27,7 +27,7 @@ Siga os passos 2 a 4 do `/conferir-tarefa` (`.claude/skills/conferir-tarefa/SKIL
 `analista-requisitos` levanta os requisitos e as lacunas, o agent `leitor-figma` lê as telas pelo Chrome e você
 monta a matriz requisito × Figma e os extras.
 
-- Fase **Futuro** ou **Futuro Marketplace**: avise e pergunte se é para especificar mesmo assim.
+- Fase **Futuro**, **Futuro Marketplace** ou **Escopo Adicional**: avise e pergunte se é para especificar mesmo assim.
 - Sem Chrome conectado (e o usuário não quer usar o MCP do Figma): siga sem as telas, preencha a seção **Telas**
   com "não conferida" e crie uma lacuna `L<n>` para isso. Spec com tela não conferida não é aprovada.
 

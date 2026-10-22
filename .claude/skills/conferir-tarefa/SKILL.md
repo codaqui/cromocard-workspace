@@ -27,7 +27,7 @@ Esta skill só lê. Não edite o Figma, os docs nem o board.
 Chame o agent `analista-requisitos` com a tarefa. Ele devolve a tabela de requisitos (R1, R2…), os dados
 envolvidos, os conflitos e as lacunas da documentação.
 
-Se a fase for **Futuro** ou **Futuro Marketplace**, avise antes de seguir: a tarefa está fora do MVP.
+Se a fase for **Futuro**, **Futuro Marketplace** ou **Escopo Adicional**, avise antes de seguir: a tarefa está fora do MVP.
 
 ## 3. Ler o Figma
 
