@@ -165,3 +165,30 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 
 | CCD | User story | Fase | Status | Work item |
 |---|---|---|---|---|
+| [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Planejada | #108 |
+| [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Planejada | #109 |
+| [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Planejada | #111 |
+| [CCD058](CCD058-visualizar-dashboard-gerencial/spec.md) | Visualizar Dashboard Gerencial | MVP | Planejada | #333 |
+| [CCD059](CCD059-gestao-de-usuarios/spec.md) | Gestão de Usuários | MVP | Planejada | #334 |
+| [CCD060](CCD060-disparar-notificacao-global/spec.md) | Disparar Notificação Global | MVP | Planejada | #335 |
+| [CCD061](CCD061-gestao-de-catalogo/spec.md) | Gestão de Catálogo | MVP | Planejada | #336 |
+| [CCD062](CCD062-gestao-de-comunidade/spec.md) | Gestão de Comunidade | MVP | Planejada | #337 |
+| [CCD063](CCD063-exportar-relatorios-gerenciais/spec.md) | Exportar Relatórios Gerenciais | MVP | Planejada | #338 |
+| [CCD064](CCD064-aprovar-solicitacoes/spec.md) | Aprovar Solicitações | MVP | Planejada | #339 |
+| [CCD065](CCD065-log-de-auditoria-admin/spec.md) | Log de Auditoria Admin | MVP | Planejada | #340 |
+| [CCD066](CCD066-configuracoes-globais/spec.md) | Configurações Globais | MVP | Planejada | #341 |
+| [Fundação](fundacao-backoffice/plano.md) | Fundação técnica do Painel Administrador | MVP | Planejada (técnica, sem spec) | #481 |
+| [CCD094](CCD094-validar-cadastro-de-vendedor/spec.md) | Validar Cadastro de Vendedor | Escopo Adicional | Planejada | #598 |
+| [CCD095](CCD095-notificar-pendencia-cadastral/spec.md) | Notificar Pendência Cadastral | Escopo Adicional | Planejada | #599 |
+| [CCD096](CCD096-acompanhar-evolucao-de-cadastros/spec.md) | Acompanhar Evolução de Cadastros | Escopo Adicional | Planejada | #600 |
+| [CCD097](CCD097-visualizar-indicadores-financeiros/spec.md) | Visualizar Indicadores Financeiros | Escopo Adicional | Planejada | #601 |
+| [CCD098](CCD098-gerenciar-dados-complementares-do-usuario/spec.md) | Gerenciar Dados Complementares do Usuário | Escopo Adicional | Planejada | #602 |
+| [CCD099](CCD099-aplicar-sancao-a-usuario/spec.md) | Aplicar Sanção a Usuário | Escopo Adicional | Planejada | #603 |
+| [CCD100](CCD100-agendar-notificacao-global/spec.md) | Agendar Notificação Global | Escopo Adicional | Planejada | #604 |
+| [CCD101](CCD101-segmentar-notificacao-global/spec.md) | Segmentar Notificação Global | Escopo Adicional | Planejada | #605 |
+| [CCD102](CCD102-exportar-log-de-auditoria/spec.md) | Exportar Log de Auditoria | Escopo Adicional | Planejada | #606 |
+| [CCD103](CCD103-votar-em-solicitacao-de-catalogo/spec.md) | Votar em Solicitação de Catálogo | Escopo Adicional | Planejada | #607 |
+| [CCD104](CCD104-ordenar-categorias-padrao/spec.md) | Ordenar Categorias Padrão | Escopo Adicional | Planejada | #608 |
+| [CCD105](CCD105-duplicar-carta/spec.md) | Duplicar Carta | Escopo Adicional | Planejada | #609 |
+| [CCD106](CCD106-salvar-rascunho-de-carta/spec.md) | Salvar Rascunho de Carta | Escopo Adicional | Planejada | #610 |
+| [CCD107](CCD107-consultar-historico-de-relatorios/spec.md) | Consultar Histórico de Relatórios | Escopo Adicional | Planejada | #611 |

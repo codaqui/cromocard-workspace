@@ -2,7 +2,7 @@
 //  CromoCard - Sistema de Gestao de Cartas Colecionaveis
 //  3/3 - DER COMPLETO (entidades + atributos + relacionamentos)
 //  Cole em https://dbdiagram.io/d
-//  Organizacao: 44 tabelas, 8 modulos (cores por modulo + TableGroup),
+//  Organizacao: 50 tabelas, 8 modulos (cores por modulo + TableGroup),
 //  relacionamentos declarados no final, agrupados por modulo.
 //  Export sugerido para o relatorio: PDF ou PNG (botao Export).
 // =====================================================================
@@ -24,6 +24,7 @@ Enum user_role {
 Enum user_status {
   ACTIVE
   SUSPENDED
+  BLOCKED
 }
 
 Enum privacy {
@@ -65,6 +66,7 @@ Enum group_access_type {
 
 Enum group_status {
   ACTIVE
+  WARNED
   SUSPENDED
 }
 
@@ -148,6 +150,35 @@ Enum catalog_request_type {
   CATEGORY
 }
 
+Enum seller_verification_status {
+  UNDER_REVIEW
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+Enum seller_document_status {
+  SUBMITTED
+  VALIDATED
+}
+
+Enum card_status {
+  DRAFT
+  ACTIVE
+}
+
+Enum notification_dispatch_status {
+  SCHEDULED
+  SENT
+  CANCELED
+}
+
+Enum catalog_vote {
+  FOR
+  NEUTRAL
+  AGAINST
+}
+
 // =====================================================================
 // MODULO 1 - USUARIOS, PERFIL E ACESSO
 // =====================================================================
@@ -162,9 +193,18 @@ Table users [headercolor: #3E5F8A] {
   terms_accepted boolean      [not null, default: false]
   oauth_provider varchar(30)
   oauth_id       varchar(120)
+  username       varchar(30) [unique, note: 'Nome de usuario (@) (CCD098, ADR-053)']
+  phone          varchar(20) [note: 'Telefone com DDD (CCD098)']
+  cpf            varchar(14) [unique, note: 'CPF, visivel so no BackOffice (CCD098)']
+  last_login_at  timestamptz [note: 'Ultimo login bem-sucedido (CCD098)']
+  last_login_ip  varchar(45) [note: 'IP do ultimo login (CCD098)']
+  suspended_until timestamptz [note: 'Fim da suspensao temporaria; nulo = sem prazo (CCD099)']
   created_at     timestamptz  [not null, default: `now()`]
   updated_at     timestamptz  [not null, default: `now()`, note: 'Atualizado pelo Prisma (@updatedAt)']
   deleted_at     timestamptz  [note: 'Soft delete (ADR-015)']
+  indexes {
+    (oauth_provider, oauth_id) [unique, note: 'Conta Google unica (ADR-048)']
+  }
   Note: 'Conta unica da plataforma; o tipo define o acesso (Cliente, Vendedor, Administrador).'
 }
 
@@ -200,7 +240,7 @@ Table addresses [headercolor: #3E5F8A] {
 Table password_reset_tokens [headercolor: #3E5F8A] {
   id         uuid         [pk, default: `uuidv7()`]
   user_id    uuid         [not null]
-  token      varchar(255) [not null, unique]
+  token      varchar(255) [not null, unique, note: 'Hash (SHA-256) do token; o valor puro so vai no link do e-mail (ADR-048)']
   expires_at timestamptz  [not null]
   used       boolean      [not null, default: false]
   created_at timestamptz  [not null, default: `now()`]
@@ -269,6 +309,10 @@ Table categories [headercolor: #2E7D5B] {
   type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
+  slug               varchar(100) [unique, note: 'Gerado a partir do nome (CCD104)']
+  display_order      integer [not null, default: 0, note: 'Ordem no menu, nos filtros e na vitrine (CCD104)']
+  is_pinned          boolean [not null, default: false, note: 'Fixada no topo (CCD104)']
+  badge              varchar(20) [note: 'Selo de exibicao: STANDARD ou TRENDING (CCD104)']
   created_at         timestamptz   [not null, default: `now()`]
   updated_at         timestamptz   [not null, default: `now()`]
   deleted_at         timestamptz
@@ -328,6 +372,10 @@ Table cards [headercolor: #2E7D5B] {
   description     text
   front_image_url varchar(255)
   back_image_url  varchar(255)
+  status          card_status [not null, default: 'ACTIVE', note: 'DRAFT = rascunho fora do catalogo (CCD106)']
+  code            varchar(30) [unique, note: 'Codigo da carta, ex.: CRD-POK-0004 (CCD105)']
+  variants        varchar(120) [note: 'Variantes separadas por virgula, ex.: Shadowless, Holofoil (CCD105)']
+  release_year    smallint [note: 'Ano de lancamento da carta (CCD106)']
   created_at      timestamptz  [not null, default: `now()`]
   updated_at      timestamptz  [not null, default: `now()`]
   deleted_at      timestamptz
@@ -650,6 +698,12 @@ Table global_notifications [headercolor: #B08A2E] {
   title           varchar(120) [not null]
   content         varchar(500) [not null]
   recipient_count integer      [not null, default: 0]
+  reference_link  varchar(255) [note: 'Link de destino, copiado para cada notificacao no envio (CCD100)']
+  audience        varchar(30) [not null, default: 'ALL', note: 'ALL, ACTIVE_COLLECTORS ou SELLERS (CCD101)']
+  channels        varchar(60) [not null, default: 'IN_APP', note: 'Canais separados por virgula: IN_APP, EMAIL (CCD101)']
+  status          notification_dispatch_status [not null, default: 'SENT', note: 'SCHEDULED ate o horario programado (CCD100)']
+  scheduled_at    timestamptz [note: 'Horario programado (CCD100)']
+  sent_at         timestamptz [note: 'Quando a notificacao foi entregue (CCD100)']
   created_at      timestamptz  [not null, default: `now()`]
   updated_at      timestamptz  [not null, default: `now()`]
   deleted_at      timestamptz
@@ -712,6 +766,7 @@ Table audit_logs [headercolor: #5A5A66] {
   entity_type varchar(60) [not null]
   entity_id   uuid
   details     jsonb
+  ip_address  varchar(45) [note: 'IP de quem fez a acao (CCD102)']
   created_at  timestamptz [not null, default: `now()`]
   updated_at  timestamptz [not null, default: `now()`]
   deleted_at  timestamptz
@@ -726,6 +781,101 @@ Table global_settings [headercolor: #5A5A66] {
   created_at    timestamptz  [not null, default: `now()`]
   updated_at    timestamptz  [not null, default: `now()`]
   deleted_at    timestamptz
+}
+
+Table seller_verifications [headercolor: #5A5A66] {
+  id                      uuid [pk, default: `uuidv7()`]
+  user_id                 uuid [not null, unique]
+  reviewed_by_id          uuid
+  address_id              uuid
+  status                  seller_verification_status [not null, default: 'UNDER_REVIEW']
+  legal_name              varchar(160) [not null, note: 'Razao social']
+  trade_name              varchar(160) [note: 'Nome fantasia']
+  cnpj                    varchar(18) [not null, unique]
+  state_registration      varchar(30) [note: 'Inscricao estadual']
+  opening_date            date
+  company_size            varchar(40) [note: 'Porte, ex.: Microempresa (ME)']
+  cnae                    varchar(120) [note: 'CNAE principal']
+  responsible_name        varchar(120) [not null, note: 'Responsavel legal']
+  responsible_cpf         varchar(14) [not null]
+  responsible_phone       varchar(20)
+  bank_name               varchar(80)
+  bank_branch             varchar(10)
+  bank_account            varchar(20)
+  pix_key                 varchar(120)
+  rejection_reason        varchar(255) [note: 'Motivo da reprovacao']
+  regularization_deadline timestamptz [note: 'Prazo da pendencia (CCD095)']
+  reviewed_at             timestamptz
+  created_at              timestamptz [not null, default: `now()`]
+  updated_at              timestamptz [not null, default: `now()`]
+  deleted_at              timestamptz
+  Note: 'Credenciamento do vendedor (CCD094, CCD095, ADR-052)'
+}
+
+Table seller_documents [headercolor: #5A5A66] {
+  id                     uuid [pk, default: `uuidv7()`]
+  seller_verification_id uuid [not null]
+  validated_by_id        uuid
+  type                   varchar(60) [not null, note: 'Ex.: CNPJ_CARD, ADDRESS_PROOF']
+  file_url               varchar(255) [not null]
+  file_size              integer [note: 'Tamanho em bytes']
+  status                 seller_document_status [not null, default: 'SUBMITTED']
+  validated_at           timestamptz
+  created_at             timestamptz [not null, default: `now()`]
+  updated_at             timestamptz [not null, default: `now()`]
+  deleted_at             timestamptz
+  Note: 'Documentos enviados no credenciamento (CCD094, ADR-052)'
+}
+
+Table seller_verification_notes [headercolor: #5A5A66] {
+  id                     uuid [pk, default: `uuidv7()`]
+  seller_verification_id uuid [not null]
+  author_id              uuid [not null]
+  content                text [not null]
+  created_at             timestamptz [not null, default: `now()`]
+  updated_at             timestamptz [not null, default: `now()`]
+  deleted_at             timestamptz
+  Note: 'Anotacao interna da moderacao, invisivel ao vendedor (CCD094, ADR-052)'
+}
+
+Table user_warnings [headercolor: #5A5A66] {
+  id         uuid [pk, default: `uuidv7()`]
+  user_id    uuid [not null]
+  admin_id   uuid [not null]
+  report_id  uuid
+  reason     varchar(255) [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+  deleted_at timestamptz
+  Note: 'Advertencias aplicadas a usuarios (CCD099, ADR-053)'
+}
+
+Table catalog_request_votes [headercolor: #5A5A66] {
+  catalog_request_id uuid [not null]
+  user_id            uuid [not null]
+  vote               catalog_vote [not null]
+  created_at         timestamptz [not null, default: `now()`]
+  updated_at         timestamptz [not null, default: `now()`]
+  deleted_at         timestamptz
+  indexes {
+    (catalog_request_id, user_id) [pk]
+  }
+  Note: 'Um voto por cliente em cada solicitacao (CCD103, ADR-053)'
+}
+
+Table report_exports [headercolor: #5A5A66] {
+  id          uuid [pk, default: `uuidv7()`]
+  admin_id    uuid [not null]
+  report_type varchar(60) [not null]
+  filters     jsonb
+  format      varchar(10) [not null, note: 'CSV ou PDF']
+  file_url    varchar(255) [not null]
+  file_size   integer [note: 'Tamanho em bytes']
+  expires_at  timestamptz [not null, note: 'created_at + 90 dias']
+  created_at  timestamptz [not null, default: `now()`]
+  updated_at  timestamptz [not null, default: `now()`]
+  deleted_at  timestamptz
+  Note: 'Arquivos de relatorio exportados, guardados por 90 dias (CCD107, ADR-053)'
 }
 
 // =====================================================================
@@ -824,6 +974,19 @@ Ref: catalog_requests.card_id         > cards.id
 Ref: catalog_requests.album_id         > albums.id
 Ref: audit_logs.admin_id                > users.id
 Ref: global_settings.updated_by_id > users.id
+Ref: seller_verifications.user_id - users.id
+Ref: seller_verifications.reviewed_by_id > users.id
+Ref: seller_verifications.address_id > addresses.id
+Ref: seller_documents.seller_verification_id > seller_verifications.id
+Ref: seller_documents.validated_by_id > users.id
+Ref: seller_verification_notes.seller_verification_id > seller_verifications.id
+Ref: seller_verification_notes.author_id > users.id
+Ref: user_warnings.user_id > users.id
+Ref: user_warnings.admin_id > users.id
+Ref: user_warnings.report_id > reports.id
+Ref: catalog_request_votes.catalog_request_id > catalog_requests.id
+Ref: catalog_request_votes.user_id > users.id
+Ref: report_exports.admin_id > users.id
 
 // =====================================================================
 // AGRUPAMENTOS VISUAIS
@@ -894,4 +1057,10 @@ TableGroup "8 - Moderacao e Administracao" {
   catalog_requests
   audit_logs
   global_settings
+  seller_verifications
+  seller_documents
+  seller_verification_notes
+  user_warnings
+  catalog_request_votes
+  report_exports
 }

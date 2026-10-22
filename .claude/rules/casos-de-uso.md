@@ -33,7 +33,8 @@ paths:
 - Os passos são numerados em sequência, alternando colunas entre ator e sistema. Cada passo é uma frase
   verificável: é dela que sai o requisito na conferência com o Figma e na revisão de código.
 - User stories em `user-stories.md`: tabela `| User Story | Narrativa |` por área funcional, narrativa
-  "Como <ator> preciso/quero … para …". A marcação `**` (Futuro) ou `***` (Futuro Marketplace) no nome define a fase.
+  "Como <ator> preciso/quero … para …". A marcação `**` (Futuro), `***` (Futuro Marketplace) ou `++` (Escopo Adicional, vindo do
+  Figma — índice em `escopo-adicional.md`) no fim da narrativa define a fase.
 - Caso de uso novo: próximo número livre, nome do arquivo em minúsculas com hífens e sem acentos, e uma linha
   correspondente em `user-stories.md` e `resumo-user-stories.md`.
 - Ao ler um caso de uso, confira as inconsistências conhecidas listadas no `CLAUDE.md` antes de concluir algo.

@@ -9,7 +9,7 @@
 '     cabia legivel na pagina e ainda estourava o limite de 4096px
 '     do servidor, cortando entidades do lado direito.
 '  2) SEM caixas de "package": a entidade "users" se liga a 26 das
-'     77 relacoes. Com caixas, o layout tem de cruzar todas elas e o
+'     90 relacoes. Com caixas, o layout tem de cruzar todas elas e o
 '     desenho vira um emaranhado. Aqui o modulo e indicado pela COR
 '     de fundo da entidade (ver legenda).
 '  3) Rotulos apenas onde ha mais de uma ligacao entre o mesmo par.
@@ -288,6 +288,36 @@ entity global_settings #E6E6EA {
   * id <<PK>>
   o updated_by_id <<FK>>
 }
+entity seller_verifications #E6E6EA {
+  * id <<PK>>
+  * user_id <<FK>>
+  o reviewed_by_id <<FK>>
+  o address_id <<FK>>
+}
+entity seller_documents #E6E6EA {
+  * id <<PK>>
+  * seller_verification_id <<FK>>
+  o validated_by_id <<FK>>
+}
+entity seller_verification_notes #E6E6EA {
+  * id <<PK>>
+  * seller_verification_id <<FK>>
+  * author_id <<FK>>
+}
+entity user_warnings #E6E6EA {
+  * id <<PK>>
+  * user_id <<FK>>
+  * admin_id <<FK>>
+  o report_id <<FK>>
+}
+entity catalog_request_votes #E6E6EA {
+  * catalog_request_id <<PK, FK>>
+  * user_id <<PK, FK>>
+}
+entity report_exports #E6E6EA {
+  * id <<PK>>
+  * admin_id <<FK>>
+}
 
 ' =====================================================================
 ' RELACIONAMENTOS
@@ -388,5 +418,18 @@ cards          |o--o{ catalog_requests
 albums          |o--o{ catalog_requests
 users        ||--o{ audit_logs        : admin
 users        |o--o{ global_settings  : admin
+users        ||--o| seller_verifications : credencia
+users        |o--o{ seller_verifications : avalia
+addresses    |o--o{ seller_verifications : endereco comercial
+seller_verifications ||--o{ seller_documents : anexa
+users        |o--o{ seller_documents : valida
+seller_verifications ||--o{ seller_verification_notes : anota
+users        ||--o{ seller_verification_notes : escreve
+users        ||--o{ user_warnings : recebe
+users        ||--o{ user_warnings : aplica
+reports      |o--o{ user_warnings : origina
+catalog_requests ||--o{ catalog_request_votes : recebe voto
+users        ||--o{ catalog_request_votes : vota
+users        ||--o{ report_exports : exporta
 
 @enduml

@@ -69,6 +69,12 @@ package "1. Usuarios, Perfil e Acesso" as M1 #E8EEF9 {
     * terms_accepted : boolean
     o oauth_provider : varchar(30)
     o oauth_id : varchar(120)
+    o username : varchar(30) <<UQ>>
+    o phone : varchar(20)
+    o cpf : varchar(14) <<UQ>>
+    o last_login_at : timestamptz
+    o last_login_ip : varchar(45)
+    o suspended_until : timestamptz
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
@@ -187,6 +193,10 @@ package "2. Catalogo Global (Albuns e Cartas)" as M2 #E6F3EC {
     * type : enum
     o description : varchar(255)
     * is_default : boolean
+    o slug : varchar(100) <<UQ>>
+    * display_order : integer
+    * is_pinned : boolean
+    o badge : varchar(20)
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
@@ -252,6 +262,10 @@ package "2. Catalogo Global (Albuns e Cartas)" as M2 #E6F3EC {
     o description : text
     o front_image_url : varchar(255)
     o back_image_url : varchar(255)
+    * status : enum
+    o code : varchar(30) <<UQ>>
+    o variants : varchar(120)
+    o release_year : smallint
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
@@ -634,6 +648,12 @@ package "7. Notificacoes e Favoritos" as M7 #FCF5E0 {
     * title : varchar(120)
     * content : varchar(500)
     * recipient_count : integer
+    o reference_link : varchar(255)
+    * audience : varchar(30)
+    * channels : varchar(60)
+    * status : enum
+    o scheduled_at : timestamptz
+    o sent_at : timestamptz
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
@@ -690,6 +710,7 @@ package "8. Moderacao e Administracao" as M8 #ECECEF {
     * entity_type : varchar(60)
     o entity_id : uuid
     o details : jsonb
+    o ip_address : varchar(45)
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz
@@ -703,6 +724,103 @@ package "8. Moderacao e Administracao" as M8 #ECECEF {
     * key : varchar(90) <<UQ>>
     * value : text
     o description : varchar(255)
+    * created_at : timestamptz
+    * updated_at : timestamptz
+    o deleted_at : timestamptz
+  }
+
+  entity seller_verifications {
+    * id : uuid <<PK>>
+    -- Chaves estrangeiras --
+    * user_id : uuid <<FK>> <<UQ>>
+    o reviewed_by_id : uuid <<FK>>
+    o address_id : uuid <<FK>>
+    -- Atributos --
+    * status : enum
+    * legal_name : varchar(160)
+    o trade_name : varchar(160)
+    * cnpj : varchar(18) <<UQ>>
+    o state_registration : varchar(30)
+    o opening_date : date
+    o company_size : varchar(40)
+    o cnae : varchar(120)
+    * responsible_name : varchar(120)
+    * responsible_cpf : varchar(14)
+    o responsible_phone : varchar(20)
+    o bank_name : varchar(80)
+    o bank_branch : varchar(10)
+    o bank_account : varchar(20)
+    o pix_key : varchar(120)
+    o rejection_reason : varchar(255)
+    o regularization_deadline : timestamptz
+    o reviewed_at : timestamptz
+    * created_at : timestamptz
+    * updated_at : timestamptz
+    o deleted_at : timestamptz
+  }
+
+  entity seller_documents {
+    * id : uuid <<PK>>
+    -- Chaves estrangeiras --
+    * seller_verification_id : uuid <<FK>>
+    o validated_by_id : uuid <<FK>>
+    -- Atributos --
+    * type : varchar(60)
+    * file_url : varchar(255)
+    o file_size : integer
+    * status : enum
+    o validated_at : timestamptz
+    * created_at : timestamptz
+    * updated_at : timestamptz
+    o deleted_at : timestamptz
+  }
+
+  entity seller_verification_notes {
+    * id : uuid <<PK>>
+    -- Chaves estrangeiras --
+    * seller_verification_id : uuid <<FK>>
+    * author_id : uuid <<FK>>
+    -- Atributos --
+    * content : text
+    * created_at : timestamptz
+    * updated_at : timestamptz
+    o deleted_at : timestamptz
+  }
+
+  entity user_warnings {
+    * id : uuid <<PK>>
+    -- Chaves estrangeiras --
+    * user_id : uuid <<FK>>
+    * admin_id : uuid <<FK>>
+    o report_id : uuid <<FK>>
+    -- Atributos --
+    * reason : varchar(255)
+    * created_at : timestamptz
+    * updated_at : timestamptz
+    o deleted_at : timestamptz
+  }
+
+  entity catalog_request_votes {
+    * catalog_request_id : uuid <<PK>> <<FK>>
+    * user_id : uuid <<PK>> <<FK>>
+    -- Atributos --
+    * vote : enum
+    * created_at : timestamptz
+    * updated_at : timestamptz
+    o deleted_at : timestamptz
+  }
+
+  entity report_exports {
+    * id : uuid <<PK>>
+    -- Chave estrangeira --
+    * admin_id : uuid <<FK>>
+    -- Atributos --
+    * report_type : varchar(60)
+    o filters : jsonb
+    * format : varchar(10)
+    * file_url : varchar(255)
+    o file_size : integer
+    * expires_at : timestamptz
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz

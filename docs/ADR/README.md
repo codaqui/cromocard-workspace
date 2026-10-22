@@ -49,7 +49,7 @@ ter o status `Substituído por ADR-XXX`.
 | [031](ADR-031-servico-tempo-real-dedicado.md) | Backend | Serviço de mensageria em tempo real como container dedicado | Substituído por ADR-007 e ADR-012 |
 | [032](ADR-032-modelagem-polimorfica-favorito-denuncia.md) | Dados | Modelagem polimórfica para alvos de `favorito` e `denuncia` | Proposto |
 | [033](ADR-033-convencoes-modelagem-dados.md) | Dados | Convenções de modelagem de dados (nomenclatura, PK, associativas N:N) | Substituído por ADR-003 e ADR-014 |
-| [034](ADR-034-trilha-auditoria-acoes-administrativas.md) | Backend | Trilha de auditoria obrigatória para ações administrativas | Proposto |
+| [034](ADR-034-trilha-auditoria-acoes-administrativas.md) | Backend | Trilha de auditoria obrigatória para ações administrativas | Aceito |
 | [035](ADR-035-heranca-tipos-usuario-diagrama-classes.md) | Diagramas | Herança de tipos de usuário no diagrama de classes (Single Table Inheritance) | Proposto |
 | [036](ADR-036-granularidade-diagrama-classes.md) | Diagramas | Granularidade do diagrama de classes (1:1 com as 43 entidades do DER) | Proposto |
 | [037](ADR-037-notacao-relacionamento-diagrama-classes.md) | Diagramas | Notação de relacionamento no diagrama de classes (rótulo textual) | Proposto |
@@ -63,6 +63,13 @@ ter o status `Substituído por ADR-XXX`.
 | [045](ADR-045-configuracao-runtime-e-imagem-docker-frontend.md) | Frontend | Configuração em runtime e imagem Docker do frontend (uma imagem para todos os ambientes) | Aceito |
 | [046](ADR-046-qualidade-frontend-lint-testes.md) | Frontend | Qualidade do frontend: ESLint, Prettier, `tsc` e Vitest + Testing Library | Aceito |
 | [047](ADR-047-desenvolvimento-orientado-a-especificacao.md) | Processo | SDD: spec, plano e tarefas por user story em `specs/` | Proposto |
+| [048](ADR-048-tokens-de-email-e-google-no-frontend.md) | Backend | Tokens de confirmação de e-mail e de redefinição de senha; client ID do Google no frontend | Aceito |
+| [049](ADR-049-middlewares-http-da-autenticacao.md) | Backend | Middlewares HTTP da autenticação: `express-rate-limit` e `cookie-parser` | Aceito |
+| [050](ADR-050-upload-e-arquivos-csv-e-pdf.md) | Backend | Upload de imagens e arquivos CSV e PDF: `multer`, `csv-parse` e `pdfkit` | Aceito |
+| [051](ADR-051-convencoes-das-colunas-flexiveis-do-backoffice.md) | Dados | Convenções das colunas flexíveis do BackOffice (`global_settings`, `notifications.type`, `catalog_requests.data`, `audit_logs`) | Aceito |
+| [052](ADR-052-credenciamento-de-vendedor-no-modelo-de-dados.md) | Dados | Credenciamento de vendedor no modelo de dados (`seller_verifications`, documentos e notas) | Aceito |
+| [053](ADR-053-colunas-e-tabelas-do-escopo-adicional-do-backoffice.md) | Dados | Colunas, enums e tabelas do escopo adicional do BackOffice | Aceito |
+| [054](ADR-054-tabelas-do-marketplace-para-indicadores.md) | Dados | Tabelas do marketplace criadas (só leitura) para os indicadores financeiros | Aceito |
 
 ## Modelo
 

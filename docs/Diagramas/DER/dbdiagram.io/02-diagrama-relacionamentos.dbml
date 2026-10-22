@@ -10,7 +10,7 @@
 
 Project CromoCard_Relacionamentos {
   database_type: 'PostgreSQL'
-  Note: 'Diagrama de relacionamentos: 44 entidades e suas cardinalidades. Apenas chaves primarias e estrangeiras.'
+  Note: 'Diagrama de relacionamentos: 50 entidades e suas cardinalidades. Apenas chaves primarias e estrangeiras.'
 }
 
 // =====================================================================
@@ -296,6 +296,45 @@ Table global_settings [headercolor: #5A5A66] {
   updated_by_id uuid
 }
 
+Table seller_verifications [headercolor: #5A5A66] {
+  id                      uuid [pk]
+  user_id                 uuid [not null]
+  reviewed_by_id          uuid
+  address_id              uuid
+}
+
+Table seller_documents [headercolor: #5A5A66] {
+  id                     uuid [pk]
+  seller_verification_id uuid [not null]
+  validated_by_id        uuid
+}
+
+Table seller_verification_notes [headercolor: #5A5A66] {
+  id                     uuid [pk]
+  seller_verification_id uuid [not null]
+  author_id              uuid [not null]
+}
+
+Table user_warnings [headercolor: #5A5A66] {
+  id         uuid [pk]
+  user_id    uuid [not null]
+  admin_id   uuid [not null]
+  report_id  uuid
+}
+
+Table catalog_request_votes [headercolor: #5A5A66] {
+  catalog_request_id uuid [not null]
+  user_id            uuid [not null]
+  indexes {
+    (catalog_request_id, user_id) [pk]
+  }
+}
+
+Table report_exports [headercolor: #5A5A66] {
+  id          uuid [pk]
+  admin_id    uuid [not null]
+}
+
 // =====================================================================
 // RELACIONAMENTOS
 // =====================================================================
@@ -392,6 +431,19 @@ Ref: catalog_requests.card_id        > cards.id         // resulta em
 Ref: catalog_requests.album_id        > albums.id         // resulta em
 Ref: audit_logs.admin_id               > users.id       // produz
 Ref: global_settings.updated_by_id > users.id      // atualiza
+Ref: seller_verifications.user_id - users.id      // credencia
+Ref: seller_verifications.reviewed_by_id > users.id      // avalia
+Ref: seller_verifications.address_id > addresses.id      // endereco comercial
+Ref: seller_documents.seller_verification_id > seller_verifications.id      // anexa
+Ref: seller_documents.validated_by_id > users.id      // valida
+Ref: seller_verification_notes.seller_verification_id > seller_verifications.id      // anota
+Ref: seller_verification_notes.author_id > users.id      // escreve
+Ref: user_warnings.user_id > users.id      // recebe
+Ref: user_warnings.admin_id > users.id      // aplica
+Ref: user_warnings.report_id > reports.id      // origina
+Ref: catalog_request_votes.catalog_request_id > catalog_requests.id      // recebe voto
+Ref: catalog_request_votes.user_id > users.id      // vota
+Ref: report_exports.admin_id > users.id      // exporta
 
 // =====================================================================
 // AGRUPAMENTOS VISUAIS
@@ -462,4 +514,10 @@ TableGroup "8 - Moderacao e Administracao" {
   catalog_requests
   audit_logs
   global_settings
+  seller_verifications
+  seller_documents
+  seller_verification_notes
+  user_warnings
+  catalog_request_votes
+  report_exports
 }

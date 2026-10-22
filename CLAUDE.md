@@ -14,8 +14,8 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
 ├── docs/                          documentação — a fonte da verdade; só guarda documentação
 │   ├── ADR/                       ADR-001…046 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
-│   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–93), user-stories.md, resumo-user-stories.md, CromoCard 1.xlsx
-│   ├── Diagrama-de-Classe/        cromocard-diagrama-classes.v2.c4 (LikeC4, atual) + .v1.c4 (histórico) + README.md — 43 classes, 1:1 com o DER
+│   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–107), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
+│   ├── Diagrama-de-Classe/        cromocard-diagrama-classes.v2.c4 (LikeC4, atual) + .v1.c4 (histórico) + README.md — 49 classes, 1:1 com o DER
 │   └── Diagramas/
 │       ├── DER/                   puml/, dbdiagram.io/ (DBML), chartdb/ (DDL PostgreSQL) + README.md
 │       ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
@@ -79,7 +79,7 @@ Notificações e Favoritos · Pagamentos e Pedidos · Administração.
 
 ## Modelo de dados (DER — fonte: `docs/Diagramas/DER/`)
 
-**Fonte da verdade:** `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml` (44 tabelas, 77 FKs, 22 enums).
+**Fonte da verdade:** `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml` (50 tabelas, 90 FKs, 27 enums).
 As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos polimórficos, sincronia dos três
 formatos) estão em `.claude/rules/modelagem-de-dados.md`.
 
@@ -93,9 +93,9 @@ formatos) estão em `.claude/rules/modelagem-de-dados.md`.
 | 5 | Chat Pessoal | conversations, conversation_participants, messages, user_blocks |
 | 6 | Marketplace | listings, listing_photos, offers, orders, payments, reviews |
 | 7 | Notificações e Favoritos | favorites, price_alerts, notifications, global_notifications |
-| 8 | Moderação e Administração | reports, catalog_requests, audit_logs, global_settings |
+| 8 | Moderação e Administração | reports, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
 
-Enums principais: `user_role` (CUSTOMER, SELLER, ADMIN) · `listing_status` (ACTIVE, PAUSED,
+Enums principais: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED, BLOCKED) · `listing_status` (ACTIVE, PAUSED,
 CLOSED) · `order_status` (AWAITING_PAYMENT, PAID, SHIPPED, DELIVERED, CANCELED) ·
 `payment_method` (CREDIT_CARD, PIX, BOLETO). Veja o DBML para os demais.
 
@@ -110,6 +110,8 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
   - sem marcador → **MVP** (tag `mvp`)
   - `**` → **Futuro** (tag `futuro`) — ex.: escanear carta, alertas de preço, plano PRO, acessibilidade avançada
   - `***` → **Futuro Marketplace** (tag `futuro-marketplace`) — compra, anúncios, pedidos, avaliações
+  - `++` → **Escopo Adicional** (tag `escopo-adicional`) — veio do protótipo no Figma e não estava na documentação
+    (CCD094–CCD107 e complementos `EA-…`); índice em `docs/Casos-De-Uso/escopo-adicional.md`
   Priorize o MVP ao implementar; entidades de funcionalidades futuras já existem no DER.
 - Áreas funcionais: 1 Painel Público · 2 Painel Cliente · 3 Minha Coleção · 4 Grupos · 5 Chat
   Pessoal · 6 Perfil e Configurações · 7 Notificações e Favoritos · 8 BackOffice · 9 Painel Vendedor.
@@ -120,7 +122,7 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 - Busca por vendedor aparece em `33-` e em `67-`.
 - CCD032/CCD033 divergem entre o board do Azure e a planilha `CromoCard 1.xlsx`.
 - O diagrama de casos de uso (`.puml`) cobre só CCD001–CCD046; o de atividades vai até CCD066;
-  os arquivos `.md` vão até 93 (marketplace e painel do vendedor).
+  os arquivos `.md` vão até 93 (marketplace e painel do vendedor) e, de 94 a 107, o escopo adicional vindo do Figma.
 
 ## SDD — da user story ao código (ADR-047)
 

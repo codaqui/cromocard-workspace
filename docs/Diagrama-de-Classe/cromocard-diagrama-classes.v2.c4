@@ -5,7 +5,7 @@
 //  usuario e comportamento (metodos) de cada classe. Ver ADR-035, ADR-036 e
 //  ADR-037 em docs/ADR/ para o racional de cada decisao de modelagem.
 //
-//  43 classes + 22 enumeracoes, organizados nos mesmos 8 modulos do DER.
+//  49 classes + 27 enumeracoes, organizados nos mesmos 8 modulos do DER.
 //  Relacoes usam rotulo textual com multiplicidade (o LikeC4 nao tem notacao
 //  UML nativa de heranca/composicao/agregacao) - ver legenda no README.md
 //  desta pasta e o ADR-037.
@@ -49,6 +49,12 @@ model {
         - status: StatusUsuario
         - emailConfirmado: Boolean
         - aceiteTermos: Boolean
+        - nomeUsuario: String
+        - telefone: String
+        - cpf: String
+        - ultimoAcesso: DateTime
+        - ipUltimoAcesso: String
+        - suspensoAte: DateTime
         - dataCadastro: DateTime
         - dataExclusao: DateTime
       """
@@ -223,7 +229,7 @@ model {
 
   statusUsuario = enumeracao "StatusUsuario" {
     metadata {
-      valores """ATIVO, SUSPENSO, EXCLUIDO"""
+      valores """ATIVO, SUSPENSO, BLOQUEADO, EXCLUIDO"""
     }
   }
 
@@ -258,6 +264,10 @@ model {
         - tipo: TipoCategoria
         - descricao: String
         - padrao: Boolean
+        - slug: String
+        - ordemExibicao: Integer
+        - fixadaNoTopo: Boolean
+        - selo: String
       """
       metodos """
         + criar()
@@ -344,6 +354,10 @@ model {
         - descricao: String
         - imagemFrenteUrl: String
         - imagemVersoUrl: String
+        - status: StatusCarta
+        - codigo: String
+        - variantes: String
+        - anoLancamento: Integer
         - dataCadastro: DateTime
       """
       metodos """
@@ -589,7 +603,7 @@ model {
 
   statusGrupo = enumeracao "StatusGrupo" {
     metadata {
-      valores """ATIVO, SUSPENSO, EXCLUIDO"""
+      valores """ATIVO, ADVERTIDO, SUSPENSO, EXCLUIDO"""
     }
   }
 
@@ -859,6 +873,12 @@ model {
         - titulo: String
         - conteudo: String
         - totalDestinatarios: Integer
+        - link: String
+        - publico: String
+        - canais: String
+        - status: StatusDisparo
+        - agendadaPara: DateTime
+        - enviadaEm: DateTime
         - dataDisparo: DateTime
       """
       metodos """
@@ -941,6 +961,7 @@ model {
         - entidadeAfetada: String
         - entidadeId: Long
         - detalhes: JSON
+        - ip: String
         - dataRegistro: DateTime
       """
       metodos """
@@ -964,6 +985,113 @@ model {
     }
   }
 
+  verificacaoVendedor = class "VerificacaoVendedor" {
+    metadata {
+      observacoes """Credenciamento do vendedor (CCD094, CCD095, ADR-052)."""
+      atributos """
+        - id: Long
+        - status: StatusVerificacaoVendedor
+        - razaoSocial: String
+        - nomeFantasia: String
+        - cnpj: String
+        - inscricaoEstadual: String
+        - dataAbertura: Date
+        - porte: String
+        - cnae: String
+        - nomeResponsavel: String
+        - cpfResponsavel: String
+        - telefoneResponsavel: String
+        - banco: String
+        - agencia: String
+        - conta: String
+        - chavePix: String
+        - motivoReprovacao: String
+        - prazoRegularizacao: DateTime
+        - dataAvaliacao: DateTime
+      """
+      metodos """
+        + aprovar()
+        + reprovar()
+        + notificarPendencia()
+      """
+    }
+  }
+
+  documentoVendedor = class "DocumentoVendedor" {
+    metadata {
+      atributos """
+        - id: Long
+        - tipo: String
+        - arquivoUrl: String
+        - tamanho: Integer
+        - status: StatusDocumentoVendedor
+        - dataValidacao: DateTime
+      """
+      metodos """
+        + validar()
+      """
+    }
+  }
+
+  notaVerificacao = class "NotaVerificacao" {
+    metadata {
+      observacoes """Anotação interna da moderação, invisível ao vendedor."""
+      atributos """
+        - id: Long
+        - conteudo: String
+        - dataCriacao: DateTime
+      """
+      metodos """
+        + registrar()
+      """
+    }
+  }
+
+  advertenciaUsuario = class "AdvertenciaUsuario" {
+    metadata {
+      atributos """
+        - id: Long
+        - motivo: String
+        - dataCriacao: DateTime
+      """
+      metodos """
+        + aplicar()
+      """
+    }
+  }
+
+  votoSolicitacao = class "VotoSolicitacao" {
+    metadata {
+      observacoes """Um voto por cliente em cada solicitação (CCD103)."""
+      atributos """
+        - voto: TipoVoto
+        - dataCriacao: DateTime
+      """
+      metodos """
+        + votar()
+      """
+    }
+  }
+
+  exportacaoRelatorio = class "ExportacaoRelatorio" {
+    metadata {
+      observacoes """Arquivo guardado por 90 dias (CCD107)."""
+      atributos """
+        - id: Long
+        - tipoRelatorio: String
+        - filtros: JSON
+        - formato: String
+        - arquivoUrl: String
+        - tamanho: Integer
+        - expiraEm: DateTime
+      """
+      metodos """
+        + exportar()
+        + baixar()
+      """
+    }
+  }
+
   tipoAlvoDenuncia = enumeracao "TipoAlvoDenuncia" {
     metadata {
       valores """ANUNCIO, VENDEDOR, USUARIO, PERFIL, MENSAGEM_GRUPO"""
@@ -979,6 +1107,36 @@ model {
   tipoSolicCadastro = enumeracao "TipoSolicCadastro" {
     metadata {
       valores """CARTA, ALBUM, CATEGORIA"""
+    }
+  }
+
+  statusVerificacaoVendedor = enumeracao "StatusVerificacaoVendedor" {
+    metadata {
+      valores """EM_ANALISE, PENDENTE, APROVADO, REPROVADO"""
+    }
+  }
+
+  statusDocumentoVendedor = enumeracao "StatusDocumentoVendedor" {
+    metadata {
+      valores """ENVIADO, VALIDADO"""
+    }
+  }
+
+  statusCarta = enumeracao "StatusCarta" {
+    metadata {
+      valores """RASCUNHO, ATIVA"""
+    }
+  }
+
+  statusDisparo = enumeracao "StatusDisparo" {
+    metadata {
+      valores """AGENDADO, ENVIADO, CANCELADO"""
+    }
+  }
+
+  tipoVoto = enumeracao "TipoVoto" {
+    metadata {
+      valores """A_FAVOR, NEUTRO, CONTRA"""
     }
   }
 
@@ -1096,6 +1254,19 @@ model {
   solicitacaoCadastro -> album "0..1 -- 1 : item criado"
   logAuditoria -> administrador "N -- 1"
   configuracaoGlobal -> administrador "0..1 -- N : atualizado por"
+  verificacaoVendedor -> vendedor "1 -- 1 : credencia"
+  verificacaoVendedor -> administrador "0..1 -- N : avaliado por"
+  verificacaoVendedor -> endereco "0..1 -- N : endereço comercial"
+  documentoVendedor -> verificacaoVendedor "N -- 1 : anexado a"
+  documentoVendedor -> administrador "0..1 -- N : validado por"
+  notaVerificacao -> verificacaoVendedor "N -- 1 : anota"
+  notaVerificacao -> administrador "N -- 1 : autor"
+  advertenciaUsuario -> usuario "N -- 1 : advertido"
+  advertenciaUsuario -> administrador "N -- 1 : aplicada por"
+  advertenciaUsuario -> denuncia "0..1 -- N : origem"
+  votoSolicitacao -> solicitacaoCadastro "N -- 1 : voto em"
+  votoSolicitacao -> cliente "N -- 1 : votante"
+  exportacaoRelatorio -> administrador "N -- 1 : exportado por"
 
 }
 
@@ -1118,7 +1289,7 @@ views {
   view modulo2_catalogo_global {
     title "Módulo 2 - Catálogo Global"
     include categoria, raridade, idioma, estadoConservacao, album, carta,
-      fotoCarta, historicoPreco, tipoCategoria, statusAlbum, origemPreco
+      fotoCarta, historicoPreco, tipoCategoria, statusAlbum, origemPreco, statusCarta
     autoLayout LeftRight
   }
 
@@ -1157,20 +1328,23 @@ views {
   view modulo7_notificacoes_favoritos {
     title "Módulo 7 - Notificações e Favoritos"
     include favorito, alertaPreco, notificacaoGlobal, notificacao, usuario,
-      administrador, album, carta, grupo, tipoFavorito
+      administrador, album, carta, grupo, tipoFavorito, statusDisparo
     autoLayout LeftRight
   }
 
   view modulo8_moderacao_administracao {
     title "Módulo 8 - Moderação e Administração"
     include denuncia, solicitacaoCadastro, logAuditoria, configuracaoGlobal,
-      usuario, administrador, anuncio, mensagemGrupo, carta, album,
-      tipoAlvoDenuncia, statusDenuncia, tipoSolicCadastro, statusSolicitacao
+      verificacaoVendedor, documentoVendedor, notaVerificacao, advertenciaUsuario,
+      votoSolicitacao, exportacaoRelatorio,
+      usuario, cliente, vendedor, administrador, endereco, anuncio, mensagemGrupo, carta, album,
+      tipoAlvoDenuncia, statusDenuncia, tipoSolicCadastro, statusSolicitacao,
+      statusVerificacaoVendedor, statusDocumentoVendedor, tipoVoto
     autoLayout LeftRight
   }
 
   view visao_geral_completa {
-    title "Visão Geral - Diagrama de Classes CromoCard (43 classes)"
+    title "Visão Geral - Diagrama de Classes CromoCard (49 classes)"
     description "Uso apenas para conferência - denso demais para apresentação/projeção. Use as views por módulo para a banca."
     include *
     autoLayout LeftRight

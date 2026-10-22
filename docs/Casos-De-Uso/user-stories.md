@@ -4,6 +4,7 @@
 > Legenda:
 > - `**` = Futuro
 > - `***` = Futuro Marketplace
+> - `++` = Escopo Adicional: veio do protótipo no Figma e não estava na documentação ([escopo-adicional.md](escopo-adicional.md))
 
 ## 1. Painel Público (Home, Login, Cadastro)
 
@@ -84,6 +85,7 @@
 | Solicitar Cadastro de Carta | Como Cliente preciso solicitar ao sistema o cadastro de uma carta caso ela não exista na busca global. |
 | Compartilhar Coleção | Como Cliente preciso gerar um link público ou exportar dados para compartilhar minha coleção nas redes sociais. |
 | Escanear Carta ou Código | Como Cliente preciso usar a câmera para escanear a imagem da carta ou código de barras para acelerar a adição no catálogo.** |
+| Votar em Solicitação de Catálogo | Como Cliente preciso votar a favor, neutro ou contra uma sugestão de nova categoria para ajudar o administrador a decidir o que entra no catálogo.++ |
 
 ## 4. Grupos da Comunidade
 
@@ -145,6 +147,19 @@
 | Aprovar Solicitações | Como Administrador eu quero analisar e aprovar sugestões de novas cartas, álbuns e categorias feitas pelos usuários. |
 | Log de Auditoria Administrativa | Como Administrador eu quero ver um log do sistema registrando qual moderador apagou um grupo ou baniu um usuário para ter controle de segurança das ações da minha equipe. |
 | Configurações Globais | Como Administrador eu quero configurar o banner da Home, categorias padrão e templates de notificações da plataforma. |
+| Validar Cadastro de Vendedor | Como Administrador eu quero analisar os dados e os documentos de um vendedor e aprovar ou reprovar o credenciamento dele para que só lojistas verificados vendam na plataforma.++ |
+| Notificar Pendência Cadastral | Como Administrador eu quero avisar um vendedor, no site e por e-mail, sobre uma pendência no cadastro e o prazo para regularizar para que ele corrija os dados sem precisar recomeçar.++ |
+| Acompanhar Evolução de Cadastros | Como Administrador eu quero ver no Dashboard um gráfico dos novos cadastros de colecionadores e de lojistas certificados por período, comparado com a meta mensal, para acompanhar o crescimento da plataforma.++ |
+| Visualizar Indicadores Financeiros | Como Administrador eu quero ver no Dashboard o valor em custódia, o valor liquidado no dia e o valor retido em garantia para acompanhar o dinheiro que passa pelo marketplace.++ |
+| Gerenciar Dados Complementares do Usuário | Como Administrador eu quero registrar e buscar usuários por nome de usuário (@), telefone e CPF e ver o último acesso de cada um para identificar a conta com rapidez.++ |
+| Aplicar Sanção a Usuário | Como Administrador eu quero advertir, suspender por um prazo ou banir definitivamente um usuário, com justificativa, para punir quem descumpre as regras na medida da infração.++ |
+| Agendar Notificação Global | Como Administrador eu quero agendar uma notificação global para uma data e hora futuras para comunicar novidades no momento certo.++ |
+| Segmentar Notificação Global | Como Administrador eu quero enviar uma notificação global só para um público (colecionadores ativos ou vendedores) e escolher os canais para não incomodar quem não é o alvo.++ |
+| Exportar Log de Auditoria | Como Administrador eu quero baixar em arquivo os registros filtrados do log de auditoria para guardar ou analisar fora da plataforma.++ |
+| Ordenar Categorias Padrão | Como Administrador eu quero definir a ordem das categorias padrão e fixar uma no topo para controlar o que aparece primeiro no menu e na vitrine.++ |
+| Duplicar Carta | Como Administrador eu quero criar uma carta a partir de outra já cadastrada para não digitar de novo os dados em comum.++ |
+| Salvar Rascunho de Carta | Como Administrador eu quero salvar uma carta incompleta como rascunho, fora do catálogo, para terminar o cadastro depois.++ |
+| Consultar Histórico de Relatórios | Como Administrador eu quero ver os relatórios exportados recentemente e baixar de novo um arquivo já gerado para não precisar exportar outra vez.++ |
 
 ## 9. Painel Vendedor
 
@@ -167,3 +182,4 @@
 |---|---|
 | ** - Futuro | Obs: Categoria do album, seleção, times.<br>Categoria card, elementos.<br>Acessibilidade narrador, daltonismo, alto contraste |
 | *** - Futuro Marketplace |  |
+| ++ - Escopo Adicional | Veio do protótipo no Figma e não estava na documentação; entra só quando o PO puxar para uma sprint. Índice e telas em [escopo-adicional.md](escopo-adicional.md). |

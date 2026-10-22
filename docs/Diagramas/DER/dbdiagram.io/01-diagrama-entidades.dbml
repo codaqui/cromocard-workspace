@@ -23,6 +23,7 @@ Enum user_role {
 Enum user_status {
   ACTIVE
   SUSPENDED
+  BLOCKED
 }
 
 Enum privacy {
@@ -64,6 +65,7 @@ Enum group_access_type {
 
 Enum group_status {
   ACTIVE
+  WARNED
   SUSPENDED
 }
 
@@ -147,6 +149,35 @@ Enum catalog_request_type {
   CATEGORY
 }
 
+Enum seller_verification_status {
+  UNDER_REVIEW
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+Enum seller_document_status {
+  SUBMITTED
+  VALIDATED
+}
+
+Enum card_status {
+  DRAFT
+  ACTIVE
+}
+
+Enum notification_dispatch_status {
+  SCHEDULED
+  SENT
+  CANCELED
+}
+
+Enum catalog_vote {
+  FOR
+  NEUTRAL
+  AGAINST
+}
+
 // =====================================================================
 // MODULO 1 - USUARIOS, PERFIL E ACESSO
 // =====================================================================
@@ -161,6 +192,12 @@ Table users [headercolor: #3E5F8A] {
   terms_accepted boolean      [not null, default: false]
   oauth_provider varchar(30)
   oauth_id       varchar(120)
+  username       varchar(30) [unique]
+  phone          varchar(20)
+  cpf            varchar(14) [unique]
+  last_login_at  timestamptz
+  last_login_ip  varchar(45)
+  suspended_until timestamptz
   created_at     timestamptz  [not null]
   updated_at     timestamptz  [not null]
   deleted_at     timestamptz
@@ -265,6 +302,10 @@ Table categories [headercolor: #2E7D5B] {
   type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
+  slug               varchar(100) [unique]
+  display_order      integer [not null, default: 0]
+  is_pinned          boolean [not null, default: false]
+  badge              varchar(20)
   created_at         timestamptz   [not null]
   updated_at         timestamptz   [not null]
   deleted_at         timestamptz
@@ -323,6 +364,10 @@ Table cards [headercolor: #2E7D5B] {
   description     text
   front_image_url varchar(255)
   back_image_url  varchar(255)
+  status          card_status [not null, default: 'ACTIVE']
+  code            varchar(30) [unique]
+  variants        varchar(120)
+  release_year    smallint
   created_at      timestamptz  [not null]
   updated_at      timestamptz  [not null]
   deleted_at      timestamptz
@@ -644,6 +689,12 @@ Table global_notifications [headercolor: #B08A2E] {
   title           varchar(120) [not null]
   content         varchar(500) [not null]
   recipient_count integer      [not null, default: 0]
+  reference_link  varchar(255)
+  audience        varchar(30) [not null, default: 'ALL']
+  channels        varchar(60) [not null, default: 'IN_APP']
+  status          notification_dispatch_status [not null, default: 'SENT']
+  scheduled_at    timestamptz
+  sent_at         timestamptz
   created_at      timestamptz  [not null]
   updated_at      timestamptz  [not null]
   deleted_at      timestamptz
@@ -705,6 +756,7 @@ Table audit_logs [headercolor: #5A5A66] {
   entity_type varchar(60) [not null]
   entity_id   uuid
   details     jsonb
+  ip_address  varchar(45)
   created_at  timestamptz [not null]
   updated_at  timestamptz [not null]
   deleted_at  timestamptz
@@ -719,6 +771,95 @@ Table global_settings [headercolor: #5A5A66] {
   created_at    timestamptz  [not null]
   updated_at    timestamptz  [not null]
   deleted_at    timestamptz
+}
+
+Table seller_verifications [headercolor: #5A5A66] {
+  id                      uuid [pk, default: `uuidv7()`]
+  user_id                 uuid [not null, unique, note: 'FK -> users.id']
+  reviewed_by_id          uuid [note: 'FK -> users.id']
+  address_id              uuid [note: 'FK -> addresses.id']
+  status                  seller_verification_status [not null, default: 'UNDER_REVIEW']
+  legal_name              varchar(160) [not null]
+  trade_name              varchar(160)
+  cnpj                    varchar(18) [not null, unique]
+  state_registration      varchar(30)
+  opening_date            date
+  company_size            varchar(40)
+  cnae                    varchar(120)
+  responsible_name        varchar(120) [not null]
+  responsible_cpf         varchar(14) [not null]
+  responsible_phone       varchar(20)
+  bank_name               varchar(80)
+  bank_branch             varchar(10)
+  bank_account            varchar(20)
+  pix_key                 varchar(120)
+  rejection_reason        varchar(255)
+  regularization_deadline timestamptz
+  reviewed_at             timestamptz
+  created_at              timestamptz [not null]
+  updated_at              timestamptz [not null]
+  deleted_at              timestamptz
+}
+
+Table seller_documents [headercolor: #5A5A66] {
+  id                     uuid [pk, default: `uuidv7()`]
+  seller_verification_id uuid [not null, note: 'FK -> seller_verifications.id']
+  validated_by_id        uuid [note: 'FK -> users.id']
+  type                   varchar(60) [not null]
+  file_url               varchar(255) [not null]
+  file_size              integer
+  status                 seller_document_status [not null, default: 'SUBMITTED']
+  validated_at           timestamptz
+  created_at             timestamptz [not null]
+  updated_at             timestamptz [not null]
+  deleted_at             timestamptz
+}
+
+Table seller_verification_notes [headercolor: #5A5A66] {
+  id                     uuid [pk, default: `uuidv7()`]
+  seller_verification_id uuid [not null, note: 'FK -> seller_verifications.id']
+  author_id              uuid [not null, note: 'FK -> users.id']
+  content                text [not null]
+  created_at             timestamptz [not null]
+  updated_at             timestamptz [not null]
+  deleted_at             timestamptz
+}
+
+Table user_warnings [headercolor: #5A5A66] {
+  id         uuid [pk, default: `uuidv7()`]
+  user_id    uuid [not null, note: 'FK -> users.id']
+  admin_id   uuid [not null, note: 'FK -> users.id']
+  report_id  uuid [note: 'FK -> reports.id']
+  reason     varchar(255) [not null]
+  created_at timestamptz [not null]
+  updated_at timestamptz [not null]
+  deleted_at timestamptz
+}
+
+Table catalog_request_votes [headercolor: #5A5A66] {
+  catalog_request_id uuid [not null, note: 'FK -> catalog_requests.id']
+  user_id            uuid [not null, note: 'FK -> users.id']
+  vote               catalog_vote [not null]
+  created_at         timestamptz [not null]
+  updated_at         timestamptz [not null]
+  deleted_at         timestamptz
+  indexes {
+    (catalog_request_id, user_id) [pk]
+  }
+}
+
+Table report_exports [headercolor: #5A5A66] {
+  id          uuid [pk, default: `uuidv7()`]
+  admin_id    uuid [not null, note: 'FK -> users.id']
+  report_type varchar(60) [not null]
+  filters     jsonb
+  format      varchar(10) [not null]
+  file_url    varchar(255) [not null]
+  file_size   integer
+  expires_at  timestamptz [not null]
+  created_at  timestamptz [not null]
+  updated_at  timestamptz [not null]
+  deleted_at  timestamptz
 }
 
 // =====================================================================
@@ -790,4 +931,10 @@ TableGroup "8 - Moderacao e Administracao" {
   catalog_requests
   audit_logs
   global_settings
+  seller_verifications
+  seller_documents
+  seller_verification_notes
+  user_warnings
+  catalog_request_votes
+  report_exports
 }
