@@ -80,6 +80,7 @@ package "1. Usuarios, Perfil e Acesso" as M1 #E8EEF9 {
     * terms_accepted : boolean
     o oauth_provider : varchar(30)
     o oauth_id : varchar(120)
+    .. unique(oauth_provider, oauth_id) ..
     * created_at : timestamptz
     * updated_at : timestamptz
     o deleted_at : timestamptz

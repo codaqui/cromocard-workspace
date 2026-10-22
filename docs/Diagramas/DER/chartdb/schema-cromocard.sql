@@ -598,6 +598,9 @@ CREATE TABLE global_settings (
 -- ---------------------------------------------------------------------
 ALTER TABLE profiles ADD CONSTRAINT fk_profiles_user_id FOREIGN KEY (user_id) REFERENCES users (id);
 ALTER TABLE addresses ADD CONSTRAINT fk_addresses_user_id FOREIGN KEY (user_id) REFERENCES users (id);
+CREATE UNIQUE INDEX uq_users_oauth_provider_oauth_id ON users (oauth_provider, oauth_id);
+COMMENT ON COLUMN password_reset_tokens.token IS 'Hash (SHA-256) do token; o valor puro so vai no link do e-mail (ADR-048)';
+
 ALTER TABLE password_reset_tokens ADD CONSTRAINT fk_password_reset_tokens_user_id FOREIGN KEY (user_id) REFERENCES users (id);
 ALTER TABLE refresh_tokens ADD CONSTRAINT fk_refresh_tokens_user_id FOREIGN KEY (user_id) REFERENCES users (id);
 ALTER TABLE user_achievements ADD CONSTRAINT fk_user_achievements_user_id FOREIGN KEY (user_id) REFERENCES users (id);
