@@ -12,7 +12,7 @@
 --  Serve tambem para dbdiagram.io (Import > From PostgreSQL),
 --  DrawSQL, QuickDBD, pgModeler e para criar o banco de verdade.
 --
---  44 tabelas | 77 chaves estrangeiras | 22 enums
+--  50 tabelas | 90 chaves estrangeiras | 27 enums
 --  Gerado a partir de DER/dbdiagram.io/03-der-completo.dbml
 -- =====================================================================
 
@@ -28,11 +28,17 @@ CREATE TABLE users (
     email VARCHAR(160) NOT NULL UNIQUE,
     password_hash VARCHAR(255),
     role VARCHAR(30) NOT NULL,  -- user_role: CUSTOMER, SELLER, ADMIN
-    status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',  -- user_status: ACTIVE, SUSPENDED
+    status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',  -- user_status: ACTIVE, SUSPENDED, BLOCKED
     email_verified BOOLEAN NOT NULL DEFAULT false,
     terms_accepted BOOLEAN NOT NULL DEFAULT false,
     oauth_provider VARCHAR(30),
     oauth_id VARCHAR(120),
+    username VARCHAR(30) UNIQUE,
+    phone VARCHAR(20),
+    cpf VARCHAR(14) UNIQUE,
+    last_login_at TIMESTAMPTZ,
+    last_login_ip VARCHAR(45),
+    suspended_until TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ  -- soft delete (ADR-015)
@@ -134,6 +140,10 @@ CREATE TABLE categories (
     type VARCHAR(30) NOT NULL,  -- category_type: ALBUM, CARD
     description VARCHAR(255),
     is_default BOOLEAN NOT NULL DEFAULT false,
+    slug VARCHAR(100) UNIQUE,
+    display_order INTEGER NOT NULL DEFAULT 0,
+    is_pinned BOOLEAN NOT NULL DEFAULT false,
+    badge VARCHAR(20),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ
@@ -192,6 +202,10 @@ CREATE TABLE cards (
     description TEXT,
     front_image_url VARCHAR(255),
     back_image_url VARCHAR(255),
+    status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',  -- card_status: DRAFT, ACTIVE
+    code VARCHAR(30) UNIQUE,
+    variants VARCHAR(120),
+    release_year SMALLINT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ,
@@ -265,7 +279,7 @@ CREATE TABLE groups (
     description TEXT,
     cover_image_url VARCHAR(255),
     access_type VARCHAR(30) NOT NULL,  -- group_access_type: OPEN, CLOSED
-    status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',  -- group_status: ACTIVE, SUSPENDED
+    status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',  -- group_status: ACTIVE, WARNED, SUSPENDED
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ
@@ -493,6 +507,12 @@ CREATE TABLE global_notifications (
     title VARCHAR(120) NOT NULL,
     content VARCHAR(500) NOT NULL,
     recipient_count INTEGER NOT NULL DEFAULT 0,
+    reference_link VARCHAR(255),
+    audience VARCHAR(30) NOT NULL DEFAULT 'ALL',
+    channels VARCHAR(60) NOT NULL DEFAULT 'IN_APP',
+    status VARCHAR(30) NOT NULL DEFAULT 'SENT',  -- notification_dispatch_status: SCHEDULED, SENT, CANCELED
+    scheduled_at TIMESTAMPTZ,
+    sent_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ
@@ -553,6 +573,7 @@ CREATE TABLE audit_logs (
     entity_type VARCHAR(60) NOT NULL,
     entity_id UUID,
     details JSONB,
+    ip_address VARCHAR(45),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ
@@ -564,6 +585,93 @@ CREATE TABLE global_settings (
     key VARCHAR(90) NOT NULL UNIQUE,
     value TEXT NOT NULL,
     description VARCHAR(255),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE seller_verifications (
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
+    user_id UUID NOT NULL UNIQUE,
+    reviewed_by_id UUID,
+    address_id UUID,
+    status VARCHAR(30) NOT NULL DEFAULT 'UNDER_REVIEW',  -- seller_verification_status: UNDER_REVIEW, PENDING, APPROVED, REJECTED
+    legal_name VARCHAR(160) NOT NULL,
+    trade_name VARCHAR(160),
+    cnpj VARCHAR(18) NOT NULL UNIQUE,
+    state_registration VARCHAR(30),
+    opening_date DATE,
+    company_size VARCHAR(40),
+    cnae VARCHAR(120),
+    responsible_name VARCHAR(120) NOT NULL,
+    responsible_cpf VARCHAR(14) NOT NULL,
+    responsible_phone VARCHAR(20),
+    bank_name VARCHAR(80),
+    bank_branch VARCHAR(10),
+    bank_account VARCHAR(20),
+    pix_key VARCHAR(120),
+    rejection_reason VARCHAR(255),
+    regularization_deadline TIMESTAMPTZ,
+    reviewed_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE seller_documents (
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
+    seller_verification_id UUID NOT NULL,
+    validated_by_id UUID,
+    type VARCHAR(60) NOT NULL,
+    file_url VARCHAR(255) NOT NULL,
+    file_size INTEGER,
+    status VARCHAR(30) NOT NULL DEFAULT 'SUBMITTED',  -- seller_document_status: SUBMITTED, VALIDATED
+    validated_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE seller_verification_notes (
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
+    seller_verification_id UUID NOT NULL,
+    author_id UUID NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE user_warnings (
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
+    user_id UUID NOT NULL,
+    admin_id UUID NOT NULL,
+    report_id UUID,
+    reason VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE catalog_request_votes (
+    catalog_request_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    vote VARCHAR(30) NOT NULL,  -- catalog_vote: FOR, NEUTRAL, AGAINST
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ,
+    PRIMARY KEY (catalog_request_id, user_id)
+);
+
+CREATE TABLE report_exports (
+    id UUID PRIMARY KEY DEFAULT uuidv7(),
+    admin_id UUID NOT NULL,
+    report_type VARCHAR(60) NOT NULL,
+    filters JSONB,
+    format VARCHAR(10) NOT NULL,
+    file_url VARCHAR(255) NOT NULL,
+    file_size INTEGER,
+    expires_at TIMESTAMPTZ NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     deleted_at TIMESTAMPTZ
@@ -652,4 +760,17 @@ ALTER TABLE catalog_requests ADD CONSTRAINT fk_catalog_requests_card_id FOREIGN 
 ALTER TABLE catalog_requests ADD CONSTRAINT fk_catalog_requests_album_id FOREIGN KEY (album_id) REFERENCES albums (id);
 ALTER TABLE audit_logs ADD CONSTRAINT fk_audit_logs_admin_id FOREIGN KEY (admin_id) REFERENCES users (id);
 ALTER TABLE global_settings ADD CONSTRAINT fk_global_settings_updated_by_id FOREIGN KEY (updated_by_id) REFERENCES users (id);
+ALTER TABLE seller_verifications ADD CONSTRAINT fk_seller_verifications_user_id FOREIGN KEY (user_id) REFERENCES users (id);
+ALTER TABLE seller_verifications ADD CONSTRAINT fk_seller_verifications_reviewed_by_id FOREIGN KEY (reviewed_by_id) REFERENCES users (id);
+ALTER TABLE seller_verifications ADD CONSTRAINT fk_seller_verifications_address_id FOREIGN KEY (address_id) REFERENCES addresses (id);
+ALTER TABLE seller_documents ADD CONSTRAINT fk_seller_documents_seller_verification_id FOREIGN KEY (seller_verification_id) REFERENCES seller_verifications (id);
+ALTER TABLE seller_documents ADD CONSTRAINT fk_seller_documents_validated_by_id FOREIGN KEY (validated_by_id) REFERENCES users (id);
+ALTER TABLE seller_verification_notes ADD CONSTRAINT fk_seller_verification_notes_seller_verification_id FOREIGN KEY (seller_verification_id) REFERENCES seller_verifications (id);
+ALTER TABLE seller_verification_notes ADD CONSTRAINT fk_seller_verification_notes_author_id FOREIGN KEY (author_id) REFERENCES users (id);
+ALTER TABLE user_warnings ADD CONSTRAINT fk_user_warnings_user_id FOREIGN KEY (user_id) REFERENCES users (id);
+ALTER TABLE user_warnings ADD CONSTRAINT fk_user_warnings_admin_id FOREIGN KEY (admin_id) REFERENCES users (id);
+ALTER TABLE user_warnings ADD CONSTRAINT fk_user_warnings_report_id FOREIGN KEY (report_id) REFERENCES reports (id);
+ALTER TABLE catalog_request_votes ADD CONSTRAINT fk_catalog_request_votes_catalog_request_id FOREIGN KEY (catalog_request_id) REFERENCES catalog_requests (id);
+ALTER TABLE catalog_request_votes ADD CONSTRAINT fk_catalog_request_votes_user_id FOREIGN KEY (user_id) REFERENCES users (id);
+ALTER TABLE report_exports ADD CONSTRAINT fk_report_exports_admin_id FOREIGN KEY (admin_id) REFERENCES users (id);
 

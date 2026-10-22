@@ -4,7 +4,7 @@ Modelo de classes (orientado a objetos) derivado do **DER** (`docs/Diagramas/DER
 **Casos de Uso** (`docs/Casos-De-Uso/`). Ferramenta: [LikeC4](https://likec4.dev) ("C4
 Playground") — cole `cromocard-diagrama-classes.v2.c4` em <https://likec4.dev/playground>.
 
-**43 classes + 22 enumerações**, organizadas nos mesmos 8 módulos do DER, para manter
+**49 classes + 27 enumerações**, organizadas nos mesmos 8 módulos do DER, para manter
 rastreabilidade 1:1 entre modelo de dados e modelo de classes.
 
 ## Versões nesta pasta
@@ -36,7 +36,7 @@ ADR — ver `docs/ADR/ADR-035-*.md` a `ADR-037-*.md`.
 |---|---|
 | `heranca_usuarios` | Só a hierarquia Usuário → Cliente/Vendedor/Administrador — destaque da decisão da ADR-035 |
 | `modulo1` a `modulo8` | Uma view por módulo do DER, com as classes do módulo + as classes de outros módulos que ele referencia (para a relação fazer sentido isolada) |
-| `visao_geral_completa` | Todas as 65 classes/enums juntas — **só para conferência**, não para apresentar. Use as views por módulo na banca, do mesmo jeito que o DER usa 01/02/03 separados em vez de um único diagrama gigante. |
+| `visao_geral_completa` | Todas as 76 classes/enums juntas — **só para conferência**, não para apresentar. Use as views por módulo na banca, do mesmo jeito que o DER usa 01/02/03 separados em vez de um único diagrama gigante. |
 
 ## Legenda de relacionamento
 
@@ -65,7 +65,7 @@ completo e para quando cada relação do diagrama aponta para `Usuario` (genéri
 
 ## Rastreabilidade
 
-Todas as 43 classes correspondem 1:1 às 43 tabelas do DER — a mesma tabela de rastreabilidade
+Todas as 49 classes correspondem 1:1 às tabelas do DER (o `refresh_tokens` não tem classe) — a mesma tabela de rastreabilidade
 classe → caso de uso já existente em `docs/Diagramas/DER/README.md` (seção "Rastreabilidade") vale
 também para este diagrama, bastando trocar `snake_case` da tabela pelo nome da classe em
 PascalCase (ex.: `colecao_carta` → `ColecaoCarta`).

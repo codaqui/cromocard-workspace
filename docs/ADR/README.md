@@ -67,6 +67,8 @@ ter o status `Substituído por ADR-XXX`.
 | [049](ADR-049-middlewares-http-da-autenticacao.md) | Backend | Middlewares HTTP da autenticação: `express-rate-limit` e `cookie-parser` | Proposto |
 | [050](ADR-050-upload-e-arquivos-csv-e-pdf.md) | Backend | Upload de imagens e arquivos CSV e PDF: `multer`, `csv-parse` e `pdfkit` | Proposto |
 | [051](ADR-051-convencoes-das-colunas-flexiveis-do-backoffice.md) | Dados | Convenções das colunas flexíveis do BackOffice (`global_settings`, `notifications.type`, `catalog_requests.data`, `audit_logs`) | Proposto |
+| [052](ADR-052-credenciamento-de-vendedor-no-modelo-de-dados.md) | Dados | Credenciamento de vendedor no modelo de dados (`seller_verifications`, documentos e notas) | Proposto |
+| [053](ADR-053-colunas-e-tabelas-do-escopo-adicional-do-backoffice.md) | Dados | Colunas, enums e tabelas do escopo adicional do BackOffice | Proposto |
 
 ## Modelo
 

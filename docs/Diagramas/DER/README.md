@@ -3,7 +3,7 @@
 Modelo de dados derivado dos **Casos de Uso / User Stories** em `../Casos-De-Uso/`
 e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + PostgreSQL).
 
-**44 entidades organizadas em 8 modulos.** Nomes de tabelas, colunas e enums em **ingles** (glossario PT → EN no fim deste arquivo). Os 3 diagramas existem nos dois formatos.
+**50 entidades organizadas em 8 modulos.** Nomes de tabelas, colunas e enums em **ingles** (glossario PT → EN no fim deste arquivo). Os 3 diagramas existem nos dois formatos.
 
 ## Estrutura
 
@@ -26,7 +26,7 @@ DER/
 
 O ChartDB nao le DBML - ele importa **script SQL**. Os dois arquivos foram
 gerados a partir de `dbdiagram.io/03-der-completo.dbml`, entao nao divergem do
-modelo: 44 tabelas, 77 chaves estrangeiras, 22 enums.
+modelo: 50 tabelas, 90 chaves estrangeiras, 27 enums.
 
 1. Abra <https://app.chartdb.io>.
 2. Escolha importar a partir de **script SQL** e selecione o dialeto **PostgreSQL**.
@@ -98,16 +98,16 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 | 5 | Chat Pessoal | ciano `#2A7B8C` | conversations, conversation_participants, messages, user_blocks |
 | 6 | Marketplace | vinho `#A63D5F` | listings, listing_photos, offers, orders, payments, reviews |
 | 7 | Notificacoes e Favoritos | dourado `#B08A2E` | favorites, price_alerts, notifications, global_notifications |
-| 8 | Moderacao e Administracao | cinza `#5A5A66` | reports, catalog_requests, audit_logs, global_settings |
+| 8 | Moderacao e Administracao | cinza `#5A5A66` | reports, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
 
 ## Rastreabilidade (entidade -> casos de uso principais)
 
 | Entidade | Casos de uso |
 |---|---|
-| `users`, `password_reset_tokens`, `refresh_tokens` | 03 Criar Conta, 04 Login, 06 Recuperar Senha, 52 Exclusao da Conta, 59 Gestao de Usuarios |
+| `users`, `password_reset_tokens`, `refresh_tokens` | 03 Criar Conta, 04 Login, 06 Recuperar Senha, 52 Exclusao da Conta, 59 Gestao de Usuarios, 98 Dados Complementares do Usuario, 99 Aplicar Sancao |
 | `profiles`, `addresses`, `achievements`/`user_achievements` | 48 Editar Perfil, 49 Vitrine de Conquistas, 51 Privacidade e Senha |
 | `subscriptions` | Gerenciar Plano PRO (futuro) |
-| `albums`, `cards`, `categories`, `rarities`, `languages`, `card_conditions`, `card_photos` | 08-10 Albuns, 13 Visualizar Cartas, 24-32 Buscas/Filtros, 30-31 Detalhes, 61 Gestao de Catalogo |
+| `albums`, `cards`, `categories`, `rarities`, `languages`, `card_conditions`, `card_photos` | 08-10 Albuns, 13 Visualizar Cartas, 24-32 Buscas/Filtros, 30-31 Detalhes, 61 Gestao de Catalogo, 104 Ordenar Categorias Padrao, 105 Duplicar Carta, 106 Rascunho de Carta |
 | `collections`, `user_albums`, `collection_cards` | 07 Resumo, 12 Compartilhar Colecao, 14-18 Marcar/Quantidade/Remover, 19 Progresso, 22 Adicionar Carta, 35 Resetar Progresso, 36 Portfolio |
 | `price_history` | 75 Historico de Precos |
 | `groups`, `group_members`, `group_join_requests` | 39 Explorar/Entrar em Grupos, 43 Criar e Administrar Grupo, 64 Aprovar Solicitacoes |
@@ -119,11 +119,15 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 | `reviews` | 70 Ordenar por Avaliacoes, 81 Visualizar Avaliacoes |
 | `favorites` | 55 Favoritar Album, 56 Favoritar Carta, 57 Favoritar Grupo |
 | `price_alerts` | Configurar Alertas de Preco (futuro) |
-| `notifications`, `global_notifications` | 53 Visualizar Notificacoes, 54 Limpar Central, 60 Disparar Notificacao Global |
+| `notifications`, `global_notifications` | 53 Visualizar Notificacoes, 54 Limpar Central, 60 Disparar Notificacao Global, 100 Agendar e 101 Segmentar Notificacao Global |
 | `reports` | 40 Denunciar Mensagem, 50 Denunciar Perfil, 82 Denunciar Anuncio, 83 Denunciar Vendedor, 90 Denunciar Usuario |
 | `catalog_requests` | 21/23 Solicitar Cadastro de Carta, Solicitar Album, 64 Aprovar Solicitacoes |
-| `audit_logs` | 65 Log de Auditoria Admin |
-| `global_settings` | 66 Configuracoes Globais |
+| `audit_logs` | 65 Log de Auditoria Admin, 102 Exportar Log de Auditoria |
+| `global_settings` | 66 Configuracoes Globais, 96 Evolucao de Cadastros (meta mensal) |
+| `seller_verifications`, `seller_documents`, `seller_verification_notes` | 94 Validar Cadastro de Vendedor, 95 Notificar Pendencia Cadastral |
+| `user_warnings` | 99 Aplicar Sancao a Usuario |
+| `catalog_request_votes` | 103 Votar em Solicitacao de Catalogo |
+| `report_exports` | 107 Consultar Historico de Relatorios |
 
 ## Convencoes
 
