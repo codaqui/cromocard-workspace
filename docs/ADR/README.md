@@ -64,6 +64,9 @@ ter o status `Substituído por ADR-XXX`.
 | [046](ADR-046-qualidade-frontend-lint-testes.md) | Frontend | Qualidade do frontend: ESLint, Prettier, `tsc` e Vitest + Testing Library | Aceito |
 | [047](ADR-047-desenvolvimento-orientado-a-especificacao.md) | Processo | SDD: spec, plano e tarefas por user story em `specs/` | Proposto |
 | [048](ADR-048-tokens-de-email-e-google-no-frontend.md) | Backend | Tokens de confirmação de e-mail e de redefinição de senha; client ID do Google no frontend | Aceito |
+| [049](ADR-049-middlewares-http-da-autenticacao.md) | Backend | Middlewares HTTP da autenticação: `express-rate-limit` e `cookie-parser` | Proposto |
+| [050](ADR-050-upload-e-arquivos-csv-e-pdf.md) | Backend | Upload de imagens e arquivos CSV e PDF: `multer`, `csv-parse` e `pdfkit` | Proposto |
+| [051](ADR-051-convencoes-das-colunas-flexiveis-do-backoffice.md) | Dados | Convenções das colunas flexíveis do BackOffice (`global_settings`, `notifications.type`, `catalog_requests.data`, `audit_logs`) | Proposto |
 
 ## Modelo
 
