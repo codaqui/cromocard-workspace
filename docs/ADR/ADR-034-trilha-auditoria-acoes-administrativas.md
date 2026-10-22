@@ -1,6 +1,6 @@
 # ADR-034 — Trilha de auditoria obrigatória para ações administrativas
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 22/10/2026)
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 

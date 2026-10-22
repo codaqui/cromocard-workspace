@@ -1,6 +1,6 @@
 # ADR-053 — Colunas, enums e tabelas do escopo adicional do BackOffice
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 22/10/2026)
 - **Data:** 2026-10-22
 - **Decisores:** Daniel Andrade (PO), equipe CromoCard
 

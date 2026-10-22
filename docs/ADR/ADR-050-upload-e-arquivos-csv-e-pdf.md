@@ -1,6 +1,6 @@
 # ADR-050 — Upload de imagens e arquivos CSV e PDF: `multer`, `csv-parse` e `pdfkit`
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 22/10/2026)
 - **Data:** 2026-10-22
 - **Decisores:** Daniel Andrade (PO), equipe CromoCard
 
