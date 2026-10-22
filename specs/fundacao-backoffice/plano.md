@@ -69,3 +69,4 @@ Uma migration por tabela, copiada do DBML, na ordem das FKs. Ficam de fora as ta
 - As stories do admin não criam tabela: se precisarem de coluna nova, a migration é da própria story, com aviso no
   grupo.
 - Cada story só acrescenta uma linha no `routes.ts`, no `router.tsx` e no menu.
+- As tabelas nascem só com as colunas do MVP. As colunas marcadas no DBML como escopo adicional (CCD094–CCD107) entram com a story que as usa, numa migration própria (ADR-053, item 10).
