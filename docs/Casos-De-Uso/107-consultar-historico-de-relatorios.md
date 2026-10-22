@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa Exportar Relatórios. |  |
-|  | 2. O sistema apresenta o histórico de relatórios exportados com o código, o tipo e o período do relatório, quem solicitou, a data e hora, o formato e o tamanho do arquivo. |
+|  | 2. O sistema apresenta o histórico de relatórios exportados por toda a equipe, com o código, o tipo e o período do relatório, quem solicitou, a data e hora, o formato e o tamanho do arquivo. |
 | 3. O administrador seleciona "Baixar" num relatório do histórico. |  |
 |  | 4. O sistema disponibiliza o mesmo arquivo gerado na exportação. |
 |  | 5. O sistema mantém cada arquivo disponível por 90 dias. |

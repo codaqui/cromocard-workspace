@@ -10,9 +10,9 @@
 |---|---|
 | 1. O administrador preenche parte do formulário "Cadastrar Nova Carta no Catálogo". |  |
 | 2. O administrador seleciona "Salvar como Rascunho". |  |
-|  | 3. O sistema grava a carta como rascunho, sem exigir todos os campos obrigatórios. |
+|  | 3. O sistema grava a carta como rascunho exigindo só o nome. |
 |  | 4. O sistema não exibe a carta no catálogo, nas buscas nem nas coleções. |
-| 5. O administrador abre o rascunho mais tarde pela Gestão de Catálogo. |  |
+| 5. O administrador abre o rascunho mais tarde pelo filtro "Rascunhos" da Gestão de Catálogo. |  |
 |  | 6. O sistema apresenta o formulário com os dados salvos. |
 | 7. O administrador completa os dados e seleciona "Cadastrar Carta no Catálogo". |  |
 |  | 8. O sistema valida todos os campos obrigatórios, publica a carta no catálogo e registra a ação no log de auditoria. |

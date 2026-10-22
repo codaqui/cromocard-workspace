@@ -12,7 +12,7 @@
 |  | 2. O sistema apresenta as categorias padrão na ordem atual, cada uma com a posição, o nome, o slug, a quantidade de cartas e o selo de exibição. |
 | 3. O administrador move uma categoria para cima ou para baixo, pelas setas ou arrastando. |  |
 |  | 4. O sistema atualiza as posições na tela. |
-| 5. O administrador marca uma categoria como "Fixado no topo", quando necessário. |  |
+| 5. O administrador marca uma categoria como "Fixado no topo", quando necessário (só uma por vez). |  |
 |  | 6. O sistema coloca a categoria fixada na primeira posição. |
 | 7. O administrador seleciona "Salvar Ordem". |  |
 |  | 8. O sistema grava a nova ordem e registra a ação no log de auditoria. |

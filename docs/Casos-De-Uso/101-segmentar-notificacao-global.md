@@ -9,9 +9,9 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador preenche a notificação na Central de Notificações (Disparar Notificação Global). |  |
-| 2. O administrador escolhe o público: toda a base, colecionadores ativos ou vendedores. |  |
+| 2. O administrador escolhe o público: toda a base, colecionadores ativos (clientes que entraram nos últimos 30 dias) ou vendedores. |  |
 |  | 3. O sistema calcula e mostra quantos usuários fazem parte do público escolhido. |
-| 4. O administrador escolhe os canais: notificação no app, push ou e-mail. |  |
+| 4. O administrador escolhe os canais: notificação no app ou e-mail. |  |
 | 5. O administrador confirma o envio. |  |
 |  | 6. O sistema envia a notificação só aos usuários do público, pelos canais escolhidos. |
 |  | 7. O sistema registra o público, os canais e a quantidade de destinatários no histórico de disparos e no log de auditoria. |

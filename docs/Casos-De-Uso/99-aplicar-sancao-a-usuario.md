@@ -11,9 +11,9 @@
 | 1. O administrador abre uma denúncia na Fila de Moderação ou seleciona um usuário na Gestão de Usuários. |  |
 |  | 2. O sistema apresenta o usuário com o número de advertências anteriores e as sanções disponíveis: advertir, suspender temporariamente e banir definitivamente. |
 | 3. O administrador escolhe a sanção. |  |
-|  | 4. O sistema solicita a justificativa e, na suspensão, o prazo. |
+|  | 4. O sistema solicita a justificativa e, na suspensão, o prazo: 3, 7, 15 ou 30 dias. |
 | 5. O administrador informa a justificativa e, se for o caso, o prazo, e confirma. |  |
-|  | 6. Na advertência, o sistema soma uma advertência ao usuário e o avisa por notificação. |
+|  | 6. Na advertência, o sistema soma uma advertência ao usuário e o avisa por notificação; advertências acumuladas não suspendem sozinhas. |
 |  | 7. Na suspensão, o sistema muda o status para Suspenso até o fim do prazo, encerra as sessões do usuário e mostra o prazo na lista (ex.: "Suspenso (7d)"). |
 |  | 8. No banimento, o sistema muda o status para Bloqueado, encerra as sessões e impede novos logins. |
 |  | 9. O sistema registra a sanção e a justificativa no log de auditoria. |

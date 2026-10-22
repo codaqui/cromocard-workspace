@@ -10,10 +10,10 @@
 |---|---|
 | 1. O administrador seleciona a opção "Notificar Lojista" na lista de cadastros ou "Notificar Pendência" no dossiê do vendedor. |  |
 |  | 2. O sistema apresenta o formulário de pendência com o destinatário (nome e e-mail do vendedor) e os canais de envio: notificação no site e e-mail. |
-| 3. O administrador escolhe um modelo de mensagem pronto, quando houver um adequado. |  |
-|  | 4. O sistema preenche o corpo da mensagem com o texto do modelo e os dados do vendedor. |
+| 3. O administrador escolhe um modelo de mensagem pronto ("Chave Pix divergente do CNPJ" ou "Endereço não informado"), quando houver um adequado. |  |
+|  | 4. O sistema preenche o corpo da mensagem com o texto do modelo e os dados do vendedor: nome, CNPJ e prazo. |
 | 5. O administrador revisa ou escreve o corpo da mensagem. |  |
-| 6. O administrador escolhe o prazo para regularização. |  |
+| 6. O administrador escolhe o prazo para regularização: 24 horas, 48 horas (padrão), 72 horas ou 7 dias. |  |
 | 7. O administrador confirma o envio. |  |
 |  | 8. O sistema valida as informações preenchidas. |
 |  | 9. O sistema envia a notificação no site e o e-mail ao vendedor. |
@@ -30,3 +30,5 @@
 |  | 4. O sistema fecha o formulário sem enviar a notificação. |
 |  | 5. O envio do e-mail falha. |
 |  | 6. O sistema mantém a notificação no site e informa ao administrador que o e-mail não foi entregue. |
+|  | 7. O prazo vence sem regularização. |
+|  | 8. O sistema mantém o cadastro Pendente; o administrador decide pela Validação de Cadastro de Vendedor. |
