@@ -4,7 +4,7 @@
   `spec.md`; a origem de cada item é um ADR ou a necessidade comum das specs CCD058–CCD066.
 - **Repositórios:** backend (`develop`) · frontend (`develop`)
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Quem faz:** backend Felipe Broetto · frontend Gabriel Nascimento
+- **Quem faz:** Daniel Andrade (backend e frontend)
 
 ## Solução
 

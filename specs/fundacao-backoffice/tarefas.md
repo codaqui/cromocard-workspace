@@ -3,7 +3,7 @@
 - **Plano:** [plano.md](plano.md) · **User story:** AB#481
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 
-## Backend — `apps/cromocard-backend`, branch `feature/481-fundacao-backoffice` (Felipe Broetto)
+## Backend — `apps/cromocard-backend`, branch `feature/481-fundacao-backoffice` (Daniel Andrade)
 
 - [ ] **T1** · Criar migrations do catálogo (categories, rarities, languages, albums, cards, card_photos) · AB#519
   - Pronto quando: as 6 tabelas existem, uma migration por tabela, e o `schema.prisma` bate com o DBML.
@@ -20,7 +20,7 @@
 - [ ] **T7** · Registrar os módulos vazios do admin (dashboard, reports, settings) em routes.ts · AB#525
   - Pronto quando: os módulos sobem sem rotas e cada story só acrescenta as suas.
 
-## Frontend — `apps/cromocard-frontend`, branch `feature/481-fundacao-backoffice` (Gabriel)
+## Frontend — `apps/cromocard-frontend`, branch `feature/481-fundacao-backoffice` (Daniel Andrade)
 
 - [ ] **T8** [P] · Criar componentes Modal, ConfirmDialog com motivo e Drawer · AB#526
   - Pronto quando: os três têm `.spec.tsx`, abrem e fecham por teclado e seguem o Figma.
