@@ -2,21 +2,23 @@
 |---|---|
 | Finalidade/Objetivo | Permitir que o administrador gere e exporte relatórios com informações gerenciais da plataforma. |
 | Atores | Administrador |
-| Pré Condições | Permitir que o administrador gere e exporte relatórios com informações gerenciais da plataforma. |
+| Pré Condições | O administrador deve estar autenticado e possuir permissão para exportar relatórios. |
 
 ### Fluxo Principal
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O administrador acessa a opção "Gestão de Comunidade". |  |
-|  | 2. O sistema apresenta os relatórios e filtros disponíveis. |
+| 1. O administrador acessa a opção "Exportar Relatórios". |  |
+|  | 2. O sistema apresenta os relatórios disponíveis ("Novos cadastros" e "Catálogo"), os filtros e o histórico das exportações. |
 | 3. O administrador seleciona o tipo de relatório e os filtros desejados. |  |
 |  | 4. O sistema processa os filtros selecionados. |
-| 5. O sistema apresenta os dados do relatório. |  |
-|  | 6. O administrador seleciona a opção "Exportar". |
+|  | 5. O sistema apresenta os dados do relatório. |
+| 6. O administrador seleciona a opção "Exportar" e escolhe o formato (CSV ou PDF). |  |
 | 7. O administrador confirma a operação. |  |
-|  | 7. O sistema gera o arquivo do relatório. |
-|  | 8. O sistema disponibiliza o arquivo para o administrador. |
+|  | 8. O sistema gera o arquivo do relatório e registra a exportação no log de auditoria. |
+|  | 9. O sistema disponibiliza o arquivo para o administrador. |
+| 10. O administrador seleciona "Baixar" numa exportação do histórico. |  |
+|  | 11. O sistema gera o arquivo de novo, com o mesmo tipo, filtros e formato. |
 
 ### Fluxo Alternativo
 
