@@ -1,12 +1,12 @@
 # CCD098 — Gerenciar Dados Complementares do Usuário
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #602 `CCD098-Gerenciar Dados Complementares do Usuário` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [98-gerenciar-dados-complementares-do-usuario.md](../../docs/Casos-De-Uso/98-gerenciar-dados-complementares-do-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -72,8 +72,8 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Formato do nome de usuário (proposta: 3 a 30 caracteres, minúsculas, números, ponto e `_`, guardado sem o `@`) | pendente — proposta | — |
-| L2 | Busca por CNPJ (proposta: pelo `seller_verifications.cnpj` da CCD094) | pendente — proposta | — |
-| L3 | Login com @ inexistente (proposta: a mesma mensagem genérica de credenciais inválidas) | pendente — proposta | — |
-| L4 | Detalhe do usuário não tem frame (proposta: gaveta lateral com os dados e as ações; o Gabriel desenha) | pendente — proposta | — |
-| L5 | Texto de confirmação da exclusão (proposta: `EXCLUIR-` + o primeiro nome em maiúsculas, como no Figma) | pendente — proposta | — |
+| L1 | Formato do nome de usuário (proposta: 3 a 30 caracteres, minúsculas, números, ponto e `_`, guardado sem o `@`) | 3 a 30 caracteres, minúsculas, números, ponto e `_`, guardado sem o `@` | `98`, FA 7–8 |
+| L2 | Busca por CNPJ (proposta: pelo `seller_verifications.cnpj` da CCD094) | Pelo `seller_verifications.cnpj` da CCD094 | `98`, FP 3 |
+| L3 | Login com @ inexistente (proposta: a mesma mensagem genérica de credenciais inválidas) | A mesma mensagem genérica de credenciais inválidas | `98`, FA 9–10 |
+| L4 | Detalhe do usuário não tem frame (proposta: gaveta lateral com os dados e as ações; o Gabriel desenha) | Gaveta lateral com os dados e as ações; o Gabriel desenha | `escopo-adicional.md`, EA-059-03 |
+| L5 | Texto de confirmação da exclusão (proposta: `EXCLUIR-` + o primeiro nome em maiúsculas, como no Figma) | `EXCLUIR-` + o primeiro nome em maiúsculas, como no Figma | `escopo-adicional.md`, EA-059-01 |

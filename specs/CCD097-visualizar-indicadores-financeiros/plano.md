@@ -1,6 +1,6 @@
 # Plano — CCD097 Visualizar Indicadores Financeiros
 
-- **Spec:** [spec.md](spec.md) — feito sobre a spec em Rascunho (pedido do PO em 2026-10-22), com as propostas das lacunas
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -57,4 +57,5 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 ## Decisões técnicas
 
+- As tabelas do marketplace entram só para leitura, com dados do seed (ADR-054).
 - Valores trafegam em centavos inteiros (`amountCents`) e o frontend formata em reais.

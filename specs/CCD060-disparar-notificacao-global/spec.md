@@ -29,7 +29,7 @@
 | R10 | O disparo é registrado em `global_notifications` com o admin e a quantidade de destinatários | Regra | `60`, FP 7; DBML `admin_id`, `recipient_count` |
 | R11 | Mensagem de sucesso ao admin | Mensagem | `60`, FP 8 |
 | R12 | Resposta `201` com o disparo criado | Regra | ADR-011 |
-| R13 | O disparo grava `audit_logs` | Regra | ADR-034 (Proposto); `.claude/rules/backend.md` |
+| R13 | O disparo grava `audit_logs` | Regra | ADR-034; `.claude/rules/backend.md` |
 | R14 | Recebem todos os usuários não excluídos e não suspensos, menos o próprio admin | Regra | `60`, FP 6 |
 | R15 | Link de destino opcional, copiado para `reference_link` de cada notificação | Campo | `60`, FP 3; DBML `notifications.reference_link` |
 | R16 | Histórico dos disparos, dos mais recentes para os mais antigos | Tela | `60`, FP 2 |

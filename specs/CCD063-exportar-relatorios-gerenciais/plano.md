@@ -58,4 +58,4 @@ gera o arquivo inteiro (CSV ou PDF) e grava `EXPORT_REPORT` em `audit_logs`. O h
 
 ## Decisões técnicas
 
-- Biblioteca nova `pdfkit` para o PDF: ADR-050 (Proposto).
+- Biblioteca nova `pdfkit` para o PDF: ADR-050.

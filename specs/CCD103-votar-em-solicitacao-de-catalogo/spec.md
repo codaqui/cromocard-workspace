@@ -1,12 +1,12 @@
 # CCD103 — Votar em Solicitação de Catálogo
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #607 `CCD103-Votar em Solicitação de Catálogo` · responsável Gabriel Nascimento · Sprint 06
 - **Caso de uso:** [103-votar-em-solicitacao-de-catalogo.md](../../docs/Casos-De-Uso/103-votar-em-solicitacao-de-catalogo.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Cliente, Administrador · **Pré-condições:** cliente autenticado para votar; `ADMIN` para ver o quórum
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -66,7 +66,7 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Onde o cliente vota, se não há tela? (proposta: página "Sugestões da comunidade" em `/sugestoes` no Painel Cliente; o Gabriel desenha) | pendente — proposta | — |
-| L2 | Só categorias ou também cartas e álbuns? (proposta: só categorias, como no Figma e no caso de uso) | pendente — proposta | — |
-| L3 | Meta padrão (proposta: 200, do Figma) | pendente — proposta | — |
-| L4 | Campos extras das sugestões dependem de quem cria a solicitação (proposta: lidos de `data` quando existirem) | pendente — proposta | — |
+| L1 | Onde o cliente vota, se não há tela? (proposta: página "Sugestões da comunidade" em `/sugestoes` no Painel Cliente; o Gabriel desenha) | Página "Sugestões da comunidade" em `/sugestoes` no Painel Cliente; o Gabriel desenha | `103`, FP 1 |
+| L2 | Só categorias ou também cartas e álbuns? (proposta: só categorias, como no Figma e no caso de uso) | Só categorias, como no Figma e no caso de uso | `103`, Finalidade |
+| L3 | Meta padrão (proposta: 200, do Figma) | 200, do Figma | `103`, FP 7 |
+| L4 | Campos extras das sugestões dependem de quem cria a solicitação (proposta: lidos de `data` quando existirem) | Lidos de `data` quando existirem | `escopo-adicional.md`, EA-064-02 |

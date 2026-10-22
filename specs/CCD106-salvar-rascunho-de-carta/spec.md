@@ -1,12 +1,12 @@
 # CCD106 — Salvar Rascunho de Carta
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #610 `CCD106-Salvar Rascunho de Carta` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [106-salvar-rascunho-de-carta.md](../../docs/Casos-De-Uso/106-salvar-rascunho-de-carta.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -63,7 +63,7 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | O que o rascunho exige no mínimo? (proposta: só o nome, porque `cards.name` é obrigatório no DER) | pendente — proposta | — |
-| L2 | Onde fica o verso padrão de cada franquia? (proposta: chave `catalog.default_backs` em `global_settings`, por categoria) | pendente — proposta | — |
-| L3 | O que conta como duplicata? (proposta: mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear) | pendente — proposta | — |
-| L4 | Onde os rascunhos aparecem? (proposta: filtro "Rascunhos" na lista de cartas) | pendente — proposta | — |
+| L1 | O que o rascunho exige no mínimo? (proposta: só o nome, porque `cards.name` é obrigatório no DER) | Só o nome, porque `cards.name` é obrigatório no DER | `106`, FP 3 |
+| L2 | Onde fica o verso padrão de cada franquia? (proposta: chave `catalog.default_backs` em `global_settings`, por categoria) | Chave `catalog.default_backs` em `global_settings`, por categoria | `escopo-adicional.md`, EA-061-07 |
+| L3 | O que conta como duplicata? (proposta: mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear) | Mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear | `escopo-adicional.md`, EA-061-08 |
+| L4 | Onde os rascunhos aparecem? (proposta: filtro "Rascunhos" na lista de cartas) | Filtro "Rascunhos" na lista de cartas | `106`, FP 5 |

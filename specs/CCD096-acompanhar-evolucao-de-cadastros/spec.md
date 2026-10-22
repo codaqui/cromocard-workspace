@@ -1,12 +1,12 @@
 # CCD096 — Acompanhar Evolução de Cadastros
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #600 `CCD096-Acompanhar Evolução de Cadastros` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [96-acompanhar-evolucao-de-cadastros.md](../../docs/Casos-De-Uso/96-acompanhar-evolucao-de-cadastros.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -66,5 +66,5 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Onde a meta é definida? (proposta: um campo a mais na tela de Configurações da CCD066) | pendente — proposta | — |
-| L2 | Variação quando o período anterior é zero (proposta: mostrar "novo" em vez do percentual) | pendente — proposta | — |
+| L1 | Onde a meta é definida? (proposta: um campo a mais na tela de Configurações da CCD066) | Um campo a mais na tela de Configurações da CCD066 | `96`, FA 5–6 |
+| L2 | Variação quando o período anterior é zero (proposta: mostrar "novo" em vez do percentual) | Mostrar "novo" em vez do percentual | `96`, FP 3 |

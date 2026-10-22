@@ -1,12 +1,12 @@
 # CCD097 — Visualizar Indicadores Financeiros
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #601 `CCD097-Visualizar Indicadores Financeiros` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [97-visualizar-indicadores-financeiros.md](../../docs/Casos-De-Uso/97-visualizar-indicadores-financeiros.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -19,7 +19,7 @@
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `97`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | Valor em custódia: soma dos pagamentos `APPROVED` de pedidos `PAID` ou `SHIPPED` | Campo | `97`, FP 2; DBML `payments`, `orders` |
 | R3 | Valor liquidado no dia e quantidade de pedidos liberados (`DELIVERED` no dia) | Campo | `97`, FP 3 |
-| R4 | Valor retido em garantia | Campo | `97`, FP 3 (cálculo em L1) |
+| R4 | Valor retido em garantia | Campo | `97`, FP 3 |
 | R5 | Volume anunciado e reputação de cada vendedor na lista de vendedores | Campo | `97`, FP 4; DBML `listings`, `reviews` |
 | R6 | Filtro de período (Hoje, 7 dias, 30 dias, 1 ano) | Campo | `97`, FP 5–6 |
 | R7 | "Ver Livro Razão de Hoje": pagamentos e liberações do dia | Tela | `97`, FP 7–8 |
@@ -69,8 +69,8 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Valor retido em garantia (proposta: pagamentos de pedidos `DELIVERED` há menos de 7 dias, o prazo de reclamação) | pendente — proposta | — |
-| L2 | As tabelas do marketplace não existem no banco (proposta: esta story cria `listings`, `orders`, `payments`, `reviews` e `price_history` copiadas do DBML, com dados do seed, só para leitura) | pendente — proposta | — |
-| L3 | Reputação (proposta: média das notas recebidas em `reviews`, de 0 a 5) | pendente — proposta | — |
-| L4 | População e preço médio (proposta: população = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias) | pendente — proposta | — |
-| L5 | Volume por grupo (proposta: soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING`) | pendente — proposta | — |
+| L1 | Valor retido em garantia (proposta: pagamentos de pedidos `DELIVERED` há menos de 7 dias, o prazo de reclamação) | Pagamentos de pedidos `DELIVERED` há menos de 7 dias, o prazo de reclamação | `97`, FP 3 |
+| L2 | As tabelas do marketplace não existem no banco (proposta: esta story cria `listings`, `orders`, `payments`, `reviews` e `price_history` copiadas do DBML, com dados do seed, só para leitura) | Esta story cria `listings`, `orders`, `payments`, `reviews` e `price_history` copiadas do DBML, com dados do seed, só para leitura | ADR-054 |
+| L3 | Reputação (proposta: média das notas recebidas em `reviews`, de 0 a 5) | Média das notas recebidas em `reviews`, de 0 a 5 | `97`, FP 4 |
+| L4 | População e preço médio (proposta: população = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias) | População = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias | `escopo-adicional.md`, EA-061-05 |
+| L5 | Volume por grupo (proposta: soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING`) | Soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING` | `escopo-adicional.md`, EA-062-03 |

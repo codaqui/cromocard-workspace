@@ -1,12 +1,12 @@
 # CCD107 — Consultar Histórico de Relatórios
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #611 `CCD107-Consultar Histórico de Relatórios` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [107-consultar-historico-de-relatorios.md](../../docs/Casos-De-Uso/107-consultar-historico-de-relatorios.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -55,6 +55,6 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Histórico só do próprio admin ou de todos? (proposta: de todos, como o "pela equipe diretiva" do Figma) | pendente — proposta | — |
-| L2 | Substitui o histórico lido de `audit_logs` na CCD063? (proposta: sim; a CCD063 continua gravando `EXPORT_REPORT`) | pendente — proposta | — |
-| L3 | Como o arquivo é servido? (proposta: rota autenticada `GET /admin/reports/exports/:id/file`, sem URL pública) | pendente — proposta | — |
+| L1 | Histórico só do próprio admin ou de todos? (proposta: de todos, como o "pela equipe diretiva" do Figma) | De todos, como o "pela equipe diretiva" do Figma | `107`, FP 2 |
+| L2 | Substitui o histórico lido de `audit_logs` na CCD063? (proposta: sim; a CCD063 continua gravando `EXPORT_REPORT`) | Sim; a CCD063 continua gravando `EXPORT_REPORT` | plano.md; ADR-053, item 9 |
+| L3 | Como o arquivo é servido? (proposta: rota autenticada `GET /admin/reports/exports/:id/file`, sem URL pública) | Rota autenticada `GET /admin/reports/exports/:id/file`, sem URL pública | plano.md |

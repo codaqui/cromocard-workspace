@@ -1,12 +1,12 @@
 # CCD104 — Ordenar Categorias Padrão
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #608 `CCD104-Ordenar Categorias Padrão` · responsável Gabriel Nascimento · Sprint 06
 - **Caso de uso:** [104-ordenar-categorias-padrao.md](../../docs/Casos-De-Uso/104-ordenar-categorias-padrao.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -60,7 +60,7 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Uma ou várias categorias fixadas? (proposta: uma só) | pendente — proposta | — |
-| L2 | Quem define o selo? (proposta: o admin, no formulário de categoria da CCD061) | pendente — proposta | — |
-| L3 | Slug das categorias que já existem (proposta: a migration gera) | pendente — proposta | — |
-| L4 | Arrastar pelo teclado (proposta: as setas são a alternativa acessível) | pendente — proposta | — |
+| L1 | Uma ou várias categorias fixadas? (proposta: uma só) | Uma só | `104`, FP 5 |
+| L2 | Quem define o selo? (proposta: o admin, no formulário de categoria da CCD061) | O admin, no formulário de categoria da CCD061 | `escopo-adicional.md`, EA-066-01 |
+| L3 | Slug das categorias que já existem (proposta: a migration gera) | A migration gera | plano.md (migration) |
+| L4 | Arrastar pelo teclado (proposta: as setas são a alternativa acessível) | As setas são a alternativa acessível | plano.md |

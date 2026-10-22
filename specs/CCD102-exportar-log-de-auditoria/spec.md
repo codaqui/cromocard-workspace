@@ -1,12 +1,12 @@
 # CCD102 — Exportar Log de Auditoria
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #606 `CCD102-Exportar Log de Auditoria` · responsável Gabriel Nascimento · Sprint 06
 - **Caso de uso:** [102-exportar-log-de-auditoria.md](../../docs/Casos-De-Uso/102-exportar-log-de-auditoria.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -58,8 +58,8 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Em quais ações a justificativa é obrigatória? (proposta: nas que mudam status ou excluem; nas demais, opcional) | pendente — proposta | — |
-| L2 | Formato do arquivo (proposta: CSV, como no ADR-050, item 3) | pendente — proposta | — |
-| L3 | Limite de linhas (proposta: 10.000, com aviso para refinar os filtros) | pendente — proposta | — |
-| L4 | Cargo do responsável (EA-065-05) (proposta: não entra; o DER só tem o papel ADMIN) | pendente — proposta | — |
-| L5 | Filtros rápidos (proposta: Banimentos, Remoção de grupos e Mudança de papel) | pendente — proposta | — |
+| L1 | Em quais ações a justificativa é obrigatória? (proposta: nas que mudam status ou excluem; nas demais, opcional) | Nas que mudam status ou excluem; nas demais, opcional | `escopo-adicional.md`, EA-065-01 |
+| L2 | Formato do arquivo (proposta: CSV, como no ADR-050, item 3) | CSV, como no ADR-050, item 3 | `102`, FP 4; ADR-050, item 3 |
+| L3 | Limite de linhas (proposta: 10.000, com aviso para refinar os filtros) | 10.000, com aviso para refinar os filtros | `102`, FA 3–4 |
+| L4 | Cargo do responsável (EA-065-05) (proposta: não entra; o DER só tem o papel ADMIN) | Não entra; o DER só tem o papel ADMIN | esta spec (Fora do escopo); `escopo-adicional.md`, EA-065-05 |
+| L5 | Filtros rápidos (proposta: Banimentos, Remoção de grupos e Mudança de papel) | Banimentos, Remoção de grupos e Mudança de papel | `escopo-adicional.md`, EA-065-03 |

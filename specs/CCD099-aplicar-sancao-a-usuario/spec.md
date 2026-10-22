@@ -1,12 +1,12 @@
 # CCD099 — Aplicar Sanção a Usuário
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #603 `CCD099-Aplicar Sanção a Usuário` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [99-aplicar-sancao-a-usuario.md](../../docs/Casos-De-Uso/99-aplicar-sancao-a-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -73,8 +73,8 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Prazos de suspensão (proposta: 3, 7, 15 e 30 dias, a partir do "3 dias" e do "7d" do Figma) | pendente — proposta | — |
-| L2 | O que é denúncia crítica (proposta: categorias "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam") | pendente — proposta | — |
-| L3 | Denúncia por detecção automática (EA-062-05) (proposta: não entra; não há caso de uso) | pendente — proposta | — |
-| L4 | O que muda para o grupo advertido (proposta: só o selo; reativar volta a `ACTIVE`) | pendente — proposta | — |
-| L5 | Advertências acumuladas suspendem sozinhas? (proposta: não) | pendente — proposta | — |
+| L1 | Prazos de suspensão (proposta: 3, 7, 15 e 30 dias, a partir do "3 dias" e do "7d" do Figma) | 3, 7, 15 e 30 dias, a partir do "3 dias" e do "7d" do Figma | `99`, FP 4 |
+| L2 | O que é denúncia crítica (proposta: categorias "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam") | Categorias "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam" | `escopo-adicional.md`, EA-062-04 |
+| L3 | Denúncia por detecção automática (EA-062-05) (proposta: não entra; não há caso de uso) | Não entra; não há caso de uso | esta spec (Fora do escopo); `escopo-adicional.md`, EA-062-05 |
+| L4 | O que muda para o grupo advertido (proposta: só o selo; reativar volta a `ACTIVE`) | Só o selo; reativar volta a `ACTIVE` | `escopo-adicional.md`, EA-062-02 |
+| L5 | Advertências acumuladas suspendem sozinhas? (proposta: não) | Não | `99`, FP 6 |

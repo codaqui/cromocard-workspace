@@ -59,4 +59,4 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 
 ## Decisões técnicas
 
-- Biblioteca `csv-parse` para o CSV: ADR-050 (Proposto).
+- Biblioteca `csv-parse` para o CSV: ADR-050.

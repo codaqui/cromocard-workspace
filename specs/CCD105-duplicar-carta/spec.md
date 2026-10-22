@@ -1,12 +1,12 @@
 # CCD105 — Duplicar Carta
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #609 `CCD105-Duplicar Carta` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [105-duplicar-carta.md](../../docs/Casos-De-Uso/105-duplicar-carta.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -64,7 +64,7 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Duplicar no backend ou só no frontend? (proposta: só no frontend, abrindo o formulário de criar; sem rota nova) | pendente — proposta | — |
-| L2 | "Álbuns licenciados" e "pendentes de revisão" (proposta: licenciado = álbum `ACTIVE`; pendente = solicitação de álbum `PENDING`) | pendente — proposta | — |
-| L3 | Ação em lote sobre a seleção, que o Figma não desenha (proposta: excluir em lote, com motivo) | pendente — proposta | — |
-| L4 | Código gerado ou digitado? (proposta: digitado, opcional e único) | pendente — proposta | — |
+| L1 | Duplicar no backend ou só no frontend? (proposta: só no frontend, abrindo o formulário de criar; sem rota nova) | Só no frontend, abrindo o formulário de criar; sem rota nova | plano.md, Decisões técnicas |
+| L2 | "Álbuns licenciados" e "pendentes de revisão" (proposta: licenciado = álbum `ACTIVE`; pendente = solicitação de álbum `PENDING`) | Licenciado = álbum `ACTIVE`; pendente = solicitação de álbum `PENDING` | `escopo-adicional.md`, EA-061-01 |
+| L3 | Ação em lote sobre a seleção, que o Figma não desenha (proposta: excluir em lote, com motivo) | Excluir em lote, com motivo | `escopo-adicional.md`, EA-061-04 |
+| L4 | Código gerado ou digitado? (proposta: digitado, opcional e único) | Digitado, opcional e único | `escopo-adicional.md`, EA-061-02 |

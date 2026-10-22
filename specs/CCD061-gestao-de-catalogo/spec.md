@@ -29,7 +29,7 @@
 | R11 | Item com vínculos que impedem a exclusão não é removido e o sistema informa o motivo | Regra | `61`, FA 5–6 |
 | R12 | Imagens vão pelo `StorageProvider`; o banco guarda a URL | Regra | ADR-009 |
 | R13 | Importar cartas e álbuns em lote por CSV | Ação | user-stories.md §8 |
-| R14 | Cadastrar, editar e remover gravam `audit_logs` | Regra | `61`, FP 8; ADR-034 (Proposto) |
+| R14 | Cadastrar, editar e remover gravam `audit_logs` | Regra | `61`, FP 8; ADR-034 |
 | R15 | Categorias são cadastradas, editadas e removidas na aba "Categorias & Franquias"; raridades e idiomas vêm do seed | Ação | `61`, FP 2 |
 
 ## Critérios de aceite

@@ -1,12 +1,12 @@
 # CCD101 — Segmentar Notificação Global
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #605 `CCD101-Segmentar Notificação Global` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [101-segmentar-notificacao-global.md](../../docs/Casos-De-Uso/101-segmentar-notificacao-global.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -19,7 +19,7 @@
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `101`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | Público: toda a base, colecionadores ativos ou vendedores | Campo | `101`, FP 2 |
 | R3 | O sistema mostra quantos usuários o público tem | Campo | `101`, FP 3 |
-| R4 | Canais: notificação no app e e-mail | Campo | `101`, FP 4 (push em L1) |
+| R4 | Canais: notificação no app e e-mail | Campo | `101`, FP 4 |
 | R5 | O envio vai só para o público e pelos canais escolhidos | Regra | `101`, FP 6 |
 | R6 | O disparo grava `audience`, `channels`, `recipient_count` e `audit_logs` | Regra | `101`, FP 7; ADR-053, item 6 |
 | R7 | Confirmação com o público selecionado | Mensagem | `101`, FP 8 |
@@ -61,8 +61,8 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Push, citado no caso de uso, não tem infraestrutura (proposta: fora; só app e e-mail, ADR-053, item 6) | pendente — proposta | — |
-| L2 | Quem é "colecionador ativo" (proposta: `CUSTOMER` que entrou nos últimos 30 dias, por `last_login_at`) | pendente — proposta | — |
-| L3 | Segmento "Com saldo" do Figma (proposta: não entra; depende de carteira, que não existe) | pendente — proposta | — |
-| L4 | E-mail em massa (proposta: enviado em lotes fora da requisição, por um job) | pendente — proposta | — |
-| L5 | Seletor de público e de canais sem desenho (proposta: o Gabriel desenha no formulário da CCD060) | pendente — proposta | — |
+| L1 | Push, citado no caso de uso, não tem infraestrutura (proposta: fora; só app e e-mail, ADR-053, item 6) | Fora; só app e e-mail, ADR-053, item 6 | `101`, FP 4; ADR-053, item 6 |
+| L2 | Quem é "colecionador ativo" (proposta: `CUSTOMER` que entrou nos últimos 30 dias, por `last_login_at`) | `CUSTOMER` que entrou nos últimos 30 dias, por `last_login_at` | `101`, FP 2 |
+| L3 | Segmento "Com saldo" do Figma (proposta: não entra; depende de carteira, que não existe) | Não entra; depende de carteira, que não existe | esta spec (Fora do escopo) |
+| L4 | E-mail em massa (proposta: enviado em lotes fora da requisição, por um job) | Enviado em lotes fora da requisição, por um job | plano.md (ADR-010) |
+| L5 | Seletor de público e de canais sem desenho (proposta: o Gabriel desenha no formulário da CCD060) | O Gabriel desenha no formulário da CCD060 | esta spec (Telas) |

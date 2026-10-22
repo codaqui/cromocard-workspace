@@ -27,7 +27,7 @@
 | R9 | Resolver (`RESOLVED`) ou descartar (`DISMISSED`) a denúncia, gravando `moderator_id` e `resolved_at` | Estado | DBML `report_status`, `moderator_id`, `resolved_at` |
 | R10 | Confirmação antes de gravar e mensagem ao concluir | Ação | `62`, FP 7–9 |
 | R11 | Cancelar sem alterar nada | Ação | `62`, FA 5–6 |
-| R12 | Suspender, excluir e moderar gravam `audit_logs` | Regra | user-stories.md §8 (Log de Auditoria); ADR-034 (Proposto) |
+| R12 | Suspender, excluir e moderar gravam `audit_logs` | Regra | user-stories.md §8 (Log de Auditoria); ADR-034 |
 | R13 | Reativar um grupo suspenso (`status = ACTIVE`); o grupo suspenso some de Explorar e fica só leitura para os membros | Ação | `62`, FP 4 e FP 8 |
 | R14 | Indicadores: grupos ativos, mensagens dos últimos 7 dias e denúncias pendentes | Campo | `62`, FP 2 |
 

@@ -1,12 +1,12 @@
 # CCD100 — Agendar Notificação Global
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #604 `CCD100-Agendar Notificação Global` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [100-agendar-notificacao-global.md](../../docs/Casos-De-Uso/100-agendar-notificacao-global.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -61,7 +61,7 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Os destinatários são calculados no envio ou no agendamento? (proposta: no envio) | pendente — proposta | — |
-| L2 | Antecedência mínima (proposta: 5 minutos) | pendente — proposta | — |
-| L3 | Frequência do job (proposta: a cada minuto) | pendente — proposta | — |
-| L4 | Editar um agendamento (proposta: não; cancelar e criar de novo) | pendente — proposta | — |
+| L1 | Os destinatários são calculados no envio ou no agendamento? (proposta: no envio) | No envio | `100`, FP 9 |
+| L2 | Antecedência mínima (proposta: 5 minutos) | 5 minutos | `100`, FP 6 |
+| L3 | Frequência do job (proposta: a cada minuto) | A cada minuto | plano.md, Decisões técnicas (ADR-010) |
+| L4 | Editar um agendamento (proposta: não; cancelar e criar de novo) | Não; cancelar e criar de novo | `100`, FA 5–6 |

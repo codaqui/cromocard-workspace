@@ -29,7 +29,7 @@
 | R11 | Configurar templates de notificações | Ação | user-stories.md §8 |
 | R12 | A imagem do banner vai pelo `StorageProvider` | Regra | ADR-009 |
 | R13 | Só categorias não excluídas aparecem | Regra | ADR-015, item 5 |
-| R14 | Alterar configuração grava `audit_logs` | Regra | ADR-034 (Proposto) |
+| R14 | Alterar configuração grava `audit_logs` | Regra | ADR-034 |
 | R15 | Leitura pública do banner em `GET /api/v1/settings/public/home.banner`, sem autenticação | Regra | `66`, FP 8; ADR-051, item 1 |
 
 ## Critérios de aceite

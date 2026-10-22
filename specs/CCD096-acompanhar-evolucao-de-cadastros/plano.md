@@ -1,6 +1,6 @@
 # Plano — CCD096 Acompanhar Evolução de Cadastros
 
-- **Spec:** [spec.md](spec.md) — feito sobre a spec em Rascunho (pedido do PO em 2026-10-22), com as propostas das lacunas
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução

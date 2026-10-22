@@ -28,7 +28,7 @@
 | R10 | O sistema informa que a solicitação foi aprovada | Mensagem | `64`, FP 9 |
 | R11 | Solicitação já processada não pode ser aprovada e o sistema informa | Regra | `64`, FA 1–2 |
 | R12 | Cancelar volta à lista sem aprovar | Ação | `64`, FA 3–4 |
-| R13 | Aprovar grava `audit_logs` | Regra | ADR-034 (Proposto) |
+| R13 | Aprovar grava `audit_logs` | Regra | ADR-034 |
 | R14 | Recusar com motivo obrigatório: status `REJECTED`, motivo em `data.rejectionReason` e no `audit_logs` | Ação | `64`, FA 5–6; ADR-051, item 3 |
 | R15 | Aprovar ou recusar avisa o solicitante com uma notificação `CATALOG_REQUEST` | Regra | `64`, FP 9 e FA 6; ADR-051, item 2 |
 

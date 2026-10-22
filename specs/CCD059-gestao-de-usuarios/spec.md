@@ -30,7 +30,7 @@
 | R11 | Validação com erros por campo (`400`) e nova validação após corrigir | Regra | `59`, FP 6 e FA 1–4; ADR-006 |
 | R12 | Mensagem de confirmação ao concluir | Mensagem | `59`, FP 8 |
 | R13 | Cancelar volta à lista sem gravar | Ação | `59`, FA 5–6 |
-| R14 | Suspender ou excluir grava `audit_logs` | Regra | ADR-034 (Proposto); user-stories.md §8 (Log de Auditoria) |
+| R14 | Suspender ou excluir grava `audit_logs` | Regra | ADR-034; user-stories.md §8 (Log de Auditoria) |
 | R15 | Usuário suspenso ou excluído não loga nem renova token | Regra | ADR-005, item 6 (implementado na CCD004) |
 | R16 | Busca por nome ou e-mail e filtros de papel e de status | Campo | `59`, FP 2 |
 | R17 | O cadastro envia o convite com o link de definir senha; a conta nasce com o e-mail confirmado e o aceite dos termos fica para o primeiro acesso | Regra | `59`, FP 7; ADR-048, item 2 |

@@ -1,12 +1,12 @@
 # CCD094 — Validar Cadastro de Vendedor
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #598 `CCD094-Validar Cadastro de Vendedor` · responsável Felipe Broetto Araujo · Sprint 06
 - **Caso de uso:** [94-validar-cadastro-de-vendedor.md](../../docs/Casos-De-Uso/94-validar-cadastro-de-vendedor.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -77,8 +77,8 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Quem cria `seller_verifications`, se não há caso de uso do vendedor? (proposta: o seed cria cadastros de teste; o caso de uso do vendedor fica para outra story) | pendente — proposta | — |
-| L2 | A "Taxa de Autenticação" do Figma (EA-058-07) não tem origem de dado (proposta: não entra) | pendente — proposta | — |
-| L3 | Vendedor não aprovado pode anunciar? (proposta: sem efeito até o marketplace existir) | pendente — proposta | — |
-| L4 | Tipos de documento (proposta: `CNPJ_CARD` e `ADDRESS_PROOF`, como no Figma) | pendente — proposta | — |
-| L5 | "Analisar Fila" (proposta: abre a lista filtrada em pendentes) | pendente — proposta | — |
+| L1 | Quem cria `seller_verifications`, se não há caso de uso do vendedor? (proposta: o seed cria cadastros de teste; o caso de uso do vendedor fica para outra story) | O seed cria cadastros de teste; o caso de uso do vendedor fica para outra story | esta spec (Fora do escopo); ADR-052, Consequências |
+| L2 | A "Taxa de Autenticação" do Figma (EA-058-07) não tem origem de dado (proposta: não entra) | Não entra | esta spec (Fora do escopo); `escopo-adicional.md`, EA-058-07 |
+| L3 | Vendedor não aprovado pode anunciar? (proposta: sem efeito até o marketplace existir) | Sem efeito até o marketplace existir | `94`, FP 12 |
+| L4 | Tipos de documento (proposta: `CNPJ_CARD` e `ADDRESS_PROOF`, como no Figma) | `CNPJ_CARD` e `ADDRESS_PROOF`, como no Figma | `94`, FP 6 |
+| L5 | "Analisar Fila" (proposta: abre a lista filtrada em pendentes) | Abre a lista filtrada em pendentes | `94`, FP 3 |

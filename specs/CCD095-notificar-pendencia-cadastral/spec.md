@@ -1,12 +1,12 @@
 # CCD095 — Notificar Pendência Cadastral
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** Escopo Adicional
 - **User story:** #599 `CCD095-Notificar Pendência Cadastral` · responsável Felipe Broetto Araujo · Sprint 06
 - **Caso de uso:** [95-notificar-pendencia-cadastral.md](../../docs/Casos-De-Uso/95-notificar-pendencia-cadastral.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** —
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
 
 ## Objetivo
 
@@ -65,7 +65,7 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Prazos disponíveis (proposta: 24 horas, 48 horas — padrão —, 72 horas e 7 dias) | pendente — proposta | — |
-| L2 | Modelos iniciais (proposta: "Chave Pix divergente do CNPJ" e "Endereço não informado", do Figma, criados pelo seed e sem edição nesta story) | pendente — proposta | — |
-| L3 | Variáveis do modelo (proposta: `{nome}`, `{cnpj}` e `{prazo}`) | pendente — proposta | — |
-| L4 | O que acontece quando o prazo vence? (proposta: nada automático; o admin decide pela CCD094) | pendente — proposta | — |
+| L1 | Prazos disponíveis (proposta: 24 horas, 48 horas — padrão —, 72 horas e 7 dias) | 24 horas, 48 horas — padrão —, 72 horas e 7 dias | `95`, FP 6 |
+| L2 | Modelos iniciais (proposta: "Chave Pix divergente do CNPJ" e "Endereço não informado", do Figma, criados pelo seed e sem edição nesta story) | "Chave Pix divergente do CNPJ" e "Endereço não informado", do Figma, criados pelo seed e sem edição nesta story | `95`, FP 3 |
+| L3 | Variáveis do modelo (proposta: `{nome}`, `{cnpj}` e `{prazo}`) | `{nome}`, `{cnpj}` e `{prazo}` | `95`, FP 4 |
+| L4 | O que acontece quando o prazo vence? (proposta: nada automático; o admin decide pela CCD094) | Nada automático; o admin decide pela CCD094 | `95`, FA 7–8 |
