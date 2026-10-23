@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "enabledMcpjsonServers": ["azure-devops", "figma", "jibble", "playwright", "playwright-figma"],
+  "enabledMcpjsonServers": ["azure-devops", "figma", "playwright", "playwright-figma"],
   "permissions": {
     "allow": [
       "mcp__azure-devops__core_list_projects",

@@ -24,10 +24,6 @@
       "type": "http",
       "url": "https://mcp.figma.com/mcp"
     },
-    "jibble": {
-      "type": "http",
-      "url": "https://mcp.jibble.io"
-    },
     "playwright": {
       "type": "stdio",
       "command": "npx",

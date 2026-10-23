@@ -1,69 +1,87 @@
 ---
 name: jibble
-description: Registra e consulta as horas do time do CromoCard no Jibble pelo MCP `jibble` — bater ponto (entrada, pausa, volta e saída), lançar horas numa Task do Azure, ver o timesheet do dia, da semana ou da sprint e, para quem é gestor, as horas da equipe. Use quando pedirem para bater ponto, apontar ou lançar horas, ou ver quanto alguém trabalhou.
-argument-hint: "[entrada|pausa|volta|saida] [AB#id] · lancar <horas> <AB#id> [data] · horas [hoje|semana|sprint] · equipe [semana|sprint]"
+description: Registra, consulta e concilia as horas do time do CromoCard no Jibble pelo Playwright (MCP `playwright-figma`, perfil que guarda o login) — bater ponto, lançar horas numa Task do Azure, ver o timesheet e, principalmente, alinhar as horas do Jibble com o Trabalho concluído das Tasks no board. Use quando pedirem para bater ponto, apontar ou lançar horas, ver quanto alguém trabalhou ou deixar o Azure em dia com o Jibble.
+argument-hint: "sincronizar [desde DD/MM] · horas [hoje|semana|sprint] · entrada|pausa|volta|saida [AB#id] · lancar <h:mm> <AB#id> [data]"
 ---
 
-Executa `$ARGUMENTS` no Jibble pelo MCP `jibble` (`https://mcp.jibble.io`, login OAuth de cada pessoa).
+Executa `$ARGUMENTS` no Jibble pelo navegador do MCP `playwright-figma`. O Jibble não tem MCP que funcione no Claude
+Code (o login OAuth do `mcp.jibble.io` recusa o endereço de retorno do Claude Code), então a skill usa a sessão da
+própria pessoa no Jibble web.
 
 ## Regras
 
-- **Só a conta de quem está usando.** O MCP segue o papel da pessoa no Jibble (membro vê o próprio, gestor vê quem
-  gerencia). Nunca bata ponto nem lance horas por outra pessoa, mesmo que a conta permita, sem pedido explícito com o
-  nome dela.
-- **Toda escrita no Jibble confirma antes**, com o resumo do que vai gravar (ação, projeto, Task, horário ou horas,
-  nota). Exceção: `entrada`, `pausa`, `volta` e `saida` pedidos explicitamente nesta chamada já são a confirmação.
-  Editar ou apagar um registro existente e pedir folga sempre confirmam.
-- **O board não muda.** A skill lê o Azure (título da Task, user story, sprint) e não altera work items.
-- Fuso: `America/Sao_Paulo`. Datas na resposta em `DD/MM`, horas em `h:mm`.
+- **Só a conta de quem está usando.** Leia e grave só as horas da pessoa logada.
+- **Senha nunca.** O Claude não digita senha nem faz o login: a pessoa entra na janela do Chrome que o Playwright
+  abriu.
+- **Escrita confirma antes.** No Jibble (ponto, registro manual, edição) e no Azure (horas, estado, Task nova), mostre
+  o que vai gravar e espere o "sim". `entrada`, `pausa`, `volta` e `saida` pedidos nesta chamada já são a confirmação.
+  Pedir para sincronizar autoriza gravar no Azure o que a tabela aprovada mostrar.
+- **Horas no Azure em horas.minutos**, como o time grava: 1h11 vira `1.11` no Trabalho concluído (não `1.18`). Ao somar
+  o que já está no board, leia assim também.
+- **Task fechada tem hora.** Toda Task `Closed` precisa de Trabalho concluído; se foi criada e fechada, alguém
+  trabalhou nela. Uma Task fechada sem hora é a primeira pista do que falta apontar.
+- Fuso `America/Sao_Paulo`; datas em `DD/MM`.
 
-## 1. Ferramentas e login
+## 1. Abrir o Jibble
 
-1. As ferramentas do servidor se chamam `mcp__jibble__*`. Se aparecerem só como nome (deferidas), carregue todas
-   numa chamada do `ToolSearch` com a consulta `+jibble`.
-2. Sem nenhuma ferramenta `mcp__jibble__*`, ou com erro de autenticação: peça para a pessoa rodar `/mcp`, escolher
-   `jibble` → **Authenticate** e entrar com a conta do Jibble no navegador. Se `jibble` nem aparecer no `/mcp`, o
-   Claude Code foi aberto fora da raiz do workspace ou antes do `.mcp.json` ter o servidor: reinicie na raiz.
-3. Use os nomes e os parâmetros que as ferramentas trouxerem; não invente parâmetro. Se nenhuma ferramenta fizer o
-   que foi pedido, diga isso em vez de improvisar com outra.
+1. `browser_navigate` para `https://web.jibble.io/timesheets` e `browser_wait_for` uns 5 segundos.
+2. Se a página for de login (Jibble ou Google), peça para a pessoa entrar na janela do Chrome do Playwright e avisar.
+   O perfil do `playwright-figma` guarda o login; das próximas vezes abre direto.
+3. A sessão fica no `localStorage`, na chave `oidc.user:https://identity.prod.jibble.io:spa.client` (`access_token`).
+   O id da pessoa é o claim `prsid` do token. Nunca mostre nem salve o token.
 
-## 2. Ligar a hora ao board
+## 2. Ler as horas
 
-O apontamento serve para o time ver as horas de cada Task. Sempre que houver um `AB#id`:
+Leia pela API que a própria tela usa, com `browser_evaluate` e `fetch` autenticado pelo token da sessão. Salve o
+resultado com `filename` em `.playwright-mcp/` (fica fora do git) em vez de trazer para a conversa:
 
-1. Leia o work item com `mcp__azure-devops__wit_work_item` (título, tipo, user story pai e sprint).
-2. Projeto no Jibble: o projeto **CromoCard** (procure na lista de projetos da conta). Se não existir ou houver mais
-   de um candidato, pergunte qual usar e não crie projeto.
-3. Atividade: a que corresponder ao tipo de trabalho, se a conta tiver atividades (ex.: desenvolvimento, reunião,
-   documentação). Sem correspondência clara, deixe sem atividade e diga isso.
-4. Nota do registro: `AB#<id> <título da Task>` — ex.: `AB#519 Criar migration da tabela categories`. Assim dá para
-   cruzar o Jibble com o board.
+```
+GET https://time-tracking.prod.jibble.io/v1/TimeEntries
+    ?$expand=activity,project
+    &$filter=personId eq <prsid> and time ge <AAAA-MM-DD>T00:00:00Z
+    &$orderby=time asc&$top=500&$skip=<n>
+Authorization: Bearer <access_token>
+```
 
-Sem `AB#id`, registre sem nota de Task e pergunte uma vez se a pessoa quer ligar a alguma.
+Cada registro tem `type` (`In` ou `Out`), `time`, `localTime`, `activity.name`, `project.name` e `note`. Junte cada
+`In` com o `Out` seguinte para formar as sessões (início, fim, duração, atividade, projeto e nota). Um `In` sem `Out`
+é a sessão aberta: não aponte, avise.
 
-## 3. Ações
+## 3. Sincronizar com o Azure (`sincronizar [desde DD/MM]`)
 
-| Pedido | O que fazer |
+1. Leia as sessões do Jibble desde a data (padrão: início da sprint atual, pelo `mcp__azure-devops__work`).
+2. Leia as Tasks da pessoa no Azure (`mcp__azure-devops__wit_query`): estado, Trabalho concluído, datas de ativação e
+   fechamento e a cerimônia ou user story pai.
+3. Case cada sessão com uma Task, nesta ordem de pista:
+   - nota ou atividade com o título da Task (`Apontamento Daniel`, `Criar diagrama de entidades (DER)`);
+   - cerimônia do dia (`Planning`, `Daily`, `Review`) → o `Apontamento <Nome>` filho da cerimônia em `#89 Reuniões`;
+   - commits e PRs da pessoa naquele dia (`git log --author` no workspace e nos apps), que trazem o `AB#`;
+   - data de ativação ou fechamento da Task.
+   Uma sessão pode cobrir mais de uma Task, e uma Task pode somar várias sessões.
+4. Monte a tabela: data, sessão do Jibble, duração, o que foi feito, Task proposta, horas hoje → horas depois. Sessão
+   sem Task certa vira proposta de Task nova, filha da user story ou da cerimônia do assunto.
+5. Com a aprovação, grave com `mcp__azure-devops__wit_work_item_write`: some no Trabalho concluído (não apague o que já
+   está lá) e feche a Task se o trabalho terminou. Ao fechar uma Task que saiu de `New`, deixe o Trabalho restante
+   vazio: o board recusa valor nele nessa transição (`TF401320 … InvalidNotEmpty`).
+6. Confira no fim: nenhuma Task `Closed` sem hora e o total do Azure ao lado do total do Jibble (diferença de poucos
+   minutos é arredondamento).
+
+## 4. Ponto e registro manual
+
+Pela interface do Jibble web (`browser_snapshot` para achar o botão, `browser_click` e `browser_type`), não pela API:
+
+| Pedido | Na tela |
 |---|---|
-| `entrada [AB#id]` | Bate a entrada, com o projeto e a nota da seção 2 quando houver Task |
-| `pausa` / `volta` | Começa ou termina a pausa |
-| `saida` | Bate a saída e mostra o total trabalhado no dia |
-| `lancar <horas> <AB#id> [data]` | Registro manual (padrão: hoje). Confirme antes. Recuse horas que se sobrepõem a outro registro do dia e mostre o conflito |
-| `horas [hoje\|semana\|sprint]` | Timesheet da própria pessoa, agrupado por dia e por Task (pela nota `AB#`) |
-| `equipe [semana\|sprint]` | Só para gestor: horas de cada pessoa do time. Sem permissão, diga que a conta não tem acesso |
+| `entrada [AB#id]` | Botão de entrada; projeto **CromoCard** (ou o que a pessoa usa) e nota `AB#<id> <título da Task>` |
+| `pausa` / `volta` / `saida` | Botões de pausa e saída; na saída, mostre o total do dia |
+| `lancar <h:mm> <AB#id> [data]` | Folhas de Ponto → adicionar registro manual no dia; confirme antes |
+| `horas [hoje\|semana\|sprint]` | Leia pela seção 2 e mostre por dia e por Task |
 
-`sprint` usa as datas da sprint atual do Azure (`mcp__azure-devops__work` → iteração atual do time
-`CromoCard Team`).
+Leia o título da Task com `mcp__azure-devops__wit_work_item` para a nota. Se o botão ou o campo não estiver onde a
+tela mostra, pare e descreva o que viu em vez de clicar no escuro.
 
-Sem argumento, mostre o estado atual (dentro ou fora do ponto, desde quando) e as horas de hoje.
+## 5. Responder
 
-## 4. Responder
-
-- Escrita: o que foi gravado (ação, horário, projeto, nota) e o total do dia.
-- Consulta: tabela curta, por exemplo:
-
-| Dia | Task | Horas |
-|---|---|---|
-| 22/10 | AB#519 Criar migration da tabela categories | 2:30 |
-
-  com o total no fim. Registros sem `AB#` aparecem como `sem Task`.
+- Sincronizar: a tabela do que foi gravado, as Tasks novas com o `#id`, o total Jibble × Azure e o que ficou de fora
+  (sessão aberta, sessão sem Task).
+- Ponto: o que foi registrado, o horário e o total do dia.

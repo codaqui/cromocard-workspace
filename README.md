@@ -34,7 +34,7 @@ a branch `develop` e siga o [fluxo de branches](.claude/rules/git.md).
 ## Claude Code e MCPs
 
 O repositório já traz os MCPs do time no `.mcp.json`: **Azure DevOps** (board), **Figma**
-(protótipo), **Jibble** (ponto e horas) e **Playwright** (navegador para testar os apps). Cada pessoa faz o setup uma vez, com as
+(protótipo) e **Playwright** (navegador para testar os apps e ler o Figma e o Jibble). Cada pessoa faz o setup uma vez, com as
 **próprias contas**. Nunca compartilhe nem commite o seu token.
 
 ### 1. Token do Azure DevOps
@@ -107,21 +107,24 @@ extensão e traz os textos exatos de cada tela.
 
 ### 5. Login no Jibble (ponto e horas)
 
-1. Tenha uma conta na organização do time no [Jibble](https://web.jibble.io). Peça o convite ao Daniel.
-2. No Claude Code, rode `/mcp`, escolha `jibble` → **Authenticate** e entre com a sua conta do Jibble no navegador.
+O Jibble é lido pelo mesmo Chrome do `playwright-figma` (o MCP oficial do Jibble não aceita o login do Claude Code).
 
-O MCP só faz o que o seu papel no Jibble permite: membro vê e lança as próprias horas, gestor também vê a equipe.
-Use pela skill `/jibble`, que liga cada registro à Task do Azure.
+1. Tenha uma conta na organização do time no [Jibble](https://web.jibble.io). Peça o convite ao Daniel.
+2. Na primeira vez que usar a `/jibble`, o Claude abre o Jibble nesse Chrome: entre com a sua conta na janela (o
+   Claude não digita senha). O login fica salvo no perfil.
+
+Use pela skill `/jibble`: `/jibble sincronizar` alinha as horas do Jibble com as Tasks do Azure, e `/jibble horas
+semana` mostra o seu timesheet.
 
 ### 6. Conferir
 
 Rode `claude` **na raiz do workspace** (não dentro de `apps/`) e aceite o aviso de confiança da
-pasta. O `/mcp` deve mostrar `azure-devops`, `figma`, `jibble`, `playwright` e `playwright-figma` conectados. Para
+pasta. O `/mcp` deve mostrar `azure-devops`, `figma`, `playwright` e `playwright-figma` conectados. Para
 testar, peça *"liste meus work items no Azure"*, *"rode o whoami do Figma"*, *"/jibble horas hoje"* e *"abra o
 http://localhost:5173 no Playwright"* (com o frontend rodando).
 
 Leituras no board e no Figma são liberadas. Qualquer escrita (criar ou editar work item, mexer no
-arquivo do Figma) pede confirmação. No Jibble, toda ação pede confirmação, inclusive as leituras. No Playwright, navegar e interagir com a página é liberado; rodar
+arquivo do Figma) pede confirmação. Na `/jibble`, toda escrita no Jibble ou no Azure mostra o que vai gravar e pede confirmação. No Playwright, navegar e interagir com a página é liberado; rodar
 JavaScript arbitrário ou enviar arquivo da sua máquina pede confirmação.
 
 ### Skills do time
@@ -144,7 +147,7 @@ Cada user story passa pelo SDD ([ADR-047](docs/ADR/ADR-047-desenvolvimento-orien
 | `/analisar-figma-mcp <nome da tela ou link>` | Mesma análise pelo MCP do Figma, para medidas e tokens (gasta a cota) |
 | `/revisar-codigo` | Antes do PR: revisa a branch nos padrões do projeto e no que a tarefa pedia |
 | `/criar-pr` | Abre o PR no padrão: commits com `AB#`, checagens do repo, push e template preenchido |
-| `/jibble entrada AB#519` | Bate ponto e lança ou consulta horas no Jibble (`pausa`, `volta`, `saida`, `lancar 2h AB#519`, `horas semana`), ligando a hora à Task do Azure |
+| `/jibble sincronizar` | Alinha as horas do Jibble com o Trabalho concluído das suas Tasks no Azure; também `horas semana`, `entrada AB#519`, `saida` e `lancar 1:30 AB#519` |
 
 As skills, os agents e as regras por pasta ficam em `.claude/` e valem para todo mundo que abrir o Claude na raiz
 do workspace.
