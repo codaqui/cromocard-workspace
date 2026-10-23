@@ -28,9 +28,9 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 ├── .claude/
 │   ├── settings.json              aprova os MCPs, libera leituras e pede confirmação nas escritas
 │   ├── rules/                     git (sempre) + regras por pasta: backend, frontend, modelagem de dados, casos de uso, specs, ADRs, diagramas
-│   ├── skills/                    /especificar, /planejar, /implementar, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-playwright, /analisar-figma-mcp, /revisar-codigo, /criar-pr
+│   ├── skills/                    /especificar, /planejar, /implementar, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-playwright, /analisar-figma-mcp, /revisar-codigo, /criar-pr, /jibble
 │   └── agents/                    analista-requisitos, leitor-figma, revisor-codigo
-├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`), `figma` (protótipo, OAuth via `/mcp`), `playwright` (Chrome isolado para testar os apps rodando) e `playwright-figma` (Chrome com perfil próprio, logado no Figma, para a `/analisar-figma-playwright`)
+├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`), `figma` (protótipo, OAuth via `/mcp`), `jibble` (ponto e horas, OAuth via `/mcp`), `playwright` (Chrome isolado para testar os apps rodando) e `playwright-figma` (Chrome com perfil próprio, logado no Figma, para a `/analisar-figma-playwright`)
 ├── README.md                      como clonar (com submódulos) e o setup de cada pessoa (token do Azure, login no Figma)
 └── CromoCardWorks.code-workspace  workspace VS Code (raiz + os 2 apps)
 ```
@@ -193,6 +193,7 @@ um ADR aceito. Detalhes em `.claude/rules/adrs.md`.
 | `/analisar-figma-mcp <link ou nome da tela> [o que precisa]` | Mesma análise pelo MCP do Figma (gasta cota): estrutura, tokens, contexto de implementação e regenerar o índice de telas |
 | `/revisar-codigo [repo] [base] [#id]` | Antes do PR: revisão em dois eixos, padrões e spec |
 | `/criar-pr [repo] [#id]` | Abre o PR no padrão: branch, commits com `AB#`, checagens, push e template |
+| `/jibble [entrada\|pausa\|volta\|saida\|lancar\|horas\|equipe] [AB#id]` | Bate ponto e lança ou consulta horas no Jibble, com a nota `AB#<id> <título>` ligando a hora à Task do Azure |
 
 | Agent | Faz |
 |---|---|
