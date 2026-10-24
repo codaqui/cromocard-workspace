@@ -13,14 +13,15 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 ```
 cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
 ├── docs/                          documentação — a fonte da verdade; só guarda documentação
-│   ├── ADR/                       ADR-001…046 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
+│   ├── ADR/                       ADR-001…055 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–107), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
 │   ├── Diagrama-de-Classe/        cromocard-diagrama-classes.v2.c4 (LikeC4, atual) + .v1.c4 (histórico) + README.md — 49 classes, 1:1 com o DER
-│   └── Diagramas/
-│       ├── DER/                   puml/, dbdiagram.io/ (DBML), chartdb/ (DDL PostgreSQL) + README.md
-│       ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
-│       ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml (CCD001–CCD046)
-│       └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD066)
+│   ├── Diagramas/
+│   │   ├── DER/                   puml/, dbdiagram.io/ (DBML), chartdb/ (DDL PostgreSQL) + README.md
+│   │   ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
+│   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml (CCD001–CCD046)
+│   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD066)
+│   └── Infraestrutura/            README.md (visão geral), topologia.md (estado atual), runbooks.md, historico.md — decisões no ADR-055; o código fica em apps/cromocard-backend/infra/ e .github/workflows/
 ├── specs/                         SDD (ADR-047): README.md (fluxo e índice), template/ e uma pasta CCDnnn-nome/ por user story
 ├── apps/                          submódulos git (`.gitmodules`) — cada app é um repo git próprio
 │   ├── cromocard-backend/         github.com/codaqui/cromocard-backend   (esqueleto + domínio de exemplo `users` em `develop`)
@@ -35,7 +36,7 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 └── CromoCardWorks.code-workspace  workspace VS Code (raiz + os 2 apps)
 ```
 
-**`docs/` é a fonte da verdade e só guarda documentação:** casos de uso, user stories, DER, diagramas e ADRs. O que
+**`docs/` é a fonte da verdade e só guarda documentação:** casos de uso, user stories, DER, diagramas, ADRs e a documentação da infraestrutura. O que
 deriva dela ou é material de trabalho fica fora de `docs/` (as specs do SDD ficam em `specs/`).
 
 ## Apps
