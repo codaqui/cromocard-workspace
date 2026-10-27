@@ -14,6 +14,8 @@ Vale para o workspace e para os dois apps. Cada app é um repositório próprio:
   `fix/<id>-<descricao>` (bug), `docs/<id>-<descricao>`, `chore/<descricao>`, `infra/<descricao>`.
   `<id>` é o número do work item no Azure Boards; a descrição vai em minúsculas, com hífens e sem acentos
   (`feature/120-marcar-carta-possuo`).
+- `pr-assets` (só nos apps) é uma branch órfã com os GIFs e prints dos critérios de aceite que a `/criar-pr` põe na
+  descrição dos PRs. Ela não sai de nenhuma branch e não entra em nenhuma.
 - `hotfix/<descricao>` sai de `main`, entra em `main` e **volta** para `homolog` e para a branch de trabalho.
 - Antes de começar e antes de commitar: `git fetch --all` e `git status`, para não divergir do que outra pessoa
   já subiu. Branch de feature é apagada depois do merge.
