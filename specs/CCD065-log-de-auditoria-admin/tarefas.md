@@ -6,7 +6,7 @@
 ## Backend — `apps/cromocard-backend`, branch `feature/340-log-de-auditoria`
 
 - [ ] **T1** · Criar consultas de lista, detalhe e total do log de auditoria — R3–R6, R8 · CA1–CA3, CA5 · AB#587
-  - Pronto quando: `audit-log.service.spec.ts` cobre filtros, detalhe e admin excluído.
+  - Pronto quando: `audit-logs.service.spec.ts` cobre filtros, detalhe e admin excluído.
 - [ ] **T2** · Criar rotas de leitura do log de auditoria — R1 · CA6 · AB#588
   - Pronto quando: as rotas aparecem no `/docs` e respondem `403` para quem não é ADMIN.
 
