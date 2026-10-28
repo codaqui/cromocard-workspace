@@ -1,6 +1,6 @@
 # CCD004 — Realizar Login
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #109 `CCD004-Realizar Login`
 - **Caso de uso:** [04-realizar-login.md](../../docs/Casos-De-Uso/04-realizar-login.md)

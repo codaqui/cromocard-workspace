@@ -1,6 +1,6 @@
 # CCD006 — Recuperar Senha
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #111 `CCD006-Recuperar Senha`
 - **Caso de uso:** [06-recuperar-senha.md](../../docs/Casos-De-Uso/06-recuperar-senha.md)

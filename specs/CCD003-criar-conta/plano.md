@@ -35,7 +35,7 @@ O reenvio é `POST /api/v1/auth/verify-email/resend`.
   | Status | `error` | Quando | Requisito |
   |---|---|---|---|
   | 400 | `VALIDATION_ERROR` | campo inválido, senha fora da regra, `role` fora de CUSTOMER/SELLER, termos não aceitos | R10, R11, L1, L2 |
-  | 409 | `EMAIL_ALREADY_REGISTERED` | e-mail já cadastrado (`details.emailVerified` diz se pode reenviar) | R13, L6 |
+  | 409 | `EMAIL_ALREADY_REGISTERED` | e-mail já cadastrado; a tela sempre oferece entrar ou reenviar a confirmação (o reenvio não faz nada se o e-mail já estiver confirmado) | R13, L6 |
   | 409 | `ACCOUNT_DELETED` | e-mail de conta excluída | R14 |
 
 ### `POST /api/v1/auth/verify-email` — R32
