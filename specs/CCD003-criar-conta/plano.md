@@ -89,6 +89,8 @@ O reenvio é `POST /api/v1/auth/verify-email/resend`.
 - `MAIL_DRIVER=ethereal` só fora de produção: com `APP_ENV=production` (ADR-018) a API recusa subir sem `smtp`, porque sem
   e-mail entregue ninguém confirma a conta e o login exige e-mail confirmado (L9). Homologação continua no Ethereal (link
   no log, visto pelo Dozzle).
-- **Pendência:** escolher o SMTP de produção e levar `MAIL_HOST`, `MAIL_PORT`, `MAIL_USER` e `MAIL_PASSWORD` para o
-  Environment `prod` do GitHub e para o `deploy.yml`, antes da primeira publicação em `main`.
+- O `deploy.yml` já grava `MAIL_DRIVER`, `MAIL_FROM`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USER` (variáveis) e `MAIL_PASSWORD`
+  (secret) do Environment no `.env`, e a `api` e o `ws` recebem o mesmo `MAIL_*` (os dois carregam o mesmo `env.ts`).
+- **Pendência:** escolher o SMTP de produção e criar essas variáveis no Environment `prod` do GitHub, com
+  `MAIL_DRIVER=smtp`, antes da primeira publicação em `main`. Sem isso, a API e o ws recusam subir em produção.
 - O texto dos termos não existe: o aceite mostra os rótulos do Figma, sem link, até haver as páginas.
