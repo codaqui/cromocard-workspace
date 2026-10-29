@@ -63,10 +63,10 @@ configuração ou componentes que ainda não aparecem em página nenhuma. Nesses
    tarefa do `tarefas.md`. Sem spec nenhuma, use os critérios do work item no Azure; sem nenhum, pergunte quais
    fluxos mostrar. Separe os CAs que aparecem na tela dos que só os testes provam.
 2. **Subir os apps:** o frontend (`npm run dev`, em background) e, se a tela chama a API, também o backend
-   (`npm run dev`, com o PostgreSQL local de pé e os dados do seed: `npm run db:seed`, que é idempotente). Enquanto
-   o backend não tem `/auth`, o frontend entra com o `VITE_DEV_ACCESS_TOKEN` (README do frontend, "Sessão de
-   desenvolvimento"). Se o token tiver vencido, gere outro e passe por variável de ambiente ao subir o Vite, sem
-   mexer no `.env`.
+   (`npm run dev`, com o PostgreSQL local de pé e os dados do seed: `npm run db:seed`, que é idempotente).
+   Entre pela tela de login com as contas do seed, uma por papel (README do frontend, "Entrar no app"). Se o CA
+   altera dados (cadastro, troca de senha), use uma conta criada só para a gravação, apague-a no fim e rode o
+   `npm run db:seed` de novo para devolver as senhas das contas de teste.
 3. **Gravar com o MCP `playwright`** (o Chrome isolado, nunca o `playwright-figma`):
    - `browser_resize` em 1440×900, a largura do Figma. Se o CA for de responsividade, use também 390×844.
    - Para cada CA, execute o fluxo do "quando" até aparecer o "então", com um `browser_take_screenshot` a cada passo
