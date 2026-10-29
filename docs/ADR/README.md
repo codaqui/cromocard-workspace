@@ -70,7 +70,7 @@ ter o status `Substituído por ADR-XXX`.
 | [052](ADR-052-credenciamento-de-vendedor-no-modelo-de-dados.md) | Dados | Credenciamento de vendedor no modelo de dados (`seller_verifications`, documentos e notas) | Aceito |
 | [053](ADR-053-colunas-e-tabelas-do-escopo-adicional-do-backoffice.md) | Dados | Colunas, enums e tabelas do escopo adicional do BackOffice | Aceito |
 | [054](ADR-054-tabelas-do-marketplace-para-indicadores.md) | Dados | Tabelas do marketplace criadas (só leitura) para os indicadores financeiros | Aceito |
-| [055](ADR-055-topologia-de-ambientes-e-implantacao.md) | Infraestrutura | Topologia de ambientes e implantação no servidor próprio (Compose, GHCR, runner self-hosted, Cloudflare Tunnel, Tailscale, backup) | Proposto |
+| [055](ADR-055-topologia-de-ambientes-e-implantacao.md) | Infraestrutura | Topologia de ambientes e implantação no servidor próprio (Compose, GHCR, runner self-hosted, Cloudflare Tunnel, Tailscale, backup) | Aceito |
 
 ## Modelo
 

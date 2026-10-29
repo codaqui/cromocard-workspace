@@ -1,6 +1,6 @@
 # ADR-055 — Topologia de ambientes e implantação no servidor próprio
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 29/10/2026)
 - **Data:** 2026-10-23
 - **Decisores:** Lucas (infraestrutura) e Duarte (automação); validação: Daniel (PO)
 
