@@ -1,6 +1,6 @@
 # ADR-037 — Notação de relacionamento no diagrama de classes (rótulo textual)
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 29/10/2026; a rejeição da revisão de 01/10 foi revista e a notação LikeC4 com rótulo textual foi mantida)
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 
