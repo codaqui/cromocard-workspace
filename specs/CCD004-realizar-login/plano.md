@@ -74,7 +74,7 @@ Domínio `src/domains/auth/`, no modelo de `src/domains/users/` (ADR-004), regis
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `database/schema.prisma` + migrations | `RefreshToken` e o índice único em `User` | R19, L15 |
-| `src/config/env.ts` · `.env.example` | `JWT_ACCESS_TTL`, `REFRESH_TTL`, `REFRESH_TTL_REMEMBER`, `GOOGLE_CLIENT_ID`, `COOKIE_SECURE` | R51 |
+| `src/config/env.ts` · `.env.example` | `JWT_ACCESS_TTL`, `REFRESH_TTL`, `REFRESH_TTL_REMEMBER`, `GOOGLE_CLIENT_ID` (opcional: sem ela o login com Google fica desligado), `COOKIE_SECURE`, `TRUST_PROXY` | R51 |
 | `src/lib/password.ts` | `hashPassword`/`verifyPassword` com argon2id | R10 |
 | `src/lib/jwt.ts` | `signAccessToken` com TTL do env; `authenticate` recusa token com `purpose` | R15–R17 |
 | `src/lib/google.ts` | `verifyGoogleIdToken` (`google-auth-library`) | R25 |
@@ -127,6 +127,11 @@ Feature `src/features/auth/`, no modelo de `src/features/users/` (ADR-040).
 ## Decisões técnicas
 
 - argon2id (`argon2`), cookie `cromocard_refresh` com `Path=/api/v1/auth`, rate limit de 5/min no login e no Google.
+- `TRUST_PROXY=1` em hml e prod: atrás do cloudflared, sem ele o rate limit veria um IP só para o site inteiro.
+- Login com e-mail inexistente ou conta só Google roda o argon2 contra um hash fixo, para o tempo de resposta não revelar
+  quais e-mails têm conta (R11).
+- Duas abas renovando juntas: o frontend serializa a renovação com o Web Locks, para a segunda aba não reapresentar o
+  refresh já rotacionado (o que contaria como reuso e derrubaria as sessões).
 - O refresh rotacionado herda o `expires_at`, o que dispensa coluna para o "lembrar de mim" (L14).
 - `user_agent` e `ip_address` são gravados no login (R19).
 - Token e cliente do Google entram por injeção no construtor, para os testes.

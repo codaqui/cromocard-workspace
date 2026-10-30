@@ -1,6 +1,6 @@
 # CCD004 — Realizar Login
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #109 `CCD004-Realizar Login`
 - **Caso de uso:** [04-realizar-login.md](../../docs/Casos-De-Uso/04-realizar-login.md)
@@ -70,7 +70,7 @@ e recuperação de senha é a [CCD006](../CCD006-recuperar-senha/spec.md).
 | R48 | A tela mostra o `message` de erro que vem da API, em pt-BR | Mensagem | ADR-041; ADR-011 |
 | R49 | Rotas sob `/api/v1`; sucesso em `{ data }` e erro em `{ error, message, details? }` | Regra | ADR-011; ADR-006 |
 | R50 | Senhas, hashes, tokens, o header `Authorization`, cookies e e-mail nunca vão para o log | Regra | ADR-019 |
-| R51 | `JWT_ACCESS_TTL`, `REFRESH_TTL`, `REFRESH_TTL_REMEMBER` e `GOOGLE_CLIENT_ID` são validadas no `env`; a API não sobe se faltar alguma | Regra | ADR-005, Consequências; ADR-018 |
+| R51 | `JWT_ACCESS_TTL`, `REFRESH_TTL` e `REFRESH_TTL_REMEMBER` são validadas no `env`, e a API não sobe se faltar alguma. `GOOGLE_CLIENT_ID` é opcional: sem ela, o login com Google fica desligado (decisão da revisão do backend#12, para o deploy não depender do Google Cloud) | Regra | ADR-005, Consequências; ADR-018 |
 | R52 | Um job diário apaga fisicamente os `refresh_tokens` expirados | Regra | ADR-010; ADR-015, item 9 |
 
 ## Critérios de aceite

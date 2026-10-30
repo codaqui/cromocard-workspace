@@ -11,7 +11,7 @@ Repositório próprio (submódulo). Rode git com `git -C apps/cromocard-frontend
 
 `npm ci` · `cp .env.example .env` · `npm run dev` (http://localhost:5173, precisa da API em
 http://localhost:3000) · `npm run format:check` · `npm run lint` · `npm run typecheck` · `npm test` ·
-`npm run test:cov` · `npm run build`. Sessão de desenvolvimento (token gerado à mão): README do frontend.
+`npm run test:cov` · `npm run build`. Para entrar no dev: as contas do `npm run db:seed` do backend (README do frontend, "Entrar no app").
 
 ## Estrutura
 
@@ -42,8 +42,9 @@ http://localhost:3000) · `npm run format:check` · `npm run lint` · `npm run t
   sempre de `@/lib/zod` (mensagens pt-BR); lógica em `hooks/use<Nome>Form.ts`, e o componente do formulário
   recebe `onSubmit`/`isSubmitting`/`errorMessage` por props, sem conhecer a API.
 - **Sessão** (ADR-043): access token só em memória (nunca `localStorage`), refresh em cookie `httpOnly`;
-  `useAuth()` → `{ user: { id, role }, signOut }`; `signOut` limpa o cache do Query. Até existir `/auth`, o dev
-  usa `VITE_DEV_ACCESS_TOKEN` (ignorado no build).
+  `useAuth()` → `{ user: { id, role }, isRestoringSession, hasSignedOut, signIn, signOut }`; o app renova a sessão
+  pelo cookie ao iniciar e num `401`, e `signOut` revoga o refresh e limpa o cache do Query. O login é a feature
+  `src/features/auth/` (CCD004); no dev, as contas de teste vêm do `npm run db:seed` do backend.
 - **Estilos** (ADR-044): CSS Modules + tokens em `styles/tokens.css` — só `var(--…)`, nunca cor ou espaçamento
   solto; sem MUI/Chakra/Tailwind; os tokens seguem as variáveis do Figma.
 - **Telas a partir do Figma**: a documentação manda no conteúdo (campos, ações, mensagens, regras), o Figma manda

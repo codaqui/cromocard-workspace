@@ -1,6 +1,6 @@
 # CCD006 — Recuperar Senha
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #111 `CCD006-Recuperar Senha`
 - **Caso de uso:** [06-recuperar-senha.md](../../docs/Casos-De-Uso/06-recuperar-senha.md)
@@ -95,7 +95,7 @@ de Login é da [CCD004](../CCD004-realizar-login/spec.md).
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Fluxo da redefinição (vai para o caso de uso): campos (senha nova e confirmação), quando o token é validado, mensagens | Senha nova e confirmação; o link é validado ao abrir e ao gravar; mensagens de sucesso e de link inválido | `06`, FP 6–8 e FA 3 |
+| L1 | Fluxo da redefinição (vai para o caso de uso): campos (senha nova e confirmação), quando o token é validado, mensagens | Senha nova e confirmação; no MVP o link é validado só ao gravar (decisão do PO na revisão do backend#14; validar ao abrir fica para depois); mensagens de sucesso e de link inválido | `06`, FP 6–8 e FA 3 |
 | L2 | Validade do link, uso único, e se um pedido novo invalida os links anteriores | 1 hora, uso único, e um pedido novo invalida os links anteriores | `06`, FP 5; ADR-048, item 2 |
 | L3 | O token é guardado puro ou com hash (SHA-256, como no `refresh_tokens`)? Como é gerado? | 32 bytes aleatórios no link; o banco guarda só o SHA-256 | ADR-048, item 2 |
 | L4 | Regra da senha nova: a mesma da CCD003 (L2 de lá)? Senha igual à atual é aceita? | A mesma regra do cadastro; senha igual à atual é aceita | `06`, FP 7 |

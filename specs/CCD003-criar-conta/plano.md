@@ -35,7 +35,7 @@ O reenvio é `POST /api/v1/auth/verify-email/resend`.
   | Status | `error` | Quando | Requisito |
   |---|---|---|---|
   | 400 | `VALIDATION_ERROR` | campo inválido, senha fora da regra, `role` fora de CUSTOMER/SELLER, termos não aceitos | R10, R11, L1, L2 |
-  | 409 | `EMAIL_ALREADY_REGISTERED` | e-mail já cadastrado (`details.emailVerified` diz se pode reenviar) | R13, L6 |
+  | 409 | `EMAIL_ALREADY_REGISTERED` | e-mail já cadastrado; a tela sempre oferece entrar ou reenviar a confirmação (o reenvio não faz nada se o e-mail já estiver confirmado) | R13, L6 |
   | 409 | `ACCOUNT_DELETED` | e-mail de conta excluída | R14 |
 
 ### `POST /api/v1/auth/verify-email` — R32
@@ -86,4 +86,11 @@ O reenvio é `POST /api/v1/auth/verify-email/resend`.
 ## Decisões técnicas
 
 - E-mail sai sem `await` no request (registrado no log se falhar), para a resposta não depender do SMTP.
+- `MAIL_DRIVER=ethereal` só fora de produção: com `APP_ENV=production` (ADR-018) a API recusa subir sem `smtp`, porque sem
+  e-mail entregue ninguém confirma a conta e o login exige e-mail confirmado (L9). Homologação continua no Ethereal (link
+  no log, visto pelo Dozzle).
+- O `deploy.yml` já grava `MAIL_DRIVER`, `MAIL_FROM`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USER` (variáveis) e `MAIL_PASSWORD`
+  (secret) do Environment no `.env`, e a `api` e o `ws` recebem o mesmo `MAIL_*` (os dois carregam o mesmo `env.ts`).
+- **Pendência:** escolher o SMTP de produção e criar essas variáveis no Environment `prod` do GitHub, com
+  `MAIL_DRIVER=smtp`, antes da primeira publicação em `main`. Sem isso, a API e o ws recusam subir em produção.
 - O texto dos termos não existe: o aceite mostra os rótulos do Figma, sem link, até haver as páginas.
