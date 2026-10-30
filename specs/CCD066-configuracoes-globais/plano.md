@@ -33,7 +33,8 @@ Schema de `notification.templates`: lista de `{ name: 1–60, title: 1–120, co
 | `src/domains/admin/settings/settings.validator.ts` · `setting-schemas.ts` | schema por chave | R4, R7 |
 | `settings.repository.ts` | ler e atualizar com `updated_by_id` | R3, R5 |
 | `settings.service.ts` + `.spec.ts` | validar, salvar, auditar, categorias padrão via `catalogService` | R4–R7, R10, R13, R14 |
-| `settings.controller.ts` · `.routes.ts` · `.swagger.ts` | rotas de admin e pública | R1, R15 |
+| `settings.controller.ts` · `.routes.ts` · `.swagger.ts` | rotas de admin, no módulo que a fundação já montou em `/admin/settings` (ADMIN) | R1 |
+| `settings-public.routes.ts` + `settings-public.module.ts` · `src/routes.ts` | rota pública `GET /settings/public/:key` num módulo próprio, sem `authenticate`, registrado com uma linha no `routes.ts` (o módulo da fundação exige ADMIN em todas as rotas) | R15 |
 
 ## Frontend
 

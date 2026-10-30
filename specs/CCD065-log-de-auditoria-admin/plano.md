@@ -26,8 +26,8 @@ Ambas com `authenticate` + `authorize('ADMIN')`; sem rotas de escrita (R8).
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `src/domains/admin/audit-logs/audit-logs.validator.ts` | filtros | R5 |
-| `audit-log.repository.ts` | consultas com o admin incluído mesmo excluído | R3, R4, R8 |
-| `audit-log.service.ts` + `.spec.ts` | lista, detalhe e total de 30 dias | R3–R6 |
+| `audit-logs.repository.ts` | consultas com o admin incluído mesmo excluído | R3, R4, R8 |
+| `audit-logs.service.ts` + `.spec.ts` | lista, detalhe e total de 30 dias | R3–R6 |
 | `audit-logs.controller.ts` · `.routes.ts` · `.swagger.ts` | rotas de leitura | R1 |
 
 ## Frontend
@@ -41,6 +41,6 @@ Ambas com `authenticate` + `authorize('ADMIN')`; sem rotas de escrita (R8).
 
 | Critério | Onde |
 |---|---|
-| CA1–CA3, CA5 | `audit-log.service.spec.ts` · integração |
+| CA1–CA3, CA5 | `audit-logs.service.spec.ts` · integração |
 | CA4 | `AuditLogsPage.spec.tsx` |
 | CA6 | integração |

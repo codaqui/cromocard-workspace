@@ -32,7 +32,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/schema.prisma` + migration · `audit-log.service.ts` | `ip_address` vindo do contexto do request | R9 |
+| `database/schema.prisma` + migration · `audit-logs.service.ts` | `ip_address` vindo do contexto do request | R9 |
 | `audit-logs.service.ts` + `.spec.ts` | exportação, resumo, filtros rápidos e busca por IP | R2–R5, R7–R9 |
 | routes · swagger | rotas acima | R1 |
 

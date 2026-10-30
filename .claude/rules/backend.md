@@ -30,7 +30,7 @@ Fluxo de trabalho da equipe: `docs/ONBOARDING.md` do repositório do backend.
   `config/` (env, logger, swagger), `lib/` (prisma, jwt, zod), `domains/`, `shared/`
   (errors, middlewares, utils, types), `providers/`, `jobs/`, `socket/`.
 - **Migrations: uma por tabela** (`npm run db:migrate -- --name create_<tabela>_table`). O `schema.prisma`
-  só contém as tabelas já implementadas (hoje: `users`); as demais entram uma a uma, copiadas do DER
+  só contém as tabelas já implementadas (hoje: `users` e as 15 da fundação do BackOffice); as demais entram uma a uma, copiadas do DER
   (`.claude/rules/modelagem-de-dados.md`).
 
 ## Regras

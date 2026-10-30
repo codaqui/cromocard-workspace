@@ -16,7 +16,7 @@
 - [ ] **T5** · Criar AuditLogService com motivo no domínio admin · AB#523
   - Pronto quando: o service grava `audit_logs` com o motivo em `details` e tem teste.
 - [ ] **T6** · Criar provider de storage local e endpoint POST /uploads · AB#524
-  - Pronto quando: o upload aceita PNG/JPG/WEBP até 4 MB, devolve a URL e recusa o resto com `400`.
+  - Pronto quando: o upload aceita PNG/JPG/WEBP até 4 MB, devolve a URL, recusa outro tipo com `400` e arquivo maior com `413` (ADR-050).
 - [ ] **T7** · Registrar os módulos vazios do admin (dashboard, reports, settings) em routes.ts · AB#525
   - Pronto quando: os módulos sobem sem rotas e cada story só acrescenta as suas.
 
