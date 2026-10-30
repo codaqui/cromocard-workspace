@@ -14,6 +14,11 @@ AB#
 - [ ] `refactor` — sem mudança de comportamento
 - [ ] `test` / `docs` / `chore` / `ci`
 
+## Critérios de aceite
+<!-- Um item por CA que o PR cobre, com o texto igual ao da spec e o teste que o prova. Status: ✅ demonstrado ·
+🧪 coberto só por teste · ⏳ fica para outro PR (diga qual). Backend não tem tela: sem Playwright. -->
+- ✅ **CA1** — Dado …, quando …, então … · `tests/integration/<arquivo>.spec.ts`
+
 ## Como testar
 <!-- Passo a passo para quem vai revisar. Inclua a rota, o payload e o resultado esperado. -->
 1.

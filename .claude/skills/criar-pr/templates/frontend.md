@@ -17,6 +17,16 @@ AB#
 - [ ] `refactor` — sem mudança de comportamento
 - [ ] `test` / `docs` / `chore` / `ci`
 
+## Critérios de aceite
+<!-- Um bloco por CA que o PR cobre, com o texto igual ao da spec. Status: ✅ demonstrado na tela · 🧪 coberto só por
+teste (diga qual) · ⏳ fica para outro PR (diga qual). Evidência: GIF do fluxo ou print do estado, da branch pr-assets. -->
+
+<details open>
+<summary>✅ <b>CA1</b> — Dado …, quando …, então …</summary>
+
+![CA1](https://raw.githubusercontent.com/codaqui/cromocard-frontend/pr-assets/<branch>/ca1.gif)
+</details>
+
 ## Como testar
 <!-- Passo a passo: rota no navegador, papel do usuário (CUSTOMER, SELLER, ADMIN), dados e resultado esperado. -->
 1.
