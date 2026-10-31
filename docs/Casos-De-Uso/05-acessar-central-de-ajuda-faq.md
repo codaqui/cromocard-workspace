@@ -1,6 +1,6 @@
 | Nome do Caso de Uso | Acessar Central de Ajuda (FAQ) |
 |---|---|
-| Finalidade/Objetivo | Permitir que o visitante acesse uma página de dúvidas frequentes para entender o aplicativo. |
+| Finalidade/Objetivo | Permitir que o visitante acesse uma página de dúvidas frequentes para entender a plataforma. |
 | Atores | Visitante |
 | Pré Condições | Nenhuma |
 

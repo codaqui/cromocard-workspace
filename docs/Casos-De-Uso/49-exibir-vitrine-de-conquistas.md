@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Exibir Vitrine de Conquistas |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário visualize suas conquistas obtidas na plataforma, apresentando seu progresso e realizações de forma organizada em seu perfil. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir um perfil cadastrado. |
 
 ### Fluxo Principal

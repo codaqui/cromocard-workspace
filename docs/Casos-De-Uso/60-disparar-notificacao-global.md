@@ -13,7 +13,7 @@
 | 3. O administrador informa o título, o conteúdo e, opcionalmente, o link de destino da notificação. |  |
 |  | 4. O sistema valida as informações preenchidas. |
 | 5. O administrador confirma o envio da notificação. |  |
-|  | 6. O sistema envia a notificação, dentro do app (central de notificações), para todos os usuários não excluídos e não suspensos, menos o próprio administrador. |
+|  | 6. O sistema envia a notificação, dentro da plataforma (central de notificações), para todos os usuários não excluídos e não suspensos, menos o próprio administrador. |
 |  | 7. O sistema registra o disparo da notificação. |
 |  | 8. O sistema informa ao administrador que a notificação foi enviada com sucesso. |
 

@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Visualizar Notificações |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário visualize as notificações relacionadas às atividades e interações ocorridas na plataforma. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir acesso à central de notificações. |
 
 ### Fluxo Principal

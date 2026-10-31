@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Responder Mensagem Específica |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário responda diretamente a uma mensagem específica dentro de uma conversa, facilitando a identificação do contexto da resposta. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir uma conversa ativa com outro usuário. |
 
 ### Fluxo Principal
@@ -21,5 +21,5 @@
 |---|---|
 | 1. O usuário tenta enviar uma resposta sem inserir conteúdo. |  |
 |  | 2. O sistema impede o envio e exibe a mensagem "Digite uma mensagem antes de enviar". |
-| 1. O usuário tenta responder a uma mensagem que não está mais disponível. |  |
-|  | 2. O sistema informa que a mensagem não está mais disponível e cancela a referência à mensagem original. |
+| 3. O usuário tenta responder a uma mensagem que não está mais disponível. |  |
+|  | 4. O sistema informa que a mensagem não está mais disponível e cancela a referência à mensagem original. |

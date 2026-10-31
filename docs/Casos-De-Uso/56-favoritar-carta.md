@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Favoritar Carta |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário favorite uma carta para facilitar seu acesso e acompanhamento dentro da plataforma. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e a carta deve estar disponível para visualização. |
 
 ### Fluxo Principal

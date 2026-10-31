@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Visualizar Mensagens |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário visualize suas conversas e mensagens recebidas e enviadas na plataforma. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir acesso à área de mensagens. |
 
 ### Fluxo Principal

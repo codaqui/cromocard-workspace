@@ -55,7 +55,7 @@ aprovadas.
 | EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793` | CCD098 | Não há frame do detalhe. Gaveta lateral com os dados e as ações; o Gabriel desenha. |
 | EA-059-04 | Status "Em análise" (vendedor aguardando credenciamento) | `208-1793` | CCD094 | |
 | EA-060-01 | Link de destino da notificação | `208-2380` | **MVP** (CCD060, L4) | |
-| EA-060-02 | Pré-visualização da notificação num celular | `208-2380` | **MVP** (plano da CCD060) | |
+| EA-060-02 | Pré-visualização da notificação num celular | `208-2380` | **MVP** (plano da CCD060) | Não há app mobile nem push (ADR-056): a prévia mostra como a notificação aparece na central de notificações da plataforma. |
 | EA-060-03 | Contadores de caracteres (título 80, corpo 240) | `208-2380` | **MVP** (CCD060) | Vale o DER: 120 e 500. |
 | EA-060-04 | Botão com o número de destinatários e aviso de envio | `208-2380` | **MVP** (plano da CCD060) | |
 | EA-060-05 | Histórico com público, canal e status | `208-2380` | CCD101 (público e canal), CCD100 (status) | O histórico em si é MVP (CCD060, L5). |

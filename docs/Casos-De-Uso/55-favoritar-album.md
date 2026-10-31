@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Favoritar Álbum |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário favorite um álbum para facilitar seu acesso e acompanhamento dentro da plataforma. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e o álbum deve estar disponível para visualização. |
 
 ### Fluxo Principal

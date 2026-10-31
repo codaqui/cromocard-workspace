@@ -8,13 +8,13 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1.O cliente acessa o Dashboard. |  |
-| 2.O cliente seleciona a seção “Anúncios Ativos”. |  |
-|  | 3.O sistema busca os anúncios ativos relacionados ao cliente. |
-|  | 4.O sistema exibe a listagem dos anúncios encontrados. |
+| 1. O cliente acessa o Dashboard. |  |
+| 2. O cliente seleciona a seção “Anúncios Ativos”. |  |
+|  | 3. O sistema busca os anúncios ativos relacionados ao cliente. |
+|  | 4. O sistema exibe a listagem dos anúncios encontrados. |
 
 ### Fluxo Alternativo
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-|  | 1.Caso não existam anúncios ativos disponíveis, o sistema exibe a mensagem: “Não existem anúncios ativos no momento.” |
+|  | 1. Caso não existam anúncios ativos disponíveis, o sistema exibe a mensagem: “Não existem anúncios ativos no momento.” |

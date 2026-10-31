@@ -8,13 +8,13 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1.O cliente acessa a listagem de anúncios. |  |
-| 2.O cliente seleciona a opção “Ordenar por mais recentes”. |  |
-|  | 3.O sistema organiza os anúncios pela data de publicação, do mais recente para o mais antigo. |
-|  | 4.O sistema atualiza a listagem. |
+| 1. O cliente acessa a listagem de anúncios. |  |
+| 2. O cliente seleciona a opção “Ordenar por mais recentes”. |  |
+|  | 3. O sistema organiza os anúncios pela data de publicação, do mais recente para o mais antigo. |
+|  | 4. O sistema atualiza a listagem. |
 
 ### Fluxo Alternativo
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-|  | 1.Caso não existam anúncios disponíveis, o sistema informa que não existem anúncios para exibir. |
+|  | 1. Caso não existam anúncios disponíveis, o sistema informa que não existem anúncios para exibir. |
