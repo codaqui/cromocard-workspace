@@ -9,7 +9,7 @@ paths:
 
 - **Fonte da verdade:** `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml`. Os `.sql` em
   `chartdb/` e os `.puml` são derivados dele — **mantenha os três formatos sincronizados** ao
-  alterar o modelo (50 tabelas, 90 FKs, 27 enums). Os `.svg` estão desatualizados (pré-tradução).
+  alterar o modelo (50 tabelas, 90 FKs, 27 enums). Regere junto os `.svg` de `puml/` (`.claude/rules/diagramas.md`) e os de `dbdiagram.io/` (comandos no `README.md` do DER).
 - O diagrama de classes (`docs/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`) é 1:1 com o DER
   (ADR-036): entidade criada ou alterada no DER muda também a classe correspondente.
 - **Identificadores em inglês** (ADR-003): tabelas `snake_case` no **plural** (`users`, `orders`,

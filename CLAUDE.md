@@ -13,14 +13,14 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 ```
 cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
 ├── docs/                          documentação — a fonte da verdade; só guarda documentação
-│   ├── ADR/                       ADR-001…055 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
+│   ├── ADR/                       ADR-001…056 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–107), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
-│   ├── Diagrama-de-Classe/        cromocard-diagrama-classes.v2.c4 (LikeC4, atual) + .v1.c4 (histórico) + README.md — 49 classes, 1:1 com o DER
+│   ├── Diagrama-de-Classe/        cromocard-diagrama-classes.v2.c4 (LikeC4, atual) + historico/ (.v1.c4) + README.md — 49 classes, 1:1 com o DER
 │   ├── Diagramas/
 │   │   ├── DER/                   puml/, dbdiagram.io/ (DBML), chartdb/ (DDL PostgreSQL) + README.md
 │   │   ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
-│   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml (CCD001–CCD046)
-│   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD066)
+│   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml + .svg (CCD001–CCD107)
+│   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD107)
 │   └── Infraestrutura/            README.md (visão geral), topologia.md (estado atual), runbooks.md, historico.md — decisões no ADR-055; o código fica em apps/cromocard-backend/infra/ e .github/workflows/
 ├── specs/                         SDD (ADR-047): README.md (fluxo e índice), template/ e uma pasta CCDnnn-nome/ por user story
 ├── apps/                          submódulos git (`.gitmodules`) — cada app é um repo git próprio
@@ -62,15 +62,13 @@ No diagrama de casos de uso também existe "Administrador do Grupo" (herda de Cl
 **Containers:**
 | Container | Stack | Uso |
 |---|---|---|
-| Aplicação Web | React + Vite (SPA) | Visitantes e clientes |
-| Aplicativo Mobile | React Native | Mesmas funções da web |
-| Painel BackOffice | React + Vite (SPA) | Administradores |
+| Aplicação Web (SPA) | React 19 + TypeScript + Vite | Áreas Pública (visitantes), Cliente (clientes e vendedores) e BackOffice em `/backoffice` (administradores) |
 | API de Aplicação | Node.js + Express + Prisma | REST, autenticação JWT (`Authorization: Bearer`) |
-| Mensageria em Tempo Real | Node.js + WebSocket | Chat pessoal e de grupo, conexão autenticada via JWT |
+| Mensageria em Tempo Real | Node.js + Socket.IO (ADR-012) | Chat pessoal e de grupo, conexão autenticada via JWT |
 | Banco de Dados | PostgreSQL (via Prisma ORM) | Todos os dados |
 
-Na implementação, Aplicação Web e Painel BackOffice são **um único SPA** (`cromocard-frontend`, BackOffice
-em `/backoffice`) — ADR-038. O C4 nível 2 ainda mostra os dois containers separados.
+Web e BackOffice são **um único SPA** (`cromocard-frontend`, BackOffice em `/backoffice`) — ADR-038.
+**Não há aplicativo mobile** (ADR-056): quem usa celular acessa o SPA pelo navegador, e não há notificação push.
 
 **Sistemas externos:** Gateway de Pagamento (Stripe/Mercado Pago, HTTPS/Webhook) e Transportadora.
 
@@ -122,8 +120,8 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 - `80-visualizar-quantidade-disponivel.md` tem título duplicado; o conteúdo é **Visualizar Dados do Vendedor**.
 - Busca por vendedor aparece em `33-` e em `67-`.
 - CCD032/CCD033 divergem entre o board do Azure e a planilha `CromoCard 1.xlsx`.
-- O diagrama de casos de uso (`.puml`) cobre só CCD001–CCD046; o de atividades vai até CCD066;
-  os arquivos `.md` vão até 93 (marketplace e painel do vendedor) e, de 94 a 107, o escopo adicional vindo do Figma.
+- Os arquivos `.md` vão até 93 (marketplace e painel do vendedor) e, de 94 a 107, o escopo adicional vindo do Figma;
+  a planilha `CromoCard 1.xlsx` tem uma aba por caso de uso (CCD001–CCD107).
 
 ## SDD — da user story ao código (ADR-047)
 
