@@ -22,7 +22,7 @@ Hipótese de trabalho a validar: colecionadores de cartas e figurinhas controlam
 dispersa (planilhas, anotações, grupos de mensagens) e negociam trocas e vendas em canais genéricos,
 sem um lugar único para acompanhar o progresso do álbum, encontrar outros colecionadores e comprar ou vender cartas.
 
-**Objetivo geral (derivado do C4 – Contexto):** desenvolver uma plataforma web e mobile que centralize a
+**Objetivo geral (derivado do C4 – Contexto):** desenvolver uma plataforma web (acessível também pelo navegador do celular) que centralize a
 gestão de coleções de cartas colecionáveis, a interação entre colecionadores e a negociação de cartas,
 com um painel administrativo para gestão e moderação.
 
@@ -89,11 +89,9 @@ Colecionáveis. Sistemas externos: **Gateway de Pagamento** (ex.: Stripe/Mercado
 
 | Container | Tecnologia | Função |
 |---|---|---|
-| Aplicação Web | React + Vite | SPA para visitantes e clientes |
-| Aplicativo Mobile | React Native | Mesmas funcionalidades da web, otimizado para celular |
-| Painel BackOffice | React + Vite | SPA para administradores |
+| Aplicação Web (SPA) | React 19 + TypeScript + Vite | SPA único com as áreas Pública, Cliente e BackOffice (`/backoffice`), separadas por rota e papel (ADR-038) |
 | API de Aplicação | Node.js + Express + Prisma | Regras de negócio via REST; autenticação JWT |
-| Serviço de Mensageria em Tempo Real | Node.js + WebSocket | Chat pessoal e de grupo em tempo real, autenticado via JWT |
+| Serviço de Mensageria em Tempo Real | Node.js + Socket.IO | Chat pessoal e de grupo em tempo real, autenticado via JWT |
 | Banco de Dados | PostgreSQL | Persistência de todos os dados, acessado via Prisma ORM |
 
 **Nível 3 – Componentes da API (9 módulos):** Autenticação · Acesso Público · Coleção · Comunidade ·
@@ -157,9 +155,9 @@ números exatamente como na seção 2; itens [PENDENTE] permanecem visíveis com
 | 9 | MVP primeiro, marketplace e extras depois | 111 user stories: 76 MVP, 16 futuro, 19 futuro marketplace (seção 2.3) | Gráfico de barras ou rosca |
 | 10 | Exemplo de caso de uso: marcar carta e ver progresso | Fluxo resumido: abrir álbum → marcar possuo/faltante/repetida → sistema atualiza progresso | Fluxo em 3–4 passos |
 | 11 | Contexto: o sistema e seus parceiros externos | C4 Nível 1: atores, sistema, gateway de pagamento, transportadora | **Espaço reservado: diagrama C4 Nível 1** |
-| 12 | Web, mobile, API e tempo real sobre PostgreSQL | C4 Nível 2: tabela de containers e tecnologias | **Espaço reservado: diagrama C4 Nível 2** |
+| 12 | Web (SPA único), API e tempo real sobre PostgreSQL; sem app mobile (ADR-056) | C4 Nível 2: tabela de containers e tecnologias | **Espaço reservado: diagrama C4 Nível 2** |
 | 13 | API organizada em 9 módulos de negócio | C4 Nível 3: lista dos 9 componentes | **Espaço reservado: diagrama C4 Nível 3** |
 | 14 | Modelo de dados: 43 tabelas em 8 módulos | PostgreSQL + Prisma; 76 FKs; 22 enums; rastreabilidade com casos de uso | **Espaço reservado: DER (visão de relacionamentos)** |
-| 15 | 28 telas mapeadas para web, mobile e BackOffice | Inventário da seção 2.7; protótipos [PENDENTE] | Mosaico de telas (quando existir) |
+| 15 | 28 telas mapeadas para a web e o BackOffice | Inventário da seção 2.7; protótipos [PENDENTE] | Mosaico de telas (quando existir) |
 | 16 | Status atual e próximos passos | Entregue: casos de uso, user stories, C4, DER, board. Próximos: protótipos, ADRs, implementação do MVP, cronograma [PENDENTE] | Checklist entregue × próximo |
 | 17 | Obrigado — perguntas? | Nomes e contato da equipe [PENDENTE] | Encerramento simples |
