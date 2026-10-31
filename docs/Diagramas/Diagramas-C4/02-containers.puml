@@ -7,31 +7,26 @@ title Diagrama de Containers (C4 - Nivel 2) - Sistema de Gestao de Cartas Coleci
 
 Person(visitante, "Visitante", "Usuario nao autenticado")
 Person(cliente, "Cliente", "Colecionador autenticado")
+Person(vendedor, "Vendedor", "Lojista credenciado que anuncia e vende cartas no marketplace")
 Person(admin, "Administrador", "Gestor da plataforma")
 
 System_Boundary(sistema, "Sistema de Gestao de Cartas Colecionaveis") {
-    Container(webApp, "Aplicacao Web", "React + Vite", "SPA usada por visitantes e clientes para navegar, gerenciar colecao, grupos, chat e marketplace")
-    Container(mobileApp, "Aplicativo Mobile", "React Native", "App usado por visitantes e clientes com as mesmas funcionalidades da web, otimizado para uso mobile")
-    Container(backofficeApp, "Painel BackOffice", "React + Vite", "SPA usada por administradores para gestao e moderacao da plataforma")
+    Container(webApp, "Aplicacao Web (SPA)", "React 19 + TypeScript + Vite", "SPA unico, acessado pelo navegador (computador ou celular), com tres areas separadas por rota e papel: Publica (visitantes), Cliente (colecao, grupos, chat, perfil e marketplace) e BackOffice em /backoffice (administradores)")
     Container(api, "API de Aplicacao", "Node.js + Express + Prisma", "Expoe via REST as regras de negocio de catalogo, colecao, grupos, chat, perfil, pagamentos e administracao. Autentica requisicoes via JWT")
-    Container(realtime, "Servico de Mensageria em Tempo Real", "Node.js + WebSocket", "Entrega mensagens de chat pessoal e de grupo em tempo real; conexao autenticada via JWT")
+    Container(realtime, "Servico de Mensageria em Tempo Real", "Node.js + Socket.IO", "Entrega mensagens de chat pessoal e de grupo em tempo real; conexao autenticada via JWT")
     ContainerDb(db, "Banco de Dados", "PostgreSQL", "Armazena usuarios, cartas, albuns, colecoes, grupos, mensagens, notificacoes, favoritos, pagamentos e assinaturas. Acessado via Prisma ORM")
 }
 
 System_Ext(pagamento, "Gateway de Pagamento", "Processa pagamentos e assinaturas (ex: Stripe/Mercado Pago)")
 System_Ext(transportadora, "Transportadora", "Empresa terceirizada responsavel pela entrega fisica das cartas compradas no marketplace")
 
-Rel(visitante, webApp, "Usa", "HTTPS")
-Rel(visitante, mobileApp, "Usa", "HTTPS")
-Rel(cliente, webApp, "Usa", "HTTPS")
-Rel(cliente, mobileApp, "Usa", "HTTPS")
-Rel(admin, backofficeApp, "Usa", "HTTPS")
+Rel(visitante, webApp, "Usa a area publica", "HTTPS")
+Rel(cliente, webApp, "Usa a area do cliente", "HTTPS")
+Rel(vendedor, webApp, "Usa a area do cliente e o painel do vendedor", "HTTPS")
+Rel(admin, webApp, "Usa o BackOffice (/backoffice)", "HTTPS")
 
 Rel(webApp, api, "Consome", "JSON/HTTPS, JWT no header Authorization")
-Rel(mobileApp, api, "Consome", "JSON/HTTPS, JWT no header Authorization")
-Rel(backofficeApp, api, "Consome", "JSON/HTTPS, JWT no header Authorization")
-Rel(webApp, realtime, "Troca mensagens", "WebSocket, autenticado via JWT")
-Rel(mobileApp, realtime, "Troca mensagens", "WebSocket, autenticado via JWT")
+Rel(webApp, realtime, "Troca mensagens", "WebSocket (Socket.IO), autenticado via JWT")
 
 Rel(api, db, "Le e grava", "SQL via Prisma ORM")
 Rel(realtime, db, "Persiste mensagens", "SQL via Prisma ORM")
