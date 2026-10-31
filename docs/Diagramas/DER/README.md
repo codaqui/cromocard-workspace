@@ -10,13 +10,13 @@ e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + Postgr
 ```
 DER/
 ├── puml/                              -> PlantUML  (plantuml.com / VS Code)
-│   ├── 01-diagrama-entidades.puml
-│   ├── 02-diagrama-relacionamentos.puml
-│   └── 03-der-completo.puml
+│   ├── 01-diagrama-entidades.puml       (+ .svg)
+│   ├── 02-diagrama-relacionamentos.puml (+ .svg)
+│   └── 03-der-completo.puml             (+ .svg)
 ├── dbdiagram.io/                      -> DBML      (dbdiagram.io/d)
-│   ├── 01-diagrama-entidades.dbml
-│   ├── 02-diagrama-relacionamentos.dbml
-│   └── 03-der-completo.dbml
+│   ├── 01-diagrama-entidades.dbml       (diagrama-entidade.svg)
+│   ├── 02-diagrama-relacionamentos.dbml (diagrama-relacionamento.svg)
+│   └── 03-der-completo.dbml             (DER.svg)
 └── chartdb/                           -> DDL SQL   (app.chartdb.io e outros)
     ├── schema-cromocard.sql
     └── schema-cromocard-sem-enums.sql
@@ -57,7 +57,7 @@ QuickDBD, pgModeler - e para criar o banco de verdade.
 4. No VS Code: extensao *PlantUML* -> `Alt+D` (preview) -> botao direito -> *Export*.
 
 > **Use SVG, nao PNG.** O servidor publico do PlantUML corta o PNG em 4096px.
-> O diagrama 03 tem 6055px de altura, entao o PNG sai truncado (falta o modulo
+> O diagrama 03 tem 8975px de altura, entao o PNG sai truncado (falta o modulo
 > "Usuarios" no rodape). Em SVG sai inteiro e o texto fica nitido em qualquer zoom.
 
 ### Layout: por que os diagramas 02 e 03 usam `left to right direction`
@@ -67,8 +67,8 @@ na pagina e estoura o limite do PNG:
 
 | Diagrama | sem `left to right` | com `left to right` |
 |---|---|---|
-| 02 Relacionamentos | 4513 x 1354 (corta `denuncia`) | **1889 x 3553** |
-| 03 DER completo | 7938 x 2018 (corta metade) | **3265 x 6055** |
+| 02 Relacionamentos | 4513 x 1354 (corta `denuncia`) | **1904 x 4351** |
+| 03 DER completo | 7938 x 2018 (corta metade) | **3044 x 8975** |
 
 O diagrama 01 nao precisa disso: ele nao tem linhas de relacionamento e usa uma
 grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
@@ -81,7 +81,26 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 1. Abra <https://dbdiagram.io/d>.
 2. Apague o exemplo e cole todo o conteudo do `.dbml`.
 3. As tabelas ja vem coloridas por modulo e agrupadas em *TableGroup*.
-4. Use **Export -> PDF/PNG** (ou *Print*) para o relatorio.
+4. Use **Export -> PDF/PNG** (ou *Print*) para o relatorio. O dbdiagram.io so exporta com login.
+
+Os `.svg` desta pasta **nao** sao exportacoes do site: sao gerados localmente a partir dos `.dbml` pelo
+[`@softwaretechnik/dbml-renderer`](https://github.com/softwaretechnik-berlin/dbml-renderer) + Graphviz, entao o
+visual e diferente do dbdiagram.io, mas o conteudo e o mesmo (tabelas coloridas e agrupadas por modulo, enums e
+ligacoes). Para regerar (o Graphviz vem da imagem Docker do PlantUML):
+
+```bash
+cd docs/Diagramas/DER/dbdiagram.io
+# o renderer nao poe aspas no nome dos TableGroup com espaco; o sed corrige o .dot
+dot_de() { npx -y @softwaretechnik/dbml-renderer -i "$1" -f dot -o - \
+  | sed -E 's/^(\s*subgraph )(cluster_[^{]*[^ {])\s*\{/\1"\2" {/'; }
+dot_de 01-diagrama-entidades.dbml | docker run --rm -i --entrypoint dot plantuml/plantuml -Kosage -Tsvg > diagrama-entidade.svg
+dot_de 02-diagrama-relacionamentos.dbml | docker run --rm -i --entrypoint dot plantuml/plantuml -Tsvg > diagrama-relacionamento.svg
+dot_de 03-der-completo.dbml | sed 's/rankdir=LR;/rankdir=TB;/' \
+  | docker run --rm -i --entrypoint dot plantuml/plantuml -Tsvg > DER.svg
+```
+
+O 01 usa o layout `osage` (modulos em grade, porque nao tem FKs) e o 03 usa `rankdir=TB`; com o padrao (`LR`)
+os dois viram uma coluna muito alta.
 
 > Dica: no dbdiagram voce pode arrastar as caixas antes de exportar. Como cada
 > modulo tem uma cor propria de cabecalho, basta juntar as caixas da mesma cor
@@ -110,7 +129,7 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 | `albums`, `cards`, `categories`, `rarities`, `languages`, `card_conditions`, `card_photos` | 08-10 Albuns, 13 Visualizar Cartas, 24-32 Buscas/Filtros, 30-31 Detalhes, 61 Gestao de Catalogo, 104 Ordenar Categorias Padrao, 105 Duplicar Carta, 106 Rascunho de Carta |
 | `collections`, `user_albums`, `collection_cards` | 07 Resumo, 12 Compartilhar Colecao, 14-18 Marcar/Quantidade/Remover, 19 Progresso, 22 Adicionar Carta, 35 Resetar Progresso, 36 Portfolio |
 | `price_history` | 75 Historico de Precos |
-| `groups`, `group_members`, `group_join_requests` | 39 Explorar/Entrar em Grupos, 43 Criar e Administrar Grupo, 64 Aprovar Solicitacoes |
+| `groups`, `group_members`, `group_join_requests` | 39 Explorar/Entrar em Grupos, 43 Criar e Administrar Grupo, 57 Favoritar Grupo, 62 Gestao de Comunidade |
 | `group_messages`, `polls`, `poll_options`, `poll_votes` | 42 Historico do Grupo, 44 Chat do Grupo, 41 Silenciar, 62 Gestao de Comunidade |
 | `conversations`, `conversation_participants`, `messages`, `user_blocks` | 45 Responder Mensagem, 46 Visualizar Mensagens, 47 Moderar Contatos, 73 Entrar em Contato |
 | `listings`, `listing_photos` | 84 Criar / 85 Editar / 86 Excluir / 87 Pausar / 88 Reativar Anuncio, 76 Anuncios Ativos |
@@ -120,8 +139,8 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 | `favorites` | 55 Favoritar Album, 56 Favoritar Carta, 57 Favoritar Grupo |
 | `price_alerts` | Configurar Alertas de Preco (futuro) |
 | `notifications`, `global_notifications` | 53 Visualizar Notificacoes, 54 Limpar Central, 60 Disparar Notificacao Global, 100 Agendar e 101 Segmentar Notificacao Global |
-| `reports` | 40 Denunciar Mensagem, 50 Denunciar Perfil, 82 Denunciar Anuncio, 83 Denunciar Vendedor, 90 Denunciar Usuario |
-| `catalog_requests` | 21/23 Solicitar Cadastro de Carta, Solicitar Album, 64 Aprovar Solicitacoes |
+| `reports` | 40 Denunciar Mensagem, 47 Moderar Contatos, 50 Denunciar Perfil, 62 Gestao de Comunidade, 82 Denunciar Anuncio, 83 Denunciar Vendedor, 90 Denunciar Usuario, 99 Aplicar Sancao |
+| `catalog_requests` | 10 Solicitar Album, 21/23 Solicitar Cadastro da Carta, 64 Aprovar Solicitacoes, 103 Votar em Solicitacao de Catalogo |
 | `audit_logs` | 65 Log de Auditoria Admin, 102 Exportar Log de Auditoria |
 | `global_settings` | 66 Configuracoes Globais, 96 Evolucao de Cadastros (meta mensal) |
 | `seller_verifications`, `seller_documents`, `seller_verification_notes` | 94 Validar Cadastro de Vendedor, 95 Notificar Pendencia Cadastral |
@@ -149,8 +168,10 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 - Notacao de cardinalidade: pe-de-galinha no PlantUML (`||--o{`) e `>` / `-` no DBML.
 - Comentarios, notas e legendas dos diagramas continuam em portugues.
 
-> **SVGs desatualizados:** os `.svg` destas pastas foram gerados antes da traducao para ingles
-> da tabela `refresh_tokens`, dos UUIDs, do soft delete e das colunas de tempo. Reexportar: `.puml` no plantuml.com (SVG) e `.dbml` no dbdiagram.io.
+> **SVGs:** os `.svg` da pasta `puml/` foram regerados em 2026-10-31 a partir dos `.puml` atuais (50 tabelas,
+> 90 FKs), e os da pasta `dbdiagram.io/` foram regerados no mesmo dia a partir dos `.dbml` (comandos na secao
+> do dbdiagram.io). Para regerar os do PlantUML sem enviar nada a um servidor externo:
+> `docker run --rm -i -e PLANTUML_LIMIT_SIZE=16384 plantuml/plantuml -tsvg -pipe < 03-der-completo.puml > 03-der-completo.svg`.
 
 ## Glossario PT → EN
 
