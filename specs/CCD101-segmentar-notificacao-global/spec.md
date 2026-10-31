@@ -54,7 +54,7 @@
 
 ## Fora do escopo
 
-- Push no celular (L1).
+- Push no celular (L1; não há app mobile, ADR-056).
 - Segmento "Com saldo" (L3).
 
 ## Lacunas e decisões
