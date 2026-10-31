@@ -1,0 +1,4 @@
+{
+  "name": "diagrama-classes",
+  "exclude": ["**/historico/**"]
+}

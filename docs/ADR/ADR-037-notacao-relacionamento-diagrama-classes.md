@@ -55,5 +55,5 @@ A legenda completa está em `docs/Diagrama-de-Classe/README.md`.
 
 ## Referências
 
-- `docs/Diagrama-de-Classe/cromocard-diagrama-classes.c4`
+- `docs/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`
 - `docs/Diagrama-de-Classe/README.md` (seção "Legenda de relacionamento")
