@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Favoritar Grupo |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário favorite um grupo para facilitar seu acesso e acompanhamento dentro da plataforma. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e o grupo deve estar disponível para visualização. |
 
 ### Fluxo Principal

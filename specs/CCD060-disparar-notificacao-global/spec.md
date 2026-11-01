@@ -10,7 +10,7 @@
 
 ## Objetivo
 
-> Como Administrador eu quero ter um painel para criar e disparar notificações push em massa para a base inteira de
+> Como Administrador eu quero ter um painel para criar e disparar notificações em massa para a base inteira de
 > usuários informando novidades.
 
 ## Requisitos
@@ -69,7 +69,7 @@
 
 ## Fora do escopo
 
-- Push do sistema operacional e e-mail: o DER só tem notificação dentro do app.
+- Push do sistema operacional e e-mail: o DER só tem notificação dentro da plataforma, e não há app mobile (ADR-056).
 - Agendamento e segmentação por público.
 
 ## Lacunas e decisões

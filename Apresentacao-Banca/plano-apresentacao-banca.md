@@ -78,7 +78,7 @@ Substituir cada [PENDENTE] em `fonte-notebooklm-cromocard.md` **antes** de subir
 - [ ] Datas das sprints 03 em diante e marco da entrega final (slides 7 e 16)
 - [ ] Decisão sobre o marketplace no MVP (item 8 da seção 3)
 - [ ] Protótipos: pelo menos 3 telas (Home, Álbum, Marketplace) exportadas em PNG (slide 15)
-- [ ] ADRs principais (ex.: por que Node/Prisma, PostgreSQL, React Native) — opcional, fortalece o slide 12
+- [ ] ADRs principais (ex.: por que Node/Prisma, PostgreSQL, SPA único sem app mobile — ADR-038 e ADR-056) — opcional, fortalece o slide 12
 - [ ] Modelo institucional de slides e tempo exato da banca (confirmar com o orientador)
 
 Se algum item não ficar pronto a tempo, o slide sai com **[PENDENTE]** visível. Na banca, é melhor mostrar
@@ -194,7 +194,7 @@ Instruções de revisão prontas:
    - Slide 11: `Diagramas-C4/diagrama_C4_1.svg`
    - Slide 12: `Diagramas-C4/diagrama_c4_2.svg`
    - Slide 13: `Diagramas-C4/diagrama_C4_3.svg`
-   - Slide 14: `DER/puml/02-diagrama-relacionamentos.svg` (a visão só com chaves é a mais legível projetada)
+   - Slide 14: `DER/02-diagrama-relacionamentos.png` (a visão só com chaves é a mais legível projetada)
 2. Aplique o modelo institucional, se houver.
 3. Escreva as notas do apresentador e divida os slides entre os integrantes.
 

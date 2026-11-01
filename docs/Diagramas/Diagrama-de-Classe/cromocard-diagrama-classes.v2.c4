@@ -1,14 +1,24 @@
 // =====================================================================
-//  Fonte da verdade do MODELO DE DADOS: docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml
+//  Fonte da verdade do MODELO DE DADOS: docs/Diagramas/DER/03-der-completo.dbml
 //  Este diagrama e derivado do DER + dos Casos de Uso (docs/Casos-De-Uso/) e
 //  acrescenta o que o DER (fisico/relacional) nao mostra: heranca de tipos de
 //  usuario e comportamento (metodos) de cada classe. Ver ADR-035, ADR-036 e
 //  ADR-037 em docs/ADR/ para o racional de cada decisao de modelagem.
 //
-//  49 classes + 27 enumeracoes, organizados nos mesmos 8 modulos do DER.
+//  49 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
+//  Usuario + 27 enumeracoes, organizados nos mesmos 8 modulos do DER.
+//  Identificadores sao UUID v7 (ADR-014). As colunas de tempo created_at,
+//  updated_at e deleted_at existem em toda tabela (ADR-015/ADR-016) e so
+//  aparecem nas classes quando tem significado de negocio (ex.: dataCriacao).
 //  Relacoes usam rotulo textual com multiplicidade (o LikeC4 nao tem notacao
-//  UML nativa de heranca/composicao/agregacao) - ver legenda no README.md
-//  desta pasta e o ADR-037.
+//  UML nativa de heranca/composicao/agregacao) - ADR-037. Legenda:
+//    herda de (generalizacao)  heranca; a seta vai da subclasse para a superclasse
+//    1 -- 1                    associacao um-para-um
+//    N -- 1                    muitos-para-um (a leitura inversa e 1 -- N)
+//    0..1 -- N                 um lado opcional (0 ou 1) associado a muitos
+//    : compoe                  composicao; a parte nao existe sem o todo
+//    : alvo (conforme tipo)    alvo polimorfico (Favorito, Denuncia): so uma das
+//                              relacoes vale, conforme a coluna tipo / tipoAlvo
 // =====================================================================
 
 specification {
@@ -36,12 +46,12 @@ model {
       observacoes """
         Classe base/abstrata: toda conta e um Usuario; o papel (Cliente,
         Vendedor, Administrador) e definido no cadastro e nao muda depois
-        (ver ADR-035 - Single Table Inheritance / enum tipo_usuario no DER).
+        (ver ADR-035 - Single Table Inheritance / enum user_role na tabela users do DER).
         Relacoes de outras classes para "usuario" (nao para uma subclasse)
         valem para qualquer um dos tres papeis.
       """
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - email: String
         - senhaHash: String
@@ -49,6 +59,8 @@ model {
         - status: StatusUsuario
         - emailConfirmado: Boolean
         - aceiteTermos: Boolean
+        - provedorOAuth: String
+        - oauthId: String
         - nomeUsuario: String
         - telefone: String
         - cpf: String
@@ -120,7 +132,7 @@ model {
   perfil = class "Perfil" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - bio: String
         - avatarUrl: String
         - cidade: String
@@ -137,7 +149,7 @@ model {
   endereco = class "Endereço" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - rotulo: String
         - cep: String
         - logradouro: String
@@ -159,7 +171,7 @@ model {
   tokenRecuperacaoSenha = class "TokenRecuperacaoSenha" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - token: String
         - expiraEm: DateTime
         - usado: Boolean
@@ -176,7 +188,7 @@ model {
   conquista = class "Conquista" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - descricao: String
         - iconeUrl: String
@@ -204,7 +216,7 @@ model {
     metadata {
       observacoes """Plano PRO - funcionalidade futura (tag `futuro` nas user stories)."""
       atributos """
-        - id: Long
+        - id: UUID
         - plano: String
         - status: StatusPlano
         - metodoPagamento: MetodoPagamento
@@ -257,9 +269,9 @@ model {
 
   categoria = class "Categoria" {
     metadata {
-      observacoes """Hierárquica (categoria pai opcional) - ex.: seleção / time."""
+      observacoes """Hierárquica (categoria pai opcional) - ex.: seleção / time. Autorrelacionamento 0..1 -- N (categoria pai), descrito aqui porque o LikeC4 não desenha relação de um elemento com ele mesmo."""
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - tipo: TipoCategoria
         - descricao: String
@@ -280,7 +292,7 @@ model {
   raridade = class "Raridade" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - ordem: Integer
       """
@@ -295,7 +307,7 @@ model {
   idioma = class "Idioma" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - codigo: String
       """
@@ -310,7 +322,7 @@ model {
     metadata {
       observacoes """Ex.: Mint, Near Mint, Ótimo, Bom, Regular."""
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - ordem: Integer
       """
@@ -325,7 +337,7 @@ model {
   album = class "Álbum" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - titulo: String
         - editora: String
         - ano: Integer
@@ -348,7 +360,7 @@ model {
     metadata {
       observacoes """album nulo = carta avulsa (item de portfólio)."""
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - numero: String
         - descricao: String
@@ -373,7 +385,7 @@ model {
   fotoCarta = class "FotoCarta" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - url: String
         - ordem: Integer
       """
@@ -388,7 +400,7 @@ model {
   historicoPreco = class "HistoricoPreco" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - preco: Decimal
         - dataReferencia: Date
         - origem: OrigemPreco
@@ -426,7 +438,7 @@ model {
     metadata {
       observacoes """1:1 com Usuário (colecao.usuario_id é unique no DER)."""
       atributos """
-        - id: Long
+        - id: UUID
         - publica: Boolean
         - linkCompartilhamento: String
         - dataCriacao: DateTime
@@ -442,7 +454,7 @@ model {
   albumUsuario = class "AlbumUsuario" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - favorito: Boolean
         - progressoPercentual: Decimal
         - dataInicio: DateTime
@@ -458,7 +470,7 @@ model {
   colecaoCarta = class "ColecaoCarta" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - status: StatusCartaColecao
         - quantidade: Integer
         - valorMercado: Decimal
@@ -487,7 +499,7 @@ model {
   grupo = class "Grupo" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - nome: String
         - descricao: String
         - imagemCapaUrl: String
@@ -507,7 +519,7 @@ model {
   membroGrupo = class "MembroGrupo" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - papel: PapelMembro
         - dataEntrada: DateTime
         - silenciadoAte: DateTime
@@ -523,7 +535,7 @@ model {
   solicitacaoGrupo = class "SolicitacaoGrupo" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - status: StatusSolicitacao
         - dataSolicitacao: DateTime
         - dataAvaliacao: DateTime
@@ -538,8 +550,9 @@ model {
 
   mensagemGrupo = class "MensagemGrupo" {
     metadata {
+      observacoes """Autorrelacionamento 0..1 -- N (responde a outra mensagem do grupo), descrito aqui porque o LikeC4 não desenha relação de um elemento com ele mesmo."""
       atributos """
-        - id: Long
+        - id: UUID
         - tipoConteudo: TipoConteudoMsg
         - conteudo: String
         - anexoUrl: String
@@ -558,7 +571,7 @@ model {
   enquete = class "Enquete" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - pergunta: String
         - multiplaEscolha: Boolean
         - encerraEm: DateTime
@@ -574,7 +587,7 @@ model {
   opcaoEnquete = class "OpcaoEnquete" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - texto: String
       """
       metodos """
@@ -633,7 +646,7 @@ model {
   conversa = class "Conversa" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - dataCriacao: DateTime
       """
       metodos """
@@ -654,8 +667,9 @@ model {
 
   mensagem = class "Mensagem" {
     metadata {
+      observacoes """Autorrelacionamento 0..1 -- N (responde a outra mensagem da conversa), descrito aqui porque o LikeC4 não desenha relação de um elemento com ele mesmo."""
       atributos """
-        - id: Long
+        - id: UUID
         - conteudo: String
         - anexoUrl: String
         - lida: Boolean
@@ -673,7 +687,7 @@ model {
   bloqueioUsuario = class "BloqueioUsuario" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - dataBloqueio: DateTime
       """
       metodos """
@@ -690,7 +704,7 @@ model {
   anuncio = class "Anúncio" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - preco: Decimal
         - quantidadeDisponivel: Integer
         - descricao: String
@@ -713,7 +727,7 @@ model {
   fotoAnuncio = class "FotoAnuncio" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - url: String
         - ordem: Integer
       """
@@ -728,7 +742,7 @@ model {
   proposta = class "Proposta" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - valorOfertado: Decimal
         - mensagem: String
         - status: StatusProposta
@@ -751,7 +765,7 @@ model {
         tinha `ItemPedido` sem lastro no DER).
       """
       atributos """
-        - id: Long
+        - id: UUID
         - quantidade: Integer
         - valorItens: Decimal
         - valorFrete: Decimal
@@ -773,7 +787,7 @@ model {
   pagamento = class "Pagamento" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - metodo: MetodoPagamento
         - valor: Decimal
         - status: StatusPagamento
@@ -792,7 +806,7 @@ model {
   avaliacao = class "Avaliação" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - nota: Integer
         - comentario: String
         - dataCriacao: DateTime
@@ -837,7 +851,7 @@ model {
     metadata {
       observacoes """Alvo polimórfico: exatamente um entre album/carta/grupo é preenchido, conforme `tipo`."""
       atributos """
-        - id: Long
+        - id: UUID
         - tipo: TipoFavorito
         - dataCriacao: DateTime
       """
@@ -852,7 +866,7 @@ model {
     metadata {
       observacoes """Funcionalidade futura (tag `futuro`)."""
       atributos """
-        - id: Long
+        - id: UUID
         - precoAlvo: Decimal
         - ativo: Boolean
         - dataCriacao: DateTime
@@ -869,7 +883,7 @@ model {
   notificacaoGlobal = class "NotificacaoGlobal" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - titulo: String
         - conteudo: String
         - totalDestinatarios: Integer
@@ -890,7 +904,7 @@ model {
   notificacao = class "Notificacao" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - titulo: String
         - mensagem: String
         - tipo: String
@@ -919,7 +933,8 @@ model {
     metadata {
       observacoes """Alvo polimórfico: anúncio, usuário/vendedor/perfil ou mensagem de grupo, conforme `tipoAlvo`."""
       atributos """
-        - id: Long
+        - id: UUID
+        - tipoAlvo: TipoAlvoDenuncia
         - motivo: String
         - descricao: String
         - status: StatusDenuncia
@@ -938,7 +953,7 @@ model {
   solicitacaoCadastro = class "SolicitacaoCadastro" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - tipo: TipoSolicCadastro
         - dados: JSON
         - status: StatusSolicitacao
@@ -956,10 +971,10 @@ model {
   logAuditoria = class "LogAuditoria" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - acao: String
         - entidadeAfetada: String
-        - entidadeId: Long
+        - entidadeId: UUID
         - detalhes: JSON
         - ip: String
         - dataRegistro: DateTime
@@ -973,7 +988,7 @@ model {
   configuracaoGlobal = class "ConfiguracaoGlobal" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - chave: String
         - valor: String
         - descricao: String
@@ -989,7 +1004,7 @@ model {
     metadata {
       observacoes """Credenciamento do vendedor (CCD094, CCD095, ADR-052)."""
       atributos """
-        - id: Long
+        - id: UUID
         - status: StatusVerificacaoVendedor
         - razaoSocial: String
         - nomeFantasia: String
@@ -1020,7 +1035,7 @@ model {
   documentoVendedor = class "DocumentoVendedor" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - tipo: String
         - arquivoUrl: String
         - tamanho: Integer
@@ -1037,7 +1052,7 @@ model {
     metadata {
       observacoes """Anotação interna da moderação, invisível ao vendedor."""
       atributos """
-        - id: Long
+        - id: UUID
         - conteudo: String
         - dataCriacao: DateTime
       """
@@ -1050,7 +1065,7 @@ model {
   advertenciaUsuario = class "AdvertenciaUsuario" {
     metadata {
       atributos """
-        - id: Long
+        - id: UUID
         - motivo: String
         - dataCriacao: DateTime
       """
@@ -1077,7 +1092,7 @@ model {
     metadata {
       observacoes """Arquivo guardado por 90 dias (CCD107)."""
       atributos """
-        - id: Long
+        - id: UUID
         - tipoRelatorio: String
         - filtros: JSON
         - formato: String
@@ -1160,7 +1175,7 @@ model {
   // =====================================================================
   // RELACOES - MODULO 2
   // =====================================================================
-  categoria -> categoria "0..1 -- N : categoria pai"
+  // categoria -> categoria (0..1 -- N : categoria pai): ver observacoes de Categoria
   album -> categoria "N -- 0..1"
   carta -> album "N -- 0..1 : nulo = carta avulsa"
   carta -> categoria "N -- 0..1"
@@ -1189,7 +1204,7 @@ model {
   solicitacaoGrupo -> administrador "0..1 -- N : avaliado por"
   mensagemGrupo -> grupo "N -- 1"
   mensagemGrupo -> usuario "N -- 1 : autor"
-  mensagemGrupo -> mensagemGrupo "0..1 -- N : responde a"
+  // mensagemGrupo -> mensagemGrupo (0..1 -- N : responde a): ver observacoes de MensagemGrupo
   mensagemGrupo -> carta "0..1 -- N : referencia"
   mensagemGrupo -> anuncio "0..1 -- N : referencia"
   enquete -> mensagemGrupo "1 -- 1 : compõe"
@@ -1205,7 +1220,7 @@ model {
   participanteConversa -> usuario "N -- 1"
   mensagem -> conversa "N -- 1"
   mensagem -> usuario "N -- 1 : autor"
-  mensagem -> mensagem "0..1 -- N : responde a"
+  // mensagem -> mensagem (0..1 -- N : responde a): ver observacoes de Mensagem
   bloqueioUsuario -> usuario "N -- 1 : bloqueador"
   bloqueioUsuario -> usuario "N -- 1 : bloqueado"
 

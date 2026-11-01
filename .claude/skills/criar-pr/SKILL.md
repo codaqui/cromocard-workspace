@@ -43,7 +43,7 @@ PR de release (`develop`/`development` → `main`) só se o usuário pedir expli
 |---|---|
 | backend | `npm run lint && npm run typecheck && npm run test:cov`; com o PostgreSQL local de pé, também `npm run test:integration` |
 | frontend | `npm run format:check && npm run lint && npm run typecheck && npm test && npm run build` |
-| workspace | Conferência manual: DER mudou nos três formatos (DBML, SQL, PlantUML)? ADR novo como `Proposto` e no índice? `.puml` alterado com o `.svg` exportado? Ponteiro de `apps/*` mudou de propósito? |
+| workspace | Conferência manual: DER mudou nos três `.dbml`, com os prints `.png` refeitos? ADR novo como `Proposto` e no índice? `.puml` alterado com o `.svg` exportado? Ponteiro de `apps/*` mudou de propósito? |
 
 Se algo falhar, pare, mostre a saída e não abra o PR. Se a branch ainda não passou pelo `/revisar-codigo`,
 pergunte se quer rodar antes.

@@ -1,6 +1,6 @@
 # ADR-021 — Separação das aplicações cliente por plataforma (Web, Mobile, BackOffice)
 
-- **Status:** Substituído parcialmente por ADR-038 (Web e BackOffice viram um único SPA; o mobile continua separado)
+- **Status:** Substituído por ADR-038 (Web e BackOffice viram um único SPA) e ADR-056 (não há aplicativo mobile)
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 
