@@ -123,7 +123,7 @@ Depois do merge dos PRs dos apps, um PR no workspace (`/criar-pr workspace`) lev
 | Na implementação, o contrato ou um arquivo do plano não funciona | `plano.md` | Propor a mudança, combinar com quem faz o outro app e só então seguir |
 | Na implementação, falta um requisito ou um contradiz outro | Spec volta para `Rascunho` | Parar a implementação nesse ponto e levar a lacuna ao PO |
 | Precisa de uma decisão de arquitetura | ADR novo `Proposto` | Citar o ADR em **Decisões técnicas** do plano |
-| O DER precisa de tabela ou coluna nova | PR de docs no DER, antes do plano | Mudar os três formatos (`.claude/rules/modelagem-de-dados.md`) |
+| O DER precisa de tabela ou coluna nova | PR de docs no DER, antes do plano | Mudar os três `.dbml` do DER (`.claude/rules/modelagem-de-dados.md`) |
 
 ### Exemplo
 

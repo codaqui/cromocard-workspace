@@ -18,7 +18,7 @@
 |---|---|---|---|
 | `<tabela>` | não | `create_<tabela>_table` | copiada do DBML |
 
-<!-- Se o DBML precisar mudar, pare: o DER muda antes, num PR de docs, nos três formatos. -->
+<!-- Se o DBML precisar mudar, pare: o DER muda antes, num PR de docs, nos três `.dbml`. -->
 
 ## Contrato da API
 
