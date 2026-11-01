@@ -194,7 +194,7 @@ Instruções de revisão prontas:
    - Slide 11: `Diagramas-C4/diagrama_C4_1.svg`
    - Slide 12: `Diagramas-C4/diagrama_c4_2.svg`
    - Slide 13: `Diagramas-C4/diagrama_C4_3.svg`
-   - Slide 14: `DER/puml/02-diagrama-relacionamentos.svg` (a visão só com chaves é a mais legível projetada)
+   - Slide 14: `DER/02-diagrama-relacionamentos.png` (a visão só com chaves é a mais legível projetada)
 2. Aplique o modelo institucional, se houver.
 3. Escreva as notas do apresentador e divida os slides entre os integrantes.
 
