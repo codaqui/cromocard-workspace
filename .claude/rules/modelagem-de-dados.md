@@ -1,23 +1,23 @@
 ---
 paths:
   - "docs/Diagramas/DER/**"
-  - "docs/Diagrama-de-Classe/**"
+  - "docs/Diagramas/Diagrama-de-Classe/**"
   - "apps/cromocard-backend/database/**"
 ---
 
 # Modelo de dados — DER, diagrama de classes e `schema.prisma`
 
-- **Fonte da verdade:** `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml`. Os `.sql` em
-  `chartdb/` e os `.puml` são derivados dele — **mantenha os três formatos sincronizados** ao
-  alterar o modelo (50 tabelas, 90 FKs, 27 enums). Regere junto os `.svg` de `puml/` (`.claude/rules/diagramas.md`) e os de `dbdiagram.io/` (comandos no `README.md` do DER).
-- O diagrama de classes (`docs/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`) é 1:1 com o DER
+- **Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 90 FKs, 27 enums). O
+  `01-diagrama-entidades.dbml` e o `02-diagrama-relacionamentos.dbml` são recortes dele: **mantenha os três `.dbml`
+  sincronizados** ao alterar o modelo e tire de novo os prints `.png` no dbdiagram.io (passo a passo no `README.md` do DER).
+- O diagrama de classes (`docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`) é 1:1 com o DER
   (ADR-036): entidade criada ou alterada no DER muda também a classe correspondente.
 - **Identificadores em inglês** (ADR-003): tabelas `snake_case` no **plural** (`users`, `orders`,
   `groups` — singular colide com palavras reservadas do PostgreSQL), colunas/enums no singular,
   valores de enum em MAIÚSCULAS, datas `*_at`. Comentários e notas continuam em português.
   Glossário PT → EN no `README.md` do DER — use-o ao ler casos de uso que citam nomes antigos.
 - PK `id` **UUID v7** (`uuidv7()`, PostgreSQL 18+), FKs `uuid` (ADR-014) · associativas N:N com PK composta (`user_achievements`,
-  `poll_votes`, `conversation_participants`) · FKs em `ALTER TABLE` no fim do SQL (`fk_<tabela>_<coluna>`).
+  `poll_votes`, `conversation_participants`) .
 - **Alvos polimórficos** (ADR-032): `favorites` (`type` + `album_id`/`card_id`/`group_id`, exatamente
   um preenchido) e `reports` (`target_type` + `listing_id`/`target_user_id`/`group_message_id`).
 - `cards.album_id` nulo = carta avulsa (portfólio). `catalog_requests.data` é `jsonb`.

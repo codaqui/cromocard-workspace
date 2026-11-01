@@ -24,7 +24,7 @@ confirmação, no board.
 
 Leia só o que a spec toca:
 
-- **Dados:** as tabelas da seção Dados no `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml` e o que já existe em
+- **Dados:** as tabelas da seção Dados no `docs/Diagramas/DER/03-der-completo.dbml` e o que já existe em
   `apps/cromocard-backend/database/schema.prisma`. Tabela que falta = uma migration (`create_<tabela>_table`). Se a
   spec precisar de algo que o DBML não tem, pare: o DER muda antes, num PR de docs.
 - **Backend:** `src/domains/<dominio>/` (o domínio com o mesmo nome do escopo de commit), o modelo
