@@ -42,5 +42,5 @@ registro), mantendo a integridade referencial via chave estrangeira nativa do Po
 ## Referências
 
 - `docs/Diagramas/DER/README.md` (seção "Convenções")
-- `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml`
+- `docs/Diagramas/DER/03-der-completo.dbml`
 - `CLAUDE.md` (seção "Modelo de dados", "Alvos polimórficos")

@@ -1,112 +1,35 @@
 # DER - CromoCard (Sistema de Gestao de Cartas Colecionaveis)
 
-Modelo de dados derivado dos **Casos de Uso / User Stories** em `../Casos-De-Uso/`
+Modelo de dados derivado dos **Casos de Uso / User Stories** em `../../Casos-De-Uso/`
 e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + PostgreSQL).
 
-**50 entidades organizadas em 8 modulos.** Nomes de tabelas, colunas e enums em **ingles** (glossario PT → EN no fim deste arquivo). Os 3 diagramas existem nos dois formatos.
+**50 entidades organizadas em 8 modulos, 90 chaves estrangeiras e 27 enums.** Nomes de tabelas, colunas e
+enums em **ingles** (glossario PT → EN no fim deste arquivo). O DER e escrito em DBML para o
+[dbdiagram.io](https://dbdiagram.io/d); cada diagrama tem o `.dbml` e o print tirado do site.
 
 ## Estrutura
 
 ```
 DER/
-├── puml/                              -> PlantUML  (plantuml.com / VS Code)
-│   ├── 01-diagrama-entidades.puml       (+ .svg)
-│   ├── 02-diagrama-relacionamentos.puml (+ .svg)
-│   └── 03-der-completo.puml             (+ .svg)
-├── dbdiagram.io/                      -> DBML      (dbdiagram.io/d)
-│   ├── 01-diagrama-entidades.dbml       (diagrama-entidade.svg)
-│   ├── 02-diagrama-relacionamentos.dbml (diagrama-relacionamento.svg)
-│   └── 03-der-completo.dbml             (DER.svg)
-└── chartdb/                           -> DDL SQL   (app.chartdb.io e outros)
-    ├── schema-cromocard.sql
-    └── schema-cromocard-sem-enums.sql
+├── 01-diagrama-entidades.dbml          entidades e atributos, sem ligacoes
+├── 01-diagrama-entidades-dbdiagram.png
+├── 02-diagrama-relacionamentos.dbml    so as chaves (PK/FK) e as ligacoes
+├── 02-diagrama-relacionamentos.png
+├── 03-der-completo.dbml                atributos e ligacoes - FONTE DA VERDADE do modelo
+├── 03-der-completo.png
+└── README.md
 ```
 
-## Pasta `chartdb/` (DDL SQL)
+O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e mudam junto.
 
-O ChartDB nao le DBML - ele importa **script SQL**. Os dois arquivos foram
-gerados a partir de `dbdiagram.io/03-der-completo.dbml`, entao nao divergem do
-modelo: 50 tabelas, 90 chaves estrangeiras, 27 enums.
+## Como gerar o print
 
-1. Abra <https://app.chartdb.io>.
-2. Escolha importar a partir de **script SQL** e selecione o dialeto **PostgreSQL**.
-3. Cole `schema-cromocard.sql` inteiro.
-4. Se a ferramenta reclamar dos `CREATE TYPE ... AS ENUM`, use
-   `schema-cromocard-sem-enums.sql`: as colunas viram `VARCHAR(30)` e os valores
-   possiveis ficam anotados no comentario ao lado de cada coluna.
+1. Abra <https://dbdiagram.io/d>, apague o exemplo e cole todo o conteudo do `.dbml`.
+2. Confira que o canto inferior esquerdo mostra **0 errors**.
+3. Recolha o painel de codigo, use o botao de enquadrar o diagrama e tire o print. Exportar
+   (PDF/PNG/SVG) pelo botao Export exige login.
 
-O mesmo SQL serve para **dbdiagram.io** (Import > From PostgreSQL), DrawSQL,
-QuickDBD, pgModeler - e para criar o banco de verdade.
-
-> As chaves estrangeiras ficam todas em `ALTER TABLE` no final do arquivo, entao
-> a ordem de criacao das tabelas nao importa e nao ha erro de referencia futura.
-
-| # | Diagrama | O que mostra |
-|---|---|---|
-| 01 | **Entidades** | Todas as entidades com atributos, tipos, PK/FK/UQ e obrigatoriedade. **Sem** linhas de relacionamento. |
-| 02 | **Relacionamentos** | Todas as entidades com **apenas as chaves** (PK/FK) + todas as ligacoes com cardinalidade. Caixas pequenas, linhas legiveis. |
-| 03 | **DER completo** | Atributos **e** relacionamentos juntos - a visao final do modelo. |
-
-## Como gerar a imagem para o relatorio
-
-### PlantUML (`puml/`)
-1. Abra <https://www.plantuml.com/plantuml/uml/>.
-2. Cole o conteudo do `.puml`.
-3. Clique em **SVG**, nao PNG. Para baixar: botao direito na imagem ->
-   "Salvar imagem como...".
-4. No VS Code: extensao *PlantUML* -> `Alt+D` (preview) -> botao direito -> *Export*.
-
-> **Use SVG, nao PNG.** O servidor publico do PlantUML corta o PNG em 4096px.
-> O diagrama 03 tem 8975px de altura, entao o PNG sai truncado (falta o modulo
-> "Usuarios" no rodape). Em SVG sai inteiro e o texto fica nitido em qualquer zoom.
-
-### Layout: por que os diagramas 02 e 03 usam `left to right direction`
-
-Sem essa linha o PlantUML monta uma **tira** larga e baixa, que nao cabe legivel
-na pagina e estoura o limite do PNG:
-
-| Diagrama | sem `left to right` | com `left to right` |
-|---|---|---|
-| 02 Relacionamentos | 4513 x 1354 (corta `denuncia`) | **1904 x 4351** |
-| 03 DER completo | 7938 x 2018 (corta metade) | **3044 x 8975** |
-
-O diagrama 01 nao precisa disso: ele nao tem linhas de relacionamento e usa uma
-grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
-
-> Nota: nas legendas dos `.puml`, o caractere `|` da notacao pe-de-galinha e
-> escrito como `&#124;`. Escrito cru, ele e interpretado como separador de
-> celula da tabela e quebra a legenda.
-
-### dbdiagram.io (`dbdiagram.io/`)
-1. Abra <https://dbdiagram.io/d>.
-2. Apague o exemplo e cole todo o conteudo do `.dbml`.
-3. As tabelas ja vem coloridas por modulo e agrupadas em *TableGroup*.
-4. Use **Export -> PDF/PNG** (ou *Print*) para o relatorio. O dbdiagram.io so exporta com login.
-
-Os `.svg` desta pasta **nao** sao exportacoes do site: sao gerados localmente a partir dos `.dbml` pelo
-[`@softwaretechnik/dbml-renderer`](https://github.com/softwaretechnik-berlin/dbml-renderer) + Graphviz, entao o
-visual e diferente do dbdiagram.io, mas o conteudo e o mesmo (tabelas coloridas e agrupadas por modulo, enums e
-ligacoes). Para regerar (o Graphviz vem da imagem Docker do PlantUML):
-
-```bash
-cd docs/Diagramas/DER/dbdiagram.io
-# o renderer nao poe aspas no nome dos TableGroup com espaco; o sed corrige o .dot
-dot_de() { npx -y @softwaretechnik/dbml-renderer -i "$1" -f dot -o - \
-  | sed -E 's/^(\s*subgraph )(cluster_[^{]*[^ {])\s*\{/\1"\2" {/'; }
-dot_de 01-diagrama-entidades.dbml | docker run --rm -i --entrypoint dot plantuml/plantuml -Kosage -Tsvg > diagrama-entidade.svg
-dot_de 02-diagrama-relacionamentos.dbml | docker run --rm -i --entrypoint dot plantuml/plantuml -Tsvg > diagrama-relacionamento.svg
-dot_de 03-der-completo.dbml | sed 's/rankdir=LR;/rankdir=TB;/' \
-  | docker run --rm -i --entrypoint dot plantuml/plantuml -Tsvg > DER.svg
-```
-
-O 01 usa o layout `osage` (modulos em grade, porque nao tem FKs) e o 03 usa `rankdir=TB`; com o padrao (`LR`)
-os dois viram uma coluna muito alta.
-
-> Dica: no dbdiagram voce pode arrastar as caixas antes de exportar. Como cada
-> modulo tem uma cor propria de cabecalho, basta juntar as caixas da mesma cor
-> para o desenho ficar organizado em blocos.
-
-## Cores por modulo (iguais nos dois formatos)
+## Cores por modulo (`headercolor` no DBML)
 
 | # | Modulo | Cor | Entidades |
 |---|---|---|---|
@@ -164,14 +87,8 @@ os dois viram uma coluna muito alta.
 - Entidades associativas (N:N) com PK composta: `user_achievements`, `poll_votes`, `conversation_participants`.
 - Enums centralizados no topo dos arquivos `.dbml`.
 - `favorites` e `reports` usam alvo polimorfico: FKs opcionais + coluna discriminadora (`type` / `target_type`).
-- Constraints FK no SQL: `fk_<tabela>_<coluna>`.
-- Notacao de cardinalidade: pe-de-galinha no PlantUML (`||--o{`) e `>` / `-` no DBML.
+- Notacao de cardinalidade no DBML: `>` (muitos para um) e `-` (um para um).
 - Comentarios, notas e legendas dos diagramas continuam em portugues.
-
-> **SVGs:** os `.svg` da pasta `puml/` foram regerados em 2026-10-31 a partir dos `.puml` atuais (50 tabelas,
-> 90 FKs), e os da pasta `dbdiagram.io/` foram regerados no mesmo dia a partir dos `.dbml` (comandos na secao
-> do dbdiagram.io). Para regerar os do PlantUML sem enviar nada a um servidor externo:
-> `docker run --rm -i -e PLANTUML_LIMIT_SIZE=16384 plantuml/plantuml -tsvg -pipe < 03-der-completo.puml > 03-der-completo.svg`.
 
 ## Glossario PT → EN
 
