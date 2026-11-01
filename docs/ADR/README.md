@@ -72,6 +72,7 @@ ter o status `Substituído por ADR-XXX`.
 | [054](ADR-054-tabelas-do-marketplace-para-indicadores.md) | Dados | Tabelas do marketplace criadas (só leitura) para os indicadores financeiros | Aceito |
 | [055](ADR-055-topologia-de-ambientes-e-implantacao.md) | Infraestrutura | Topologia de ambientes e implantação no servidor próprio (Compose, GHCR, runner self-hosted, Cloudflare Tunnel, Tailscale, backup) | Aceito |
 | [056](ADR-056-runner-de-deploy-por-repositorio.md) | Infraestrutura | Um runner de deploy por repositório no servidor e deploy próprio do frontend (substitui parcialmente a decisão 8 do 055) | Proposto |
+| [057](ADR-057-imagens-publicas-no-ghcr.md) | Infraestrutura | Imagens públicas no GHCR, sem segredo dentro da imagem (substitui parcialmente a decisão 7 do 055) | Proposto |
 
 ## Modelo
 
