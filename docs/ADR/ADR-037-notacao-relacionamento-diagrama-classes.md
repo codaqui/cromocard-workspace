@@ -24,7 +24,7 @@ com casos especiais:
 - Alvo polimórfico: sufixo `": alvo (conforme tipo)"` nas várias relações opcionais que saem de
   `Favorito` e `Denuncia`.
 
-A legenda completa está em `docs/Diagrama-de-Classe/README.md`.
+A legenda fica nos comentários do `docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`.
 
 ## Alternativas consideradas
 
@@ -55,5 +55,4 @@ A legenda completa está em `docs/Diagrama-de-Classe/README.md`.
 
 ## Referências
 
-- `docs/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`
-- `docs/Diagrama-de-Classe/README.md` (seção "Legenda de relacionamento")
+- `docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`

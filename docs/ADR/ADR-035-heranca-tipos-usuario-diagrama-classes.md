@@ -54,6 +54,6 @@ apontam para `Administrador`).
 
 ## Referências
 
-- `docs/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4` (view `heranca_usuarios`)
-- `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml` (tabela `users`, enum `user_role`, antes `usuario` e `tipo_usuario`)
+- `docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4` (view `heranca_usuarios`)
+- `docs/Diagramas/DER/03-der-completo.dbml` (tabela `users`, enum `user_role`, antes `usuario` e `tipo_usuario`)
 - `Apresentacao-Banca/plano-apresentacao-banca.md` (item 7 — padronização de atores)

@@ -1,5 +1,5 @@
 // =====================================================================
-//  Fonte da verdade do MODELO DE DADOS: docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml
+//  Fonte da verdade do MODELO DE DADOS: docs/Diagramas/DER/03-der-completo.dbml
 //  Este diagrama e derivado do DER + dos Casos de Uso (docs/Casos-De-Uso/) e
 //  acrescenta o que o DER (fisico/relacional) nao mostra: heranca de tipos de
 //  usuario e comportamento (metodos) de cada classe. Ver ADR-035, ADR-036 e
@@ -11,8 +11,14 @@
 //  updated_at e deleted_at existem em toda tabela (ADR-015/ADR-016) e so
 //  aparecem nas classes quando tem significado de negocio (ex.: dataCriacao).
 //  Relacoes usam rotulo textual com multiplicidade (o LikeC4 nao tem notacao
-//  UML nativa de heranca/composicao/agregacao) - ver legenda no README.md
-//  desta pasta e o ADR-037.
+//  UML nativa de heranca/composicao/agregacao) - ADR-037. Legenda:
+//    herda de (generalizacao)  heranca; a seta vai da subclasse para a superclasse
+//    1 -- 1                    associacao um-para-um
+//    N -- 1                    muitos-para-um (a leitura inversa e 1 -- N)
+//    0..1 -- N                 um lado opcional (0 ou 1) associado a muitos
+//    : compoe                  composicao; a parte nao existe sem o todo
+//    : alvo (conforme tipo)    alvo polimorfico (Favorito, Denuncia): so uma das
+//                              relacoes vale, conforme a coluna tipo / tipoAlvo
 // =====================================================================
 
 specification {
