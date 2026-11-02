@@ -24,7 +24,7 @@ Todas com `authenticate` + `authorize('ADMIN')`.
 | `GET /api/v1/users/:id` | — | `200` | `404 USER_NOT_FOUND` | R4 |
 | `POST /api/v1/users` | `{ name, email, role }` | `201` + e-mail de convite | `400`, `409 EMAIL_ALREADY_REGISTERED` | R5, R10, R17 |
 | `PATCH /api/v1/users/:id` | `{ name?, email?, role? }` | `200` | `400`, `404`, `409`, `422 CANNOT_CHANGE_OWN_ROLE`, `422 LAST_ADMIN` | R6, R7, R18 |
-| `POST /api/v1/users/:id/suspend` | `{ reason }` | `200` | `404`, `409 ALREADY_SUSPENDED`, `422 CANNOT_SUSPEND_SELF` | R8, R14, R19 |
+| `POST /api/v1/users/:id/suspend` | `{ reason }` | `200` | `404`, `409 ALREADY_SUSPENDED`, `422 CANNOT_SUSPEND_SELF`, `422 LAST_ADMIN` | R8, R14, R18, R19 |
 | `POST /api/v1/users/:id/reactivate` | `{ reason }` | `200` | `404`, `409 NOT_SUSPENDED` | R8 |
 | `DELETE /api/v1/users/:id` | `{ reason }` | `204` | `404`, `422 CANNOT_DELETE_SELF`, `422 LAST_ADMIN` | R9, R14 |
 

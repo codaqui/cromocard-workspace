@@ -1,6 +1,6 @@
 # CCD059 — Gestão de Usuários
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #334 `CCD059-Gestão de Usuários` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [59-gestao-de-usuarios.md](../../docs/Casos-De-Uso/59-gestao-de-usuarios.md)

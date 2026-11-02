@@ -169,7 +169,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Em implementação | #109 |
 | [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Em implementação | #111 |
 | [CCD058](CCD058-visualizar-dashboard-gerencial/spec.md) | Visualizar Dashboard Gerencial | MVP | Planejada | #333 |
-| [CCD059](CCD059-gestao-de-usuarios/spec.md) | Gestão de Usuários | MVP | Planejada | #334 |
+| [CCD059](CCD059-gestao-de-usuarios/spec.md) | Gestão de Usuários | MVP | Em implementação | #334 |
 | [CCD060](CCD060-disparar-notificacao-global/spec.md) | Disparar Notificação Global | MVP | Planejada | #335 |
 | [CCD061](CCD061-gestao-de-catalogo/spec.md) | Gestão de Catálogo | MVP | Planejada | #336 |
 | [CCD062](CCD062-gestao-de-comunidade/spec.md) | Gestão de Comunidade | MVP | Planejada | #337 |

@@ -5,20 +5,20 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/334-gestao-de-usuarios`
 
-- [ ] **T1** · Criar validators e errors da gestão de usuários — R5–R11 · AB#540
+- [x] **T1** · Criar validators e errors da gestão de usuários — R5–R11 · AB#540
   - Pronto quando: os schemas recusam dados inválidos e a busca usa `q`.
-- [ ] **T2** · Estender o repository de users com filtros, detalhe, criação, status e soft delete — R3–R9 · AB#541
+- [x] **T2** · Estender o repository de users com filtros, detalhe, criação, status e soft delete — R3–R9 · AB#541
   - Pronto quando: o repository filtra excluídos e por papel e status.
-- [ ] **T3** · Criar service de gestão com convite, limites, revogação de sessões e auditoria — R5–R10, R14 · CA2–CA7 · AB#542
+- [x] **T3** · Criar service de gestão com convite, limites, revogação de sessões e auditoria — R5–R10, R14 · CA2–CA7 · AB#542
   - Pronto quando: `admin-users.service.spec.ts` cobre CA2–CA7.
-- [ ] **T4** · Criar rotas de detalhe, criar, editar, suspender, reativar e excluir — R1 · CA9 · AB#543
+- [x] **T4** · Criar rotas de detalhe, criar, editar, suspender, reativar e excluir — R1 · CA9 · AB#543
   - Pronto quando: as rotas aparecem no `/docs` e respondem `403` para quem não é ADMIN.
-- [ ] **T5** · Criar teste de integração da gestão de usuários — CA1–CA9 · AB#544
+- [x] **T5** · Criar teste de integração da gestão de usuários — CA1–CA9 · AB#544
   - Pronto quando: `npm run test:integration` passa.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/334-gestao-de-usuarios`
 
-- [ ] **T6** [P] · Criar api, queries, schemas e labels da gestão de usuários — R5–R9 · AB#545
+- [x] **T6** [P] · Criar api, queries, schemas e labels da gestão de usuários — R5–R9 · AB#545
   - Pronto quando: o typecheck passa e as query keys invalidam a lista após cada ação.
 - [ ] **T7** · Adicionar filtros e ações à lista de usuários — R2–R4 · CA1 · AB#546
   - Pronto quando: a lista filtra por busca, papel e status, como no Figma 208-1793.
