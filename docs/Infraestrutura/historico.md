@@ -1,7 +1,9 @@
 # Histórico da infraestrutura
 
 Linha do tempo do que foi executado na infraestrutura, com quem fez e a evidência. O estado atual está em
-[topologia.md](topologia.md); as decisões, no [ADR-055](../ADR/ADR-055-topologia-de-ambientes-e-implantacao.md).
+[topologia.md](topologia.md); as decisões, no [ADR-055](../ADR/ADR-055-topologia-de-ambientes-e-implantacao.md),
+no [ADR-056](../ADR/ADR-056-runner-de-deploy-por-repositorio.md) e no
+[ADR-057](../ADR/ADR-057-imagens-publicas-no-ghcr.md).
 
 | Marca | Significado |
 |---|---|
@@ -94,7 +96,32 @@ Datas de 2026; horários em BRT (UTC−3). PRs sem repositório indicado são do
 | 23/10 | PR #10: os 8 jobs hospedados passam de `ubuntu-latest` para `ubuntu-24.04` (`fd99a94`). Os checks reprovaram no Trivy por dois CVEs HIGH novos, sem relação com o Ubuntu; `zod` 4.6.7 e `body-parser` 2.4.0 corrigem (`ef6b9a5`) e os checks ficam verdes | Lucas | ✅ PR #10; runs 40054461597 e 40054466977 |
 | 23/10 | Alertas automáticos descartados: nem `TEAM_WEBHOOK` no deploy nem notificações no Uptime Kuma (o Discord chegou a ser escolhido e foi descartado no mesmo dia) | Lucas, com a equipe | Decisão 18 do ADR-055 |
 | 23:34 | Rulesets do backend: `develop` e `main` com PR, 1 aprovação, os cinco status checks, sem apagar a branch, sem force-push e sem bypass; `main` só *merge commit* | Lucas | ✅ API, rulesets `25766870` e `25766871`; PR #10 passou a exigir revisão |
-| 23/10 | ADR-055 e esta pasta `docs/Infraestrutura/` no workspace | Lucas | Este PR |
+| 23/10 | ADR-055 e esta pasta `docs/Infraestrutura/` no workspace | Lucas | PR #11 do workspace |
+
+### 28/10 a 31/10 — Proteções do frontend e preparação do deploy dele
+
+| Data | O que | Quem | Evidência |
+|---|---|---|---|
+| 28/10 20:12 | Rulesets do frontend na `develop` e na `main`: PR, 1 aprovação, status check, sem apagar a branch e sem force-push; `main` só *merge commit* | ⚠️ | ✅ API, rulesets `26084700` e `26084701` |
+| Entre 23/10 e 31/10 | Frontend com secret scanning, push protection, Dependabot, `GITHUB_TOKEN` só leitura e aprovação de workflows externos; workspace com secret scanning, push protection e rulesets | ⚠️ | ✅ API (conferido em 31/10 e 05/11) |
+| 29/10 20:17 | Deploy de hml do `b37e59b` (PR #11, fundação do BackOffice) falha em *Baixar imagens*: timeout de rede até o `ghcr.io`. Parou antes de mexer em qualquer container; o deploy seguinte (`e3f6801`, 21:08) passou | — | ✅ run 40971569912 |
+| 31/10 | Causa do 502 em `hml.cromocard.com.br`: o frontend nunca foi implantado (o `ci.yml` dele não publicava a imagem e não havia deploy) | Lucas | ✅ `curl`, API do GHCR e workflows |
+| 31/10 11:01 | PR #8 do frontend (imagem `web` no GHCR, `deploy.yml` próprio, base `nginx-unprivileged:1.30-alpine` com `apk upgrade` para os CVEs do Trivy) e ADR-056 (PR #17 do workspace) abertos | Lucas | ✅ PRs |
+| 31/10 | Conferido que os três pacotes do GHCR são **públicos** (tags listadas sem login); ADR-057 mantém públicos | Lucas | ✅ consulta anônima ao registro; PR #17 do workspace |
+| 31/10 20:27 | Environments `hml` e `prod` do frontend, com a variável `WEB_URL`; ruleset do frontend passa a exigir só o check de qualidade (fase 1 do ADR-056), para não travar a PR #7 do frontend | Lucas | ✅ API |
+| 31/10 | Segundo runner, `cromocard-srv-frontend`, instalado no servidor e registrado no repositório do frontend | Lucas | ✅ API (online); 🟡 pasta e usuário |
+| 31/10 | Leitura do pacote `cromocard-web` liberada para o repositório do backend (*Manage Actions access*) | Lucas | 🟡 (a API não mostra) |
+| 31/10 21:10 | PR #18: trava `flock` no `deploy.yml` do backend | Lucas | ✅ PR |
+
+### 05/11 — Frontend no ar em homologação
+
+| Hora | O que | Quem | Evidência |
+|---|---|---|---|
+| 15:24 a 15:28 | PRs mescladas: #17 do workspace (ADRs 056 e 057), #18 do backend (trava) e #8 do frontend (deploy) | Daniel (revisão e merge), Lucas (autor) | ✅ PRs; merges `7269b65`, `de50bd3` e `2aefd84` |
+| 15:29 a 16:35 | Os dois jobs de deploy ficam cerca de 1 h em *Queued*; os dois runners começam juntos às 16:35. Causa não identificada | — | ✅ status dos deployments; causa ⚠️ |
+| 16:35 a 16:37 | Deploys de hml rodam ao mesmo tempo. O backend sobe ainda no modo sem frontend; o frontend espera a trava e cria o `web` às 16:37:28, logo depois de o backend soltá-la. **`hml.cromocard.com.br` responde 200 pela primeira vez** | Automático | ✅ runs 42084405760 (backend) e 42084588874 (frontend) |
+| 05/11 | `env.js` de hml com `GOOGLE_CLIENT_ID` vazio: a variável não existe no Environment `hml` do backend, e o botão do Google não aparece | Lucas | ✅ `curl` e API |
+| 05/11 | Esta pasta atualizada com o frontend | Lucas | Este PR |
 
 ## O que deixou de valer
 
@@ -114,3 +141,8 @@ Datas de 2026; horários em BRT (UTC−3). PRs sem repositório indicado são do
 | `ubuntu-latest` nos jobs hospedados | 23/10 (PR #10) | `ubuntu-24.04` | ✅ PR #10 |
 | Backend sem proteção de branch (PRs #6 a #8 mescladas pelo autor, sem revisão) | 23/10 | Rulesets na `develop` e na `main` | ✅ API |
 | Plano de alertas no canal da equipe (`TEAM_WEBHOOK` no deploy e notificação do Kuma) | 23/10 | Sem alertas automáticos; acompanhamento pelo Actions e pelo painel do Kuma | Decisão 18 do ADR-055 |
+| Frontend sem rulesets e sem secret scanning | Até 31/10 | Mesmas proteções do backend | ✅ API |
+| Runner levado para um grupo da organização para atender o frontend (decisão 8 do ADR-055) | 31/10 | Um runner por repositório no mesmo servidor | ADR-056 |
+| Pacotes do GHCR privados (decisão 7 do ADR-055) | 31/10 | Públicos, sem segredo dentro da imagem | ADR-057 |
+| Deploy do backend sem trava entre repositórios | 05/11 | Trava `flock` por ambiente, comum aos dois deploys | ✅ PR #18 |
+| Modo sem frontend em hml (`hml.cromocard.com.br` = 502) | 05/11 | `web` rodando, implantado pelo deploy do frontend | ✅ run 42084588874 |
