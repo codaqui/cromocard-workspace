@@ -155,8 +155,7 @@ critérios de aceite `CA`, telas, lacunas), `plano.md` (como: dados, contrato da
 - Cerimônias: `<Evento> Sprint NN` (ex.: `Planning Sprint 04`), Daily `Daily DD/MM`,
   apontamentos `Apontamento <Nome>` como Task filha da cerimônia, sempre dentro de `#89 Reuniões`.
 - Tipos customizados existentes: Reuniões, Cerimônias, Daily, Spike, Task Spike — não criar novos.
-- Equipe: Daniel Andrade (usuário), Felipe Consulim, Lucas Oliveira Lima, Felipe Broetto Araujo,
-  Gabriel Nascimento, Lucca Rocha.
+- Equipe: Daniel Andrade (usuário), Felipe Consulim, Lucas Oliveira Lima, Gabriel Nascimento, Lucca Rocha.
 
 ## Figma (protótipo)
 
