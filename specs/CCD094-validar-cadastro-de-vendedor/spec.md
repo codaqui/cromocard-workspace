@@ -2,7 +2,7 @@
 
 - **Status:** Planejada
 - **Fase:** Escopo Adicional
-- **User story:** #598 `CCD094-Validar Cadastro de Vendedor` · responsável Felipe Broetto Araujo · Sprint 06
+- **User story:** #598 `CCD094-Validar Cadastro de Vendedor` · responsável Daniel Andrade · Sprint 06
 - **Caso de uso:** [94-validar-cadastro-de-vendedor.md](../../docs/Casos-De-Uso/94-validar-cadastro-de-vendedor.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
