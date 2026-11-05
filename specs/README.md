@@ -165,9 +165,9 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 
 | CCD | User story | Fase | Status | Work item |
 |---|---|---|---|---|
-| [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Em implementação | #108 |
-| [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Em implementação | #109 |
-| [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Em implementação | #111 |
+| [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Implementada | #108 |
+| [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Implementada | #109 |
+| [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Implementada | #111 |
 | [CCD058](CCD058-visualizar-dashboard-gerencial/spec.md) | Visualizar Dashboard Gerencial | MVP | Planejada | #333 |
 | [CCD059](CCD059-gestao-de-usuarios/spec.md) | Gestão de Usuários | MVP | Planejada | #334 |
 | [CCD060](CCD060-disparar-notificacao-global/spec.md) | Disparar Notificação Global | MVP | Planejada | #335 |
@@ -177,7 +177,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD064](CCD064-aprovar-solicitacoes/spec.md) | Aprovar Solicitações | MVP | Planejada | #339 |
 | [CCD065](CCD065-log-de-auditoria-admin/spec.md) | Log de Auditoria Admin | MVP | Planejada | #340 |
 | [CCD066](CCD066-configuracoes-globais/spec.md) | Configurações Globais | MVP | Planejada | #341 |
-| [Fundação](fundacao-backoffice/plano.md) | Fundação técnica do Painel Administrador | MVP | Em implementação (técnica, sem spec) | #481 |
+| [Fundação](fundacao-backoffice/plano.md) | Fundação técnica do Painel Administrador | MVP | Implementada (técnica, sem spec; T12 do Figma com o Gabriel) | #481 |
 | [CCD094](CCD094-validar-cadastro-de-vendedor/spec.md) | Validar Cadastro de Vendedor | Escopo Adicional | Planejada | #598 |
 | [CCD095](CCD095-notificar-pendencia-cadastral/spec.md) | Notificar Pendência Cadastral | Escopo Adicional | Planejada | #599 |
 | [CCD096](CCD096-acompanhar-evolucao-de-cadastros/spec.md) | Acompanhar Evolução de Cadastros | Escopo Adicional | Planejada | #600 |
