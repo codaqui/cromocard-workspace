@@ -31,13 +31,15 @@ mudou. Estado atual: [topologia.md](topologia.md).
 
 ```bash
 curl -fsS https://hml-api.cromocard.com.br/health      # {"status":"ok"}
+curl -fsS https://hml.cromocard.com.br/env.js          # window.__ENV__ = { API_URL: "...", GOOGLE_CLIENT_ID: "..." };
 ```
 
 | Resposta | Significado |
 |---|---|
 | `hml-api /health` = 200 | API de hml no ar, túnel funcionando |
+| `hml.cromocard.com.br` = 200 e `/env.js` com a `API_URL` | Frontend de hml no ar |
+| `hml.cromocard.com.br` = 502 | O `web` não está rodando: veja o último *Deploy do web em hml* do frontend |
 | `hml-ws` = 404 na raiz | Esperado: o `ws` só responde `/health` |
-| `hml.cromocard.com.br` = 502 | Esperado no modo sem frontend |
 
 Pela VPN: página de status em `http://cromocard-ops:3001/status/cromocard` e logs de hml em
 `http://cromocard-ops:8080`.
@@ -47,8 +49,9 @@ Pela VPN: página de status em `http://cromocard-ops:3001/status/cromocard` e lo
 ```bash
 sudo -iu deploy
 cd /srv/cromocard/hml
-docker compose -p cromocard-hml -f docker-compose.yml -f compose.hml.yml -f compose.sem-frontend.yml ps
-cat .deployed-tag            # SHA no ar
+docker compose -p cromocard-hml -f docker-compose.yml -f compose.hml.yml ps
+cat .deployed-tag            # SHA do backend no ar
+cat .deployed-web-tag        # SHA do frontend no ar
 docker stats --no-stream $(docker ps -q --filter "label=com.docker.compose.project=cromocard-hml")
 ```
 
@@ -60,20 +63,27 @@ tailscale status
 systemctl list-timers cromocard-backup.timer
 ```
 
-No GitHub, *Settings → Actions → Runners* deve mostrar `cromocard-srv` como **Idle** ou **Active**.
+No GitHub, *Settings → Actions → Runners* deve mostrar **Idle** ou **Active**: `cromocard-srv` no backend e
+`cromocard-srv-frontend` no frontend.
 
 ## Deploy
 
-Fonte: `.github/workflows/ci.yml`, `deploy.yml`, `infra/README.md` e `docs/ONBOARDING.md` (seção 5) do backend.
+Fonte: `.github/workflows/ci.yml`, `deploy.yml`, `infra/README.md` e `docs/ONBOARDING.md` (seção 5) do backend;
+`.github/workflows/ci.yml` e `deploy.yml` do frontend. Os dois apps seguem as mesmas regras, cada um com o seu
+runner (ADR-056):
 
-| Evento | Ambiente | Tag (`BACKEND_TAG`) | Aprovação |
+| Evento (em cada app) | Ambiente | Tag (`BACKEND_TAG` ou `FRONTEND_TAG`) | Aprovação |
 |---|---|---|---|
 | Merge na `develop`, depois do CI verde | `hml` | SHA desse push | Só a do PR |
 | Merge `develop → main` com *Create a merge commit* | `prod` | `HEAD^2` do merge commit, que precisa estar na `develop` | PR + revisor do Environment `prod`, nunca quem disparou |
 | *Actions → deploy → Run workflow* | escolhido | SHA informado | Em `prod`, sim |
 
-**Homologação:** automático. Acompanhe em *Actions → CI* o job *Deploy em hml*. O aviso "Sem imagem do
-frontend no .env: subindo sem o web" é esperado enquanto o frontend não for implantado.
+**Homologação:** automático. Acompanhe em *Actions → CI* o job *Deploy em hml* (backend) ou *Deploy do web em
+hml* (frontend). Se os dois rodarem juntos, um espera o outro na trava (até 15 min).
+
+**Ordem:** o backend implanta o ambiente primeiro (cria a pasta, o `.env` e os arquivos do Compose). Um deploy
+do frontend num ambiente que o backend ainda não implantou falha em *Conferir o ambiente*. Em produção, faça o
+release do backend antes do release do frontend.
 
 **Produção (release):**
 
@@ -87,17 +97,26 @@ frontend no .env: subindo sem o web" é esperado enquanto o frontend não for im
 6. Depois do **primeiro** deploy de produção, rode o backup à mão e confira o arquivo de prod
    ([Backup](#backup-e-restauração)).
 
-O que o job faz no servidor: copia `infra/` do mesmo commit para `/srv/cromocard/<env>/`, regrava o `.env`
-(`umask 077`, preservando o `FRONTEND_TAG`), valida com `config -q`, baixa `api` e `ws` do GHCR, guarda
-`.deployed-tag` em `.previous-tag`, sobe o `postgres`, roda o `migrate`, `up -d --remove-orphans`, espera o
-`api` *healthy* e a `HEALTH_URL` responder 200 (até 30 × 5 s), grava `.deployed-tag`, apaga imagens sem uso
-há mais de 7 dias e faz logout. O Compose só recria os serviços que mudaram.
+O que o job do **backend** faz no servidor: copia `infra/` do mesmo commit para `/srv/cromocard/<env>/`,
+regrava o `.env` com a trava (`umask 077`, preservando o `FRONTEND_TAG`), valida com `config -q`, baixa `api` e
+`ws` do GHCR, guarda `.deployed-tag` em `.previous-tag`, pega a trava, refaz a lista de arquivos do Compose com o
+`FRONTEND_TAG` atual, sobe o `postgres`, roda o `migrate`, `up -d --remove-orphans`, espera o `api` *healthy* e a
+`HEALTH_URL` responder 200 (até 30 × 5 s), grava `.deployed-tag`, apaga imagens sem uso há mais de 7 dias e faz
+logout. O Compose só recria os serviços que mudaram; o `web` é recriado quando muda uma variável dele (por
+exemplo, `GOOGLE_CLIENT_ID`).
+
+O que o job do **frontend** faz: confere se o `.env` e os arquivos do Compose existem, baixa
+`cromocard-web:<sha>`, pega a trava, guarda o `FRONTEND_TAG` anterior em `.previous-web-tag`, troca só a linha
+`FRONTEND_TAG` do `.env` e roda `up -d --no-deps web`. Espera o container rodando, o site com 200 e o `/env.js`
+com a `API_URL` (`WEB_URL`, até 30 tentativas), grava `.deployed-web-tag` e faz logout. Não toca no banco, na
+`api` nem no `ws`.
 
 ## Rollback
 
-**Automático:** se a migration, a subida ou o healthcheck falharem, o job volta o `BACKEND_TAG` para o valor
-de `.previous-tag` e sobe de novo. O job fica vermelho, e **ninguém é avisado**: não há alertas automáticos,
-então quem fez o merge confere o Actions. 📝 Nunca foi provocado: nenhum deploy falhou até 23/10.
+**Automático:** se a migration, a subida ou o healthcheck falharem, o job do backend volta o `BACKEND_TAG` para
+o valor de `.previous-tag` e sobe de novo; o do frontend volta o `FRONTEND_TAG` para o de `.previous-web-tag` e
+sobe só o `web`. O job fica vermelho, e **ninguém é avisado**: não há alertas automáticos, então quem fez o
+merge confere o Actions. 📝 Nunca rodou: o único deploy que falhou até 05/11 parou no download das imagens, antes da subida.
 
 Limites: não há para onde voltar no primeiro deploy de um ambiente, e **migrations já aplicadas não voltam**.
 
@@ -109,8 +128,9 @@ Limites: não há para onde voltar no primeiro deploy de um ambiente, e **migrat
 
 1. Descubra a tag anterior (SHA completo, 40 caracteres): no job *Definir ambiente e tag* da última execução
    boa, pelo Git (`git log origin/main --merges --first-parent -n 5` e `git rev-parse <merge>^2`) ou no
-   servidor (`cat /srv/cromocard/prod/.previous-tag`).
-2. *Actions → deploy → Run workflow*: **Use workflow from** `main`, ambiente e tag.
+   servidor (`cat /srv/cromocard/prod/.previous-tag`, ou `.previous-web-tag` para o frontend).
+2. No repositório do app que vai voltar, *Actions → deploy → Run workflow*: **Use workflow from** `main`,
+   ambiente e tag.
 3. Em produção, aprove como num release.
 4. Confira o `/health` e avise a equipe.
 5. Corrija a `develop` com `git revert` num PR, senão o próximo merge publica o defeito de novo.
@@ -119,7 +139,12 @@ Limites: não há para onde voltar no primeiro deploy de um ambiente, e **migrat
 
 | Sintoma no job | Causa | O que fazer |
 |---|---|---|
-| *Deploy em hml* parado em *Queued* | Runner offline (o GitHub desiste depois de 24 h) | [Runner](#runner-self-hosted); depois, *Re-run* do CI |
+| *Deploy em hml* ou *Deploy do web em hml* parado em *Queued* | Runner do app offline (o GitHub desiste depois de 24 h). Em 05/11, os dois ficaram cerca de 1 h na fila e começaram juntos | [Runner](#runner-self-hosted); depois, *Re-run* do CI |
+| Falha em *Baixar imagens* com `i/o timeout` até o `ghcr.io` | Rede do servidor (aconteceu em 29/10). Nada foi alterado no ambiente | *Re-run* do job; se repetir, confira a internet do servidor |
+| `Outro deploy segura o ambiente há mais de 900s.` | O deploy do outro app está preso com a trava | Veja o job do outro app; quando terminar, *Re-run* |
+| `/srv/cromocard/<env>/.env não existe: o backend precisa ter sido implantado…` | Deploy do frontend antes do primeiro deploy do backend no ambiente | Implante o backend no ambiente e refaça o do frontend |
+| `Variável WEB_URL não cadastrada no Environment.` | Falta a variável no Environment do frontend | Cadastrar e refazer |
+| `Healthcheck falhou (web: …)` | O `web` novo não subiu ou o `env.js` não tem a `API_URL` | O rollback já voltou o `web`; veja `docker logs cromocard-<env>-web-1` |
 | `O push em main não é um merge commit` | Release com *Squash* ou *Rebase* | Nada mudou em produção. Refaça com *Create a merge commit* |
 | `Tag inválida` | `workflow_dispatch` com SHA curto | Use os 40 caracteres |
 | `O commit <tag> não está na develop` | Produção recebendo algo que não passou por hml | Leve o commit para a `develop` primeiro |
@@ -151,7 +176,23 @@ GitHub, o PowerShell ou `winpty gh secret set NOME ...`. O valor nunca vai no lu
 
 Se um segredo vazar: **rotacionar primeiro**, avisar a equipe, só depois limpar o rastro.
 
+> [!WARNING]
+> Nunca edite o `/srv/cromocard/<env>/.env` à mão para trocar uma variável: o próximo deploy do backend regrava
+> o arquivo a partir do Environment do GitHub e a mudança some. Troque no Environment e refaça o deploy.
+
 Complementos ao `segredos.md`:
+
+### `GOOGLE_CLIENT_ID` (login com Google)
+
+O client ID é público (ADR-048): é **variável**, não secret, e entra no `env.js` do navegador. Vai no
+Environment do **backend** (`hml` ou `prod`), e o mesmo `.env` alimenta a `api`, o `ws` e o `web`. O *client
+secret* do Google não é usado.
+
+1. No Google Cloud Console, no cliente OAuth do tipo *Web application*, inclua a origem do site em
+   *Authorized JavaScript origins* (`https://hml.cromocard.com.br` ou `https://cromocard.com.br`). O botão usa o
+   modo popup, sem *redirect URI*. Com a tela de consentimento em *Testing*, só os *Test users* entram.
+2. Cadastre `GOOGLE_CLIENT_ID` no Environment do backend e refaça o deploy do backend.
+3. Confira: `curl -s https://hml.cromocard.com.br/env.js` mostra o client ID, e o botão aparece no login.
 
 O `TEAM_WEBHOOK` citado no `segredos.md` e no `infra/README.md` do backend **não é mais usado**: a equipe
 descartou os alertas automáticos em 23/10 (decisão 18 do ADR-055). Não cadastre esse secret.
@@ -298,19 +339,25 @@ para arquivo e copiado com `docker cp`. Dump de produção tem dados pessoais: a
 
 ## Runner self-hosted
 
-Runner `cromocard-srv`, registrado no repositório do backend, label `cromocard-deploy`, unit
-`actions.runner.codaqui-cromocard-backend.cromocard-srv.service`.
+Dois runners no mesmo servidor, um por repositório (ADR-056), os dois com a label `cromocard-deploy` e
+rodando como `deploy`:
+
+| Runner | Repositório | Pasta | Unit |
+|---|---|---|---|
+| `cromocard-srv` | backend | `/home/deploy/actions-runner` | `actions.runner.codaqui-cromocard-backend.cromocard-srv.service` |
+| `cromocard-srv-frontend` | frontend | `/home/deploy/actions-runner-frontend` | `actions.runner.codaqui-cromocard-frontend.cromocard-srv-frontend.service` |
 
 **Conferir:**
 
 ```bash
-cd /home/deploy/actions-runner
-sudo ./svc.sh status
-ps -o user= -p $(pgrep -f Runner.Listener)    # deve retornar deploy
+systemctl status 'actions.runner.*' --no-pager
+ps -o user=,args= -p "$(pgrep -d, -f Runner.Listener)"    # os dois com o usuário deploy
+sudo journalctl -u 'actions.runner.*' --since "1 hour ago"
 ```
 
 **Reinstalar**, com alguém que tenha admin no repositório gerando o token em *Settings → Actions → Runners →
-New self-hosted runner* (expira em 1 h):
+New self-hosted runner* (expira em 1 h). Exemplo do backend; no frontend, troque a pasta, o repositório e o
+nome pelos da tabela:
 
 ```bash
 sudo -iu deploy
@@ -323,10 +370,12 @@ cd /home/deploy/actions-runner
 sudo ./svc.sh install deploy && sudo ./svc.sh start && sudo ./svc.sh status
 ```
 
+Cada runner precisa da pasta própria: dois runners na mesma pasta se sobrescrevem.
+
 **Remover:** `sudo ./svc.sh stop && sudo ./svc.sh uninstall` e `./config.sh remove --token <TOKEN>`.
 
-Regras que não mudam: só o `deploy.yml` usa `runs-on: [self-hosted, cromocard-deploy]`, e ele nunca tem
-gatilho `pull_request` ou `pull_request_target`.
+Regras que não mudam: em cada app, só o `deploy.yml` usa `runs-on: [self-hosted, cromocard-deploy]`, e ele
+nunca tem gatilho `pull_request` ou `pull_request_target`.
 
 ## Projeto ops (Dozzle e Uptime Kuma)
 
