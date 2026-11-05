@@ -20,7 +20,7 @@
 
 - [x] **T6** [P] · Criar api, queries, schemas e labels da gestão de usuários — R5–R9 · AB#545
   - Pronto quando: o typecheck passa e as query keys invalidam a lista após cada ação.
-- [ ] **T7** · Adicionar filtros e ações à lista de usuários — R2–R4 · CA1 · AB#546
+- [x] **T7** · Adicionar filtros e ações à lista de usuários — R2–R4 · CA1 · AB#546
   - Pronto quando: a lista filtra por busca, papel e status, como no Figma 208-1793.
 - [ ] **T8** · Criar modal de criar e editar usuário — R5–R7, R11–R13 · CA2, CA3, CA8 · AB#547
   - Pronto quando: `UserFormModal.spec.tsx` cobre criar, editar, erro por campo e cancelar.
