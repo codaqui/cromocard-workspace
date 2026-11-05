@@ -1,6 +1,6 @@
 # ADR-035 — Herança de tipos de usuário no diagrama de classes (Single Table Inheritance)
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 29/10/2026, na revisão da issue #2)
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 
@@ -54,6 +54,6 @@ apontam para `Administrador`).
 
 ## Referências
 
-- `docs/Diagrama-de-Classe/cromocard-diagrama-classes.c4` (view `heranca_usuarios`)
-- `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml` (tabela `usuario`, enum `tipo_usuario`)
+- `docs/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4` (Cliente, Vendedor e Administrador herdam de Usuário)
+- `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml` (tabela `users`, enum `user_role`)
 - `Apresentacao-Banca/plano-apresentacao-banca.md` (item 7 — padronização de atores)
