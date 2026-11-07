@@ -1,8 +1,8 @@
 # ADR-058 — Sem aplicativo mobile: o CromoCard é só web
 
-- **Status:** Aceito
+- **Status:** Aceito (validado pelo PO em 07/11/2026)
 - **Data:** 2026-10-31
-- **Decisores:** Equipe CromoCard
+- **Decisores:** Daniel Andrade (proposta e validação como PO)
 - **Substitui:** ADR-023 (stack do aplicativo mobile: React Native)
 - **Substitui parcialmente:** ADR-021 (o Aplicativo Mobile como terceira aplicação cliente) e ADR-038 (a linha
   "o Aplicativo Mobile continua sendo um app separado")

@@ -1,4 +1,4 @@
-# ADR-036 — Granularidade do diagrama de classes (1:1 com as tabelas do DER)
+# ADR-036 — Granularidade do diagrama de classes (1:1 com as 43 entidades do DER)
 
 - **Status:** Aceito (validado pelo PO em 29/10/2026, na revisão da issue #2)
 - **Data:** 2026-09-29
@@ -16,9 +16,8 @@ banca costuma cruzar números entre slides").
 
 ## Decisão
 
-Modelar o diagrama de classes com fidelidade 1:1 ao DER: uma classe por tabela e uma enumeração por enum,
-organizadas nos mesmos 8 módulos (na criação, 43 classes e 22 enumerações; hoje, 49 classes e 27 enumerações,
-porque o DER chegou a 50 tabelas e só o `refresh_tokens` ficou sem classe), incluindo as entidades técnicas
+Modelar o diagrama de classes com fidelidade 1:1 ao DER: **43 classes** (uma por tabela) + **22
+enumerações**, organizadas nos mesmos 8 módulos, incluindo as entidades técnicas
 (`LogAuditoria`, `ConfiguracaoGlobal`, `TokenRecuperacaoSenha`) mesmo com pouco comportamento de
 negócio.
 
@@ -39,9 +38,10 @@ negócio.
 - Uma única tabela de rastreabilidade (a do DER) serve para os dois artefatos.
 
 **Negativas / riscos**
-- Diagrama grande (hoje 49 classes) não cabe em uma única view legível — mitigado com views separadas
-  por módulo (as views do `docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`), como o DER,
-  que também é dividido em três diagramas.
+- Diagrama grande (43 classes) não cabe em uma única view legível — mitigado com views separadas
+  por módulo (ver as views de `docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`),
+  replicando a lição já aprendida no DER
+  (`docs/Diagramas/DER/README.md`, seção "por que os diagramas usam `left to right direction`").
 - Classes técnicas (ex.: `LogAuditoria`) têm poucos métodos de negócio — aceitável, pois o valor
   aqui é rastreabilidade, não riqueza comportamental.
 

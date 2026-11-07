@@ -4,6 +4,8 @@ Um ADR registra **uma** decisão de arquitetura: o contexto, o que foi decidido,
 alternativas e as consequências. ADRs não são editados depois de aceitos. Se a
 decisão mudar, cria-se um ADR novo que **substitui** o antigo, e o antigo passa a
 ter o status `Substituído por ADR-XXX`.
+A única exceção é corrigir um caminho de arquivo que mudou de lugar (nas Referências
+ou no texto): isso não muda a decisão e mantém os links funcionando.
 
 **Status possíveis:** `Proposto` (em discussão) · `Aceito` · `Substituído por ADR-XXX` · `Rejeitado`
 
