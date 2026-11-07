@@ -53,7 +53,8 @@ cadastro com e-mail e senha e perguntou o que fazer sem um servidor SMTP. Hoje:
    o MX de retorno do subdomínio de envio), todos como *DNS only*, sem o proxy da Cloudflare. Crie também um
    registro DMARC (`_dmarc`) começando em `p=none`, para observar antes de endurecer.
 4. **A conta do Resend é da organização, não de uma pessoa:** crie-a com um e-mail da equipe, guarde o acesso no
-   Bitwarden e dê acesso a quem cuida da infraestrutura (ADR-055).
+   Bitwarden e dê acesso a quem cuida da infraestrutura (ADR-055). **Em 07/11/2026 a conta ainda não existe e não há
+   item dela no Bitwarden**; o item *CromoCard — Resend* é criado junto com a conta.
 5. **Teste o SMTP antes da produção** pelo próprio Resend (envio de teste) e, se a equipe quiser, num deploy de hml
    com as mesmas variáveis por um dia, voltando ao Ethereal depois.
 
@@ -93,7 +94,8 @@ cadastro com e-mail e senha e perguntou o que fazer sem um servidor SMTP. Hoje:
 
 **O que precisa ser feito** (quando o PO aceitar)
 
-1. Criar a conta do Resend com o e-mail da equipe e guardar o acesso no Bitwarden.
+1. Criar a conta do Resend com o e-mail da equipe e criar o item *CromoCard — Resend* no Bitwarden, que ainda não
+   existe, com o login da conta e, depois do passo 3, a API key.
 2. Adicionar o domínio no Resend e criar os registros DNS na Cloudflare; esperar o status *Verified*.
 3. Criar a API key só de envio, restrita ao domínio.
 4. No `codaqui/cromocard-backend`, Environment `prod`: as variáveis e o secret da tabela da decisão 2.
