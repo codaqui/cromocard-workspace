@@ -1,9 +1,9 @@
 # CCD061 — Gestão de Catálogo
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #336 `CCD061-Gestão de Catálogo` · responsável Lucas Oliveira Lima · Sprint 06
-- **Caso de uso:** [61-gestao-de-catalogo.md](../../docs/Casos-De-Uso/61-gestao-de-catalogo.md) (a Finalidade foi copiada do caso 60)
+- **Caso de uso:** [61-gestao-de-catalogo.md](../../docs/Casos-De-Uso/61-gestao-de-catalogo.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
 - **Aprovação:** 2026-10-22, Daniel Andrade (PO)
@@ -17,7 +17,7 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401`/`403` | Permissão | `61`, Pré-condições; ADR-005, item 4 |
-| R2 | Tela em `/backoffice/catalogo`, item "Catálogo" do menu | Tela | `61`, FP 1; ADR-038 |
+| R2 | Tela em `/backoffice/catalog`, item "Catálogo" do menu | Tela | `61`, FP 1; ADR-038 |
 | R3 | Lista paginada dos itens do catálogo, sem excluídos | Tela | `61`, FP 2; ADR-011; ADR-015, item 5 |
 | R4 | Cadastrar, editar e remover cartas e álbuns | Ação | `61`, FP 3; user-stories.md §8 |
 | R5 | Álbum: `title` obrigatório (160); opcionais `publisher`, `year`, `description`, `cover_url`, `category_id` | Regra | DBML `albums` |
@@ -28,7 +28,7 @@
 | R10 | Remover é soft delete | Regra | ADR-015, item 1 |
 | R11 | Item com vínculos que impedem a exclusão não é removido e o sistema informa o motivo | Regra | `61`, FA 5–6 |
 | R12 | Imagens vão pelo `StorageProvider`; o banco guarda a URL | Regra | ADR-009 |
-| R13 | Importar cartas e álbuns em lote por CSV | Ação | user-stories.md §8 |
+| R13 | Importar cartas em lote por CSV (os álbuns ficam fora, pela L3) | Ação | user-stories.md §8; `61`, FP 10; L3 |
 | R14 | Cadastrar, editar e remover gravam `audit_logs` | Regra | `61`, FP 8; ADR-034 |
 | R15 | Categorias são cadastradas, editadas e removidas na aba "Categorias & Franquias"; raridades e idiomas vêm do seed | Ação | `61`, FP 2 |
 
@@ -79,3 +79,6 @@
 | L3 | Formato do CSV (proposta: um arquivo de cartas com `album_title;number;name;rarity;language;category`; tudo ou nada; modelo para baixar) | Um arquivo de cartas com `album_title;number;name;rarity;language;category`, tudo ou nada, com modelo para baixar | `61`, FP 10–11; ADR-050, item 2 |
 | L4 | Imagens: upload ou URL? (proposta: upload pelo `/uploads` da fundação; frente obrigatória, verso opcional) | Upload pelo `/uploads` da fundação; frente obrigatória e verso opcional | `61`, FP 5; ADR-050, item 1 |
 | L5 | `total_cards` do álbum: informado ou calculado? (proposta: calculado pelas cartas do álbum) | Calculado pelas cartas do álbum | `61`, FP 8 |
+| L6 | Como escolher entre muitos álbuns e categorias nos selects? | Em aberto. A implementação carrega a primeira página (até 100, o máximo da API) e sempre inclui o item já escolhido na edição; um select com busca fica para quando o catálogo passar de 100 | Só aqui, aguardando o PO |
+| L7 | A categoria pai precisa ser do mesmo tipo (`ALBUM`/`CARD`)? | Em aberto. A tela oferece categorias de qualquer tipo, menos a própria; o backend recusa o pai inválido com `422 CATEGORY_PARENT_INVALID` | Só aqui, aguardando o PO |
+| L8 | O que é o "resumo" da importação (CA5)? | Em aberto. A tela mostra a quantidade de cartas criadas num aviso ("50 cartas importadas com sucesso.") | Só aqui, aguardando o PO |
