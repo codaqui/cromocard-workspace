@@ -1,8 +1,10 @@
 # Topologia de ambientes e requisitos do servidor
 
-**Estado atual da infraestrutura em 23/10/2026.** As decisões estão no
-[ADR-055](../ADR/ADR-055-topologia-de-ambientes-e-implantacao.md), a operação nos [runbooks](runbooks.md) e o que
-já mudou no [histórico](historico.md).
+**Estado atual da infraestrutura em 05/11/2026.** As decisões estão no
+[ADR-055](../ADR/ADR-055-topologia-de-ambientes-e-implantacao.md), no
+[ADR-056](../ADR/ADR-056-runner-de-deploy-por-repositorio.md) (runner por repositório e deploy do frontend) e no
+[ADR-057](../ADR/ADR-057-imagens-publicas-no-ghcr.md) (imagens públicas). A operação está nos
+[runbooks](runbooks.md) e o que já mudou, no [histórico](historico.md).
 
 Marcas: ✅ evidência direta (código, API do GitHub, run do Actions ou saída de comando) · 🟡 relatado pela
 infraestrutura, sem saída de comando · ⚠️ a confirmar.
@@ -14,10 +16,12 @@ ficam no registro interno da infraestrutura.
 
 | Área | Situação |
 |---|---|
-| Homologação | **No ar** sem o frontend: `postgres`, `api`, `ws`, `cloudflared` e `ts-hml-db`. Último deploy: merge da PR #8 do backend (`d864d7d`), em 16/10 ✅ |
-| Produção | **Nunca publicada.** A `main` do backend só tem o commit inicial (`f1eeae3`) ✅ |
-| CI | Verde. Fixação em `ubuntu-24.04` e correção de dois CVEs do Trivy na PR #10 do backend, em revisão ✅ |
-| Proteção de branch | Rulesets na `develop` e na `main` do backend desde 23/10 ✅ |
+| Homologação | **No ar completa desde 05/11**: `postgres`, `api`, `ws`, `web`, `cloudflared` e `ts-hml-db`. Últimos deploys: backend `de50bd3` (PR #18) e frontend `2aefd84` (PR #8 do frontend), em 05/11 ✅ |
+| Produção | **Nunca publicada.** A `main` do backend (`f1eeae3`) e a do frontend (`e63021c`) só têm o commit inicial ✅ |
+| CI | Verde nos dois apps; todos os jobs hospedados em `ubuntu-24.04` ✅ |
+| Deploy | Dois runners no servidor, um por repositório (ADR-056), com trava `flock` comum por ambiente ✅ |
+| Proteção de branch | Rulesets no backend, no frontend e no workspace ✅ |
+| Login com Google em hml | Desligado: `GOOGLE_CLIENT_ID` vazio, sem a variável no Environment `hml` do backend ✅ |
 | Observabilidade | Projeto `cromocard-ops` (Dozzle e Uptime Kuma) rodando 🟡; **sem alertas automáticos** (decisão de 23/10) |
 | Backup | Diário às 03:00 🟡; primeiro dump de hml em 16/10 ✅; restauração nunca testada |
 | Acesso | SSH só com chave e só pela VPN; a equipe usa só o Tailscale e o GitHub |
@@ -48,7 +52,7 @@ ficam no registro interno da infraestrutura.
 | Conta | sudo | Grupo `docker` | Uso |
 |---|---|---|---|
 | Administradores (Lucas e Duarte) | Sim | Não, de propósito: Docker só pelo `deploy` ✅ | Administração por SSH com chave |
-| `deploy` | Não ✅ | Sim ✅ | Runner, backup e dono de `/srv/cromocard` |
+| `deploy` | Não ✅ | Sim ✅ | Os dois runners, backup e dono de `/srv/cromocard` |
 
 ### Acesso, firewall e manutenção
 
@@ -73,13 +77,18 @@ rede, banco e `.env` próprios. Limites de memória: [ADR-055, orçamento](../AD
 | `migrate` | imagem da API, `prisma migrate deploy` | — | `data` | Roda a cada deploy e termina | — |
 | `api` | `ghcr.io/codaqui/cromocard-api:${BACKEND_TAG}` | 3000 (`/health`) | `edge`, `data` | Rodando, *healthy* ✅ | — |
 | `ws` | `ghcr.io/codaqui/cromocard-ws:${BACKEND_TAG}` | 3001 (`/health`) | `edge`, `data` | Rodando ✅ | — |
-| `web` | `ghcr.io/codaqui/cromocard-web:${FRONTEND_TAG}` (inclui o BackOffice, ADR-038) | 8080 | `edge` | Não sobe: modo sem frontend ✅ | — |
+| `web` | `ghcr.io/codaqui/cromocard-web:${FRONTEND_TAG}` (nginx sem root; inclui o BackOffice, ADR-038) | 8080 | `edge` | Rodando desde 05/11 ✅ | — |
 | `cloudflared` | `cloudflare/cloudflared:${CLOUDFLARED_VERSION}` | — | `edge` | Rodando ✅ | — |
 | `ts-hml-db` (só hml) | `tailscale/tailscale:${TAILSCALE_VERSION}`, `tag:hml-db` | repassa 5432 | `data`, `ts-egress` | Rodando, limite de 128M ✅ | não existe |
 
-- **Modo sem frontend:** sem `FRONTEND_TAG` no `.env`, o deploy grava `FRONTEND_TAG=sem-frontend` e acrescenta
-  `compose.sem-frontend.yml`, que tira o `web`. Por isso `hml.cromocard.com.br` responde 502 e `hml-ws`
-  responde 404 na raiz; os dois são esperados ✅.
+- **`FRONTEND_TAG`:** quem grava é o deploy do frontend (ADR-056). O deploy do backend só preserva o valor.
+  Sem `FRONTEND_TAG` no `.env`, o deploy do backend grava `FRONTEND_TAG=sem-frontend` e acrescenta
+  `compose.sem-frontend.yml`, que tira o `web` (modo sem frontend, que valeu em hml até 05/11 e vale em prod
+  até o primeiro release do frontend) ✅.
+- **`env.js`:** o `web` gera o arquivo na subida com `API_URL` e `GOOGLE_CLIENT_ID` do `.env` (ADR-045). Hoje
+  em hml: `API_URL` = `https://hml-api.cromocard.com.br` e `GOOGLE_CLIENT_ID` vazio, então o botão do Google não
+  aparece ✅.
+- **`hml-ws`** responde 404 na raiz, o que é esperado: o `ws` só responde `/health`.
 - **Redes:** `edge` tem internet; `data` é `internal: true`. Homologação e produção não se enxergam. Faixa do
   Docker: `10.200.0.0/16` em redes `/24`.
 - **Hardening:** todos os serviços com `restart: unless-stopped` e `no-new-privileges` (âncora `x-hardening`).
@@ -91,7 +100,9 @@ rede, banco e `.env` próprios. Limites de memória: [ADR-055, orçamento](../AD
 | Pacotes | `docker-ce` 29.8.2 e Compose v5.6.0 do repositório oficial (inventário de 06/10) |
 | `/etc/docker/daemon.json` | Logs `json-file` 10 MB × 3, `live-restore: true`, `default-address-pools` `10.200.0.0/16` em `/24` 🟡 |
 | Pastas | `/srv/cromocard/{hml,prod,ops,backups}`, dono `deploy`, 750 ✅ |
-| `.env` de hml | Regravado a cada deploy com `umask 077` (600, dono `deploy`) ✅ |
+| `.env` de hml | Regravado a cada deploy do backend com `umask 077` (600, dono `deploy`); o do frontend só troca a linha `FRONTEND_TAG` ✅. **Não edite à mão:** o próximo deploy apaga a mudança |
+| Trava de deploy | `/srv/cromocard/<env>/.deploy.lock` (`flock`, espera até 900 s), usada pelos dois deploys ao mexer no `.env` e nos containers ✅ |
+| Tags no ar | `.deployed-tag` e `.previous-tag` (backend); `.deployed-web-tag` e `.previous-web-tag` (frontend) ✅ |
 | `.env` de prod | Nasce no primeiro deploy de produção |
 | `.env` do ops | `/srv/cromocard/ops/.env` (600, dono `deploy`), com `TS_AUTHKEY_OPS` e `TAILSCALE_VERSION` 🟡 |
 | Volumes que **nunca** podem ser apagados | `pgdata` de hml, `cromocard-hml_ts-hml-db-state`, `cromocard-ops_ts-ops-state`, `cromocard-ops_kuma-data` |
@@ -136,8 +147,8 @@ Nenhum registro A aponta para o IP residencial. `admin.` e `hml-admin.` foram re
 | Repositório | Branches | Proteções |
 |---|---|---|
 | `codaqui/cromocard-backend` (público) | `develop` → hml; `main` (padrão) → prod | Secret scanning, push protection e Dependabot ligados; `GITHUB_TOKEN` só leitura; aprovação de workflows de `all_external_contributors`. **Rulesets** na `develop` e na `main`: PR, 1 aprovação, os cinco status checks, sem apagar a branch, sem force-push, sem bypass; `main` só *merge commit*, `develop` *merge commit* ou *squash* ✅ API |
-| `codaqui/cromocard-frontend` (público) | `develop` (esqueleto, CI e build da imagem desde a PR #1) e `main` (padrão) | Secret scanning, push protection e Dependabot **desligados**; sem rulesets ✅ API (23/10) |
-| `codaqui/cromocard-workspace` (público) | `development` (padrão) e `main` | Igual ao frontend ✅ API (23/10). Backend e frontend como submódulos em `apps/` |
+| `codaqui/cromocard-frontend` (público) | `develop` → hml; `main` (padrão) → prod | Secret scanning, push protection e Dependabot ligados; `GITHUB_TOKEN` só leitura; aprovação de workflows de `all_external_contributors`. **Rulesets** na `develop` e na `main`: PR, 1 aprovação, sem apagar a branch, sem force-push; `main` só *merge commit*. Status check exigido: só "Formatação, lint, tipos, testes e build" (fase 1 do ADR-056; a fase 2 acrescenta o gitleaks e a imagem `web`) ✅ API (05/11) |
+| `codaqui/cromocard-workspace` (público) | `development` (padrão) e `main` | Secret scanning e push protection ligados; rulesets na `development` (PR e 1 aprovação) e na `main` (também só *merge commit*) ✅ API (05/11). Backend e frontend como submódulos em `apps/` |
 
 ### Workflows do backend
 
@@ -150,19 +161,39 @@ Nenhum registro A aponta para o IP residencial. `admin.` e `hml-admin.` foram re
 | `dependabot.yml` | npm, Docker e Actions, semanal, PRs para a `develop` |
 
 - **Runners hospedados:** 8 jobs em `ubuntu-24.04` na PR #10 (antes `ubuntu-latest`).
+- **Trava:** desde a PR #18, o `deploy.yml` pega a trava `flock` do ambiente ao gravar o `.env`, ao subir e no
+  rollback, e na subida refaz a lista de arquivos do Compose com o `FRONTEND_TAG` atual ✅.
 - **Rollback manual e `env-check` indisponíveis hoje:** o *Run workflow* só aparece quando o arquivo está na
   branch padrão, e a `main` só tem o commit inicial ✅.
-- **Deploys:** 4 em hml (15 e 16/10), todos verdes; o rollback automático nunca rodou ✅.
-- **Pacotes no GHCR:** `cromocard-api` e `cromocard-ws` (visibilidade ⚠️).
+- **Deploys:** 10 em hml até 05/11, 9 verdes. O de 29/10 (`b37e59b`) falhou ao baixar as imagens, por timeout de
+  rede até o `ghcr.io`, antes de mexer em qualquer container; o seguinte passou. O rollback automático nunca
+  rodou ✅.
+
+### Workflows do frontend
+
+| Workflow | O que faz |
+|---|---|
+| `ci.yml` | Em todo push e PR: formatação, lint, tipos, testes e build; gitleaks; imagem `web` com checagem de não-root, Trivy e push para o GHCR com o SHA. Em push na `develop`, chama o deploy de hml |
+| `deploy.yml` | Roda no runner `[self-hosted, cromocard-deploy]` do frontend. Mesmos gatilhos do backend (hml por `workflow_call`, prod pelo `HEAD^2` do merge na `main`, rollback por `workflow_dispatch`). Confere se o backend já criou o ambiente, baixa a imagem, troca só a linha `FRONTEND_TAG` do `.env` com a trava e sobe só o `web` (`--no-deps`); healthcheck no site e no `/env.js` (`WEB_URL`); rollback por `.previous-web-tag` |
+
+- **Imagem:** `nginxinc/nginx-unprivileged:1.30-alpine` com `apk upgrade` no build (CVEs do Trivy) ✅.
+- **Deploys:** 1 em hml (05/11), verde ✅.
+
+### Pacotes no GHCR
+
+`cromocard-api`, `cromocard-ws` e `cromocard-web`, todos **públicos** (ADR-057): baixam sem login, e o deploy
+mantém o login por precaução. Um pacote público não volta a ser privado. A retenção continua pendente ✅.
 
 ### Environments e runner
 
 | Item | Estado |
 |---|---|
-| Environment `hml` | Deploy de `develop` e `main`; sem revisores ✅ |
-| Environment `prod` | Só a `main`; revisores Daniel e Lucas; *Prevent self-review*; sem bypass de administrador ✅ |
-| Secret de repositório | Nenhum ✅ |
-| Runner | `cromocard-srv`, registrado **no repositório** do backend, label `cromocard-deploy`, roda como `deploy` ✅ (usuário 🟡). Sem limite de memória |
+| Environment `hml` (backend) | Deploy de `develop` e `main`; sem revisores. Sem `GOOGLE_CLIENT_ID` nem as variáveis `MAIL_*` ✅ |
+| Environment `prod` (backend) | Só a `main`; revisores Daniel e Lucas; *Prevent self-review*; sem bypass de administrador ✅ |
+| Environments `hml` e `prod` (frontend) | Criados em 31/10 com as mesmas regras do backend: `prod` só da `main`, revisores Daniel e Lucas, *Prevent self-review* e sem bypass. Só a variável `WEB_URL` ✅ |
+| Secret de repositório | Nenhum, nos dois apps ✅ |
+| Runner do backend | `cromocard-srv`, registrado no repositório do backend, label `cromocard-deploy`, roda como `deploy` ✅. Sem limite de memória |
+| Runner do frontend | `cromocard-srv-frontend`, registrado no repositório do frontend, mesma label, online ✅; usuário `deploy` e pasta `/home/deploy/actions-runner-frontend` 🟡 (ADR-056) |
 
 ## Observabilidade
 
