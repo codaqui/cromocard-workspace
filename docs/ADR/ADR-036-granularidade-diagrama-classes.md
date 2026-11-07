@@ -39,13 +39,14 @@ negócio.
 
 **Negativas / riscos**
 - Diagrama grande (43 classes) não cabe em uma única view legível — mitigado com views separadas
-  por módulo (ver `docs/Diagrama-de-Classe/README.md`), replicando a lição já aprendida no DER
+  por módulo (ver as views de `docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`),
+  replicando a lição já aprendida no DER
   (`docs/Diagramas/DER/README.md`, seção "por que os diagramas usam `left to right direction`").
 - Classes técnicas (ex.: `LogAuditoria`) têm poucos métodos de negócio — aceitável, pois o valor
   aqui é rastreabilidade, não riqueza comportamental.
 
 ## Referências
 
-- `docs/Diagrama-de-Classe/cromocard-diagrama-classes.c4`
+- `docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`
 - `docs/Diagramas/DER/README.md`
 - `Apresentacao-Banca/plano-apresentacao-banca.md`

@@ -34,7 +34,7 @@ commits. Leia o diff inteiro e, quando precisar de contexto, o arquivo completo 
    - Frontend: feature importa outra só pelo `index.ts`; componente não chama o `api` (só `.queries.ts`); dado da
      API só no TanStack Query; tela trata carregando/erro/vazio; schema espelha o validator do backend; estilo só
      com tokens; `import.meta.env` só no `env.ts`; token nunca em `localStorage`; URL só em `paths.ts`.
-   - Workspace: DER alterado nos três formatos; ADR novo como `Proposto` e no índice; caso de uso no formato padrão.
+   - Workspace: DER alterado nos três `.dbml`, com os prints refeitos; ADR novo como `Proposto` e no índice; caso de uso no formato padrão.
 2. **Clean Code**: nomes que revelam a intenção, sem abreviação; uma função faz uma coisa num só nível de
    abstração; sem número mágico; sem código morto ou comentado. Código TypeScript sem comentários (pedido do time):
    aponte comentário que explica "o quê" e proponha o nome que o substitui.

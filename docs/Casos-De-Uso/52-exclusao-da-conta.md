@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Exclusão da Conta |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário solicite a exclusão de sua conta e dos dados associados, conforme as regras da plataforma. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir uma conta ativa. |
 
 ### Fluxo Principal

@@ -11,7 +11,7 @@ AB#
 - [ ] `chore` — configuração do workspace, submódulos, Claude Code
 
 ## Checklist
-- [ ] DER alterado nos três formatos (DBML, SQL do chartdb e PlantUML), a partir do `03-der-completo.dbml`
+- [ ] DER alterado nos três `.dbml` (a partir do `03-der-completo.dbml`), com os prints `.png` refeitos no dbdiagram.io
 - [ ] Diagrama de classes continua 1:1 com o DER; rastreabilidade do `README.md` do DER atualizada
 - [ ] ADR novo com o próximo número, status `Proposto` e linha no índice `docs/ADR/README.md`
 - [ ] Caso de uso novo no formato padrão e na `user-stories.md`

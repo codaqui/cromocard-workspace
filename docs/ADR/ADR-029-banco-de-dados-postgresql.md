@@ -40,4 +40,4 @@ Usar PostgreSQL como único banco de dados do sistema, para todos os 8 módulos 
 
 - `docs/Diagramas/Diagramas-C4/02-containers.puml`
 - `docs/Diagramas/DER/README.md`
-- `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml`
+- `docs/Diagramas/DER/03-der-completo.dbml`

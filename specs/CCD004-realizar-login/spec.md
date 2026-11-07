@@ -147,7 +147,7 @@ Enums: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED
 
 - Cadastro (aba Criar Conta) — CCD003. Recuperação e redefinição de senha — CCD006.
 - Reativação de conta excluída (`POST /api/v1/auth/restore`) — CCD052.
-- Autenticação do WebSocket (ADR-005, item 5) e armazenamento seguro no mobile.
+- Autenticação do WebSocket (ADR-005, item 5). Não há app mobile (ADR-058).
 - Registrar login de admin em `audit_logs`: o ADR-034 trata de ações administrativas, não de login.
 
 ## Lacunas e decisões

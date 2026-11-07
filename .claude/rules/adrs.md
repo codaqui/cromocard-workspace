@@ -14,7 +14,9 @@ paths:
   `Substituído por ADR-XXX` depois que o usuário confirmar a validação. Nunca marque como aceito por conta própria.
 - Não edite o conteúdo de um ADR aceito. Se a decisão mudar, crie um ADR novo com o campo
   `**Substitui:** ADR-XXX` (ou `Substitui parcialmente`) e, quando o novo for aceito, troque o status do antigo
-  para `Substituído por ADR-YYY`. Essa troca de status é a única edição permitida num ADR aceito.
+  para `Substituído por ADR-YYY`. Num ADR aceito, só são permitidas essa troca de status e a correção de um
+  caminho de arquivo que mudou de lugar (não muda a decisão e evita link quebrado); número ou contagem desatualizados
+  não se corrigem no ADR, ficam no `CLAUDE.md` ou no README do artefato.
 - Ao criar ou mudar o status de um ADR, atualize a linha dele no índice do `README.md` (número, área, decisão, status).
 - Seções, nesta ordem: Contexto · Decisão (no imperativo) · Alternativas consideradas · Consequências ·
   Referências (opcional). Cite os ADRs relacionados pelo número e os arquivos de código pelo caminho.

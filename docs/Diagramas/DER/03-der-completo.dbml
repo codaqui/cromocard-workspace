@@ -1032,7 +1032,7 @@ TableGroup "4 - Comunidade (Grupos)" {
 TableGroup "5 - Chat Pessoal" {
   conversations
   conversation_participants
-  message
+  messages
   user_blocks
 }
 

@@ -4,6 +4,8 @@ Um ADR registra **uma** decisão de arquitetura: o contexto, o que foi decidido,
 alternativas e as consequências. ADRs não são editados depois de aceitos. Se a
 decisão mudar, cria-se um ADR novo que **substitui** o antigo, e o antigo passa a
 ter o status `Substituído por ADR-XXX`.
+A única exceção é corrigir um caminho de arquivo que mudou de lugar (nas Referências
+ou no texto): isso não muda a decisão e mantém os links funcionando.
 
 **Status possíveis:** `Proposto` (em discussão) · `Aceito` · `Substituído por ADR-XXX` · `Rejeitado`
 
@@ -36,9 +38,9 @@ ter o status `Substituído por ADR-XXX`.
 | [018](ADR-018-configuracao-e-ambientes.md) | Backend | Configuração e ambientes (local, test, homolog, produção; `.env`; segredos) | Proposto |
 | [019](ADR-019-logs-e-observabilidade.md) | Backend | Logs e observabilidade (pino, `requestId`, redaction, health check) | Proposto |
 | [020](ADR-020-estrutura-src-sem-infra.md) | Backend | Estrutura do `src` sem a pasta `infra` (pastas na raiz do `src`) | Aceito |
-| [021](ADR-021-separacao-de-clientes-por-plataforma.md) | Frontend | Separação das aplicações cliente por plataforma (Web, Mobile, BackOffice) | Substituído parcialmente por ADR-038 |
+| [021](ADR-021-separacao-de-clientes-por-plataforma.md) | Frontend | Separação das aplicações cliente por plataforma (Web, Mobile, BackOffice) | Substituído por ADR-038 e ADR-058 |
 | [022](ADR-022-stack-frontend-web-backoffice-react-vite.md) | Frontend | Stack de frontend para Web e BackOffice: React + Vite | Substituído por ADR-039 |
-| [023](ADR-023-stack-mobile-react-native.md) | Frontend | Stack do aplicativo mobile: React Native | Aceito |
+| [023](ADR-023-stack-mobile-react-native.md) | Frontend | Stack do aplicativo mobile: React Native | Substituído por ADR-058 |
 | [024](ADR-024-integracao-gateway-pagamento.md) | Integrações | Integração com gateway de pagamento externo via HTTPS/Webhook | Proposto |
 | [025](ADR-025-integracao-transportadora.md) | Integrações | Integração com transportadora terceirizada para entrega física | Proposto |
 | [026](ADR-026-estrutura-multi-repositorio.md) | Processo | Estrutura multi-repositório (workspace para SDD e documentação; um repositório por aplicação) | Aceito |
@@ -51,9 +53,9 @@ ter o status `Substituído por ADR-XXX`.
 | [033](ADR-033-convencoes-modelagem-dados.md) | Dados | Convenções de modelagem de dados (nomenclatura, PK, associativas N:N) | Substituído por ADR-003 e ADR-014 |
 | [034](ADR-034-trilha-auditoria-acoes-administrativas.md) | Backend | Trilha de auditoria obrigatória para ações administrativas | Aceito |
 | [035](ADR-035-heranca-tipos-usuario-diagrama-classes.md) | Diagramas | Herança de tipos de usuário no diagrama de classes (Single Table Inheritance) | Aceito |
-| [036](ADR-036-granularidade-diagrama-classes.md) | Diagramas | Granularidade do diagrama de classes (1:1 com as 43 entidades do DER) | Aceito |
+| [036](ADR-036-granularidade-diagrama-classes.md) | Diagramas | Granularidade do diagrama de classes (1:1 com as tabelas do DER) | Aceito |
 | [037](ADR-037-notacao-relacionamento-diagrama-classes.md) | Diagramas | Notação de relacionamento no diagrama de classes (rótulo textual) | Aceito |
-| [038](ADR-038-spa-unico-web-e-backoffice.md) | Frontend | Web e BackOffice num único SPA, separados por rota e papel | Aceito |
+| [038](ADR-038-spa-unico-web-e-backoffice.md) | Frontend | Web e BackOffice num único SPA, separados por rota e papel | Aceito (mobile: ver 058) |
 | [039](ADR-039-stack-frontend-react-typescript-vite.md) | Frontend | Stack do frontend web: React 19 + TypeScript + Vite + React Router | Aceito |
 | [040](ADR-040-estrutura-frontend-por-feature.md) | Frontend | Estrutura de pastas do frontend por feature | Aceito |
 | [041](ADR-041-comunicacao-api-estado-servidor.md) | Frontend | Comunicação com a API e estado do servidor: cliente HTTP único + TanStack Query | Aceito |
@@ -73,6 +75,7 @@ ter o status `Substituído por ADR-XXX`.
 | [055](ADR-055-topologia-de-ambientes-e-implantacao.md) | Infraestrutura | Topologia de ambientes e implantação no servidor próprio (Compose, GHCR, runner self-hosted, Cloudflare Tunnel, Tailscale, backup) | Aceito |
 | [056](ADR-056-runner-de-deploy-por-repositorio.md) | Infraestrutura | Um runner de deploy por repositório no servidor e deploy próprio do frontend (substitui parcialmente a decisão 8 do 055) | Proposto |
 | [057](ADR-057-imagens-publicas-no-ghcr.md) | Infraestrutura | Imagens públicas no GHCR, sem segredo dentro da imagem (substitui parcialmente a decisão 7 do 055) | Proposto |
+| [058](ADR-058-sem-aplicativo-mobile.md) | Frontend | Sem aplicativo mobile: o CromoCard é só web (substitui o 023) | Aceito |
 | [059](ADR-059-provedor-de-email-por-ambiente.md) | Infraestrutura | Provedor de e-mail por ambiente: Ethereal em homologação e Resend (SMTP) em produção | Proposto |
 
 ## Modelo

@@ -17,7 +17,7 @@ http://localhost:3000) · `npm run format:check` · `npm run lint` · `npm run t
 
 - **Um SPA para Web e BackOffice** (ADR-038): área Pública (`PublicLayout`), Cliente (`CustomerLayout` +
   `RequireAuth`) e BackOffice em `/backoffice` (`AdminLayout` + `RequireRole role="ADMIN"`); rotas das features
-  com `lazy`. O mobile (React Native) é outro app. Guard do frontend é só navegação: quem autoriza é a API.
+  com `lazy`. Não há app mobile (ADR-058): o SPA atende o celular pelo navegador. Guard do frontend é só navegação: quem autoriza é a API.
 - **Stack** (ADR-039): React 19 + TypeScript strict (`noUncheckedIndexedAccess`) + Vite + React Router (data
   router) · TanStack Query + Axios · React Hook Form + Zod · CSS Modules · Vitest + Testing Library.
   Sem Redux/Zustand: o único estado global é a sessão (Context).

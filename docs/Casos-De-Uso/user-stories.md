@@ -14,7 +14,7 @@
 | Buscar Global | Como visitante eu quero buscar cartas, usuários e grupos diretamente no painel público. |
 | Criar Conta | Como visitante eu quero me cadastrar via e-mail informando tipo de usuário, aceitando termos e confirmando o e-mail. |
 | Realizar Login | Como visitante eu quero fazer login com e-mail/senha ou Google, com a opção de lembrar usuário. |
-| Central de Ajuda /FAQ | Como visitante eu quero acessar uma página de dúvidas frequentes (FAQ) para entender como o aplicativo gerencia trocas e álbuns antes de criar minha conta. |
+| Central de Ajuda /FAQ | Como visitante eu quero acessar uma página de dúvidas frequentes (FAQ) para entender como a plataforma gerencia trocas e álbuns antes de criar minha conta. |
 | Recuperar Senha | Como visitante eu quero solicitar a recuperação da minha senha caso eu a esqueça. |
 
 ## 2. Painel Cliente (Dashboard)
@@ -59,7 +59,7 @@
 | Ampliar Carta | Como Cliente preciso ampliar as imagens da carta para analisar seus detalhes e estado de conservação.** |
 | Visualizar Histórico de Preços | Como Cliente preciso visualizar o histórico de preços para acompanhar a variação do valor da carta.*** |
 | Visualizar Anúncios Ativos | Como Cliente preciso visualizar meus anúncios ativos para acompanhar os itens que estão atualmente disponíveis para venda.*** |
-| Vizualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma.*** |
+| Visualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma.*** |
 | Escanear Carta por Imagem | Como Cliente preciso escanear uma carta por imagem para identificar o item de forma automática.** |
 | Escanear Código | Como Cliente preciso escanear o código de uma carta para localizar suas informações de forma rápida.** |
 | Mostrar Todas as Cartas | Como Cliente preciso visualizar todas as cartas disponíveis no marketplace para encontrar itens de meu interesse.*** |
@@ -93,11 +93,11 @@
 |---|---|
 | Explorar e Entrar em Grupos | Como Cliente preciso buscar grupos, solicitar entrada ou compartilhar o link de um grupo existente. |
 | Denunciar Mensagem no Grupo | Como Cliente preciso poder reportar uma mensagem ofensiva ou spam dentro do grupo para que os administradores a avaliem e excluam. |
-| Silenciar Notificações de Grupo | Como Cliente preciso silenciar temporariamente um grupo muito ativo para não receber alertas no celular a todo momento. |
+| Silenciar Notificações de Grupo | Como Cliente preciso silenciar temporariamente um grupo muito ativo para não receber alertas dele a todo momento. |
 | Pesquisar no Histórico do Grupo | Como Cliente preciso uma barra de busca dentro do grupo para localizar mensagens, links ou cartas enviadas em dias anteriores. |
 | Criar e Administrar Grupo | Como Cliente preciso criar um grupo, administrar seus membros e fixar mensagens importantes. |
 | Interagir no Chat do Grupo | Como Cliente preciso utilizar o chat de texto do grupo para conversar com outros membros, divulgar as cartas que procuro e combinar informalmente horários e locais para trocas presenciais. |
-| Compartilhar Cartas | Como Cliente precio compartilhar cartas no grupo para apresentar itens na minha coleção aos participantes.** |
+| Compartilhar Cartas | Como Cliente preciso compartilhar cartas no grupo para apresentar itens na minha coleção aos participantes.** |
 | Compartilhar Imagens | Como Cliente preciso compartilhar imagens no grupo para enviar conteudos.** |
 
 ## 5. Chat Pessoal (Conversas)
@@ -117,7 +117,7 @@
 |---|---|
 | Editar Dados do Perfil | Como Cliente preciso editar minhas informações, alterar minha foto (avatar) e gerenciar meus endereços cadastrados. |
 | Exibir Vitrine de Conquistas | Como Cliente preciso que as medalhas/badges que eu ganhei (ex: "Colecionador Veterano") fiquem em destaque na página pública do meu perfil. |
-| Denunciar Perfil | Como Cliente preciso poder reportar um perfil inteiro no aplicativo caso suspeite que seja um bot ou golpista. |
+| Denunciar Perfil | Como Cliente preciso poder reportar um perfil inteiro na plataforma caso suspeite que seja um bot ou golpista. |
 | Configurar Privacidade e Senha | Como Cliente preciso alterar minha senha e configurar as opções de privacidade do meu portfólio (público/privado). |
 | Exclusão da Conta | Como Cliente preciso poder solicitar a exclusão definitiva da minha conta e dados da plataforma. |
 | Compartilhar Conquista Externa | Como Cliente preciso um botão para compartilhar uma nova conquista alcançada (ex: "Álbum Completo!") diretamente nos meus stories do Instagram ou WhatsApp.** |
@@ -131,8 +131,8 @@
 | Limpar Central de Notificações | Como Cliente preciso um botão de "Marcar todas como lidas" para zerar rapidamente o contador de avisos do sistema. |
 | Favoritar Álbum | Como Cliente preciso favoritar álbuns para acessá-los rapidamente posteriormente. |
 | Favoritar Carta | Como Cliente preciso favoritar uma carta para acessá-la posteriormente com facilidade. |
-| Favoritar Grupo | Como Cliente preciso favoritar um grupo para acessá-la posteriormente com facilidade. |
-| Configurar Alertas de Preço | Como Cliente preciso configurar alertas para receber uma notificação push no celular imediatamente quando um item da minha lista de favoritos baixar de preço no mercado agregado.** |
+| Favoritar Grupo | Como Cliente preciso favoritar um grupo para acessá-lo posteriormente com facilidade. |
+| Configurar Alertas de Preço | Como Cliente preciso configurar alertas para receber uma notificação na plataforma imediatamente quando um item da minha lista de favoritos baixar de preço no mercado agregado.** |
 
 ## 8. BackOffice (Administração)
 
@@ -140,7 +140,7 @@
 |---|---|
 | Visualizar Dashboard Gerencial | Como Administrador eu quero visualizar KPIs (total de usuários, cartas cadastradas, novos cadastros), relatórios no painel e cadastros dos vendedores. |
 | Gestão de Usuários | Como Administrador eu quero criar, editar, suspender, excluir e alterar permissões de acesso de qualquer usuário da plataforma. |
-| Disparar Notificação Global | Como Administrador eu quero ter um painel para criar e disparar notificações push em massa para a base inteira de usuários informando novidades. |
+| Disparar Notificação Global | Como Administrador eu quero ter um painel para criar e disparar notificações em massa para a base inteira de usuários informando novidades. |
 | Gestão de Catálogo | Como Administrador eu quero cadastrar, editar, excluir ou importar em lote (CSV) as cartas e álbuns do sistema global. |
 | Gestão de Comunidade (Grupos) | Como Administrador eu quero poder excluir, suspender grupos e moderar mensagens denunciadas na plataforma. |
 | Exportar Relatórios Gerenciais | Como Administrador eu quero exportar os gráficos e tabelas da Dashboard (ex: novos cadastros do mês) para um arquivo CSV ou PDF. |
