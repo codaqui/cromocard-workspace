@@ -69,7 +69,7 @@
 
 ## Fora do escopo
 
-- Push do sistema operacional e e-mail: o DER só tem notificação dentro da plataforma, e não há app mobile (ADR-056).
+- Push do sistema operacional e e-mail: o DER só tem notificação dentro da plataforma, e não há app mobile (ADR-058).
 - Agendamento e segmentação por público.
 
 ## Lacunas e decisões

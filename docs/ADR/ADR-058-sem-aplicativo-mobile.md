@@ -1,4 +1,4 @@
-# ADR-056 — Sem aplicativo mobile: o CromoCard é só web
+# ADR-058 — Sem aplicativo mobile: o CromoCard é só web
 
 - **Status:** Aceito
 - **Data:** 2026-10-31
@@ -47,7 +47,7 @@ O app mobile nunca teve repositório, código, tela no Figma nem Task no Azure: 
   ADR-043) ficam como registro histórico e não valem mais. Esses ADRs não são editados (`docs/ADR/README.md`).
 - User stories que citavam "celular" ou "push" (CCD041 Silenciar Notificações de Grupo, CCD060 Disparar
   Notificação Global e "Configurar Alertas de Preço", Futuro) passam a falar das notificações da plataforma.
-- Quando este ADR for aceito: o ADR-023 passa a `Substituído por ADR-056`, e as notas de substituição parcial
+- Quando este ADR for aceito: o ADR-023 passa a `Substituído por ADR-058`, e as notas de substituição parcial
   do ADR-021 e do ADR-038 passam a citar também este ADR.
 
 ## Referências

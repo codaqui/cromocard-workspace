@@ -260,7 +260,7 @@ views {
   //
   // Convencao: o passo parte do ator, atravessa o frontend (Aplicacao Web,
   // o SPA unico; o BackOffice e a area /backoffice do mesmo SPA - ADR-038;
-  // nao ha aplicativo mobile - ADR-056), chega ao modulo responsavel da API e, quando o caso de uso
+  // nao ha aplicativo mobile - ADR-058), chega ao modulo responsavel da API e, quando o caso de uso
   // exige persistencia ou consulta, ao Banco de Dados.
   // ===============================================================
 

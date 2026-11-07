@@ -26,17 +26,18 @@ fundação.
   ```json
   { "data": {
       "period": { "from": "ISO", "to": "ISO" },
-      "kpis": { "totalUsers": 0, "totalCards": 0, "newUsers": 0, "newSellers": 0 },
+      "kpis": { "totalUsers": 0, "totalCards": null, "newUsers": 0, "newSellers": 0 },
       "signupsByMonth": [{ "month": "2026-10", "customers": 0, "sellers": 0 }],
       "isEmpty": false
   } }
   ```
 
+- **`totalCards`:** `number | null`, `null` até a CCD061 expor `countCards()` (L5)
 - **Erros:** `400 VALIDATION_ERROR` (período inválido) · `401` · `403`
 
 ### `GET /api/v1/admin/dashboard/recent-sellers` — R9
 
-- **Acesso:** ADMIN · **Entrada:** `page`, `pageSize`, `from`, `to`
+- **Acesso:** ADMIN · **Entrada:** `page`, `pageSize` e `period` ou `from` e `to` (ISO 8601 UTC, L7)
 - **Sucesso:** `200` `{ "data": [{ "id", "name", "email", "createdAt" }], "meta": { … } }`
 
 ## Backend
@@ -44,7 +45,8 @@ fundação.
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `src/domains/admin/dashboard/dashboard.validator.ts` | período e intervalo | R10, R15 |
-| `dashboard.repository.ts` | contagens e série mensal filtrando `deletedAt: null` | R5–R9, R14 |
+| `src/domains/users/users.repository.ts` · `users.service.ts` | `countMembers`, `signupsByMonth` e `listSellersCreatedWithin`, filtrando `deletedAt: null`; o dashboard consome a `UsersService` (ADR-001), sem repository próprio | R5–R9, R14 |
+| `src/shared/utils/time-zone.ts` | início do dia e meses no horário de Brasília | R10, R15 |
 | `dashboard.service.ts` + `.spec.ts` | resolve o período (fuso de São Paulo), monta a resposta e `isEmpty` | R11, R12 |
 | `dashboard.controller.ts` · `.routes.ts` · `.swagger.ts` · `.module.ts` | 2 rotas ADMIN | R1 |
 

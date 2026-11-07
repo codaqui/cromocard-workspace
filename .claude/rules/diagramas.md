@@ -13,7 +13,7 @@ paths:
 - C4 usa `!include` do C4-PlantUML via GitHub raw.
 - Cobertura atual: o diagrama de casos de uso (`.puml`) e o de atividades (LikeC4) vão até CCD107. Caso de uso
   novo ou alterado muda também o diagrama de casos de uso e a `dynamic view` dele no diagrama de atividades.
-- C4: Web e BackOffice são um único SPA (ADR-038) e não há aplicativo mobile (ADR-056). No nível 3 e no diagrama
+- C4: Web e BackOffice são um único SPA (ADR-038) e não há aplicativo mobile (ADR-058). No nível 3 e no diagrama
   de atividades o BackOffice aparece como elemento à parte (`backofficeApp`) só para separar os fluxos do admin.
 - Para gerar o `.svg` sem enviar o diagrama a um servidor externo:
   `docker run --rm -i plantuml/plantuml -tsvg -pipe < arquivo.puml > arquivo.svg`

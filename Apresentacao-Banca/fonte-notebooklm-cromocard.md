@@ -155,7 +155,7 @@ números exatamente como na seção 2; itens [PENDENTE] permanecem visíveis com
 | 9 | MVP primeiro, marketplace e extras depois | 111 user stories: 76 MVP, 16 futuro, 19 futuro marketplace (seção 2.3) | Gráfico de barras ou rosca |
 | 10 | Exemplo de caso de uso: marcar carta e ver progresso | Fluxo resumido: abrir álbum → marcar possuo/faltante/repetida → sistema atualiza progresso | Fluxo em 3–4 passos |
 | 11 | Contexto: o sistema e seus parceiros externos | C4 Nível 1: atores, sistema, gateway de pagamento, transportadora | **Espaço reservado: diagrama C4 Nível 1** |
-| 12 | Web (SPA único), API e tempo real sobre PostgreSQL; sem app mobile (ADR-056) | C4 Nível 2: tabela de containers e tecnologias | **Espaço reservado: diagrama C4 Nível 2** |
+| 12 | Web (SPA único), API e tempo real sobre PostgreSQL; sem app mobile (ADR-058) | C4 Nível 2: tabela de containers e tecnologias | **Espaço reservado: diagrama C4 Nível 2** |
 | 13 | API organizada em 9 módulos de negócio | C4 Nível 3: lista dos 9 componentes | **Espaço reservado: diagrama C4 Nível 3** |
 | 14 | Modelo de dados: 43 tabelas em 8 módulos | PostgreSQL + Prisma; 76 FKs; 22 enums; rastreabilidade com casos de uso | **Espaço reservado: DER (visão de relacionamentos)** |
 | 15 | 28 telas mapeadas para a web e o BackOffice | Inventário da seção 2.7; protótipos [PENDENTE] | Mosaico de telas (quando existir) |

@@ -13,7 +13,7 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 ```
 cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
 ├── docs/                          documentação — a fonte da verdade; só guarda documentação
-│   ├── ADR/                       ADR-001…056 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
+│   ├── ADR/                       ADR-001…059 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–107), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
 │   ├── Diagramas/
 │   │   ├── DER/                   01-entidades, 02-relacionamentos, 03-der-completo (.dbml do dbdiagram.io + print .png) + README.md
@@ -68,7 +68,7 @@ No diagrama de casos de uso também existe "Administrador do Grupo" (herda de Cl
 | Banco de Dados | PostgreSQL (via Prisma ORM) | Todos os dados |
 
 Web e BackOffice são **um único SPA** (`cromocard-frontend`, BackOffice em `/backoffice`) — ADR-038.
-**Não há aplicativo mobile** (ADR-056): quem usa celular acessa o SPA pelo navegador, e não há notificação push.
+**Não há aplicativo mobile** (ADR-058): quem usa celular acessa o SPA pelo navegador, e não há notificação push.
 
 **Sistemas externos:** Gateway de Pagamento (Stripe/Mercado Pago, HTTPS/Webhook) e Transportadora.
 

@@ -36,24 +36,24 @@ ter o status `Substituído por ADR-XXX`.
 | [018](ADR-018-configuracao-e-ambientes.md) | Backend | Configuração e ambientes (local, test, homolog, produção; `.env`; segredos) | Proposto |
 | [019](ADR-019-logs-e-observabilidade.md) | Backend | Logs e observabilidade (pino, `requestId`, redaction, health check) | Proposto |
 | [020](ADR-020-estrutura-src-sem-infra.md) | Backend | Estrutura do `src` sem a pasta `infra` (pastas na raiz do `src`) | Aceito |
-| [021](ADR-021-separacao-de-clientes-por-plataforma.md) | Frontend | Separação das aplicações cliente por plataforma (Web, Mobile, BackOffice) | Substituído por ADR-038 e ADR-056 |
+| [021](ADR-021-separacao-de-clientes-por-plataforma.md) | Frontend | Separação das aplicações cliente por plataforma (Web, Mobile, BackOffice) | Substituído por ADR-038 e ADR-058 |
 | [022](ADR-022-stack-frontend-web-backoffice-react-vite.md) | Frontend | Stack de frontend para Web e BackOffice: React + Vite | Substituído por ADR-039 |
-| [023](ADR-023-stack-mobile-react-native.md) | Frontend | Stack do aplicativo mobile: React Native | Substituído por ADR-056 |
+| [023](ADR-023-stack-mobile-react-native.md) | Frontend | Stack do aplicativo mobile: React Native | Substituído por ADR-058 |
 | [024](ADR-024-integracao-gateway-pagamento.md) | Integrações | Integração com gateway de pagamento externo via HTTPS/Webhook | Proposto |
 | [025](ADR-025-integracao-transportadora.md) | Integrações | Integração com transportadora terceirizada para entrega física | Proposto |
-| [026](ADR-026-estrutura-multi-repositorio.md) | Processo | Estrutura multi-repositório (workspace para SDD e documentação; um repositório por aplicação) | Proposto |
+| [026](ADR-026-estrutura-multi-repositorio.md) | Processo | Estrutura multi-repositório (workspace para SDD e documentação; um repositório por aplicação) | Aceito |
 | [027](ADR-027-escopo-marketplace-no-mvp.md) | Produto | Escopo do Marketplace no MVP (decisão em aberto) | Proposto |
 | [028](ADR-028-stack-backend-node-express-prisma.md) | Backend | Stack de backend: Node.js + Express + Prisma | Substituído por ADR-002 |
 | [029](ADR-029-banco-de-dados-postgresql.md) | Dados | Banco de dados relacional: PostgreSQL via Prisma ORM | Substituído por ADR-003 e ADR-014 |
 | [030](ADR-030-autenticacao-jwt-compartilhada.md) | Backend | Autenticação via JWT compartilhado entre API REST e serviço de tempo real | Substituído por ADR-005 |
 | [031](ADR-031-servico-tempo-real-dedicado.md) | Backend | Serviço de mensageria em tempo real como container dedicado | Substituído por ADR-007 e ADR-012 |
-| [032](ADR-032-modelagem-polimorfica-favorito-denuncia.md) | Dados | Modelagem polimórfica para alvos de `favorito` e `denuncia` | Proposto |
+| [032](ADR-032-modelagem-polimorfica-favorito-denuncia.md) | Dados | Modelagem polimórfica para alvos de `favorito` e `denuncia` | Aceito |
 | [033](ADR-033-convencoes-modelagem-dados.md) | Dados | Convenções de modelagem de dados (nomenclatura, PK, associativas N:N) | Substituído por ADR-003 e ADR-014 |
 | [034](ADR-034-trilha-auditoria-acoes-administrativas.md) | Backend | Trilha de auditoria obrigatória para ações administrativas | Aceito |
-| [035](ADR-035-heranca-tipos-usuario-diagrama-classes.md) | Diagramas | Herança de tipos de usuário no diagrama de classes (Single Table Inheritance) | Proposto |
-| [036](ADR-036-granularidade-diagrama-classes.md) | Diagramas | Granularidade do diagrama de classes (1:1 com as tabelas do DER) | Proposto |
-| [037](ADR-037-notacao-relacionamento-diagrama-classes.md) | Diagramas | Notação de relacionamento no diagrama de classes (rótulo textual) | Proposto |
-| [038](ADR-038-spa-unico-web-e-backoffice.md) | Frontend | Web e BackOffice num único SPA, separados por rota e papel | Aceito (mobile: ver 056) |
+| [035](ADR-035-heranca-tipos-usuario-diagrama-classes.md) | Diagramas | Herança de tipos de usuário no diagrama de classes (Single Table Inheritance) | Aceito |
+| [036](ADR-036-granularidade-diagrama-classes.md) | Diagramas | Granularidade do diagrama de classes (1:1 com as tabelas do DER) | Aceito |
+| [037](ADR-037-notacao-relacionamento-diagrama-classes.md) | Diagramas | Notação de relacionamento no diagrama de classes (rótulo textual) | Aceito |
+| [038](ADR-038-spa-unico-web-e-backoffice.md) | Frontend | Web e BackOffice num único SPA, separados por rota e papel | Aceito (mobile: ver 058) |
 | [039](ADR-039-stack-frontend-react-typescript-vite.md) | Frontend | Stack do frontend web: React 19 + TypeScript + Vite + React Router | Aceito |
 | [040](ADR-040-estrutura-frontend-por-feature.md) | Frontend | Estrutura de pastas do frontend por feature | Aceito |
 | [041](ADR-041-comunicacao-api-estado-servidor.md) | Frontend | Comunicação com a API e estado do servidor: cliente HTTP único + TanStack Query | Aceito |
@@ -71,7 +71,10 @@ ter o status `Substituído por ADR-XXX`.
 | [053](ADR-053-colunas-e-tabelas-do-escopo-adicional-do-backoffice.md) | Dados | Colunas, enums e tabelas do escopo adicional do BackOffice | Aceito |
 | [054](ADR-054-tabelas-do-marketplace-para-indicadores.md) | Dados | Tabelas do marketplace criadas (só leitura) para os indicadores financeiros | Aceito |
 | [055](ADR-055-topologia-de-ambientes-e-implantacao.md) | Infraestrutura | Topologia de ambientes e implantação no servidor próprio (Compose, GHCR, runner self-hosted, Cloudflare Tunnel, Tailscale, backup) | Aceito |
-| [056](ADR-056-sem-aplicativo-mobile.md) | Frontend | Sem aplicativo mobile: o CromoCard é só web (substitui o 023) | Aceito |
+| [056](ADR-056-runner-de-deploy-por-repositorio.md) | Infraestrutura | Um runner de deploy por repositório no servidor e deploy próprio do frontend (substitui parcialmente a decisão 8 do 055) | Proposto |
+| [057](ADR-057-imagens-publicas-no-ghcr.md) | Infraestrutura | Imagens públicas no GHCR, sem segredo dentro da imagem (substitui parcialmente a decisão 7 do 055) | Proposto |
+| [058](ADR-058-sem-aplicativo-mobile.md) | Frontend | Sem aplicativo mobile: o CromoCard é só web (substitui o 023) | Aceito |
+| [059](ADR-059-provedor-de-email-por-ambiente.md) | Infraestrutura | Provedor de e-mail por ambiente: Ethereal em homologação e Resend (SMTP) em produção | Proposto |
 
 ## Modelo
 
