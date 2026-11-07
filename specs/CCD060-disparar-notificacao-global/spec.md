@@ -2,7 +2,7 @@
 
 - **Status:** Planejada
 - **Fase:** MVP
-- **User story:** #335 `CCD060-Disparar Notificação Global` · responsável Felipe Broetto · Sprint 07
+- **User story:** #335 `CCD060-Disparar Notificação Global` · responsável Daniel Andrade · Sprint 07
 - **Caso de uso:** [60-disparar-notificacao-global.md](../../docs/Casos-De-Uso/60-disparar-notificacao-global.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
