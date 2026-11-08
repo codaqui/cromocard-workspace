@@ -28,6 +28,13 @@ Todas com `authenticate` + `authorize('ADMIN')`.
 | `POST /api/v1/users/:id/reactivate` | `{ reason }` | `200` | `404`, `409 NOT_SUSPENDED` | R8 |
 | `DELETE /api/v1/users/:id` | `{ reason }` | `204` | `404`, `422 CANNOT_DELETE_SELF`, `422 LAST_ADMIN` | R9, R14 |
 
+**Decisão tomada na implementação (T7/T8):** o frontend não chama `GET /api/v1/users/:id`; o modal de editar
+(R4) usa os dados que a própria linha da lista já tem (`GET /api/v1/users`), sem buscar de novo. Pelo mesmo
+motivo, o `PATCH /api/v1/users/:id` sempre manda `{ name, email, role }` completo (o formulário já coleta os
+três campos), não um corpo parcial — o endpoint continua aceitando campos opcionais para outros consumidores
+futuros. A rota `GET /api/v1/users/:id` do backend continua implementada e documentada no Swagger, só não tem
+consumidor no frontend hoje.
+
 ## Backend
 
 | Arquivo | O que muda | Requisitos |
