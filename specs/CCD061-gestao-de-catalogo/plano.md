@@ -91,3 +91,17 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   como mensagem no modal ou no diálogo. O modelo do CSV vem pelo `api.getBlob`, novo em `src/lib/http.ts`, que também
   converte um erro devolvido como `Blob` em `ApiError`. Os selects de álbum e categoria carregam a primeira página
   (até 100) e sempre incluem o item já escolhido (L6). Decidido em 2026-11-05 e 2026-11-06 com Lucas Oliveira Lima.
+- Tipo da categoria (L7, L9): a `catalogService` confere o tipo num lugar só (`ensureCategory(id, tipo)`): álbum com
+  categoria `ALBUM`, carta com categoria `CARD` e categoria pai do mesmo tipo da filha; trocar o tipo de uma categoria
+  em uso também é recusado. Outro tipo responde `422 CATEGORY_TYPE_MISMATCH`. Na importação, a coluna `category` só
+  encontra categorias `CARD`, e o nome de uma categoria de álbum vira o erro `<linha>.category` do `CSV_INVALID`. O seed ganha a categoria de álbum "Pokémon TCG" para o álbum "Pokémon Base
+  Set". Decidido em 2026-11-08 com Lucas Oliveira Lima.
+- Leitura do CSV pelo `csv-parse` com `columns` (ADR-050, item 2): o cabeçalho é conferido contra as colunas esperadas
+  e uma coluna faltando ou a mais vira o erro `<linha>.columns`. Decidido em 2026-11-08 com Lucas Oliveira Lima.
+- Importação concorrente: se outro admin ocupar o número entre a validação e a gravação, a importação responde
+  `409 CARD_NUMBER_TAKEN` em vez de `500`. Decidido em 2026-11-08 com Lucas Oliveira Lima.
+- Dashboard (CCD058, R6): o catálogo expõe `countCards()` (cartas sem as excluídas) e o `dashboard.module.ts` passa a
+  recebê-lo, preenchendo o KPI "cartas cadastradas". Decidido em 2026-11-08 com Lucas Oliveira Lima.
+- **Dívida:** a `catalogService` cuida de álbuns, cartas, categorias e referências (cerca de 290 linhas). Dividir em
+  `AlbumsService`, `CardsService` e `CategoriesService` atrás de uma fachada fica para uma Task própria, de preferência
+  na CCD064, que mexe nas mesmas regras. Decidido em 2026-11-08 com Lucas Oliveira Lima.
