@@ -1,6 +1,6 @@
 # CCD058 — Visualizar Dashboard Gerencial
 
-- **Status:** Planejada
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #333 `CCD058-Visualizar Dashboard Gerencial` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [58-visualizar-dashboard-gerencial.md](../../docs/Casos-De-Uso/58-visualizar-dashboard-gerencial.md)
