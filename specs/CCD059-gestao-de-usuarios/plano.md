@@ -28,12 +28,15 @@ Todas com `authenticate` + `authorize('ADMIN')`.
 | `POST /api/v1/users/:id/reactivate` | `{ reason }` | `200` | `404`, `409 NOT_SUSPENDED` | R8 |
 | `DELETE /api/v1/users/:id` | `{ reason }` | `204` | `404`, `422 CANNOT_DELETE_SELF`, `422 LAST_ADMIN` | R9, R14 |
 
-**Decisão tomada na implementação (T7/T8):** o frontend não chama `GET /api/v1/users/:id`; o modal de editar
-(R4) usa os dados que a própria linha da lista já tem (`GET /api/v1/users`), sem buscar de novo. Pelo mesmo
-motivo, o `PATCH /api/v1/users/:id` sempre manda `{ name, email, role }` completo (o formulário já coleta os
-três campos), não um corpo parcial — o endpoint continua aceitando campos opcionais para outros consumidores
-futuros. A rota `GET /api/v1/users/:id` do backend continua implementada e documentada no Swagger, só não tem
-consumidor no frontend hoje.
+**Decisão tomada na implementação (T7/T8), revista na revisão do PR do frontend (08/11, @Danixzy):** a primeira
+versão não chamava o `GET /api/v1/users/:id` — o modal de editar usava os dados que a própria linha da lista já
+tinha. O Daniel apontou que isso não atende o R4 nem os passos 3 e 4 do CCD059 ("seleciona um usuário e vê os
+dados e as opções"): clicar na linha abria direto o editar, sem uma tela só de visualização. A partir da T10,
+o clique na linha (e um botão "Visualizar" na linha, acessível por teclado) leva para `/backoffice/users/:id`
+(`UserDetailPage`), que chama o `GET /api/v1/users/:id` e mostra nome, e-mail, papel, status e data de cadastro,
+com as ações editar, suspender/reativar e excluir reaproveitando os mesmos modais/diálogos da lista. O lápis na
+lista continua abrindo o editar direto, sem passar pela tela de visualização. O `PATCH /api/v1/users/:id`
+continua recebendo o corpo completo do formulário (sem mudança nisso).
 
 ## Backend
 
@@ -49,8 +52,9 @@ consumidor no frontend hoje.
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/features/users/users.api.ts` · `.queries.ts` · `.schemas.ts` · `.labels.ts` | chamadas e schemas | R5–R9 |
-| `pages/UsersListPage/` · `components/UsersTable/` | filtros, ações por linha, `Badge` de status e papel | R2–R4 |
+| `src/features/users/users.api.ts` · `.queries.ts` · `.schemas.ts` · `.labels.ts` | chamadas, schemas e `useUser(id)` (`GET /:id`) | R4–R9 |
+| `pages/UsersListPage/` · `components/UsersTable/` | filtros, ações por linha (visualizar, editar, suspender/reativar, excluir), `Badge` de status e papel | R2, R3 |
+| `pages/UserDetailPage/` (`/backoffice/users/:id`) | tela de visualização com dados e ações, reaproveita os modais/diálogos da lista | R4 |
 | `components/UserFormModal/` + `hooks/useUserForm.ts` | criar e editar (nome, e-mail, papel) | R5–R7, R11–R13 |
 | `components/SuspendUserDialog/` · `DeleteUserDialog/` | `ConfirmDialog` com motivo; exclusão pede digitar o nome | R8, R9, R14 |
 

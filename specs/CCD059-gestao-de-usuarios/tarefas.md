@@ -20,12 +20,18 @@
 
 - [x] **T6** [P] · Criar api, queries, schemas e labels da gestão de usuários — R5–R9 · AB#545
   - Pronto quando: o typecheck passa e as query keys invalidam a lista após cada ação.
-- [x] **T7** · Adicionar filtros e ações à lista de usuários — R2–R4 · CA1 · AB#546
+- [x] **T7** · Adicionar filtros e ações à lista de usuários — R2, R3 · CA1 · AB#546
   - Pronto quando: a lista filtra por busca, papel e status, como no Figma 208-1793.
 - [x] **T8** · Criar modal de criar e editar usuário — R5–R7, R11–R13 · CA2, CA3, CA8 · AB#547
   - Pronto quando: `UserFormModal.spec.tsx` cobre criar, editar, erro por campo e cancelar.
 - [x] **T9** · Criar diálogos de suspender, reativar e excluir com motivo — R8, R9, R14 · CA4–CA6 · AB#548
   - Pronto quando: a exclusão exige digitar o nome e o motivo, com o texto de soft delete.
+- [x] **T11** · Criar a tela de visualização do usuário — R4 · AB#550
+  - Surgiu da revisão do PR do frontend (08/11, @Danixzy): clicar na linha abria direto o editar, sem uma
+    tela só de visualização, o que não atendia o R4. Pronto quando: `/backoffice/users/:id` mostra nome,
+    e-mail, papel, status e data de cadastro via `GET /api/v1/users/:id`, com as ações editar,
+    suspender/reativar e excluir reaproveitando os modais/diálogos da lista; o clique na linha e um botão
+    "Visualizar" acessível por teclado levam a essa tela, e o lápis continua abrindo o editar direto.
 
 ## Fechamento — workspace
 
@@ -38,7 +44,8 @@
 |---|---|
 | R1 | T4 |
 | R2 | T7 |
-| R3, R4 | T2, T7 |
+| R3 | T2, T7 |
+| R4 | T2, T11 |
 | R5–R7 | T1–T3, T6, T8 |
 | R8, R9 | T2, T3, T6, T9 |
 | R10, R11 | T1, T3, T8 |
