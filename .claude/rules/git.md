@@ -81,4 +81,4 @@ AB#120
 - Merge com **1 aprovação** e **CI verde**. Quem revisa não é quem escreveu.
 - **Squash merge** de feature para a branch de trabalho (1 commit por feature); **merge commit** nas promoções,
   para preservar o histórico. Cada merge em `main` gera uma tag SemVer `vX.Y.Z`.
-- Critério de revisão: Clean Code, SOLID, Object Calisthenics e os ADRs (`/revisar-codigo`, agent `revisor-codigo`).
+- Critério de revisão: Clean Code, SOLID, Object Calisthenics e os ADRs (`/cromocard-revisor`, agent `revisor-codigo`).

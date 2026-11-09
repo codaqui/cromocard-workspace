@@ -38,7 +38,8 @@ Tipos: Tela · Campo · Ação · Regra · Permissão · Mensagem · Estado.
 |---|---|---|---|
 | <nome do frame> | [<node-id>](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=<node-id>) | R1, R3 | ✅ Bate · ❌ Não bate |
 
-- **Onde o Figma está errado** (vale a documentação): <tela> — "<elemento>": mostra <X>; a documentação pede <Y> (R<n>).
+- **Diferenças com o Figma** (decisão em Lacunas e decisões): <tela> — "<elemento>": mostra <X>; a documentação pede <Y> (L<n>).
+- **Só no Figma** (faz sentido implementar? decisão em Lacunas e decisões): <tela> — "<elemento>" (L<n>).
 - **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R<n> <requisito>.
 
 ## Fora do escopo

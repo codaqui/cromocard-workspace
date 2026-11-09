@@ -45,7 +45,7 @@ PR de release (`develop`/`development` → `main`) só se o usuário pedir expli
 | frontend | `npm run format:check && npm run lint && npm run typecheck && npm test && npm run build` |
 | workspace | Conferência manual: DER mudou nos três `.dbml`, com os prints `.png` refeitos? ADR novo como `Proposto` e no índice? `.puml` alterado com o `.svg` exportado? Ponteiro de `apps/*` mudou de propósito? |
 
-Se algo falhar, pare, mostre a saída e não abra o PR. Se a branch ainda não passou pelo `/revisar-codigo`,
+Se algo falhar, pare, mostre a saída e não abra o PR. Se a branch ainda não passou pelo `/cromocard-revisor`,
 pergunte se quer rodar antes.
 
 ## 5. Evidências dos critérios de aceite

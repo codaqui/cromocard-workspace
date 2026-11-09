@@ -1,19 +1,21 @@
 ---
 name: conferir-tarefa
-description: Confere se a tela do protótipo no Figma cobre o que a documentação do CromoCard pede para uma tarefa (work item do Azure, código CCDnnn ou nome do caso de uso). Se bater, confirma; se não, aponta onde o Figma está errado, o que falta e o que sobra. A documentação é a fonte da verdade. Use antes de implementar uma tela ou quando pedirem para comparar doc e Figma.
+description: Confere se a tela do protótipo no Figma e a documentação do CromoCard batem para uma tarefa (work item do Azure, código CCDnnn ou nome do caso de uso). Aponta as diferenças, pergunta ao usuário o que fazer com cada uma (o que só existe no Figma recebe a pergunta "faz sentido implementar?") e ajusta a documentação com as respostas, sem escrever código. Use para avaliar uma tela antes de desenvolver ou quando pedirem para comparar documentação e Figma.
 argument-hint: "<#work-item | CCDnnn> [link do frame no Figma]"
 ---
 
 Confere a tarefa `$ARGUMENTS` comparando a documentação com o protótipo no Figma.
 
-**Princípio:** a documentação (caso de uso, user story, work item, DER, ADRs) é a fonte da verdade. O Figma é o
-design a seguir na implementação e foi feito a partir da documentação. Então:
+**Princípio:** a documentação (caso de uso, user story, work item, DER, ADRs) é a fonte principal da verdade, e o
+objetivo é ser o mais fiel possível ao Figma. É o mesmo critério da `/cromocard-desenvolver`. Então:
 
-- requisito da documentação que o Figma não mostra **continua valendo** — o Figma está incompleto;
-- quando os dois divergem, **vale a documentação** — o Figma está errado naquele ponto;
-- o que o Figma mostra e a documentação não pede **não entra** na implementação até a documentação ser atualizada.
+- requisito da documentação que o Figma não mostra **continua valendo**, salvo decisão em contrário do usuário;
+- quando os dois divergem, o usuário decide, e **até a decisão vale a documentação**;
+- o que o Figma mostra e a documentação não tem recebe a pergunta **"faz sentido implementar?"**. Se sim, a documentação
+  é ajustada, e a tarefa pode ser desenvolvida.
 
-Esta skill só lê. Não edite o Figma, os docs nem o board.
+Esta skill só altera a documentação e a spec, e só depois da resposta do usuário. Não escreve código e não edita o Figma
+nem o board.
 
 ## 1. Entender a entrada
 
@@ -47,7 +49,7 @@ Monte a matriz requisito × Figma com uma destas situações:
 | Situação | Quando |
 |---|---|
 | ✅ Coberto | O Figma mostra o requisito como a documentação descreve |
-| ⚠️ Divergente | O Figma mostra, mas diferente (rótulo, regra, campo, fluxo, permissão) — vale a documentação |
+| ⚠️ Divergente | O Figma mostra, mas diferente (rótulo, regra, campo, fluxo, permissão) |
 | ❌ Faltando | O Figma não mostra o requisito |
 
 Depois liste os **extras do Figma**: elementos da tela que nenhum requisito pede. Para cada um, veja em
@@ -57,34 +59,43 @@ qual; se não, é algo fora da documentação.
 Elementos puramente visuais (ícones, ilustrações, layout, cores) não são requisitos: só entram se contradisserem
 uma regra (ex.: botão de excluir visível para quem não tem permissão).
 
-## 5. Responder
+## 5. Perguntar
+
+Siga a **Fase 3** da `/cromocard-desenvolver` (`.claude/skills/cromocard-desenvolver/SKILL.md`): as mesmas categorias de
+pendência, as mesmas opções e o mesmo formato de pergunta com `AskUserQuestion`. Decisão já registrada na spec não é
+perguntada de novo. Sem nenhuma diferença, peça a confirmação de que está tudo coberto.
+
+Quem não puder decidir agora deixa a pendência aberta: nada é alterado para ela, e ela aparece no relatório.
+
+## 6. Registrar
+
+Com as respostas, siga os passos 1 a 3 da **Fase 4** da `/cromocard-desenvolver`: Git do workspace, ajuste da documentação
+e, se a tarefa já tiver spec, atualização da spec. Sem spec, ajuste só a documentação e ofereça o `/especificar`. Sem esse
+registro, um "não fazer" será perguntado de novo no desenvolvimento.
+
+## 7. Responder
 
 ```
 ## <CCDnnn> — <Nome> · #<work item> · fase <MVP|…>
 Tela: <nome do frame> — <link>
 
-**Veredito: ✅ Bate** | **Veredito: ❌ Não bate (<n> divergências, <n> faltando)**
+**Veredito: ✅ Bate** | **Veredito: ⚠️ Com diferenças (<n> decididas, <n> abertas)**
 
 | ID | Requisito (documentação) | Figma | Situação |
 |---|---|---|---|
 
-### Onde o Figma está errado
-- <tela> — "<texto ou elemento no Figma>": mostra <X>; a documentação pede <Y> (<origem>).
+### Decisões
+| Diferença | Decisão | Registrada em |
 
-### O que falta no Figma
-- R<n> <requisito> — implementar mesmo assim, no estilo visual da tela.
+### Extras do Figma de outra tarefa
+- <tela> — "<texto ou elemento>": pertence a <CCDnnn / Futuro>; <decisão>.
 
-### Extras do Figma fora desta tarefa
-- <tela> — "<texto ou elemento>": pertence a <CCDnnn / Futuro> | não está na documentação.
+### Pendências abertas
+- <o que falta decidir> | nenhuma
 
-### Lacunas e conflitos na documentação
-(do analista — precisam de decisão do time)
+### Para o Gabriel (telas que ficam diferentes do Figma por decisão)
+- <tela> — <o que muda e por quê>
 ```
 
-- **Bate**: confirme que dá para implementar seguindo o Figma e cite as telas (com o link do protótipo).
-- **Não bate**: o relatório acima é o que o designer (Gabriel) precisa corrigir. Ofereça, sem fazer, publicar o
-  resumo como comentário no work item (escrita no board: só com pedido explícito).
-- Lacunas da documentação não se resolvem olhando o Figma: elas vão para o time decidir e, se for o caso, viram
-  ajuste no caso de uso.
-- Para guardar este resultado como a spec da tarefa (`specs/`, ADR-047), ofereça o `/especificar`: ele segue
-  estes mesmos passos e grava o `spec.md`.
+Sem pendências abertas, ofereça desenvolver com `/cromocard-desenvolver faça esta spec "<CCDnnn>"`. Publicar o resumo como
+comentário no work item é escrita no board: só com pedido explícito.

@@ -67,6 +67,6 @@ Fluxo de trabalho da equipe: `docs/ONBOARDING.md` do repositório do backend.
 - ESLint type-checked com `max-depth` 1, `max-params` 3, `max-lines-per-function` 25, `no-else-return`,
   `no-console`, import de repository de outro domínio barrado e `../` barrado (use `@/`). Prettier e `tsc --noEmit`.
 - Testes `.spec.ts` com **Vitest**: unitários ao lado do arquivo (service com repository falso injetado pelo
-  construtor) e integração em `tests/integration/` com o PostgreSQL de teste. Cobertura mínima de 80% nas services.
+  construtor) e integração em `tests/integration/` com o PostgreSQL de teste. Cobertura: 80% nas services no limite global e, em cada PR, de 90% a 100% em todo arquivo alterado (ADR-060).
 - O husky/lint-staged do ADR-008 ainda não está configurado: o CI é a barreira.
-- Critério de code review: Clean Code, SOLID e Object Calisthenics (agent `revisor-codigo`, skill `/revisar-codigo`).
+- Critério de code review: Clean Code, SOLID e Object Calisthenics (agent `revisor-codigo`, skill `/cromocard-revisor`).

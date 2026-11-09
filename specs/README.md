@@ -6,7 +6,9 @@ item, no DER e no Figma, e acrescenta o que falta para implementar e conferir: c
 e tarefas (ADR-047).
 
 Hierarquia das fontes: **documentação** (casos de uso, user stories, DER, ADRs) → **spec** → **código**. O Figma
-manda no visual; quando diverge da documentação, vale a documentação.
+manda no visual, e o objetivo é ser o mais fiel possível a ele. Cada diferença entre os dois vira uma pergunta: o que só
+existe no Figma recebe "faz sentido implementar?", e, se sim, a documentação é ajustada antes do código. Até haver
+decisão, vale a documentação.
 
 As specs ficam aqui, fora de `docs/`, porque `docs/` é a fonte da verdade e só guarda documentação. A spec é
 derivada dela e muda de status e de progresso ao longo do trabalho.
@@ -21,9 +23,9 @@ flowchart TD
     RAS["spec.md<br/>Rascunho"]
     APR["2 · PO decide as lacunas<br/>spec Aprovada"]
     PLA["3 · /planejar<br/>plano.md + tarefas.md<br/>Planejada"]
-    BACK["4 · /implementar backend"]
-    FRONT["4 · /implementar frontend"]
-    PR["5 · /revisar-codigo + /criar-pr<br/>um PR em cada app"]
+    BACK["4 · /cromocard-desenvolver backend"]
+    FRONT["4 · /cromocard-desenvolver frontend"]
+    PR["5 · /cromocard-revisor + /criar-pr<br/>um PR em cada app"]
     FIM["6 · PR de fechamento no workspace<br/>Implementada"]
 
     DOC --> ESP
@@ -42,8 +44,8 @@ flowchart TD
 | 1. Especificar | quem pegou a user story | `/especificar CCDnnn [link do frame]` | `spec.md` com requisitos, critérios de aceite, telas e lacunas | `Rascunho` |
 | 2. Aprovar | PO | revisa o PR da spec e decide as lacunas | lacunas decididas; caso de uso atualizado se a regra mudou | `Aprovada` |
 | 3. Planejar | devs do back e do front, juntos | `/planejar CCDnnn` | `plano.md` (contrato da API) e `tarefas.md`; Tasks no Azure, se quiser | `Planejada` |
-| 4. Implementar | dev de cada app, em paralelo | `/implementar CCDnnn backend` · `… frontend` | código e testes na branch de feature de cada app | `Em implementação` |
-| 5. Revisar e abrir o PR | quem implementou | `/revisar-codigo` · `/criar-pr` | um PR em cada app, citando os requisitos | — |
+| 4. Implementar | dev de cada app, em paralelo | `/cromocard-desenvolver faça esta spec "CCDnnn" backend` · `… frontend` | código e testes na branch de feature de cada app | `Em implementação` |
+| 5. Revisar e abrir o PR | quem implementou | `/cromocard-revisor` · `/criar-pr` | um PR em cada app, citando os requisitos | — |
 | 6. Fechar | quem implementou | `/criar-pr workspace` | ponteiros `apps/*` atualizados e tarefas marcadas | `Implementada` |
 
 ### 1. Especificar — `/especificar CCDnnn [link do frame]`
@@ -67,7 +69,8 @@ flowchart TD
 - O PO lê a spec no PR do workspace e responde cada lacuna.
 - **Regra de negócio** decidida (ex.: "pode marcar Possuo com quantidade zero?"): o caso de uso é atualizado no mesmo
   PR, e o requisito passa a citar o passo novo. **Decisão técnica:** vira ADR `Proposto`.
-- **Figma errado** não bloqueia a aprovação: vale a documentação, e o designer corrige a tela.
+- **Diferença com o Figma** é decidida aqui, como lacuna. Se o que só existe no Figma fizer sentido, o caso de uso é
+  atualizado no mesmo PR.
 - Quando não sobra lacuna `pendente`, avise o Claude ("o PO aprovou a spec do CCD014"). A spec fica `Aprovada`, com
   a data e quem aprovou. O Claude nunca aprova sozinho.
 
@@ -85,22 +88,24 @@ flowchart TD
 - **Sai:** a spec `Planejada`. O contrato da API é o combinado entre quem faz o back e quem faz o front; ele é revisado
   no PR do workspace (o mesmo da spec ou outro).
 
-### 4. Implementar — `/implementar CCDnnn backend` e `/implementar CCDnnn frontend`
+### 4. Implementar — `/cromocard-desenvolver faça esta spec "CCDnnn" [backend|frontend]`
 
-- **Entra:** a spec `Planejada`. O frontend não precisa esperar o backend: ele segue o contrato do plano.
-- **O que acontece:** no app, a skill cria `feature/<id>-<descricao>` a partir de `develop` e faz as tarefas daquele
-  app em ordem. Em cada tarefa ela copia o padrão do modelo `users`, implementa só o que a tarefa diz, escreve os
-  testes com o ID do critério no nome (`CA2: recusa senha incorreta com 401`), roda lint, typecheck e testes, e marca
-  `[x]`. Se você autorizar no começo, ela commita ao fim de cada tarefa (`feat(<dominio>): … AB#<task>`).
-- **Para quando:** o plano não funciona como escrito, falta um requisito ou é preciso uma decisão de arquitetura (veja
-  [Quando algo não bate](#quando-algo-não-bate)).
-- **Sai:** a branch com as tarefas feitas, as checagens completas do app passando e a cobertura de cada requisito. A
-  spec fica `Em implementação`.
+- **Entra:** a spec. O frontend não precisa esperar o backend: ele segue o contrato do plano.
+- **O que acontece:** a skill compara o Figma com a documentação e pergunta cada diferença, ajusta a documentação e a spec
+  e, sem pendências, cria `feature/<id>-<descricao>` a partir de `develop` e faz as tarefas em ordem. Em cada tarefa ela
+  copia o padrão do modelo `users`, implementa só o que a tarefa diz, escreve os testes com o ID do critério no nome
+  (`CA2: recusa senha incorreta com 401`), roda lint, typecheck e testes, e marca `[x]`. Se você autorizar, ela commita ao
+  fim de cada tarefa (`feat(<dominio>): … AB#<task>`). Depois valida a fidelidade ao Figma e a responsividade no navegador.
+- **Para quando:** há pendência aberta, o plano não funciona como escrito, falta um requisito ou é preciso uma decisão de
+  arquitetura (veja [Quando algo não bate](#quando-algo-não-bate)).
+- **Sai:** a branch com as tarefas feitas, testes e linters verdes nos dois apps e cobertura de 90% a 100% em cada arquivo
+  alterado (ADR-060). A spec fica `Em implementação`.
 
-### 5. Revisar e abrir o PR — `/revisar-codigo` e `/criar-pr`
+### 5. Revisar e abrir o PR — `/cromocard-revisor` e `/criar-pr`
 
-- `/revisar-codigo` revisa em dois eixos. **Padrões:** ADRs, rules, Clean Code, SOLID e Object Calisthenics.
-  **Spec:** cada `R` como feito, parcial ou não feito, e o contrato da API do plano comparado com o diff.
+- `/cromocard-revisor` roda o código e revisa em seis eixos: PR e checagens, com testes e cobertura; Padrões (ADRs, rules,
+  SOLID, Object Calisthenics e Design Patterns); Spec (cada `R` e o contrato da API do plano comparado com o diff);
+  Decisões e documentação; Fidelidade ao Figma; e Responsividade.
 - `/criar-pr` roda as checagens, faz push e abre o PR no app para `develop`, com o `AB#` e a seção **Spec**
   (requisitos e tarefas que o PR cobre).
 - Merge com 1 aprovação de outra pessoa e o CI verde, em squash (`.claude/rules/git.md`).
@@ -118,7 +123,7 @@ Depois do merge dos PRs dos apps, um PR no workspace (`/criar-pr workspace`) lev
 | Situação | Onde se resolve | O que fazer |
 |---|---|---|
 | A documentação não diz algo | Lacuna `L<n>` na spec | O PO decide; regra de negócio vai para o caso de uso |
-| O Figma diverge da documentação | Seção **Telas** da spec | Implementar como a documentação pede; o designer corrige a tela |
+| O Figma diverge da documentação ou mostra algo que ela não tem | Pergunta ao usuário, em **Lacunas e decisões** | Faz sentido: ajustar a documentação e desenvolver. Não faz: fica fora do escopo, e a tela difere do frame nesse ponto |
 | O caso de uso, a user story ou o DER mudou depois da aprovação | Spec volta para `Rascunho` | `/especificar` atualiza, o PO aprova de novo e o `/planejar` revê o plano |
 | Na implementação, o contrato ou um arquivo do plano não funciona | `plano.md` | Propor a mudança, combinar com quem faz o outro app e só então seguir |
 | Na implementação, falta um requisito ou um contradiz outro | Spec volta para `Rascunho` | Parar a implementação nesse ponto e levar a lacuna ao PO |
@@ -133,9 +138,9 @@ Depois do merge dos PRs dos apps, um PR no workspace (`/criar-pr workspace`) lev
 (PO decide L1 e L2 no PR)               → caso de uso 14 atualizado no mesmo PR
 "o PO aprovou a spec do CCD014"         → spec Aprovada
 /planejar CCD014                        → plano.md + tarefas.md (T1–T8), Tasks criadas no Azure
-/implementar CCD014 backend             → feature/120-marcar-carta-possuo no backend, T1–T4
-/implementar CCD014 frontend            → feature/120-marcar-carta-possuo no frontend, T5–T7
-/revisar-codigo backend · /criar-pr backend     (e o mesmo no frontend)
+/cromocard-desenvolver faça esta spec "CCD014" backend  → feature/120-marcar-carta-possuo no backend, T1–T4
+/cromocard-desenvolver faça esta spec "CCD014" frontend → feature/120-marcar-carta-possuo no frontend, T5–T7
+/cromocard-revisor backend · /criar-pr backend     (e o mesmo no frontend)
 /criar-pr workspace                     → ponteiros apps/*, T8 marcada, spec Implementada
 ```
 
