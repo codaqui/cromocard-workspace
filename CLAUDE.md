@@ -13,7 +13,7 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 ```
 cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
 ├── docs/                          documentação — a fonte da verdade; só guarda documentação
-│   ├── ADR/                       ADR-001…059 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
+│   ├── ADR/                       ADR-001…060 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–107), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
 │   ├── Diagramas/
 │   │   ├── DER/                   01-entidades, 02-relacionamentos, 03-der-completo (.dbml do dbdiagram.io + print .png) + README.md
@@ -29,7 +29,7 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 ├── .claude/
 │   ├── settings.json              aprova os MCPs, libera leituras e pede confirmação nas escritas
 │   ├── rules/                     git (sempre) + regras por pasta: backend, frontend, modelagem de dados, casos de uso, specs, ADRs, diagramas
-│   ├── skills/                    /especificar, /planejar, /implementar, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-playwright, /analisar-figma-mcp, /revisar-codigo, /criar-pr, /jibble
+│   ├── skills/                    /especificar, /planejar, /cromocard-desenvolver, /conferir-tarefa, /analisar-figma-chrome, /analisar-figma-playwright, /analisar-figma-mcp, /cromocard-revisor, /criar-pr, /jibble
 │   └── agents/                    analista-requisitos, leitor-figma, revisor-codigo
 ├── .mcp.json                      MCPs do time: `azure-devops` (board, PAT de cada pessoa em `$AZURE_DEVOPS_PAT`), `figma` (protótipo, OAuth via `/mcp`), `jibble` (ponto e horas, OAuth via `/mcp`), `playwright` (Chrome isolado para testar os apps rodando) e `playwright-figma` (Chrome com perfil próprio, logado no Figma, para a `/analisar-figma-playwright`)
 ├── README.md                      como clonar (com submódulos) e o setup de cada pessoa (token do Azure, login no Figma)
@@ -131,7 +131,7 @@ critérios de aceite `CA`, telas, lacunas), `plano.md` (como: dados, contrato da
 `.claude/rules/specs.md`.
 
 ```
-/especificar CCDnnn → spec Rascunho → PO aprova → /planejar → /implementar <app> → /revisar-codigo → /criar-pr
+/especificar CCDnnn → spec Rascunho → PO aprova → /planejar → /cromocard-desenvolver → /cromocard-revisor → /criar-pr
 ```
 
 - Fontes: **documentação → spec → código**. A spec não cria requisito; lacuna decidida volta para o caso de uso
@@ -165,9 +165,10 @@ critérios de aceite `CA`, telas, lacunas), `plano.md` (como: dados, contrato da
 - Alternativa sem a extensão: skill `/analisar-figma-playwright` (MCP `playwright-figma`), quando o usuário pedir o
   Playwright, quando o Claude in Chrome não conectar ou quando precisar dos textos exatos da tela. Também só no modo
   protótipo e sem cota.
-- **A documentação é a fonte da verdade** (casos de uso, user stories, DER, ADRs); o Figma é o design
-  a seguir na implementação. O Figma foi feito a partir da documentação: se ele divergir dela ou
-  deixar algum requisito de fora, aponte onde (tela/frame) em vez de seguir o Figma ou omitir o requisito.
+- **A documentação é a fonte principal da verdade** (casos de uso, user stories, DER, ADRs), e o objetivo é ser o mais
+  fiel possível ao Figma. Se os dois divergirem, ou se o Figma deixar requisito de fora, aponte onde (tela/frame) e
+  pergunte. O que o Figma mostra e a documentação não tem recebe a pergunta "faz sentido implementar?": se sim, ajuste a
+  documentação e desenvolva. Até haver decisão, vale a documentação.
 - O MCP `figma` tem cota (cerca de 20 chamadas por mês no plano Starter): só pela skill `/analisar-figma-mcp`, quando
   o usuário pedir, para medidas/tokens ou para regenerar o índice de telas.
 - Não edite o arquivo do Figma sem pedido explícito.
@@ -184,12 +185,12 @@ um ADR aceito. Detalhes em `.claude/rules/adrs.md`.
 |---|---|
 | `/especificar <CCDnnn ou #id> [link do frame]` | SDD passo 1: cria ou atualiza o `spec.md` da user story a partir da documentação e do Figma |
 | `/planejar <CCDnnn>` | SDD passo 2, com a spec aprovada: gera `plano.md` e `tarefas.md` e oferece criar as Tasks no Azure |
-| `/implementar <CCDnnn> <backend\|frontend> [T<n>]` | SDD passo 3: executa as tarefas no app, uma por vez, sem sair da spec |
-| `/conferir-tarefa <#id ou CCDnnn> [link do frame]` | Antes de implementar uma tela: confere se o Figma cobre a documentação e aponta onde está errado |
+| `/cromocard-desenvolver faça esta spec "<CCDnnn>" [backend\|frontend]` | SDD passo 3: desenvolve a spec do início ao fim. Compara Figma e documentação, pergunta cada diferença, ajusta a documentação e, sem pendências, coda fiel ao Figma, valida a responsividade e só termina com testes e linters verdes |
+| `/conferir-tarefa <#id ou CCDnnn> [link do frame]` | Consulta rápida antes de desenvolver: compara Figma e documentação, pergunta cada diferença e ajusta a documentação, sem escrever código |
 | `/analisar-figma-chrome <link ou nome da tela>` | Analisa uma tela do Figma por prints no Chrome (modo protótipo, sem cota) e devolve o inventário dela |
 | `/analisar-figma-playwright <link ou nome da tela>` | Mesma análise pelo Playwright (MCP `playwright-figma`, sem a extensão e sem cota): print da tela inteira em tamanho real e os textos exatos de cada camada |
 | `/analisar-figma-mcp <link ou nome da tela> [o que precisa]` | Mesma análise pelo MCP do Figma (gasta cota): estrutura, tokens, contexto de implementação e regenerar o índice de telas |
-| `/revisar-codigo [repo] [base] [#id]` | Antes do PR: revisão em dois eixos, padrões e spec |
+| `/cromocard-revisor este PR "<link ou número>"` ou `[repo] [base] [#id]` | Revisa um PR ou uma branch rodando o código: checagens, padrões (SOLID, Object Calisthenics e Design Patterns), spec, decisões e documentação, fidelidade ao Figma e responsividade. Cada achado traz problema, por que é ruim e sugestão |
 | `/criar-pr [repo] [#id]` | Abre o PR no padrão: branch, commits com `AB#`, checagens, push e template |
 | `/jibble [entrada\|pausa\|volta\|saida\|lancar\|horas\|equipe] [AB#id]` | Bate ponto e lança ou consulta horas no Jibble, com a nota `AB#<id> <título>` ligando a hora à Task do Azure |
 

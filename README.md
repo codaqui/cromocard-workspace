@@ -130,19 +130,19 @@ Cada user story passa pelo SDD ([ADR-047](docs/ADR/ADR-047-desenvolvimento-orien
 [fluxo e índice das specs](specs/README.md)):
 
 ```
-/especificar CCD014 → PO aprova a spec → /planejar CCD014 → /implementar CCD014 backend|frontend → /revisar-codigo → /criar-pr
+/especificar CCD014 → PO aprova a spec → /planejar CCD014 → /cromocard-desenvolver faça esta spec "CCD014" → /cromocard-revisor → /criar-pr
 ```
 
 | Comando | Para quê |
 | --- | --- |
 | `/especificar CCD014 <link do frame>` | Escreve a spec da user story: requisitos com origem, critérios de aceite, telas e lacunas para o PO decidir |
 | `/planejar CCD014` | Com a spec aprovada: plano técnico (dados, contrato da API, arquivos, testes) e lista de tarefas, com opção de criar as Tasks no Azure |
-| `/implementar CCD014 backend` | Executa as tarefas no app, uma por vez, com os testes dos critérios de aceite |
-| `/conferir-tarefa CCD014 <link do frame>` | Antes de implementar uma tela: confere se o Figma cobre o que a documentação pede e aponta onde está errado |
+| `/cromocard-desenvolver faça esta spec "CCD014" [backend\|frontend]` | Desenvolve a spec do início ao fim: pergunta cada diferença entre Figma e documentação, coda fiel ao Figma, valida a responsividade e só termina com testes e linters verdes |
+| `/conferir-tarefa CCD014 <link do frame>` | Consulta rápida: compara Figma e documentação, pergunta cada diferença e ajusta a documentação, sem escrever código |
 | `/analisar-figma-chrome <nome da tela ou link>` | Analisa uma tela do Figma por prints no Chrome e lista o que tem nela (sem gastar a cota do MCP) |
 | `/analisar-figma-playwright <nome da tela ou link>` | Mesma análise pelo Playwright: print da tela inteira e os textos exatos, sem a extensão do Chrome (sem gastar a cota do MCP) |
 | `/analisar-figma-mcp <nome da tela ou link>` | Mesma análise pelo MCP do Figma, para medidas e tokens (gasta a cota) |
-| `/revisar-codigo` | Antes do PR: revisa a branch nos padrões do projeto e no que a tarefa pedia |
+| `/cromocard-revisor este PR "<link ou número>"` | Revisa um PR ou uma branch rodando o código: testes, cobertura, padrões, spec, decisões, fidelidade ao Figma e responsividade |
 | `/criar-pr` | Abre o PR no padrão: commits com `AB#`, checagens do repo, push e template preenchido |
 | `/jibble entrada AB#519` | Bate ponto e lança ou consulta horas no Jibble (`pausa`, `volta`, `saida`, `lancar 2h AB#519`, `horas semana`), ligando a hora à Task do Azure |
 

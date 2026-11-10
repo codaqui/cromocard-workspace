@@ -1,6 +1,6 @@
 ---
 name: planejar
-description: Gera o plano técnico (plano.md) e a lista de tarefas (tarefas.md) de uma spec aprovada do CromoCard — tabelas e migrations, contrato da API, arquivos do backend e do frontend, testes e a ordem de execução —, seguindo os ADRs e os modelos users dos apps. Segundo passo do SDD, depois do /especificar e antes do /implementar. No fim, oferece criar as Tasks no Azure.
+description: Gera o plano técnico (plano.md) e a lista de tarefas (tarefas.md) de uma spec aprovada do CromoCard — tabelas e migrations, contrato da API, arquivos do backend e do frontend, testes e a ordem de execução —, seguindo os ADRs e os modelos users dos apps. Segundo passo do SDD, depois do /especificar e antes do /cromocard-desenvolver. No fim, oferece criar as Tasks no Azure.
 argument-hint: "<CCDnnn>"
 ---
 
@@ -90,4 +90,4 @@ specs/<pasta>/plano.md · tarefas.md — <n> endpoints, <n> migrations, <n> tare
 ### Decisões que precisam do time (ADR proposto, se houver)
 ```
 
-Próximo passo: revisão do plano no PR do workspace e `/implementar <CCDnnn> backend` (e `frontend`, em paralelo).
+Próximo passo: revisão do plano no PR do workspace e `/cromocard-desenvolver faça esta spec "<CCDnnn>"`.

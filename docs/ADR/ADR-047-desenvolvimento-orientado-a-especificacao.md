@@ -14,7 +14,7 @@ os dois e o código:
   `/conferir-tarefa`, e o resultado não ficava salvo: duas pessoas podiam chegar a listas diferentes;
 - não havia um plano técnico nem um contrato de API combinado entre backend e frontend, que estão em repositórios
   separados (risco já apontado no ADR-026);
-- a revisão (`/revisar-codigo`, eixo Spec) levantava os requisitos de novo, sem IDs estáveis para citar.
+- a revisão (`/cromocard-revisor`, eixo Spec) levantava os requisitos de novo, sem IDs estáveis para citar.
 
 ## Decisão
 
@@ -28,7 +28,7 @@ Adotar SDD com uma pasta por user story em `specs/CCDnnn-<nome>/`, com três arq
 
 - **Fora de `docs/`:** as specs ficam em `specs/`, na raiz do workspace. `docs/` é a fonte da verdade e só guarda
   documentação.
-- **Fluxo:** `/especificar` → aprovação do PO → `/planejar` → `/implementar` → `/revisar-codigo` → `/criar-pr`.
+- **Fluxo:** `/especificar` → aprovação do PO → `/planejar` → `/cromocard-desenvolver` → `/cromocard-revisor` → `/criar-pr`.
 - **Status da spec:** `Rascunho` → `Aprovada` → `Planejada` → `Em implementação` → `Implementada` (ou `Cancelada`).
   Só o PO aprova, e nenhuma spec com lacuna pendente é aprovada. Se a documentação mudar, a spec volta para `Rascunho`.
 - **A spec não cria requisito:** todo requisito cita a origem. Lacuna decidida pelo time volta para o caso de uso
@@ -60,7 +60,7 @@ O formato e as regras ficam em `.claude/rules/specs.md`, e os modelos em `specs/
 - A revisão e o PR citam os IDs da spec; o `analista-requisitos` usa a spec salva em vez de levantar tudo de novo.
 - Custo: cada user story ganha um PR de documentação (spec e plano) e um passo de aprovação do PO, e o progresso
   volta ao workspace num PR de fechamento, junto com os ponteiros dos submódulos.
-- Novas skills: `/especificar`, `/planejar` e `/implementar`. O `/revisar-codigo`, o `/criar-pr` e o
+- Novas skills: `/especificar`, `/planejar` e `/cromocard-desenvolver`. O `/cromocard-revisor`, o `/criar-pr` e o
   `analista-requisitos` passam a ler a spec.
 
 ## Referências
