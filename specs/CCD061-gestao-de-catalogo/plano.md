@@ -19,7 +19,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 
 | Método e caminho | Entrada | Sucesso | Erros | Requisitos |
 |---|---|---|---|---|
-| `GET /albums` · `GET /cards` · `GET /categories` | `q`, `page`, `pageSize` e os filtros de cada recurso: cartas `albumId`, `categoryId`, `rarityId`; álbuns `categoryId`, `year`; categorias só `q`. Ordem fixa: cartas por álbum e número, álbuns por título, categorias por nome | `200` `{ data, meta }` | `400` | R3 |
+| `GET /albums` · `GET /cards` · `GET /categories` | `q`, `page`, `pageSize` e os filtros de cada recurso: cartas `albumId`, `categoryId`, `rarityId`; álbuns `categoryId`, `year`; categorias só `q`. Ordem fixa: cartas por álbum e número, álbuns por título, categorias por nome | `200` `{ data, meta }`; a carta traz o álbum com `id`, `title`, `publisher`, `year` e `totalCards`, para a coluna "Álbum / coleção" e o "Nº álbum" (`004 / 102`) do Figma | `400` | R3 |
 | `POST /albums` · `PATCH /albums/:id` | campos de R5 | `201` / `200` | `400`, `404` (`ALBUM_NOT_FOUND`, `CATEGORY_NOT_FOUND`) | R4, R5, R8 |
 | `DELETE /albums/:id` | — | `204` | `404`, `422 ALBUM_HAS_CARDS` | R10, R11 |
 | `POST /cards` · `PATCH /cards/:id` | campos de R6 | `201` / `200` | `400`, `404` (`CARD_NOT_FOUND`, `ALBUM_NOT_FOUND`, `CATEGORY_NOT_FOUND`, `RARITY_NOT_FOUND`, `LANGUAGE_NOT_FOUND`), `409 CARD_NUMBER_TAKEN` | R4, R6–R8 |
@@ -46,7 +46,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `src/features/catalog/catalog.api.ts` · `.queries.ts` · `.schemas.ts` · `.types.ts` | chamadas e schemas | R4–R8 |
-| `pages/CatalogAdminPage/` | abas Cartas, Álbuns e Categorias com busca, filtros e `DataTable` | R2, R3 |
+| `pages/CatalogAdminPage/` | cabeçalho do Figma (selo, título, subtítulo e os botões "+ Cadastrar Carta", "+ Novo Álbum" e "Importar CSV"), dois cards de totais, abas com ícone e contador, "Linhas por página" e as abas Cartas, Álbuns e Categorias com busca, filtros com ícone, chips de filtros ativos, `DataTable` e paginação numerada | R2, R3 |
 | `components/CardFormModal/` · `AlbumFormModal/` · `CategoryFormModal/` | formulários com upload de imagem | R4–R9, R12 |
 | `components/ImportCsvModal/` | upload do CSV, modelo para baixar e lista de erros por linha | R13 |
 | `components/DeleteCatalogItemDialog/` | confirmação e motivo do bloqueio | R10, R11 |

@@ -65,6 +65,14 @@
   "+ Novo Álbum", filtros de franquia, raridade e edição/ano, seleção em lote e as ações editar, duplicar e excluir.
 - **O que falta no Figma:** a importação CSV (R13) não aparece na área visível (o frame está cortado à direita).
 - **Fora da documentação no Figma:** "população base", "preço médio ref." e "duplicar".
+- **Também fora da documentação**, encontrados na revisão do PR do frontend (2026-11-09):
+  - os indicadores "+420 esta semana", "Álbuns licenciados" e "14 pendentes de revisão": o DER não tem licença nem
+    revisão de álbum. A tela usa os mesmos dois cards com totais que a API já dá: "Total de cartas" e "Álbuns oficiais"
+    (com o total de categorias embaixo);
+  - o "código vault" (`#CRD-POK-0004`) embaixo do nome: o DER não tem esse código. A tela mostra o idioma da carta como
+    etiqueta no lugar;
+  - a seleção em lote (checkbox nas linhas e "5 selecionados" no rodapé): nenhum caso de uso pede ação em lote no
+    catálogo. Fica de fora até a documentação prever.
 
 ## Fora do escopo
 
