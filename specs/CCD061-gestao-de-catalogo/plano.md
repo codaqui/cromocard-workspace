@@ -19,7 +19,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 
 | Método e caminho | Entrada | Sucesso | Erros | Requisitos |
 |---|---|---|---|---|
-| `GET /albums` · `GET /cards` · `GET /categories` | `q`, `page`, `pageSize` e os filtros de cada recurso: cartas `albumId`, `categoryId`, `rarityId`; álbuns `categoryId`, `year`; categorias só `q`. Ordem fixa: cartas por álbum e número, álbuns por título, categorias por nome | `200` `{ data, meta }`; a carta traz o álbum com `id`, `title`, `publisher`, `year` e `totalCards`, para a coluna "Álbum / coleção" e o "Nº álbum" (`004 / 102`) do Figma | `400` | R3 |
+| `GET /albums` · `GET /cards` · `GET /categories` | `q`, `page`, `pageSize` e os filtros de cada recurso: cartas `albumId`, `categoryId`, `rarityId`; álbuns `categoryId`, `year`; categorias `q` e `type` (`ALBUM`/`CARD`). Ordem fixa: cartas por álbum e número, álbuns por título, categorias por nome | `200` `{ data, meta }`; a carta traz o álbum com `id`, `title`, `publisher`, `year` e `totalCards`, para a coluna "Álbum / coleção" e o "Nº álbum" (`004 / 102`) do Figma | `400` | R3 |
 | `POST /albums` · `PATCH /albums/:id` | campos de R5 | `201` / `200` | `400`, `404` (`ALBUM_NOT_FOUND`, `CATEGORY_NOT_FOUND`) | R4, R5, R8 |
 | `DELETE /albums/:id` | — | `204` | `404`, `422 ALBUM_HAS_CARDS` | R10, R11 |
 | `POST /cards` · `PATCH /cards/:id` | campos de R6 | `201` / `200` | `400`, `404` (`CARD_NOT_FOUND`, `ALBUM_NOT_FOUND`, `CATEGORY_NOT_FOUND`, `RARITY_NOT_FOUND`, `LANGUAGE_NOT_FOUND`), `409 CARD_NUMBER_TAKEN` | R4, R6–R8 |
@@ -66,7 +66,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 - Carta usada em coleções (R11, L2): a tabela `collection_cards` ainda não existe e o catálogo não lê tabela de outro
   domínio (ADR-001). O `catalogService` declara a interface `CardUsage` (`isCardInCollections(cardId)`) e a recebe
   opcional pelo construtor, no padrão do `CatalogStats` do dashboard (CCD058). Sem implementação, a carta é tratada
-  como não usada; **pendência:** a user story que criar o domínio `collection` liga a implementação no
+  como não usada; **pendência:** a CCD014 (Marcar carta como possuo), a primeira user story que usa `collection_cards`, liga a implementação no
   `catalog.module.ts`. Decidido em 2026-10-29 com Lucas Oliveira Lima.
 - Raridades e idiomas (R6, R15): vêm do seed e não são editados, mas o formulário de carta precisa das opções. Entram
   `GET /rarities` e `GET /languages` só de leitura, e a service confere cada referência informada (álbum, categoria,
@@ -98,6 +98,13 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   Set". Decidido em 2026-11-08 com Lucas Oliveira Lima.
 - Leitura do CSV pelo `csv-parse` com `columns` (ADR-050, item 2): o cabeçalho é conferido contra as colunas esperadas
   e uma coluna faltando ou a mais vira o erro `<linha>.columns`. Decidido em 2026-11-08 com Lucas Oliveira Lima.
+- Filtro por tipo nas categorias (L6, L9): `GET /categories` aceita `type` (`ALBUM`/`CARD`), e os selects de categoria do
+  frontend pedem só o tipo que cabe (álbum ou carta), em vez de buscar 100 categorias e separar no navegador. Decidido em
+  2026-11-10 com Lucas Oliveira Lima, a partir da revisão do backend.
+- Editar a carta para o número de uma carta excluída (R7): o índice único (`album_id`, `number`) vale também para as linhas
+  excluídas, e restaurar na edição juntaria duas cartas. A edição responde `409 CARD_NUMBER_TAKEN` com a mensagem "O
+  número pertence a uma carta excluída deste álbum", para o admin não procurar na lista uma carta que não aparece.
+  Decidido em 2026-11-10 com Lucas Oliveira Lima.
 - Importação concorrente: se outro admin ocupar o número entre a validação e a gravação, a importação responde
   `409 CARD_NUMBER_TAKEN` em vez de `500`. Decidido em 2026-11-08 com Lucas Oliveira Lima.
 - Dashboard (CCD058, R6): o catálogo expõe `countCards()` (cartas sem as excluídas) e o `dashboard.module.ts` passa a
