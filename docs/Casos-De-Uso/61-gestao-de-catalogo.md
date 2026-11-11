@@ -30,3 +30,5 @@
 |  | 4. O sistema realiza novamente a validação. |
 | 5. O administrador tenta remover um item que possui vínculos que impedem sua exclusão: álbum com cartas; categoria com álbuns, cartas ou subcategorias; carta já usada em coleções. |  |
 |  | 6. O sistema impede a exclusão e informa o motivo. |
+| 7. O administrador importa cartas por um arquivo CSV. |  |
+|  | 8. O sistema cria as cartas sem imagem; o administrador envia a imagem da frente depois, pela edição da carta. |
