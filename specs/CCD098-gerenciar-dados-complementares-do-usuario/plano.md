@@ -26,7 +26,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Método e caminho | Entrada | Sucesso | Erros | Requisitos |
 |---|---|---|---|---|
-| `GET /api/v1/users` (CCD059) | `q` também busca @, CPF, CNPJ e ID | acrescenta `username`, `phone`, `lastLoginAt`, `lastLoginIp`, `total` | — | R2, R3, R12 |
+| `GET /api/v1/users` (CCD059) | `q` também busca @, CPF, CNPJ e ID | acrescenta `username`, `phone`, `lastLoginAt`, `lastLoginIp`; o total já existe em `meta.total` (ADR-011) | — | R2, R3, R12 |
 | `POST /api/v1/users` · `PATCH /api/v1/users/:id` (CCD059) | acrescenta `username?`, `cpf?`, `phone?`, `sendActivation` | `201` / `200` | `400`, `409 USERNAME_TAKEN`, `409 CPF_TAKEN` | R4–R7, R9 |
 | `GET /api/v1/users/:id` | — | `200` todos os dados | `404` | R13 |
 | `POST /api/v1/users/:id/resend-activation` | — | `202` | `404`, `409 ALREADY_ACTIVATED` | R15 |
@@ -58,7 +58,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|
 | CA3–CA5, CA8 | `admin-users.service.spec.ts` · integração |
 | CA6 | `auth.service.spec.ts` |
-| CA1, CA2, CA7 | `UsersPage.spec.tsx` · `DeleteUserDialog.spec.tsx` |
+| CA1, CA2, CA7 | `UsersListPage.spec.tsx` · `DeleteUserDialog.spec.tsx` |
 | CA9 | integração |
 
 ## Decisões técnicas
