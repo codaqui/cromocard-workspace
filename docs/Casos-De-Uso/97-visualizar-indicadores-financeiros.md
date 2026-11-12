@@ -10,12 +10,12 @@
 |---|---|
 | 1. O administrador acessa o Dashboard Gerencial. |  |
 |  | 2. O sistema apresenta o valor total em custódia (pagamentos recebidos e ainda não liberados ao vendedor). |
-|  | 3. O sistema apresenta o valor liquidado no dia, a quantidade de pedidos liberados e o valor retido em garantia (pagamentos de pedidos entregues há menos de 7 dias, o prazo de reclamação). |
+|  | 3. O sistema apresenta, sempre juntos, o valor liquidado no período (no filtro Hoje, "liquidado hoje"), a quantidade de pedidos liberados e o valor retido em garantia (pagamentos de pedidos entregues há menos de 7 dias, o prazo de reclamação). |
 |  | 4. O sistema apresenta, na lista de vendedores, o volume anunciado e a nota de reputação de cada vendedor (média das notas recebidas, de 0 a 5). |
 | 5. O administrador seleciona o período: Hoje, 7 dias, 30 dias ou 1 ano. |  |
 |  | 6. O sistema atualiza os indicadores financeiros conforme o período. |
 | 7. O administrador seleciona a opção "Ver Livro Razão de Hoje". |  |
-|  | 8. O sistema apresenta a lista dos pagamentos e liberações do dia. |
+|  | 8. O sistema apresenta a lista dos pagamentos recebidos e das liberações aos vendedores do dia, com hora, pedido, comprador, vendedor, tipo (pagamento ou liberação) e valor, e os totais do dia: recebido, liberado e retido em garantia. |
 
 ### Fluxo Alternativo
 

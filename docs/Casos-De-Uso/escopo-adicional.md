@@ -52,8 +52,8 @@ aprovadas.
 | EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados. A taxa de autenticação não entra: não tem origem de dado. |
 | EA-059-01 | Confirmação reforçada ao excluir (digitar o texto e marcar "Estou ciente") | `276-1735` | CCD098 | O texto "irreversível" contraria o soft delete (ADR-015). Texto de confirmação: `EXCLUIR-` + o primeiro nome em maiúsculas. O texto "irreversível" muda: a conta pode ser restaurada (ADR-015). |
 | EA-059-02 | Total de usuários no cabeçalho | `208-1793` | CCD098 | |
-| EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793` | CCD098 | Não há frame do detalhe. Gaveta lateral com os dados e as ações; o Gabriel desenha. |
-| EA-059-04 | Status "Em análise" (vendedor aguardando credenciamento) | `208-1793` | CCD094 | |
+| EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793`, `649-1164`, `649-796` | CCD098 | Página do usuário, um layout só para qualquer papel (decisão do PO em 11/11/2026, no lugar da gaveta lateral): dados pessoais, contato, endereços, ações (editar, aplicar sanção, reativar, excluir), advertências e as ações administrativas sobre o usuário lidas do `audit_logs`. O frame `649-796` mostra a própria conta do admin, com as ações bloqueadas (CCD059 FA 7–8). |
+| EA-059-04 | Status "Em análise" (vendedor aguardando credenciamento) | `208-1793` | CCD094 | Selo "Em análise" ao lado do papel Vendedor; a coluna Status mostra só Ativo, Suspenso e Bloqueado (decisão do PO em 11/11/2026). |
 | EA-060-01 | Link de destino da notificação | `208-2380` | **MVP** (CCD060, L4) | |
 | EA-060-02 | Pré-visualização da notificação num celular | `208-2380` | **MVP** (plano da CCD060) | Não há app mobile nem push (ADR-058): a prévia mostra como a notificação aparece na central de notificações da plataforma. |
 | EA-060-03 | Contadores de caracteres (título 80, corpo 240) | `208-2380` | **MVP** (CCD060) | Vale o DER: 120 e 500. |
@@ -96,9 +96,16 @@ média", "Tempo real", "Live Sync", "rede neural anti-fraude", "API GraphQL e Ba
 "pré-validado via OCR", "protocolo de auditoria" e os prazos "Padrão Bacen". Se algum deles precisar virar
 funcionalidade, vira caso de uso novo.
 
+Também não entram, por decisão do PO em 11/11/2026 na revisão do Figma de Administração: no Dashboard, a taxa de
+autenticação, a taxa de conformidade anti-fraude, os botões "Logs" e "Notificar Lojista" na linha do vendedor, o
+status com motivo ("Pendente Doc Pix"), "leilões" e os nomes de eventos no eixo do gráfico; em Usuários, cargos,
+equipes, departamentos e permissões por módulo do administrador (o DER só tem o papel ADMIN), 2FA, sessões e
+dispositivos, observações internas sobre o usuário, nível "Ouro", reputação e pedidos do cliente na página do
+usuário, data de nascimento, "tipo de conta", coleções favoritas e preferências de entrega e pagamento.
+
 ## 4. Telas conferidas
 
-Administração: `208-1240`, `247-2499`, `247-3539`, `246-1201`, `246-2038`, `252-1375`, `252-1723`, `252-2837`,
+Administração: `208-1240`, `247-2499`, `247-3539`, `649-796`, `649-1164`, `246-1201`, `246-2038`, `252-1375`, `252-1723`, `252-2837`,
 `208-1793`, `276-1202`, `276-1735`, `208-2380`, `277-2689`, `277-2982`, `208-2895`, `278-3246`, `220-3524`,
 `228-1236`, `228-1804`, `228-2395`, `228-3048`. Login: `152-2587`, `238-1204`. Painel do vendedor `281-3729` e
 perfil `229-3585` só para procurar o envio dos documentos do vendedor (não existe).
@@ -106,3 +113,8 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
 - O frame `208-2895` (Catálogo) está cortado à direita no próprio Figma.
 - Os frames `252-1723`, `252-2837` e `278-3246` aparecem como "Html → Body" no Figma: são o dossiê do vendedor (dois
   estados) e o cadastro de carta.
+- Revisão de 11/11/2026: o Dashboard e Usuários foram ajustados no Figma para ficarem iguais à documentação, e
+  ganharam os estados que faltavam. Dashboard: sem dados `795-1174`, filtro sem dados `795-1704`, meta não
+  configurada `795-2234`, Livro Razão de Hoje `795-2761`, intervalo de datas `795-3417`, filtro de status `795-3961`.
+  Usuários: erros de validação `804-1188`, editar `804-1682`, aplicar sanção `804-2174` e com a justificativa
+  obrigatória `804-2531`, reativar `804-2889`, operação concluída `804-3283`.
