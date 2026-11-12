@@ -1,6 +1,6 @@
 # CCD059 — Gestão de Usuários
 
-- **Status:** Planejada
+- **Status:** Rascunho
 - **Fase:** MVP
 - **User story:** #334 `CCD059-Gestão de Usuários` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [59-gestao-de-usuarios.md](../../docs/Casos-De-Uso/59-gestao-de-usuarios.md)
@@ -19,8 +19,8 @@
 |---|---|---|---|
 | R1 | Todos os endpoints exigem `ADMIN`; `401`/`403` | Permissão | `59`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | Tela em `/backoffice/usuarios`, item "Usuários" do menu | Tela | `59`, FP 1; ADR-038 |
-| R3 | Lista paginada de usuários, sem excluídos | Tela | `59`, FP 2; ADR-011; ADR-015, item 5 |
-| R4 | O admin seleciona um usuário e vê os dados e as opções | Tela | `59`, FP 3–4 |
+| R3 | Lista paginada de usuários, sem excluídos, com nome, e-mail, papel (Cliente, Vendedor ou Administrador), status (Ativo, Suspenso ou Bloqueado) e data de cadastro | Tela | `59`, FP 2 (L7); ADR-011; ADR-015, item 5 |
+| R4 | Selecionar um usuário abre a página do usuário, com dados pessoais, contato, endereços, as ações administrativas já feitas sobre ele (lidas do `audit_logs`) e as opções de gerenciamento | Tela | `59`, FP 3–4 (L8) |
 | R5 | Opção cadastrar novo usuário com nome, e-mail e papel | Ação | `59`, FP 3 e FP 5; user-stories.md §8; DBML `users` |
 | R6 | Editar os dados de um usuário (`PATCH`) | Ação | `59`, FP 5; user-stories.md §8 |
 | R7 | Alterar o papel (`CUSTOMER`, `SELLER`, `ADMIN`) | Ação | user-stories.md §8; DBML `user_role` |
@@ -39,8 +39,8 @@
 
 ## Critérios de aceite
 
-- **CA1** (R3) — **Dado** usuários cadastrados, **quando** abre Usuários, **então** vê a lista paginada com busca por
-  nome ou e-mail e filtros de papel e status, sem os excluídos.
+- **CA1** (R3) — **Dado** usuários cadastrados, **quando** abre Usuários, **então** vê a lista paginada com nome,
+  e-mail, papel, status e data de cadastro, busca por nome ou e-mail e filtros de papel e status, sem os excluídos.
 - **CA2** (R5, R10, R11, R12) — **Dado** o formulário de novo usuário, **quando** salva com dados válidos, **então** a
   API responde `201`, o usuário aparece na lista e recebe o convite; com e-mail existente, `409`.
 - **CA3** (R6, R7) — **Dado** um usuário, **quando** o admin muda nome e papel, **então** a API responde `200` e a
@@ -48,12 +48,14 @@
 - **CA4** (R8, R14) — **Dado** um usuário ativo, **quando** o admin suspende informando o motivo, **então** o status
   vira `SUSPENDED`, as sessões dele são revogadas e o log registra a ação.
 - **CA5** (R8) — **Dado** um usuário suspenso, **quando** o admin reativa, **então** o status volta a `ACTIVE`.
-- **CA6** (R9, R14) — **Dado** um usuário, **quando** o admin confirma a exclusão digitando o nome de usuário e o
-  motivo, **então** `deleted_at` é preenchido, ele some da lista e o log registra.
+- **CA6** (R9, R14) — **Dado** um usuário, **quando** o admin confirma a exclusão digitando o texto de confirmação
+  e o motivo, **então** `deleted_at` é preenchido, ele some da lista e o log registra.
 - **CA7** (R18) — **Dado** o admin logado, **quando** tenta suspender, excluir ou rebaixar a si mesmo, **então** a API
   responde `422`.
 - **CA8** (R13) — **Dado** um formulário aberto, **quando** cancela, **então** nada é gravado e volta à lista.
 - **CA9** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama qualquer rota de gestão, **então** recebe `403`.
+- **CA10** (R4) — **Dado** um usuário que teve o telefone editado por um admin, **quando** o admin abre a página dele,
+  **então** vê os dados, os endereços e, em "Ações administrativas", a edição com quem fez e quando.
 
 ## Dados
 
@@ -66,20 +68,29 @@
 
 ## Telas (Figma)
 
+Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
+
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| administração - Gestão de usuarios | [208-1793](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=208-1793) | R2–R4, R6–R9 | ⚠️ Divergente |
-| administração - adicionar novo usuario | [276-1202](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=276-1202) | R5 | ⚠️ Divergente |
-| administração - remover usuario | [276-1735](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=276-1735) | R9 | ❌ Não bate |
+| Gestão de usuários | `208-1793` | R2, R3, R16 | ✅ Bate |
+| Adicionar novo usuário | `276-1202` | R5, R17 | ✅ Bate |
+| Adicionar novo usuário - erros de validação | `804-1188` | R10, R11 | ✅ Bate |
+| Editar usuário | `804-1682` | R6, R7 | ✅ Bate |
+| Operação concluída | `804-3283` | R12 | ✅ Bate |
+| Página do usuário (cliente) | `649-1164` | R4, R8, R9 | ✅ Bate |
+| Página do usuário (própria conta do admin) | `649-796` | R4, R18 | ✅ Bate |
+| Reativar usuário | `804-2889` | R8 | ✅ Bate |
+| Excluir usuário | `276-1735` | R9, R19 | ✅ Bate (a conta pode ser restaurada; motivo obrigatório) |
 
-- **Onde o Figma está errado:** "Excluir Usuário Definitivamente" e "irreversível" contrariam o soft delete (R9); o
-  texto deve dizer que a conta é excluída e pode ser restaurada.
-- **Fora da documentação no Figma** (L1): @nome de usuário, telefone, CPF, último acesso e IP, status "Em análise",
-  "Suspenso (7d)" e "Bloqueado".
+- Na lista, @, telefone, CPF, último acesso e IP são da CCD098; "Suspenso (7d)", "Bloqueado" e o modal de sanção, da
+  CCD099; o selo "Em análise", da CCD094.
 
 ## Fora do escopo
 
 - Restaurar usuário excluído pelo BackOffice; suspensão com prazo; CPF e IP.
+- Itens do Figma antigo que não entram (decisão de 11/11/2026, `escopo-adicional.md` §3): cargos, equipes,
+  departamentos e permissões por módulo do administrador, 2FA, sessões e dispositivos, observações internas sobre o
+  usuário, nível, reputação e pedidos do cliente na página do usuário.
 
 ## Lacunas e decisões
 
@@ -91,3 +102,5 @@
 | L4 | Suspender e excluir revogam as sessões na hora? (proposta: sim, revoga os refresh tokens; o access de 15 min expira sozinho) | Sim: revoga os refresh tokens na hora; o access token de 15 minutos expira sozinho | `59`, FP 10 |
 | L5 | Limites: o admin pode agir sobre si mesmo? Sobre o último ADMIN? (proposta: não, `422`) | Não pode agir sobre a própria conta nem sobre o último ADMIN ativo (`422`) | `59`, FA 7–8 |
 | L6 | Filtros da lista (proposta: busca por nome ou e-mail, papel, status) | Busca por nome ou e-mail e filtros de papel e de status | `59`, FP 2 |
+| L7 | Nome dos papéis e o "Em análise" do Figma na coluna de status | Papéis Cliente, Vendedor e Administrador; status só Ativo, Suspenso e Bloqueado; vendedor com credenciamento em análise ganha o selo "Em análise" ao lado do papel. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 2 |
+| L8 | O que a seleção do usuário abre? | A página do usuário (frames `649-1164` e `649-796`), com dados, contato, endereços, as ações administrativas sobre ele (do `audit_logs`) e as opções de gerenciamento. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 4; EA-059-03 |

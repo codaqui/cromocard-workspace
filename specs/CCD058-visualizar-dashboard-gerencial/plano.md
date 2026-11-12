@@ -1,6 +1,6 @@
 # Plano — CCD058 Visualizar Dashboard Gerencial
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026 (R9, R17, R18) aguardando a reaprovação
 - **Repositórios:** backend · frontend
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
 
@@ -71,3 +71,18 @@ fundação.
 ## Decisões técnicas
 
 - Gráfico em SVG próprio, sem biblioteca nova (ADR-044 não prevê lib de gráfico).
+
+## Revisão de 11/11/2026 (L10–L12)
+
+O que muda no que já foi implementado:
+
+| Onde | O que muda | Requisitos |
+|---|---|---|
+| backend `dashboard.service.ts` · `users.service.ts` | a série do gráfico passa a ser agrupada por hora (`today`), por dia (`7d`, `30d` e intervalo de até 31 dias) ou por mês (`1y`, até 7 meses): o campo `signupsByMonth` vira `signups: [{ "bucket": "ISO", "customers": 0, "sellers": 0 }]` com `granularity: "hour" \| "day" \| "month"` | R18 |
+| backend `GET /admin/dashboard/recent-sellers` | devolve os 5 mais recentes, sem `page`/`pageSize` (a rota deixa de paginar) | R9 |
+| frontend `SignupsChart` | eixo por hora, dia ou mês conforme `granularity` | R18 |
+| frontend `RecentSellersTable` | sem paginação; link "Ver todos" para `/backoffice/usuarios?role=SELLER` | R9 |
+| frontend `DashboardPage` | os mesmos cards em todo período | R17 |
+
+Testes: CA3 e CA4 mudam (`dashboard.service.spec.ts`, integração e `RecentSellersTable.spec.tsx`); CA9 é novo
+(`DashboardPage.spec.tsx`).

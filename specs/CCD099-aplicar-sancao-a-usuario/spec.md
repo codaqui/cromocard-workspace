@@ -1,6 +1,6 @@
 # CCD099 — Aplicar Sanção a Usuário
 
-- **Status:** Planejada
+- **Status:** Rascunho
 - **Fase:** Escopo Adicional
 - **User story:** #603 `CCD099-Aplicar Sanção a Usuário` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [99-aplicar-sancao-a-usuario.md](../../docs/Casos-De-Uso/99-aplicar-sancao-a-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -17,7 +17,7 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `99`, Pré-condições; ADR-005, item 4; ADR-011 |
-| R2 | As sanções ficam na fila de moderação e na Gestão de Usuários, mostrando as advertências anteriores | Tela | `99`, FP 1–2 |
+| R2 | As sanções ficam na fila de moderação e na página do usuário (card "Ações sobre o usuário", com o número de advertências), num modal com as três sanções e as advertências anteriores | Tela | `99`, FP 1–2; EA-059-03 |
 | R3 | Justificativa obrigatória em toda sanção e prazo na suspensão | Campo | `99`, FP 4–5 e FA 7–8 |
 | R4 | Advertir cria um registro em `user_warnings` e notifica o usuário | Ação | `99`, FP 6; DBML `user_warnings` |
 | R5 | Suspender por prazo: `SUSPENDED` com `suspended_until`, revoga as sessões e a lista mostra o prazo | Ação | `99`, FP 7; DBML `users.suspended_until` |
@@ -56,11 +56,17 @@
 
 ## Telas (Figma)
 
+Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
+
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Gestão de usuários | [208-1793](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=208-1793) | R2, R5, R6, R10 | ⚠️ Divergente |
-| Comunidade | [220-3524](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=220-3524) | R2, R8, R12–R14 | ⚠️ Divergente |
-| Logs do sistema | [228-2395](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=228-2395) | R7 | ✅ Bate |
+| Gestão de usuários | `208-1793` | R5, R6, R10 | ✅ Bate (ajustado em 11/11/2026) |
+| Página do usuário | `649-1164` | R2 | ✅ Bate (ajustado em 11/11/2026) |
+| Aplicar sanção | `804-2174` | R2–R6 | ✅ Bate (criado em 11/11/2026) |
+| Aplicar sanção - justificativa obrigatória | `804-2531` | R3 | ✅ Bate (criado em 11/11/2026) |
+| Reativar usuário | `804-2889` | R10 | ✅ Bate (criado em 11/11/2026) |
+| Comunidade | `220-3524` | R2, R8, R12–R14 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Logs do sistema | `228-2395` | R7 | ✅ Bate |
 
 - "Denunciado por: Algoritmo Heurístico" e "Link Malicioso Detectado" pedem detecção automática (L3).
 
@@ -78,3 +84,4 @@
 | L3 | Denúncia por detecção automática (EA-062-05) (proposta: não entra; não há caso de uso) | Não entra; não há caso de uso | esta spec (Fora do escopo); `escopo-adicional.md`, EA-062-05 |
 | L4 | O que muda para o grupo advertido (proposta: só o selo; reativar volta a `ACTIVE`) | Só o selo; reativar volta a `ACTIVE` | `escopo-adicional.md`, EA-062-02 |
 | L5 | Advertências acumuladas suspendem sozinhas? (proposta: não) | Não | `99`, FP 6 |
+| L6 | De onde o admin aplica a sanção na Gestão de Usuários? | Da página do usuário, pelo card "Ações sobre o usuário", num modal com advertir, suspender (3, 7, 15 ou 30 dias) e banir. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | EA-059-03; frames `804-2174` e `804-2531` |

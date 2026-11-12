@@ -1,6 +1,6 @@
 # CCD097 — Visualizar Indicadores Financeiros
 
-- **Status:** Planejada
+- **Status:** Rascunho
 - **Fase:** Escopo Adicional
 - **User story:** #601 `CCD097-Visualizar Indicadores Financeiros` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [97-visualizar-indicadores-financeiros.md](../../docs/Casos-De-Uso/97-visualizar-indicadores-financeiros.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -18,11 +18,11 @@
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `97`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | Valor em custódia: soma dos pagamentos `APPROVED` de pedidos `PAID` ou `SHIPPED` | Campo | `97`, FP 2; DBML `payments`, `orders` |
-| R3 | Valor liquidado no dia e quantidade de pedidos liberados (`DELIVERED` no dia) | Campo | `97`, FP 3 |
-| R4 | Valor retido em garantia | Campo | `97`, FP 3 |
+| R3 | Valor liquidado no período e quantidade de pedidos liberados (`DELIVERED` no período); no filtro Hoje, "liquidado hoje" | Campo | `97`, FP 3 (L6) |
+| R4 | Valor retido em garantia, sempre junto da custódia e do liquidado | Campo | `97`, FP 3 (L6) |
 | R5 | Volume anunciado e reputação de cada vendedor na lista de vendedores | Campo | `97`, FP 4; DBML `listings`, `reviews` |
 | R6 | Filtro de período (Hoje, 7 dias, 30 dias, 1 ano) | Campo | `97`, FP 5–6 |
-| R7 | "Ver Livro Razão de Hoje": pagamentos e liberações do dia | Tela | `97`, FP 7–8 |
+| R7 | "Ver Livro Razão de Hoje": lista dos pagamentos recebidos e das liberações do dia, com hora, pedido, comprador, vendedor, tipo (pagamento ou liberação) e valor, e os totais recebido, liberado e retido | Tela | `97`, FP 7–8 (L7) |
 | R8 | Sem movimentação: indicadores em zero e a mensagem | Estado | `97`, FA 1–2 |
 | R9 | População e preço médio de referência de cada carta na Gestão de Catálogo | Campo | EA-061-05; DBML `collection_cards`, `price_history` |
 | R10 | Volume negociado e negociações ativas de cada grupo na Gestão de Comunidade | Campo | EA-062-03 (cálculo em L5) |
@@ -31,8 +31,8 @@
 ## Critérios de aceite
 
 - **CA1** (R2) — **Dado** dois pagamentos aprovados de pedidos pagos, de R$ 100 e R$ 50, **quando** o admin abre o Dashboard, **então** a custódia mostra R$ 150,00.
-- **CA2** (R3) — **Dado** um pedido entregue hoje de R$ 80, **quando** o admin abre o Dashboard, **então** o liquidado do dia mostra R$ 80,00 e 1 pedido.
-- **CA3** (R7) — **Dado** movimentação hoje, **quando** o admin abre o livro razão, **então** vê os pagamentos e liberações do dia.
+- **CA2** (R3) — **Dado** um pedido entregue hoje de R$ 80 e outro há 10 dias de R$ 20, **quando** o admin seleciona Hoje, **então** "liquidado hoje" mostra R$ 80,00 e 1 pedido; no filtro de 30 dias, "liquidado no período" mostra R$ 100,00 e 2 pedidos.
+- **CA3** (R7) — **Dado** um pagamento recebido e uma liberação hoje, **quando** o admin abre o livro razão, **então** vê as duas linhas com hora, pedido, comprador, vendedor, tipo e valor, e os totais do dia.
 - **CA4** (R8) — **Dado** nenhuma movimentação no período, **quando** o admin filtra, **então** os indicadores mostram zero e a mensagem.
 - **CA5** (R5) — **Dado** um vendedor com anúncios ativos e avaliações, **quando** o admin vê a lista de vendedores, **então** vê o volume anunciado e a média das notas.
 - **CA6** (R9) — **Dado** uma carta em 3 coleções e preços nos últimos 30 dias, **quando** o admin vê o catálogo, **então** vê a população 3 e o preço médio.
@@ -50,20 +50,24 @@
 
 ## Telas (Figma)
 
+Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
+
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Dashboard geral | [208-1240](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=208-1240) | R2, R5 | ⚠️ Divergente |
-| Dashboard — Hoje | [247-3539](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=247-3539) | R3, R4, R7 | ⚠️ Divergente |
-| Validar Cadastro | [246-1201](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=246-1201) | R5 | ⚠️ Divergente |
-| Catálogo | [208-2895](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=208-2895) | R9 | ⚠️ Divergente |
-| Comunidade | [220-3524](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=220-3524) | R10 | ⚠️ Divergente |
-
-- "Smart Contract", "Auditoria automática 100% validada" e leilões são efeito visual ou dependem de funcionalidade sem caso de uso.
+| Dashboard geral (30 dias) | `208-1240` | R2–R5 | ✅ Bate |
+| Dashboard - filtro de 7 dias | `247-2499` | R2–R4, R6 | ✅ Bate |
+| Dashboard - filtro Hoje | `247-3539` | R2–R4, R6 | ✅ Bate |
+| Dashboard - Livro Razão de Hoje | `795-2761` | R7 | ✅ Bate |
+| Dashboard - filtro sem dados | `795-1704` | R8 | ✅ Bate |
+| Validar Cadastro | `246-1201` | R5 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Catálogo | `208-2895` | R9 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Comunidade | `220-3524` | R10 | ⚠️ Divergente (ainda não revisado no Figma) |
 
 ## Fora do escopo
 
 - Compra, pedidos e pagamentos em si — fase Futuro Marketplace (CCD072 e seguintes).
 - Leilões e chargebacks.
+- "Smart Contract", "Auditoria automática 100% validada" e "Tempo real": efeito visual, retirados do Figma em 11/11/2026.
 
 ## Lacunas e decisões
 
@@ -74,3 +78,5 @@
 | L3 | Reputação (proposta: média das notas recebidas em `reviews`, de 0 a 5) | Média das notas recebidas em `reviews`, de 0 a 5 | `97`, FP 4 |
 | L4 | População e preço médio (proposta: população = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias) | População = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias | `escopo-adicional.md`, EA-061-05 |
 | L5 | Volume por grupo (proposta: soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING`) | Soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING` | `escopo-adicional.md`, EA-062-03 |
+| L6 | O card mostra custódia, liquidado e garantia juntos? O que é "liquidado" fora do filtro Hoje? | Os três sempre juntos; "liquidado no período" (no filtro Hoje, "liquidado hoje"). Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `97`, FP 3 |
+| L7 | Colunas do Livro Razão de Hoje | Hora, pedido, comprador, vendedor, tipo (pagamento ou liberação) e valor, mais os totais recebido, liberado e retido. Frame `795-2761`. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `97`, FP 8 |

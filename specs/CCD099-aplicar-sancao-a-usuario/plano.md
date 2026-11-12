@@ -1,6 +1,6 @@
 # Plano — CCD099 Aplicar Sanção a Usuário
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026 aguardando a reaprovação
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -65,3 +65,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - O job roda de hora em hora (`node-cron`, ADR-010).
+
+## Revisão de 11/11/2026
+
+- R2: o modal de sanção abre a partir do card "Ações sobre o usuário" da página do usuário (CCD059/CCD098), além da
+  fila de moderação. O texto de cada opção segue os frames `804-2174` e `804-2531`.

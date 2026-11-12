@@ -1,6 +1,6 @@
 # Plano — CCD096 Acompanhar Evolução de Cadastros
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026 aguardando a reaprovação
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -55,3 +55,10 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - Gráfico em SVG próprio, como na CCD058 (sem biblioteca nova).
+
+## Revisão de 11/11/2026 (L3)
+
+- R3 mudou: o indicador de novos cadastros segue o período, e o percentual da meta mensal só vem no filtro de 30 dias.
+  A resposta da evolução manda `goalPercent: null` fora de `30d`; o `KpiCard` esconde o percentual quando é `null`
+  (mesmo caminho do R7).
+- Testes: o CA8 (7 dias, sem percentual) entra em `dashboard.service.spec.ts` e no teste do card.
