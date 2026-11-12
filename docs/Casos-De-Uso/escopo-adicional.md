@@ -74,9 +74,9 @@ aprovadas.
 | EA-062-04 | Categoria da denúncia e filtro da fila por gravidade | `220-3524` | CCD099 | Críticas: "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam". O Figma usa esses nomes desde 12/11/2026. |
 | EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). Retirada do Figma em 12/11/2026. |
 | EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | Em todas as denúncias da fila. |
-| EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | |
+| EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | Primeiras linhas e total de registros, sem gráficos (decisão do PO em 12/11/2026). |
 | EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | |
-| EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | |
+| EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
 | EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. |
 | EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | |
@@ -112,7 +112,9 @@ semana" e, no fundo do cadastro de carta, os indicadores "Total indexado", "Nova
 categoria), "guilda", "Líder" (vira o criador, `groups.creator_id`), "99.2% em conformidade", "SLA 4ms", "AÇÃO
 IMEDIATA REQUERIDA", "Custódia congelada", "slabs vintage", "leilões", "Algoritmo Heurístico VaultShield", "Link
 Malicioso Detectado", "rede neural anti-fraude", o hash da mensagem e os botões de banir direto na fila (a fila abre o
-modal de sanção do caso de uso 99).
+modal de sanção do caso de uso 99). Em Relatórios (12/11/2026): "Taxa de atualização: Tempo Real", "Digest SHA-256",
+"Assinatura HSM", "Assinado HSM", gráficos na prévia e no PDF, "retenção de cohort", "funil de conversão", "Conselho
+Administrativo", "Data Warehouse e BI" e a granularidade ("Consol. Mensal", "Diária") no período.
 
 ## 4. Telas conferidas
 
@@ -139,3 +141,5 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   Comunidade (12/11/2026): detalhes do grupo `841-4451`, advertir `841-2435`, suspender `841-418` e com o motivo
   obrigatório `841-922`, excluir `841-1427`, reativar `841-1931`, remover mensagem `841-2939`, remover e advertir
   `841-3443`, dispensar denúncia `841-3947`, aplicar sanção ao autor `841-4977`, operação concluída `841-5508`.
+  Relatórios (12/11/2026): confirmar exportação `843-442`, relatório exportado `843-1246`, sem dados `843-1674`,
+  arquivo expirado `843-844`, histórico vazio `843-2068`.
