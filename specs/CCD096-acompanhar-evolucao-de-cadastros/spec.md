@@ -71,6 +71,6 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Onde a meta é definida? (proposta: um campo a mais na tela de Configurações da CCD066) | Um campo a mais na tela de Configurações da CCD066 | `96`, FA 5–6 |
+| L1 | Onde a meta é definida? (proposta: um campo a mais na tela de Configurações da CCD066) | Um campo a mais na tela de Configurações da CCD066; desenhado no módulo 4 "Metas" de `228-3048` em 12/11/2026 | `96`, FA 5–6 |
 | L2 | Variação quando o período anterior é zero (proposta: mostrar "novo" em vez do percentual) | Mostrar "novo" em vez do percentual | `96`, FP 3 |
 | L3 | "Novos cadastros (mês)" ou "no período"? | O número segue o período; o percentual da meta mensal aparece só no filtro de 30 dias. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `96`, FP 3 |
