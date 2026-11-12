@@ -55,3 +55,11 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - A duplicação é só no frontend (L1, proposta).
+
+## Revisão de 12/11/2026 (L5, L6)
+
+- R9: os filtros da lista são Álbum (`albumId`) e Ano (`year`), sem o "Edição / Ano" combinado.
+- R10: a exclusão em lote responde com as cartas excluídas e as que ficaram por estarem em coleções
+  (`{ deleted: [...], skipped: [...] }`); o modal pede o motivo, que vai no `details` do `audit_logs` de cada carta.
+  CA9 no `catalog.service.spec.ts`.
+- Telas novas: duplicar carta `832-6457` e excluir em lote `832-4908`.

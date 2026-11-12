@@ -60,7 +60,7 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Dashboard - Livro Razão de Hoje | `795-2761` | R7 | ✅ Bate |
 | Dashboard - filtro sem dados | `795-1704` | R8 | ✅ Bate |
 | Validar Cadastro | `246-1201` | R5 | ⚠️ Divergente (ainda não revisado no Figma) |
-| Catálogo | `208-2895` | R9 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Catálogo | `208-2895` | R9 | ✅ Bate (revisado em 12/11/2026: população em unidades e preço médio de 30 dias, sem graduação PSA/BGS nem variação) |
 | Comunidade | `220-3524` | R10 | ⚠️ Divergente (ainda não revisado no Figma) |
 
 ## Fora do escopo

@@ -48,6 +48,7 @@
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
 | Configurações da plataforma — Módulo 2 | [228-3048](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=228-3048) | R2–R8, R10 | ✅ Bate |
+| Nova categoria (selo no formulário de categoria, desenhado em 12/11/2026) | [833-10832](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=833-10832) | R10 | ✅ Bate |
 
 - "Status: Exibição Primária/Normal" corresponde a fixada ou não.
 
