@@ -82,9 +82,9 @@ aprovadas.
 | EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | Colunas Nº, código, nome, raridade e variantes; resumo por raridade do seed. |
 | EA-064-04 | Subcategorias a criar junto com a categoria sugerida | `228-1804` | CCD103 | |
 | EA-065-01 | Justificativa obrigatória em toda ação administrativa | `228-2395` | CCD102 | O MVP já exige motivo em suspender, excluir e moderar. Obrigatória nas ações que mudam status ou excluem; opcional nas demais. |
-| EA-065-02 | Total de ações em 30 dias, com variação e média diária | `228-2395` | CCD102 | |
+| EA-065-02 | Total de ações em 30 dias, com variação e média diária | `228-2395` | CCD102 | Variação em relação aos 30 dias anteriores, acrescentada ao Figma em 12/11/2026. |
 | EA-065-03 | Filtros rápidos | `228-2395` | CCD102 | Banimentos, Remoção de grupos e Mudança de papel. |
-| EA-065-04 | Busca por IP | `228-2395` | CCD102 | |
+| EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
 | EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. |
 
@@ -118,7 +118,9 @@ Administrativo", "Data Warehouse e BI" e a granularidade ("Consol. Mensal", "Di�
 Histórico", "Hub de Franquia Raiz & Taxonomia", "Hi-Res / 1200DPI", "Inspecionar Raw", "PSA Spec", "SHA-256 Hash
 Verificado", "arquivos criptográficos", "API GraphQL e Banco Central", "slots de binder", "Fórum de Curadoria",
 "Projeção de novos álbuns", "Transações estimadas/mês", a comunidade do solicitante e as raridades "Secret Promo", "L",
-"SR" e "SEC" (fora do seed).
+"SR" e "SEC" (fora do seed). Em Logs (12/11/2026): "Registro de alta integridade", "Filtros de Investigação", "Registros de
+Execução de Segurança", "Timestamp: ISO 8601", os milissegundos de cada linha, as barras coloridas do total, o cargo
+("staff") e o botão "Sair" só nesta tela.
 
 ## 4. Telas conferidas
 
@@ -150,3 +152,5 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   Solicitações (12/11/2026): aprovar `847-390`, recusar `847-883` e com o motivo obrigatório `847-1380`, solicitação
   aprovada `847-2864`, já processada `847-1878`, erro ao aprovar `847-2371`. A tela de votação do cliente (CCD103)
   fica para a revisão do painel do cliente.
+  Logs (12/11/2026): nenhum registro encontrado `849-383`, logs extraídos `849-852`, nada para exportar `849-2265`,
+  limite de exportação `849-1794`; o painel de detalhes `749-624` ganhou o IP.
