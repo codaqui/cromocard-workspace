@@ -21,7 +21,7 @@ e recuperação de senha é a [CCD006](../CCD006-recuperar-senha/spec.md).
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Tela de Login na área pública do SPA, sem guard | Tela | `04-realizar-login.md`, FP 1; ADR-038 (área Pública) |
-| R2 | Campo E-mail | Campo | `04`, FP 2 e FP 3 |
+| R2 | Campo E-mail (**estendido pela CCD098, 2026-11:** aceita também o `@` do nome de usuário — ver R53) | Campo | `04`, FP 2 e FP 3 |
 | R3 | Campo Senha | Campo | `04`, FP 2 e FP 3 |
 | R4 | Botão que envia e-mail e senha | Ação | `04`, FP 3 |
 | R5 | Opção "lembrar de mim" | Campo | user-stories.md §1 "Realizar Login"; ADR-005, item 3 |
@@ -30,7 +30,7 @@ e recuperação de senha é a [CCD006](../CCD006-recuperar-senha/spec.md).
 | R8 | A API valida os campos antes de autenticar | Regra | `04`, FP 4; ADR-006 |
 | R9 | Entrada inválida responde `400 VALIDATION_ERROR` com `details` por campo | Regra | ADR-006; ADR-011 |
 | R10 | A senha é conferida com `users.password_hash` (argon2, ou bcrypt com custo ≥ 12) | Regra | ADR-005, item 1; DBML `users.password_hash` |
-| R11 | Credenciais que não batem mostram "E-mail ou senha incorretos", a mesma mensagem para e-mail inexistente e senha errada | Mensagem | `04`, FA 1 |
+| R11 | Credenciais que não batem mostram "E-mail ou senha incorretos" (**mensagem revista pela CCD098, 2026-11:** "E-mail, nome de usuário ou senha incorretos", pela R53), a mesma mensagem para login inexistente e senha errada | Mensagem | `04`, FA 1 |
 | R12 | Usuário com `status = SUSPENDED` não loga | Regra | ADR-005, item 6; DBML `user_status` |
 | R13 | Usuário com `deleted_at` preenchido não loga | Regra | ADR-005, item 6; ADR-015, item 8 |
 | R14 | Login em conta excluída responde `403 ACCOUNT_DELETED` | Mensagem | ADR-015, item 8 |
@@ -72,6 +72,7 @@ e recuperação de senha é a [CCD006](../CCD006-recuperar-senha/spec.md).
 | R50 | Senhas, hashes, tokens, o header `Authorization`, cookies e e-mail nunca vão para o log | Regra | ADR-019 |
 | R51 | `JWT_ACCESS_TTL`, `REFRESH_TTL` e `REFRESH_TTL_REMEMBER` são validadas no `env`, e a API não sobe se faltar alguma. `GOOGLE_CLIENT_ID` é opcional: sem ela, o login com Google fica desligado (decisão da revisão do backend#12, para o deploy não depender do Google Cloud) | Regra | ADR-005, Consequências; ADR-018 |
 | R52 | Um job diário apaga fisicamente os `refresh_tokens` expirados | Regra | ADR-010; ADR-015, item 9 |
+| R53 | O login aceita e-mail ou `@` do nome de usuário no mesmo campo, sem espaços nas pontas e sem diferenciar maiúsculas; a conta precisa ter `username` cadastrado pela CCD098 | Regra | CCD098 R8, R10; DBML `users.username` |
 
 ## Critérios de aceite
 

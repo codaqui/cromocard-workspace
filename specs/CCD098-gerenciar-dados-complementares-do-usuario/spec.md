@@ -1,6 +1,6 @@
 # CCD098 — Gerenciar Dados Complementares do Usuário
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #602 `CCD098-Gerenciar Dados Complementares do Usuário` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [98-gerenciar-dados-complementares-do-usuario.md](../../docs/Casos-De-Uso/98-gerenciar-dados-complementares-do-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -75,5 +75,5 @@
 | L1 | Formato do nome de usuário (proposta: 3 a 30 caracteres, minúsculas, números, ponto e `_`, guardado sem o `@`) | 3 a 30 caracteres, minúsculas, números, ponto e `_`, guardado sem o `@` | `98`, FA 7–8 |
 | L2 | Busca por CNPJ (proposta: pelo `seller_verifications.cnpj` da CCD094) | Pelo `seller_verifications.cnpj` da CCD094 | `98`, FP 3 |
 | L3 | Login com @ inexistente (proposta: a mesma mensagem genérica de credenciais inválidas) | A mesma mensagem genérica de credenciais inválidas | `98`, FA 9–10 |
-| L4 | Detalhe do usuário não tem frame (proposta: gaveta lateral com os dados e as ações; o Gabriel desenha) | Gaveta lateral com os dados e as ações; o Gabriel desenha | `escopo-adicional.md`, EA-059-03 |
+| L4 | Detalhe do usuário não tem frame (proposta original: gaveta lateral com os dados e as ações; o Gabriel desenha) | **Revista em 2026-11-10:** o Gabriel desenhou uma tela de página cheia (`administração - perfil do admin`, node `649-796`, com variações por papel), não uma gaveta. A CCD059 já implementou `/backoffice/users/:id` como página cheia (pedido do Daniel na revisão do PR do frontend); a CCD098 estende essa mesma página em vez de criar um Drawer | `escopo-adicional.md`, EA-059-03; Figma node `649-796` |
 | L5 | Texto de confirmação da exclusão (proposta: `EXCLUIR-` + o primeiro nome em maiúsculas, como no Figma) | `EXCLUIR-` + o primeiro nome em maiúsculas, como no Figma | `escopo-adicional.md`, EA-059-01 |
