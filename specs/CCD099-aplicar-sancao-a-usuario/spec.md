@@ -17,19 +17,19 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `99`, Pré-condições; ADR-005, item 4; ADR-011 |
-| R2 | As sanções ficam na fila de moderação e na página do usuário (card "Ações sobre o usuário", com o número de advertências), num modal com as três sanções e as advertências anteriores | Tela | `99`, FP 1–2; EA-059-03 |
+| R2 | As sanções ficam na fila de moderação (botão "Aplicar sanção ao autor" em cada denúncia) e na página do usuário (card "Ações sobre o usuário", com o número de advertências), num modal com as três sanções e as advertências anteriores | Tela | `99`, FP 1–2 (L7); EA-059-03 |
 | R3 | Justificativa obrigatória em toda sanção e prazo na suspensão | Campo | `99`, FP 4–5 e FA 7–8 |
 | R4 | Advertir cria um registro em `user_warnings` e notifica o usuário | Ação | `99`, FP 6; DBML `user_warnings` |
 | R5 | Suspender por prazo: `SUSPENDED` com `suspended_until`, revoga as sessões e a lista mostra o prazo | Ação | `99`, FP 7; DBML `users.suspended_until` |
 | R6 | Banir definitivamente: `BLOCKED`, revoga as sessões e impede o login | Ação | `99`, FP 8; ADR-053, item 1 |
 | R7 | Toda sanção grava `audit_logs` com a justificativa | Regra | `99`, FP 9 |
-| R8 | "Remover Mensagem & Advertir Usuário" remove a mensagem, adverte e resolve a denúncia | Ação | `99`, FA 1–2 |
+| R8 | "Remover Mensagem & Advertir Usuário" pede a justificativa num modal, remove a mensagem, adverte e resolve a denúncia | Ação | `99`, FA 1–2 |
 | R9 | Um job volta para `ACTIVE` quem teve a suspensão vencida | Regra | `99`, FA 3–4; ADR-010 |
 | R10 | Reativar um usuário suspenso ou bloqueado | Ação | `99`, FA 5–6 |
 | R11 | Usuário `BLOCKED` não loga nem renova o token | Regra | ADR-053, Consequências; ADR-005, item 6 |
-| R12 | Advertir um grupo: status `WARNED`, com o selo "Advertido por Regras" | Ação | EA-062-02; DBML `group_status` |
+| R12 | Advertir um grupo (botão "Advertir" na linha do grupo ativo e nos detalhes, com motivo): status `WARNED`, com o selo "Advertido"; reativar tira o selo | Ação | EA-062-02; DBML `group_status` |
 | R13 | Categoria da denúncia e filtro da fila por gravidade | Campo | EA-062-04; DBML `reports.reason` |
-| R14 | Na denúncia: idade da conta do autor, advertências anteriores e quantos membros denunciaram | Campo | EA-062-06 |
+| R14 | Em toda denúncia: idade da conta do autor, advertências anteriores e quantos membros denunciaram | Campo | EA-062-06 |
 
 ## Critérios de aceite
 
@@ -65,10 +65,14 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 | Aplicar sanção | `804-2174` | R2–R6 | ✅ Bate (criado em 11/11/2026) |
 | Aplicar sanção - justificativa obrigatória | `804-2531` | R3 | ✅ Bate (criado em 11/11/2026) |
 | Reativar usuário | `804-2889` | R10 | ✅ Bate (criado em 11/11/2026) |
-| Comunidade | `220-3524` | R2, R8, R12–R14 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Comunidade | `220-3524` | R2, R8, R12–R14 | ✅ Bate (ajustado em 12/11/2026) |
+| Advertir grupo | `841-2435` | R12 | ✅ Bate (criado em 12/11/2026) |
+| Remover mensagem e advertir | `841-3443` | R8 | ✅ Bate (criado em 12/11/2026) |
+| Aplicar sanção ao autor (fila) | `841-4977` | R2–R6 | ✅ Bate (criado em 12/11/2026) |
 | Logs do sistema | `228-2395` | R7 | ✅ Bate |
 
-- "Denunciado por: Algoritmo Heurístico" e "Link Malicioso Detectado" pedem detecção automática (L3).
+- "Denunciado por: Algoritmo Heurístico" e "Link Malicioso Detectado" (detecção automática, L3) e os botões de banir direto
+  na fila saíram do Figma em 12/11/2026.
 
 ## Fora do escopo
 
@@ -85,3 +89,4 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 | L4 | O que muda para o grupo advertido (proposta: só o selo; reativar volta a `ACTIVE`) | Só o selo; reativar volta a `ACTIVE` | `escopo-adicional.md`, EA-062-02 |
 | L5 | Advertências acumuladas suspendem sozinhas? (proposta: não) | Não | `99`, FP 6 |
 | L6 | De onde o admin aplica a sanção na Gestão de Usuários? | Da página do usuário, pelo card "Ações sobre o usuário", num modal com advertir, suspender (3, 7, 15 ou 30 dias) e banir. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | EA-059-03; frames `804-2174` e `804-2531` |
+| L7 | Como a fila aplica sanção? O Figma tinha "Banir definitivamente" e "Banir temporariamente (3 dias)" direto na denúncia | Botões "Dispensar denúncia", "Remover mensagem", "Remover mensagem e advertir" e "Aplicar sanção ao autor", que abre o mesmo modal de Usuários. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `99`, FP 1 |
