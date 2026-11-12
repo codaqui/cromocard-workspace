@@ -1,12 +1,12 @@
 # CCD059 — Gestão de Usuários
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** MVP
 - **User story:** #334 `CCD059-Gestão de Usuários` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [59-gestao-de-usuarios.md](../../docs/Casos-De-Uso/59-gestao-de-usuarios.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 

@@ -1,12 +1,12 @@
 # CCD065 — Log de Auditoria Admin
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** MVP
 - **User story:** #340 `CCD065-Log de Auditoria Admin` · responsável Gabriel Nascimento · Sprint 07
 - **Caso de uso:** [65-log-de-auditoria-admin.md](../../docs/Casos-De-Uso/65-log-de-auditoria-admin.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 

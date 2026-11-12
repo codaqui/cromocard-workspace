@@ -1,12 +1,12 @@
 # CCD064 — Aprovar Solicitações
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** MVP
 - **User story:** #339 `CCD064-Aprovar Solicitações` · responsável Felipe Consulim · Sprint 07
 - **Caso de uso:** [64-aprovar-solicitacoes.md](../../docs/Casos-De-Uso/64-aprovar-solicitacoes.md) (pré-condições e passos 3, 7 e 8 têm texto do caso 63)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 

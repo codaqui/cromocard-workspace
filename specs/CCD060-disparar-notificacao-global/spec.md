@@ -1,12 +1,12 @@
 # CCD060 — Disparar Notificação Global
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** MVP
 - **User story:** #335 `CCD060-Disparar Notificação Global` · responsável Daniel Andrade · Sprint 07
 - **Caso de uso:** [60-disparar-notificacao-global.md](../../docs/Casos-De-Uso/60-disparar-notificacao-global.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 

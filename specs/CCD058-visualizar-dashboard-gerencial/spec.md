@@ -1,12 +1,12 @@
 # CCD058 — Visualizar Dashboard Gerencial
 
-- **Status:** Rascunho
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #333 `CCD058-Visualizar Dashboard Gerencial` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [58-visualizar-dashboard-gerencial.md](../../docs/Casos-De-Uso/58-visualizar-dashboard-gerencial.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 
@@ -108,4 +108,4 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links:
 | L9 | O que ocupa o espaço do card de escrow, que ficou fora do MVP (L3)? A spec não define | Card "Composição dos cadastros", com a proporção de clientes e vendedores entre os novos cadastros do período. Usa só dados que a API já devolve | frontend#7 |
 | L10 | Os KPIs mudam conforme o período, como no Figma antigo (Hoje sem cartas, 7D com "Lojistas")? | Não: os quatro indicadores são os mesmos em qualquer período e o filtro só recalcula os valores. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `58`, FP 3 |
 | L11 | Quantos vendedores a lista mostra? | Os 5 cadastros mais recentes, com "Ver todos", que abre a Gestão de Usuários filtrada em vendedores. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `58`, FP 3 |
-| L12 | O gráfico de 30 dias agrupa por mês (L8) ou por dia (CCD096 FP 5)? | Por dia, como manda a CCD096 FP 5; a L8 (últimos 7 meses) vale só para o filtro de 1 ano. O frontend já implementado precisa de ajuste. Registrado na revisão do Figma de 11/11/2026 seguindo o caso de uso, que é a fonte da verdade (o Daniel delegou a forma do registro); confirmar ao reaprovar a spec | `96`, FP 5 |
+| L12 | O gráfico de 30 dias agrupa por mês (L8) ou por dia (CCD096 FP 5)? | Por dia, como manda a CCD096 FP 5; a L8 (últimos 7 meses) vale só para o filtro de 1 ano. O frontend já implementado precisa de ajuste. Registrado na revisão do Figma de 11/11/2026 seguindo o caso de uso, que é a fonte da verdade (o Daniel delegou a forma do registro); confirmado na reaprovação de 12/11/2026 | `96`, FP 5 |

@@ -1,6 +1,6 @@
 # Plano — CCD058 Visualizar Dashboard Gerencial
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026 (R9, R17, R18) aguardando a reaprovação
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026 (R9, R17, R18), reaprovada em 12/11/2026
 - **Repositórios:** backend · frontend
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
 

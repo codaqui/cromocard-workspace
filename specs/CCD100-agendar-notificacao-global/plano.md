@@ -1,6 +1,6 @@
 # Plano — CCD100 Agendar Notificação Global
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 12/11/2026 aguardando a reaprovação
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 12/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução

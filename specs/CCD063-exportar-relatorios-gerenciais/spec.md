@@ -1,12 +1,12 @@
 # CCD063 — Exportar Relatórios Gerenciais
 
-- **Status:** Rascunho
+- **Status:** Planejada
 - **Fase:** MVP
 - **User story:** #338 `CCD063-Exportar Relatórios Gerenciais` · responsável Lucca Rocha · Sprint 07
 - **Caso de uso:** [63-exportar-relatorios-gerenciais.md](../../docs/Casos-De-Uso/63-exportar-relatorios-gerenciais.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN` (o texto do caso de uso repete a finalidade)
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 
