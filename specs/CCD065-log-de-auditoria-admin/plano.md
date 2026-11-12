@@ -44,3 +44,10 @@ Ambas com `authenticate` + `authorize('ADMIN')`; sem rotas de escrita (R8).
 | CA1–CA3, CA5 | `audit-logs.service.spec.ts` · integração |
 | CA4 | `AuditLogsPage.spec.tsx` |
 | CA6 | integração |
+
+## Revisão de 12/11/2026 (L4)
+
+- R4: a data é formatada no frontend (DD/MM/AAAA HH:MM, `America/Sao_Paulo`); o alvo aparece encurtado na tabela e
+  completo no painel.
+- R6: `AuditLogDetailsDrawer` mostra também o IP (`ip_address`, CCD102).
+- R7: o estado vazio desabilita "Extrair Logs" (`849-383`).

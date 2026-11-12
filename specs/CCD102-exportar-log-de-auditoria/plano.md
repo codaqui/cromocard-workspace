@@ -53,3 +53,10 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - O IP sai de `req.ip` com `trust proxy` configurado (ADR-019).
+
+## Revisão de 12/11/2026 (L6, L7)
+
+- R9: `GET /admin/audit-logs` aceita `ip`; a linha e o painel mostram o IP.
+- R3 e R5: o download é direto; o aviso de sucesso e os dois avisos de bloqueio seguem `849-852`, `849-2265` e
+  `849-1794`.
+- R7: o resumo devolve a variação em relação aos 30 dias anteriores.
