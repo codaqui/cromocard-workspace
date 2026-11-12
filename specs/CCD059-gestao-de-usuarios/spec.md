@@ -6,7 +6,7 @@
 - **Caso de uso:** [59-gestao-de-usuarios.md](../../docs/Casos-De-Uso/59-gestao-de-usuarios.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista em 2026-11-12, com as decisões de T11 (Felipe Consulim, PO)
 
 ## Objetivo
 
@@ -35,19 +35,22 @@
 | R16 | Busca por nome ou e-mail e filtros de papel e de status | Campo | `59`, FP 2 |
 | R17 | O cadastro envia o convite com o link de definir senha; a conta nasce com o e-mail confirmado e o aceite dos termos fica para o primeiro acesso | Regra | `59`, FP 7; ADR-048, item 2 |
 | R18 | O admin não suspende, exclui nem rebaixa a própria conta nem o último ADMIN ativo (`422`) | Regra | `59`, FA 7–8 |
-| R19 | Suspender, reativar e excluir exigem motivo; suspender e excluir revogam os refresh tokens do usuário | Regra | `59`, FP 9–10 |
+| R19 | Suspender e excluir exigem motivo; suspender e excluir revogam os refresh tokens do usuário. **Revista em 2026-11-12** (L9): reativar não exige motivo, só confirmação | Regra | `59`, FP 9–10, 11–12 |
+| R20 | A página do usuário (R4) também mostra "Membro desde", o indicador de status (Ativo, Suspenso ou Bloqueado — Bloqueado é da CCD099, sem ação aqui), as advertências (contador, da CCD099) e o quadro "Autenticação" (método de login e desde quando) | Tela | `59`, FP 4 (L10) |
 
 ## Critérios de aceite
 
 - **CA1** (R3) — **Dado** usuários cadastrados, **quando** abre Usuários, **então** vê a lista paginada com nome,
   e-mail, papel, status e data de cadastro, busca por nome ou e-mail e filtros de papel e status, sem os excluídos.
 - **CA2** (R5, R10, R11, R12) — **Dado** o formulário de novo usuário, **quando** salva com dados válidos, **então** a
-  API responde `201`, o usuário aparece na lista e recebe o convite; com e-mail existente, `409`.
+  API responde `201`, o usuário aparece na lista e recebe o convite, e a mensagem de confirmação cita o e-mail do
+  convite; com e-mail existente, `409`.
 - **CA3** (R6, R7) — **Dado** um usuário, **quando** o admin muda nome e papel, **então** a API responde `200` e a
   lista mostra o novo papel.
 - **CA4** (R8, R14) — **Dado** um usuário ativo, **quando** o admin suspende informando o motivo, **então** o status
   vira `SUSPENDED`, as sessões dele são revogadas e o log registra a ação.
-- **CA5** (R8) — **Dado** um usuário suspenso, **quando** o admin reativa, **então** o status volta a `ACTIVE`.
+- **CA5** (R8) — **Dado** um usuário suspenso, **quando** o admin confirma a reativação (sem motivo), **então** o
+  status volta a `ACTIVE` e o log registra a ação.
 - **CA6** (R9, R14) — **Dado** um usuário, **quando** o admin confirma a exclusão digitando o texto de confirmação
   e o motivo, **então** `deleted_at` é preenchido, ele some da lista e o log registra.
 - **CA7** (R18) — **Dado** o admin logado, **quando** tenta suspender, excluir ou rebaixar a si mesmo, **então** a API
@@ -56,6 +59,9 @@
 - **CA9** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama qualquer rota de gestão, **então** recebe `403`.
 - **CA10** (R4) — **Dado** um usuário que teve o telefone editado por um admin, **quando** o admin abre a página dele,
   **então** vê os dados, os endereços e, em "Ações administrativas", a edição com quem fez e quando.
+- **CA11** (R20) — **Dado** um usuário qualquer, **quando** o admin abre a página dele, **então** vê "Membro desde", o
+  status em destaque entre Ativo/Suspenso/Bloqueado (Bloqueado sem ação) e o quadro "Autenticação" com o método de
+  login; na própria conta do admin, "Aplicar sanção" e "Excluir ou alterar o papel" aparecem indisponíveis.
 
 ## Dados
 
@@ -79,7 +85,7 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Operação concluída | `804-3283` | R12 | ✅ Bate |
 | Página do usuário (cliente) | `649-1164` | R4, R8, R9 | ✅ Bate |
 | Página do usuário (própria conta do admin) | `649-796` | R4, R18 | ✅ Bate |
-| Reativar usuário | `804-2889` | R8 | ✅ Bate |
+| Reativar usuário | `804-2889` | R8, R19 (L9) | ✅ Bate |
 | Excluir usuário | `276-1735` | R9, R19 | ✅ Bate (a conta pode ser restaurada; motivo obrigatório) |
 
 - Na lista, @, telefone, CPF, último acesso e IP são da CCD098; "Suspenso (7d)", "Bloqueado" e o modal de sanção, da
@@ -88,6 +94,8 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 ## Fora do escopo
 
 - Restaurar usuário excluído pelo BackOffice; suspensão com prazo; CPF e IP.
+- "Aplicar sanção" (advertir, suspender com prazo ou banir) e o status "Bloqueado": ficam visíveis na página do
+  usuário (L10), mas a ação é da CCD099.
 - Itens do Figma antigo que não entram (decisão de 11/11/2026, `escopo-adicional.md` §3): cargos, equipes,
   departamentos e permissões por módulo do administrador, 2FA, sessões e dispositivos, observações internas sobre o
   usuário, nível, reputação e pedidos do cliente na página do usuário.
@@ -104,3 +112,5 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L6 | Filtros da lista (proposta: busca por nome ou e-mail, papel, status) | Busca por nome ou e-mail e filtros de papel e de status | `59`, FP 2 |
 | L7 | Nome dos papéis e o "Em análise" do Figma na coluna de status | Papéis Cliente, Vendedor e Administrador; status só Ativo, Suspenso e Bloqueado; vendedor com credenciamento em análise ganha o selo "Em análise" ao lado do papel. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 2 |
 | L8 | O que a seleção do usuário abre? | A página do usuário (frames `649-1164` e `649-796`), com dados, contato, endereços, as ações administrativas sobre ele (do `audit_logs`) e as opções de gerenciamento. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 4; EA-059-03 |
+| L9 | Reativar exige motivo como suspender/excluir? O Figma (`804-2889`) mostra só confirmação, sem motivo, e o caso de uso nunca pediu motivo para reativar (proposta: tirar a exigência) | Não exige motivo: só confirmação. Decisão do PO (Felipe Consulim, 12/11/2026), na revisão da T11 | `59`, FP 11–12 |
+| L10 | A página do usuário (R4) deve trazer também "Membro desde", advertências, o indicador de status e o quadro "Autenticação" (frames `649-1164`/`649-796`), que a L8 não cobria? | Sim, completa como no Figma; "Aplicar sanção" e o status "Bloqueado" ficam visíveis mas indisponíveis, reservados à CCD099. Decisão do PO (Felipe Consulim, 12/11/2026) | `59`, FP 4; CCD099 |
