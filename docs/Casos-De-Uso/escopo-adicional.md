@@ -86,7 +86,7 @@ aprovadas.
 | EA-065-03 | Filtros rápidos | `228-2395` | CCD102 | Banimentos, Remoção de grupos e Mudança de papel. |
 | EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
-| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. |
+| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. |
 
 ## 3. O que não vira requisito
 
@@ -120,7 +120,10 @@ Verificado", "arquivos criptográficos", "API GraphQL e Banco Central", "slots d
 "Projeção de novos álbuns", "Transações estimadas/mês", a comunidade do solicitante e as raridades "Secret Promo", "L",
 "SR" e "SEC" (fora do seed). Em Logs (12/11/2026): "Registro de alta integridade", "Filtros de Investigação", "Registros de
 Execução de Segurança", "Timestamp: ISO 8601", os milissegundos de cada linha, as barras coloridas do total, o cargo
-("staff") e o botão "Sair" só nesta tela.
+("staff") e o botão "Sair" só nesta tela. Em Configurações (12/11/2026): "BackOffice Engine • Sistema Central",
+"mensageria com custódia transacional", "showcase", "canvas", "Banner ativo no ar", "Imagem Master", "cards indexados",
+"Status: Exibição Primária/Normal", o botão global "Salvar Todas as Alterações" e "Adicionar Nova Categoria" (criar
+categoria fica no Catálogo).
 
 ## 4. Telas conferidas
 
@@ -154,3 +157,5 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   fica para a revisão do painel do cliente.
   Logs (12/11/2026): nenhum registro encontrado `849-383`, logs extraídos `849-852`, nada para exportar `849-2265`,
   limite de exportação `849-1794`; o painel de detalhes `749-624` ganhou o IP.
+  Configurações (12/11/2026): `228-3048` com os módulos de templates e metas e o verso padrão por franquia; link
+  inválido `859-661`, banner atualizado `859-1068`, editar template `859-1479`.
