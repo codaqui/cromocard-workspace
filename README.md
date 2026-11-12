@@ -142,7 +142,7 @@ Cada user story passa pelo SDD ([ADR-047](docs/ADR/ADR-047-desenvolvimento-orien
 | `/analisar-figma-chrome <nome da tela ou link>` | Analisa uma tela do Figma por prints no Chrome e lista o que tem nela (sem gastar a cota do MCP) |
 | `/analisar-figma-playwright <nome da tela ou link>` | Mesma análise pelo Playwright: print da tela inteira e os textos exatos, sem a extensão do Chrome (sem gastar a cota do MCP) |
 | `/analisar-figma-mcp <nome da tela ou link>` | Mesma análise pelo MCP do Figma, para medidas e tokens (gasta a cota) |
-| `/cromocard-revisor este PR "<link ou número>"` | Revisa um PR ou uma branch rodando o código: testes, cobertura, padrões, spec, decisões, fidelidade ao Figma e responsividade |
+| `/cromocard-revisor este PR "<link ou número>"` | Revisa um PR ou uma branch rodando o código: testes, cobertura, padrões, spec, decisões, fidelidade ao Figma e responsividade. Não corrige: comenta no PR, e o autor corrige |
 | `/criar-pr` | Abre o PR no padrão: commits com `AB#`, checagens do repo, push e template preenchido |
 | `/jibble entrada AB#519` | Bate ponto e lança ou consulta horas no Jibble (`pausa`, `volta`, `saida`, `lancar 2h AB#519`, `horas semana`), ligando a hora à Task do Azure |
 

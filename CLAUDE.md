@@ -190,7 +190,7 @@ um ADR aceito. Detalhes em `.claude/rules/adrs.md`.
 | `/analisar-figma-chrome <link ou nome da tela>` | Analisa uma tela do Figma por prints no Chrome (modo protótipo, sem cota) e devolve o inventário dela |
 | `/analisar-figma-playwright <link ou nome da tela>` | Mesma análise pelo Playwright (MCP `playwright-figma`, sem a extensão e sem cota): print da tela inteira em tamanho real e os textos exatos de cada camada |
 | `/analisar-figma-mcp <link ou nome da tela> [o que precisa]` | Mesma análise pelo MCP do Figma (gasta cota): estrutura, tokens, contexto de implementação e regenerar o índice de telas |
-| `/cromocard-revisor este PR "<link ou número>"` ou `[repo] [base] [#id]` | Revisa um PR ou uma branch rodando o código: checagens, padrões (SOLID, Object Calisthenics e Design Patterns), spec, decisões e documentação, fidelidade ao Figma e responsividade. Cada achado traz problema, por que é ruim e sugestão |
+| `/cromocard-revisor este PR "<link ou número>"` ou `[repo] [base] [#id]` | Revisa um PR ou uma branch rodando o código: checagens, padrões (SOLID, Object Calisthenics e Design Patterns), spec, decisões e documentação, fidelidade ao Figma e responsividade. Cada achado traz problema, por que é ruim e sugestão. Não corrige: publica os achados como comentários no PR, e quem corrige é o autor |
 | `/criar-pr [repo] [#id]` | Abre o PR no padrão: branch, commits com `AB#`, checagens, push e template |
 | `/jibble [entrada\|pausa\|volta\|saida\|lancar\|horas\|equipe] [AB#id]` | Bate ponto e lança ou consulta horas no Jibble, com a nota `AB#<id> <título>` ligando a hora à Task do Azure |
 
