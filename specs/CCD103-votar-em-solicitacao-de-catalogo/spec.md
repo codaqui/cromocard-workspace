@@ -1,6 +1,6 @@
 # CCD103 — Votar em Solicitação de Catálogo
 
-- **Status:** Planejada
+- **Status:** Rascunho
 - **Fase:** Escopo Adicional
 - **User story:** #607 `CCD103-Votar em Solicitação de Catálogo` · responsável Gabriel Nascimento · Sprint 06
 - **Caso de uso:** [103-votar-em-solicitacao-de-catalogo.md](../../docs/Casos-De-Uso/103-votar-em-solicitacao-de-catalogo.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -25,8 +25,8 @@
 | R7 | Votar de novo troca o voto anterior | Regra | `103`, FA 1–2 |
 | R8 | Sugestão encerrada não aceita voto | Regra | `103`, FA 3–4 |
 | R9 | A meta de votos vem de `global_settings` (`catalog.voting_goal`) | Regra | ADR-053, item 7 |
-| R10 | Na sugestão de carta: frente e verso, ilustrador, população estimada, justificativa e fontes | Tela | EA-064-02; DBML `catalog_requests.data` |
-| R11 | Na sugestão de álbum: checklist das cartas com "Baixar Planilha .CSV" | Ação | EA-064-03 |
+| R10 | Na sugestão de carta: frente e verso, álbum, raridade (nomes do seed), ilustrador, população estimada, justificativa e fontes | Tela | EA-064-02; DBML `catalog_requests.data` |
+| R11 | Na sugestão de álbum: editora, ano, resumo por raridade e checklist (Nº, código, nome, raridade, variantes) com "Baixar Planilha .CSV" | Ação | EA-064-03 |
 | R12 | Na sugestão de categoria: as subcategorias a criar; aprovar cria todas | Ação | EA-064-04; DBML `categories.parent_category_id` |
 
 ## Critérios de aceite
@@ -52,10 +52,11 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Fila de solicitações de cartas | [228-1804](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=228-1804) | R5, R10–R12 | ⚠️ Divergente |
+| Fila de solicitações de cartas | [228-1804](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=228-1804) | R5, R10–R12 | ✅ Bate (ajustado em 12/11/2026) |
 
 - O Figma não tem a tela de votação do cliente (L1).
-- "Arquivos criptográficos de autenticação" e "API GraphQL e Banco Central" são efeito visual.
+- "Arquivos criptográficos de autenticação", "API GraphQL e Banco Central", "Fórum de Curadoria" e as projeções da categoria
+  saíram do Figma em 12/11/2026. O selo de votos mostra "340 votos • 97,4% a favor".
 
 ## Fora do escopo
 
@@ -70,3 +71,5 @@
 | L2 | Só categorias ou também cartas e álbuns? (proposta: só categorias, como no Figma e no caso de uso) | Só categorias, como no Figma e no caso de uso | `103`, Finalidade |
 | L3 | Meta padrão (proposta: 200, do Figma) | 200, do Figma | `103`, FP 7 |
 | L4 | Campos extras das sugestões dependem de quem cria a solicitação (proposta: lidos de `data` quando existirem) | Lidos de `data` quando existirem | `escopo-adicional.md`, EA-064-02 |
+| L5 | Raridades da sugestão e do checklist (o Figma usava "Secret Promo", "L", "SR", "SEC") | Os nomes do seed (Comum, Incomum, Rara, Épica, Lendária). Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `escopo-adicional.md`, EA-064-02 |
+| L6 | A tela de votação do cliente (L1) continua sem desenho | Fica para a revisão do painel do cliente. Decisão do PO (Daniel, 12/11/2026) | `escopo-adicional.md`, seção 4 |
