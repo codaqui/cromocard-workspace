@@ -189,8 +189,8 @@ mantém o login por precaução. Um pacote público não volta a ser privado. A 
 | Item | Estado |
 |---|---|
 | Environment `hml` (backend) | Deploy de `develop` e `main`; sem revisores. Sem `GOOGLE_CLIENT_ID` nem as variáveis `MAIL_*` ✅ |
-| Environment `prod` (backend) | Só a `main`; revisores Daniel e Lucas; *Prevent self-review*; sem bypass de administrador ✅ |
-| Environments `hml` e `prod` (frontend) | Criados em 31/10 com as mesmas regras do backend: `prod` só da `main`, revisores Daniel e Lucas, *Prevent self-review* e sem bypass. Só a variável `WEB_URL` ✅ |
+| Environment `prod` (backend) | Só a `main`; revisores Daniel e Lucas; *Prevent self-review*; sem bypass de administrador ✅. Falta trocar o Daniel pelo Felipe Consulim, que é o PO ⚠️ |
+| Environments `hml` e `prod` (frontend) | Criados em 31/10 com as mesmas regras do backend: `prod` só da `main`, revisores Daniel e Lucas, *Prevent self-review* e sem bypass. Só a variável `WEB_URL` ✅. Falta trocar o Daniel pelo Felipe Consulim, que é o PO ⚠️ |
 | Secret de repositório | Nenhum, nos dois apps ✅ |
 | Runner do backend | `cromocard-srv`, registrado no repositório do backend, label `cromocard-deploy`, roda como `deploy` ✅. Sem limite de memória |
 | Runner do frontend | `cromocard-srv-frontend`, registrado no repositório do frontend, mesma label, online ✅; usuário `deploy` e pasta `/home/deploy/actions-runner-frontend` 🟡 (ADR-056) |

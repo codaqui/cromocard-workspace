@@ -2,7 +2,7 @@
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-11-06
-- **Decisores:** Lucas Oliveira Lima (proposta); validação: Daniel Andrade (PO)
+- **Decisores:** Lucas Oliveira Lima (proposta); validação: Felipe Consulim (PO)
 - **Complementa:** ADR-009 (o `MailProvider` previa "SMTP real (ex.: Amazon SES, Resend)" sem escolher qual) e
   ADR-055 (os ambientes e o `.env` gerado pelo deploy).
 

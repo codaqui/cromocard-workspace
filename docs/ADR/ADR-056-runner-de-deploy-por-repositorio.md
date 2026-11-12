@@ -2,7 +2,7 @@
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-10-31
-- **Decisores:** Lucas Oliveira Lima (proposta); validação: Daniel Andrade (PO)
+- **Decisores:** Lucas Oliveira Lima (proposta); validação: Felipe Consulim (PO)
 - **Substitui parcialmente:** ADR-055, decisão 8 (só a frase sobre levar o runner para um grupo da organização
   quando o frontend fizer deploy)
 

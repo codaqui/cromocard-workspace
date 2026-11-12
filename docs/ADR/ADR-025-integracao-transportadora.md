@@ -2,7 +2,7 @@
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-09-29
-- **Decisores:** Equipe CromoCard
+- **Decisores:** Equipe CromoCard; validação: Felipe Consulim (PO)
 
 ## Contexto
 
