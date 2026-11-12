@@ -61,6 +61,7 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Dashboard - filtro sem dados | `795-1704` | R8 | ✅ Bate |
 | Validar Cadastro | `246-1201` | R5 | ⚠️ Divergente (ainda não revisado no Figma) |
 | Catálogo | `208-2895` | R9 | ✅ Bate (revisado em 12/11/2026: população em unidades e preço médio de 30 dias, sem graduação PSA/BGS nem variação) |
+| Exportar Relatórios, card "Volume Transacionado & Custódia" | `228-1236` | R11 | ✅ Bate (revisado em 12/11/2026) |
 | Comunidade | `220-3524` | R10 | ✅ Bate (revisado em 12/11/2026: volume e "N negociações ativas" em todos os grupos) |
 
 ## Fora do escopo

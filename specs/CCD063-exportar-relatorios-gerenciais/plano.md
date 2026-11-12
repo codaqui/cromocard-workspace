@@ -59,3 +59,11 @@ gera o arquivo inteiro (CSV ou PDF) e grava `EXPORT_REPORT` em `audit_logs`. O h
 ## Decisões técnicas
 
 - Biblioteca nova `pdfkit` para o PDF: ADR-050.
+
+## Revisão de 12/11/2026 (L6, L7)
+
+- R3 e R5: a tela tem a grade dos 4 relatórios e o seletor de período do Dashboard (Hoje, 7D, 30 dias, 1 ano e intervalo).
+- R7: a prévia mostra as primeiras linhas e o total, sem gráficos; sem dados, os botões de exportar ficam desabilitados.
+- R8: "Exportar PDF" e "Exportar CSV" abrem `ExportConfirmDialog` com tipo, período, formato e total.
+- R16: o histórico e o "Baixar" passam a ser os da CCD107 (`report_exports`), sem gerar o arquivo de novo.
+- Telas novas: `843-442`, `843-1246`, `843-1674`.

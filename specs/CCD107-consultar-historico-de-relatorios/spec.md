@@ -1,6 +1,6 @@
 # CCD107 — Consultar Histórico de Relatórios
 
-- **Status:** Planejada
+- **Status:** Rascunho
 - **Fase:** Escopo Adicional
 - **User story:** #611 `CCD107-Consultar Histórico de Relatórios` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [107-consultar-historico-de-relatorios.md](../../docs/Casos-De-Uso/107-consultar-historico-de-relatorios.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -17,7 +17,7 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `107`, Pré-condições; ADR-005, item 4; ADR-011 |
-| R2 | Histórico com código, tipo e período do relatório, solicitante, data e hora, formato e tamanho | Tela | `107`, FP 2 |
+| R2 | Histórico com código, tipo e período do relatório, solicitante, data e hora, formato e tamanho, e a coluna "Disponível até" (ou "Expirado") | Tela | `107`, FP 2 e FP 5 (L4) |
 | R3 | "Baixar" entrega o mesmo arquivo gerado na exportação | Ação | `107`, FP 3–4 |
 | R4 | Cada arquivo fica disponível por 90 dias | Regra | `107`, FP 5; ADR-053, item 9 |
 | R5 | Arquivo vencido: informa e oferece gerar de novo com os mesmos filtros | Regra | `107`, FA 1–2 |
@@ -41,11 +41,15 @@
 
 ## Telas (Figma)
 
+Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
+
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Relatórios — histórico | [228-1236](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=228-1236) | R2, R3 | ⚠️ Divergente |
+| Relatórios — histórico | `228-1236` | R2, R3 | ✅ Bate |
+| Arquivo expirado | `843-844` | R5 | ✅ Bate |
+| Histórico vazio | `843-2068` | R6 | ✅ Bate |
 
-- "Assinado HSM" e "Digest SHA-256" são efeito visual.
+- "Assinado HSM" e "Digest SHA-256" saíram do Figma em 12/11/2026.
 
 ## Fora do escopo
 
@@ -58,3 +62,4 @@
 | L1 | Histórico só do próprio admin ou de todos? (proposta: de todos, como o "pela equipe diretiva" do Figma) | De todos, como o "pela equipe diretiva" do Figma | `107`, FP 2 |
 | L2 | Substitui o histórico lido de `audit_logs` na CCD063? (proposta: sim; a CCD063 continua gravando `EXPORT_REPORT`) | Sim; a CCD063 continua gravando `EXPORT_REPORT` | plano.md; ADR-053, item 9 |
 | L3 | Como o arquivo é servido? (proposta: rota autenticada `GET /admin/reports/exports/:id/file`, sem URL pública) | Rota autenticada `GET /admin/reports/exports/:id/file`, sem URL pública | plano.md |
+| L4 | O que a coluna de status do histórico mostra? (o Figma tinha "Assinado HSM") | "Disponível até DD/MM/AAAA" ou "Expirado", a partir de `expires_at`. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | esta spec (R2) |

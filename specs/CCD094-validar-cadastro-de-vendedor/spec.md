@@ -65,6 +65,7 @@
 | Gestão de Usuários, selo "Em análise" | `208-1793` | R12 | ✅ Bate (ajustado em 11/11/2026) |
 | Validar Cadastro (painel) | `246-1201` | R5–R10 | ⚠️ Divergente (ainda não revisado no Figma) |
 | Dossiê do vendedor (Em análise e Aprovado) | `252-1723`, `252-2837` | R5–R8 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Exportar Relatórios, card "Auditoria de Lojistas" | `228-1236` | R13 | ✅ Bate (revisado em 12/11/2026) |
 
 Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
 
