@@ -1,6 +1,6 @@
 # Plano — CCD094 Validar Cadastro de Vendedor
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -65,3 +65,11 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 - Novo `notifications.type`: `SELLER_REVIEW` (ADR-051, item 2).
 - O painel abre como gaveta lateral sobre o Dashboard, como no Figma.
+
+## Revisão de 11/11/2026 (L6)
+
+- R2: a linha da lista do Dashboard tem só "Ver informações" e, em análise, "Validar Cadastro"; "Notificar
+  Pendência" fica no dossiê (CCD095). O filtro de status inclui Reprovado.
+- R12: na Gestão de Usuários, o status da análise vira um selo ao lado do papel Vendedor, sem mudar a coluna Status
+  (`admin-users.repository.ts` devolve `verificationStatus`; o frontend mostra o selo).
+- Testes: o CA11 entra no teste da lista de usuários do frontend.

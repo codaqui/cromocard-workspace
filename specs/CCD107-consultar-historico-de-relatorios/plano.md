@@ -55,3 +55,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - O arquivo vai para a pasta `reports/` do storage, com o id da exportação no nome.
+
+## Revisão de 12/11/2026 (L4)
+
+- R2: a coluna "Disponível até" mostra a data de `expires_at` ou "Expirado"; no expirado, "Baixar" abre o diálogo
+  "Este arquivo expirou" com "Gerar de novo" (`843-844`).
+- R6: o estado de histórico vazio segue o frame `843-2068`.

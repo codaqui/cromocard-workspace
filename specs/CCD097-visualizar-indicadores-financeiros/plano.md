@@ -1,6 +1,6 @@
 # Plano — CCD097 Visualizar Indicadores Financeiros
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -59,3 +59,12 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 - As tabelas do marketplace entram só para leitura, com dados do seed (ADR-054).
 - Valores trafegam em centavos inteiros (`amountCents`) e o frontend formata em reais.
+
+## Revisão de 11/11/2026 (L6, L7)
+
+- R3: o liquidado passa a ser do período selecionado (`DELIVERED` dentro de `from`–`to`), com o rótulo "liquidado
+  hoje" no filtro Hoje e "liquidado no período" nos outros. Custódia, liquidado e retido vêm juntos em
+  `FinanceCards`, em qualquer período.
+- R7: o `LedgerModal` ganha as colunas hora, pedido, comprador, vendedor, tipo e valor, e o rodapé com os totais
+  recebido, liberado e retido. A rota do livro razão devolve `totals: { received, released, retained }`.
+- Testes: CA2 e CA3 reescritos em `finance.service.spec.ts` e `LedgerModal.spec.tsx`.

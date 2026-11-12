@@ -9,12 +9,12 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa a opção "Log de Auditoria". |  |
-|  | 2. O sistema apresenta os registros de ações administrativas, dos mais recentes para os mais antigos. |
-| 3. O administrador aplica filtros de pesquisa, quando necessário: administrador responsável, tipo de ação, tipo de entidade, período e o ID do alvo. |  |
+|  | 2. O sistema apresenta os registros de ações administrativas, dos mais recentes para os mais antigos, paginados, com a data e hora (horário de Brasília), o responsável e o IP, a ação, o alvo e o motivo. |
+| 3. O administrador aplica filtros de pesquisa, quando necessário: administrador responsável, tipo de ação, tipo de entidade, período, o ID do alvo e o IP. |  |
 |  | 4. O sistema processa os filtros informados. |
 |  | 5. O sistema apresenta os registros correspondentes, com a ação descrita em português. |
 | 6. O administrador seleciona um registro. |  |
-|  | 7. O sistema apresenta os detalhes da ação registrada, inclusive o motivo. |
+|  | 7. O sistema apresenta os detalhes da ação registrada num painel lateral: responsável, IP, data e hora, ação, alvo, motivo e os dados gravados. |
 
 ### Fluxo Alternativo
 

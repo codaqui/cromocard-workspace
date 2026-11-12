@@ -6,7 +6,7 @@
 - **Caso de uso:** [98-gerenciar-dados-complementares-do-usuario.md](../../docs/Casos-De-Uso/98-gerenciar-dados-complementares-do-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 
@@ -28,7 +28,7 @@
 | R10 | O login aceita e-mail ou nome de usuário | Ação | EA-004-01 |
 | R11 | Excluir pede digitar o texto de confirmação e marcar "Estou ciente"; o texto diz que a conta pode ser restaurada | Ação | EA-059-01; ADR-015 |
 | R12 | Total de usuários no cabeçalho da Gestão de Usuários | Campo | EA-059-02 |
-| R13 | Clicar na linha abre o detalhe do usuário com todos os dados e as ações | Tela | EA-059-03 |
+| R13 | Clicar na linha abre a página do usuário (um layout só para qualquer papel) com os dados complementares, os dados de acesso (último login e IP) e as ações | Tela | EA-059-03 (L6); `59`, FP 4 |
 | R14 | O CPF não aparece nos logs da aplicação | Regra | ADR-019 |
 | R15 | Reenviar o link de ativação de uma conta que ainda não definiu a senha | Ação | `98`, FA 6 |
 
@@ -54,19 +54,26 @@
 
 ## Telas (Figma)
 
+Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
+
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Gestão de usuários | [208-1793](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=208-1793) | R2, R3, R12, R13 | ⚠️ Divergente |
-| Adicionar novo usuário | [276-1202](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=276-1202) | R4, R5 | ✅ Bate |
-| Remover usuário | [276-1735](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=276-1735) | R11 | ❌ Não bate |
+| Gestão de usuários | `208-1793` | R2, R3, R12 | ✅ Bate |
+| Adicionar novo usuário | `276-1202` | R4, R5 | ✅ Bate |
+| Adicionar novo usuário - erros de validação | `804-1188` | R6, R7 | ✅ Bate |
+| Editar usuário (com "Reenviar link de ativação") | `804-1682` | R4, R15 | ✅ Bate |
+| Excluir usuário | `276-1735` | R11 | ✅ Bate |
+| Página do usuário (cliente e própria conta do admin) | `649-1164`, `649-796` | R13 | ✅ Bate |
 
-- "Excluir Usuário Definitivamente" e "irreversível" contrariam o soft delete (ADR-015): o texto muda para "Excluir usuário (pode ser restaurado)".
-- Os status "Suspenso (7d)" e "Bloqueado" são da CCD099; "Em análise", da CCD094.
+- Os status "Suspenso (7d)" e "Bloqueado" são da CCD099; o selo "Em análise", da CCD094.
 
 ## Fora do escopo
 
 - Sanções — CCD099.
 - Editar o próprio perfil (@ e telefone) pelo cliente — CCD091.
+- Itens do Figma antigo que não entram (decisão de 11/11/2026): cargos, permissões por módulo, 2FA, sessões e
+  dispositivos, observações internas, data de nascimento, "tipo de conta", coleções favoritas e preferências de
+  entrega e pagamento.
 
 ## Lacunas e decisões
 
@@ -77,3 +84,4 @@
 | L3 | Login com @ inexistente (proposta: a mesma mensagem genérica de credenciais inválidas) | A mesma mensagem genérica de credenciais inválidas | `98`, FA 9–10 |
 | L4 | Detalhe do usuário não tem frame (proposta: gaveta lateral com os dados e as ações; o Gabriel desenha) | Gaveta lateral com os dados e as ações; o Gabriel desenha | `escopo-adicional.md`, EA-059-03 |
 | L5 | Texto de confirmação da exclusão (proposta: `EXCLUIR-` + o primeiro nome em maiúsculas, como no Figma) | `EXCLUIR-` + o primeiro nome em maiúsculas, como no Figma | `escopo-adicional.md`, EA-059-01 |
+| L6 | A L4 (gaveta lateral) continua valendo? | Não: o detalhe do usuário é uma página inteira, um layout só para qualquer papel (frames `649-1164` e `649-796`). Cargos, permissões por módulo, 2FA, sessões e observações internas ficam fora. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | EA-059-03 |

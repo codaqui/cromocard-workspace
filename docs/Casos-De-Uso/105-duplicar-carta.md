@@ -9,8 +9,8 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador seleciona a ação "Duplicar" numa carta da lista de Gestão de Catálogo. |  |
-|  | 2. O sistema abre o formulário de cadastro de carta preenchido com os dados da carta de origem, sem a numeração e sem as imagens. |
-| 3. O administrador informa a numeração, as imagens e ajusta os demais dados. |  |
+|  | 2. O sistema abre o formulário "Duplicar carta" preenchido com os dados da carta de origem, sem a numeração, o código e as imagens. |
+| 3. O administrador informa a numeração, o código, as imagens e ajusta os demais dados. |  |
 | 4. O administrador confirma o cadastro. |  |
 |  | 5. O sistema valida os dados como num cadastro novo. |
 |  | 6. O sistema grava a nova carta, registra a ação no log de auditoria e confirma a operação. |

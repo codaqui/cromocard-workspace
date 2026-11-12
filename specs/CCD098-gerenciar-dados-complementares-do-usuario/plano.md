@@ -1,6 +1,6 @@
 # Plano — CCD098 Gerenciar Dados Complementares do Usuário
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -62,3 +62,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - O campo do login passa de `email` para `login`, com o e-mail ainda aceito; a mudança no contrato da CCD004 é combinada com o Daniel antes do código.
+
+## Revisão de 11/11/2026 (L6)
+
+- R13: o detalhe deixa de ser gaveta lateral e vira a página do usuário (`/backoffice/usuarios/:id`), compartilhada
+  com a CCD059; esta story acrescenta @, telefone, CPF mascarado, último login e IP.

@@ -1,6 +1,6 @@
 # Plano — CCD101 Segmentar Notificação Global
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 12/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -56,3 +56,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - `channels` é gravado como lista separada por vírgula (`IN_APP,EMAIL`), como no DBML.
+
+## Revisão de 12/11/2026 (L6)
+
+- R3: o número do botão de envio vem do `GET /admin/notifications/audience-count` do público escolhido.
+- R4: "Plataforma" vem marcada por padrão.
+- R7: o modal de sucesso mostra público, canais e destinatários.

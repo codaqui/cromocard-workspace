@@ -15,10 +15,10 @@
 | 5. O administrador confirma o agendamento. |  |
 |  | 6. O sistema valida que a data e o horário estão pelo menos 5 minutos à frente. |
 |  | 7. O sistema grava a notificação com o status "Na fila" e registra a ação no log de auditoria. |
-|  | 8. O sistema informa que a notificação foi agendada, com o título, o público e o horário programado. |
+|  | 8. O sistema informa que a notificação foi agendada, com o título, o público, os canais e o horário programado. |
 |  | 9. No horário programado, o sistema calcula os destinatários, envia a notificação e muda o status para "Entregue". |
 | 10. O administrador consulta o histórico de disparos. |  |
-|  | 11. O sistema apresenta os disparos com data e horário, título, público, canal e status. |
+|  | 11. O sistema apresenta os disparos com data e horário, título, público, canal e status ("Na fila", "Entregue" ou "Cancelado"). |
 
 ### Fluxo Alternativo
 
@@ -26,7 +26,7 @@
 |---|---|
 | 1. O administrador seleciona uma data ou horário já passados. |  |
 |  | 2. O sistema informa que o horário precisa ser futuro. |
-| 3. O administrador cancela um agendamento que ainda está na fila. |  |
-|  | 4. O sistema cancela o envio e registra a ação no log de auditoria. |
+| 3. O administrador seleciona "Cancelar agendamento" num disparo "Na fila" do histórico e confirma. |  |
+|  | 4. O sistema cancela o envio, mostra o disparo como "Cancelado" e registra a ação no log de auditoria. |
 | 5. O administrador quer mudar um agendamento. |  |
 |  | 6. O sistema não permite editar; o administrador cancela e cria outro. |

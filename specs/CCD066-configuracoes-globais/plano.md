@@ -52,3 +52,12 @@ Schema de `notification.templates`: lista de `{ name: 1–60, title: 1–120, co
 | CA2–CA4 | `settings.service.spec.ts` · integração |
 | CA1, CA5 | `SettingsPage.spec.tsx` |
 | CA6 | integração |
+
+## Revisão de 12/11/2026 (L6–L8)
+
+- R4: cada módulo salva a própria chave (`PUT /admin/settings/:key`), com Cancelar que volta os valores carregados.
+- R11: `NotificationTemplatesModule` com a lista e o `TemplateDialog` (nome, título até 120, texto até 500), gravando
+  `notification.templates`.
+- R16: módulo de metas grava a meta mensal de cadastros (CCD096) e `catalog.voting_goal` (CCD103).
+- R17: o verso padrão de cada categoria grava `catalog.default_backs` (CCD106), com upload pelo `StorageProvider`.
+- Telas novas: `859-661`, `859-1068`, `859-1479`.

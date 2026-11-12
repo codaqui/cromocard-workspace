@@ -12,7 +12,7 @@
 |  | 2. O sistema apresenta os registros correspondentes. |
 | 3. O administrador seleciona a opção "Extrair Logs". |  |
 |  | 4. O sistema gera o arquivo CSV com os registros filtrados: data e hora, responsável, ação, alvo e justificativa. |
-|  | 5. O sistema disponibiliza o arquivo para download. |
+|  | 5. O sistema baixa o arquivo, sem pedir confirmação, e avisa quantos registros foram exportados. |
 |  | 6. O sistema registra a exportação no log de auditoria. |
 
 ### Fluxo Alternativo

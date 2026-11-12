@@ -59,3 +59,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - O voto usa `upsert` na PK composta, o que garante um voto por cliente.
+
+## Revisão de 12/11/2026 (L5, L6)
+
+- R10 e R11: as raridades vêm do seed; o checklist tem a coluna de variantes.
+- A página do cliente continua sem desenho no Figma (L6).
