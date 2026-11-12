@@ -61,12 +61,12 @@ aprovadas.
 | EA-060-05 | Histórico com público, canal e status | `208-2380` | CCD101 (público e canal), CCD100 (status) | O histórico em si é MVP (CCD060, L5). Paginado, sem o recorte de 30 dias; status "Na fila", "Entregue" e "Cancelado" (decisão do PO em 11/11/2026). |
 | EA-061-01 | Indicadores: total de álbuns, álbuns licenciados e pendentes de revisão | `208-2895` | CCD105 | Licenciado = álbum `ACTIVE`; pendente de revisão = solicitação de álbum `PENDING`. |
 | EA-061-02 | Código da carta e etiquetas de variante | `208-2895` | CCD105 | Código digitado, opcional e único; não é copiado ao duplicar. |
-| EA-061-03 | Filtro por edição/ano e chips de filtros ativos | `208-2895` | CCD105 | |
-| EA-061-04 | Seleção de várias cartas | `208-2895` | CCD105 | O Figma não desenha ação em lote (lacuna na spec). Ação em lote: excluir as selecionadas, com motivo. |
-| EA-061-05 | População base e preço médio por carta | `208-2895` | CCD097 | Depende de `price_history` e das vendas. População = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias. |
+| EA-061-03 | Filtros por álbum e por ano e chips de filtros ativos | `208-2895` | CCD105 | O filtro "Edição / Ano" do Figma virou dois filtros, Álbum e Ano, como no contrato da CCD061 (decisão do PO em 12/11/2026). |
+| EA-061-04 | Seleção de várias cartas | `208-2895`, `832-4908` | CCD105 | Ação em lote: excluir as selecionadas, com motivo obrigatório; as cartas usadas em coleções não são excluídas e o sistema avisa quais (decisão do PO em 12/11/2026). |
+| EA-061-05 | População e preço médio por carta | `208-2895` | CCD097 | Depende de `price_history` e das vendas. População = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias. Sem graduação PSA/BGS e sem variação do preço (retiradas do Figma em 12/11/2026). |
 | EA-061-06 | Ano de lançamento da carta | `278-3246` | CCD106 | |
-| EA-061-07 | Verso padrão da franquia aplicado automaticamente | `278-3246` | CCD106 | Verso padrão por categoria na chave `catalog.default_backs` de `global_settings`. |
-| EA-061-08 | Checagem de duplicidade antes de cadastrar | `278-3246` | CCD106 | Duplicata = mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear. |
+| EA-061-07 | Verso padrão da franquia aplicado automaticamente | `278-3246` | CCD106 | Verso padrão por categoria na chave `catalog.default_backs` de `global_settings`. Com ele, o verso é opcional no formulário. |
+| EA-061-08 | Checagem de duplicidade antes de cadastrar | `278-3246`, `832-7887` | CCD106 | Duplicata = mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear, com o link para a carta existente. |
 | EA-061-09 | Imagem com mínimo de 1200×1600 px | `278-3246` | CCD106 | |
 | EA-062-01 | Indicadores da comunidade | `220-3524` | **MVP** (CCD062, L5) | |
 | EA-062-02 | Status "Advertido por Regras" para grupo | `220-3524` | CCD099 | Só o selo "Advertido"; reativar volta a `ACTIVE`. |
@@ -104,7 +104,11 @@ dispositivos, observações internas sobre o usuário, nível "Ouro", reputaçã
 usuário, data de nascimento, "tipo de conta", coleções favoritas e preferências de entrega e pagamento. Em Notificação: push e
 pré-visualização num celular (não há app, ADR-058), canais "Push", público "Com Saldo", "telemetria", "Fila de
 Envio Operante", "Deeplink Validado", "Status Geral", certificado de operação, ID de transmissão, taxa de entrega
-projetada, SLA, assinatura SHA-256 e "Ver Fila de Disparos / Logs".
+projetada, SLA, assinatura SHA-256 e "Ver Fila de Disparos / Logs". Em Catálogo (12/11/2026): graduação PSA/BGS ("PSA 10", "BGS 9.5",
+"PSA GEM MT"), "Ultra Escasso", "Alta Demanda", população "no Brasil", variação do preço médio, "Código Vault", "Nome
+canônico", "Padrão TCG Oficial", hash SHA-256 da imagem, "Checksum de Metadados", espaço de cor da imagem, "+420 esta
+semana" e, no fundo do cadastro de carta, os indicadores "Total indexado", "Novas este mês", "Cartas raras/slabs" e
+"Aguardando homologação" e a busca global ⌘K.
 
 ## 4. Telas conferidas
 
@@ -113,7 +117,7 @@ Administração: `208-1240`, `247-2499`, `247-3539`, `649-796`, `649-1164`, `246
 `228-1236`, `228-1804`, `228-2395`, `228-3048`. Login: `152-2587`, `238-1204`. Painel do vendedor `281-3729` e
 perfil `229-3585` só para procurar o envio dos documentos do vendedor (não existe).
 
-- O frame `208-2895` (Catálogo) está cortado à direita no próprio Figma.
+- O frame `208-2895` (Catálogo) estava cortado à direita; foi alargado na revisão de 12/11/2026.
 - Os frames `252-1723`, `252-2837` e `278-3246` aparecem como "Html → Body" no Figma: são o dossiê do vendedor (dois
   estados) e o cadastro de carta.
 - Revisão de 11/11/2026: o Dashboard e Usuários foram ajustados no Figma para ficarem iguais à documentação, e
@@ -123,3 +127,8 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   obrigatória `804-2531`, reativar `804-2889`, operação concluída `804-3283`.
   Notificação (12/11/2026): agendamento `277-2689` refeito, notificação enviada `277-2982`, agendada `821-1118`,
   erros de validação `827-1523`, cancelar agendamento `827-2006`.
+  Catálogo (12/11/2026): cadastro de carta `278-3246` refeito, operação concluída `832-1149`, rascunhos `832-4379`,
+  excluir em lote `832-4908`, excluir rascunho `832-5330`, erros de validação `832-7170`, possível duplicata
+  `832-7887`, editar carta `832-5744`, duplicar carta `832-6457`, exclusão bloqueada `832-2217`, importar CSV
+  `832-3295`, importação com erro `832-3837`, importação concluída `832-1683`, álbuns `832-8603`, novo álbum
+  `833-9661`, categorias `833-9132`, nova categoria `833-10832`.
