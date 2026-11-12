@@ -20,6 +20,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | Tabela | Migration | O que muda | Requisitos |
 |---|---|---|---|
 | `users` | `add_profile_fields_to_users_table` | `username`, `phone`, `cpf`, `last_login_at`, `last_login_ip` | R2, R4, R8 |
+| `seller_verifications` | `create_seller_verifications_table` | tabela copiada do DBML (CCD094), criada aqui só para viabilizar a busca por CNPJ (R3/L2); `address_id` fica como coluna solta, sem FK, até a CCD094 criar `addresses` | R3 |
 
 ## Contrato da API
 
@@ -45,9 +46,10 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/features/admin/users/` (api, queries, schemas) | campos e rotas novas | R3–R7, R15 |
-| `UsersPage` · `UserFormModal` | colunas, busca, total e campos | R2–R7, R12 |
-| `components/UserDetailDrawer/` · `DeleteUserDialog/` | detalhe e confirmação reforçada | R11, R13 |
+| `src/features/users/` (api, queries, schemas, types) | campos e rotas novas | R3–R7, R15 |
+| `pages/UsersListPage/` · `components/UsersTable/` | colunas (@, telefone, último acesso), busca e total | R2–R7, R12 |
+| `pages/UserDetailPage/` (já existe, da CCD059) | acrescenta @, telefone, CPF e último acesso/IP | R13 |
+| `components/DeleteUserDialog/` (já existe, da CCD059) | confirmação reforçada (`EXCLUIR-`+primeiro nome, caixa "Estou ciente") | R11 |
 | `src/features/auth/components/LoginForm/` | rótulo "E-mail ou nome de usuário" | R10 |
 
 ## Testes
@@ -61,4 +63,6 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 ## Decisões técnicas
 
-- O campo do login passa de `email` para `login`, com o e-mail ainda aceito; a mudança no contrato da CCD004 é combinada com o Daniel antes do código.
+- O campo do login passa de `email` para `login`, com o e-mail ainda aceito. **Confirmado em 2026-11-10** (Felipe Consulim).
+- A tela de detalhe (R13) é a `UserDetailPage` da CCD059 (`/backoffice/users/:id`), não uma gaveta — ver L4 revista no `spec.md`.
+- O `DeleteUserDialog` da CCD059 é o mesmo componente desta story; o formato de confirmação do R11 vale para toda exclusão de usuário.

@@ -18,7 +18,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Tabela | Migration | O que muda | Requisitos |
 |---|---|---|---|
-| `seller_verifications` | `create_seller_verifications_table` | tabela e enum `seller_verification_status` | R5, R8, R9 |
+| `seller_verifications` | ~~`create_seller_verifications_table`~~ **já criada pela CCD098** | A CCD098 (`create_seller_verifications_table`, 2026-11) adiantou a tabela inteira, copiada do DBML, para viabilizar a busca por CNPJ na Gestão de Usuários antes desta story existir. Esta story não cria migration nova aqui: usa a tabela como está. `address_id` chegou como coluna solta, sem FK (a CCD098 não criou `addresses`) — se esta story precisar da FK, é uma migration de ajuste, não de criação. | R5, R8, R9 |
 | `seller_documents` | `create_seller_documents_table` | tabela e enum `seller_document_status` | R6 |
 | `seller_verification_notes` | `create_seller_verification_notes_table` | tabela | R7 |
 
