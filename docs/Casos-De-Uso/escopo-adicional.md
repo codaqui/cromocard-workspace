@@ -58,7 +58,7 @@ aprovadas.
 | EA-060-02 | Pré-visualização da notificação num celular | `208-2380` | **MVP** (plano da CCD060) | Não há app mobile nem push (ADR-058): a prévia mostra como a notificação aparece na central de notificações da plataforma. |
 | EA-060-03 | Contadores de caracteres (título 80, corpo 240) | `208-2380` | **MVP** (CCD060) | Vale o DER: 120 e 500. |
 | EA-060-04 | Botão com o número de destinatários e aviso de envio | `208-2380` | **MVP** (plano da CCD060) | |
-| EA-060-05 | Histórico com público, canal e status | `208-2380` | CCD101 (público e canal), CCD100 (status) | O histórico em si é MVP (CCD060, L5). |
+| EA-060-05 | Histórico com público, canal e status | `208-2380` | CCD101 (público e canal), CCD100 (status) | O histórico em si é MVP (CCD060, L5). Paginado, sem o recorte de 30 dias; status "Na fila", "Entregue" e "Cancelado" (decisão do PO em 11/11/2026). |
 | EA-061-01 | Indicadores: total de álbuns, álbuns licenciados e pendentes de revisão | `208-2895` | CCD105 | Licenciado = álbum `ACTIVE`; pendente de revisão = solicitação de álbum `PENDING`. |
 | EA-061-02 | Código da carta e etiquetas de variante | `208-2895` | CCD105 | Código digitado, opcional e único; não é copiado ao duplicar. |
 | EA-061-03 | Filtro por edição/ano e chips de filtros ativos | `208-2895` | CCD105 | |
@@ -101,7 +101,10 @@ autenticação, a taxa de conformidade anti-fraude, os botões "Logs" e "Notific
 status com motivo ("Pendente Doc Pix"), "leilões" e os nomes de eventos no eixo do gráfico; em Usuários, cargos,
 equipes, departamentos e permissões por módulo do administrador (o DER só tem o papel ADMIN), 2FA, sessões e
 dispositivos, observações internas sobre o usuário, nível "Ouro", reputação e pedidos do cliente na página do
-usuário, data de nascimento, "tipo de conta", coleções favoritas e preferências de entrega e pagamento.
+usuário, data de nascimento, "tipo de conta", coleções favoritas e preferências de entrega e pagamento. Em Notificação: push e
+pré-visualização num celular (não há app, ADR-058), canais "Push", público "Com Saldo", "telemetria", "Fila de
+Envio Operante", "Deeplink Validado", "Status Geral", certificado de operação, ID de transmissão, taxa de entrega
+projetada, SLA, assinatura SHA-256 e "Ver Fila de Disparos / Logs".
 
 ## 4. Telas conferidas
 
@@ -118,3 +121,5 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   configurada `795-2234`, Livro Razão de Hoje `795-2761`, intervalo de datas `795-3417`, filtro de status `795-3961`.
   Usuários: erros de validação `804-1188`, editar `804-1682`, aplicar sanção `804-2174` e com a justificativa
   obrigatória `804-2531`, reativar `804-2889`, operação concluída `804-3283`.
+  Notificação (12/11/2026): agendamento `277-2689` refeito, notificação enviada `277-2982`, agendada `821-1118`,
+  erros de validação `827-1523`, cancelar agendamento `827-2006`.
