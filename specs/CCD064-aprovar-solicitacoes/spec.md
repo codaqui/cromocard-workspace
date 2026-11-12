@@ -59,12 +59,18 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| administração - fila de solicitações de cartas | [228-1804](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=228-1804) | R3–R8 | ⚠️ Divergente |
+| administração - fila de solicitações de cartas | [228-1804](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=228-1804) | R3–R8 | ✅ Coberto |
 
 - O Figma mostra cartões por solicitação (imagens, dados, justificativa, solicitante) com "Recusar" e "Aprovar e
   integrar"; o de álbum traz a lista de cartas.
-- **Fora da documentação no Figma:** "votos da comunidade" e "quórum" na solicitação de categoria; "população
-  estimada"; "fontes oficiais e arquivos criptográficos".
+- **Campos de outra user story no Figma, não implementar no CCD064:** "votos da comunidade" e "quórum" na
+  solicitação de categoria (CCD103, Escopo Adicional — `catalog_request_votes`, ADR-053 item 7); ilustrador,
+  "população estimada" e "fontes oficiais/hash de autenticação" na carta, e o checklist com "Baixar Planilha .CSV"
+  no álbum (`escopo-adicional.md` EA-064-02/03 — ficam em `catalog_requests.data`, ADR-051 item 3). Ficam para
+  quando o CCD103 tiver spec própria.
+- **Fora da documentação no Figma** (parecem texto decorativo do mockup, sem requisito correspondente): nota de
+  integração com "Banco Central" no card da carta; "Estrutura de Domínio de Mercado" (projeção de novos álbuns/mês,
+  taxas) no card da categoria; "23 dias restantes de visibilidade comunitária" no card do álbum.
 
 ## Fora do escopo
 
