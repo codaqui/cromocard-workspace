@@ -69,11 +69,11 @@ aprovadas.
 | EA-061-08 | Checagem de duplicidade antes de cadastrar | `278-3246`, `832-7887` | CCD106 | Duplicata = mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear, com o link para a carta existente. |
 | EA-061-09 | Imagem com mínimo de 1200×1600 px | `278-3246` | CCD106 | |
 | EA-062-01 | Indicadores da comunidade | `220-3524` | **MVP** (CCD062, L5) | |
-| EA-062-02 | Status "Advertido por Regras" para grupo | `220-3524` | CCD099 | Só o selo "Advertido"; reativar volta a `ACTIVE`. |
+| EA-062-02 | Status "Advertido" para grupo | `220-3524`, `841-2435` | CCD099 | Só o selo "Advertido"; reativar volta a `ACTIVE`. Ação "Advertir", com motivo, na linha do grupo ativo e nos detalhes (decisão do PO em 12/11/2026). |
 | EA-062-03 | Volume custodiado e negociações ativas por grupo | `220-3524` | CCD097 | Volume = soma dos anúncios ativos compartilhados no grupo (mensagens `LISTING`). |
-| EA-062-04 | Categoria da denúncia e filtro da fila por gravidade | `220-3524` | CCD099 | Críticas: "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam". |
-| EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). |
-| EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | |
+| EA-062-04 | Categoria da denúncia e filtro da fila por gravidade | `220-3524` | CCD099 | Críticas: "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam". O Figma usa esses nomes desde 12/11/2026. |
+| EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). Retirada do Figma em 12/11/2026. |
+| EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | Em todas as denúncias da fila. |
 | EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | |
 | EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | |
 | EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | |
@@ -108,7 +108,11 @@ projetada, SLA, assinatura SHA-256 e "Ver Fila de Disparos / Logs". Em Catálogo
 "PSA GEM MT"), "Ultra Escasso", "Alta Demanda", população "no Brasil", variação do preço médio, "Código Vault", "Nome
 canônico", "Padrão TCG Oficial", hash SHA-256 da imagem, "Checksum de Metadados", espaço de cor da imagem, "+420 esta
 semana" e, no fundo do cadastro de carta, os indicadores "Total indexado", "Novas este mês", "Cartas raras/slabs" e
-"Aguardando homologação" e a busca global ⌘K.
+"Aguardando homologação" e a busca global ⌘K. Em Comunidade (12/11/2026): franquia do grupo (o DER não liga grupo a
+categoria), "guilda", "Líder" (vira o criador, `groups.creator_id`), "99.2% em conformidade", "SLA 4ms", "AÇÃO
+IMEDIATA REQUERIDA", "Custódia congelada", "slabs vintage", "leilões", "Algoritmo Heurístico VaultShield", "Link
+Malicioso Detectado", "rede neural anti-fraude", o hash da mensagem e os botões de banir direto na fila (a fila abre o
+modal de sanção do caso de uso 99).
 
 ## 4. Telas conferidas
 
@@ -132,3 +136,6 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   `832-7887`, editar carta `832-5744`, duplicar carta `832-6457`, exclusão bloqueada `832-2217`, importar CSV
   `832-3295`, importação com erro `832-3837`, importação concluída `832-1683`, álbuns `832-8603`, novo álbum
   `833-9661`, categorias `833-9132`, nova categoria `833-10832`.
+  Comunidade (12/11/2026): detalhes do grupo `841-4451`, advertir `841-2435`, suspender `841-418` e com o motivo
+  obrigatório `841-922`, excluir `841-1427`, reativar `841-1931`, remover mensagem `841-2939`, remover e advertir
+  `841-3443`, dispensar denúncia `841-3947`, aplicar sanção ao autor `841-4977`, operação concluída `841-5508`.
