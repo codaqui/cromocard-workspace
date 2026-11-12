@@ -31,8 +31,9 @@ Convenções do ADR-011: `/api/v1`, `{ data }`, JSON camelCase, erros `{ error, 
 
 ### `POST /api/v1/auth/login` — R2–R5, R8–R23, R43
 
-- **Acesso:** público, com rate limit (5 tentativas/min por IP + e-mail)
-- **Entrada:** `{ "email": "string", "password": "string", "rememberMe": false }`
+- **Acesso:** público, com rate limit (5 tentativas/min por IP + `login`)
+- **Entrada:** `{ "login": "string", "password": "string", "rememberMe": false }` (**estendido pela CCD098, 2026-11:**
+  `login` aceita e-mail ou `@` do nome de usuário — R53)
 - **Sucesso:** `200` `{ "data": { "accessToken": "jwt", "user": { "id": "uuid", "name": "string", "role": "CUSTOMER" } } }`
   e cookie `cromocard_refresh` (httpOnly, `Secure` fora de dev, `SameSite=Lax`, `Path=/api/v1/auth`; sem `Max-Age`
   quando `rememberMe = false`)
@@ -40,8 +41,8 @@ Convenções do ADR-011: `/api/v1`, `{ data }`, JSON camelCase, erros `{ error, 
 
   | Status | `error` | Quando | Requisito |
   |---|---|---|---|
-  | 400 | `VALIDATION_ERROR` | campo vazio ou e-mail inválido | R9 |
-  | 401 | `INVALID_CREDENTIALS` | e-mail inexistente, senha errada ou conta só Google | R11 |
+  | 400 | `VALIDATION_ERROR` | campo vazio ou acima de 160 caracteres | R9 |
+  | 401 | `INVALID_CREDENTIALS` | e-mail/@ inexistente, senha errada ou conta só Google | R11 |
   | 403 | `EMAIL_NOT_VERIFIED` | `email_verified = false` | L9 |
   | 403 | `ACCOUNT_SUSPENDED` | `status = SUSPENDED` (checado depois da senha) | R12 |
   | 403 | `ACCOUNT_DELETED` | `deleted_at` preenchido | R13, R14 |
