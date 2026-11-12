@@ -78,8 +78,8 @@ aprovadas.
 | EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | |
 | EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
-| EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. |
-| EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | |
+| EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). |
+| EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | Colunas Nº, código, nome, raridade e variantes; resumo por raridade do seed. |
 | EA-064-04 | Subcategorias a criar junto com a categoria sugerida | `228-1804` | CCD103 | |
 | EA-065-01 | Justificativa obrigatória em toda ação administrativa | `228-2395` | CCD102 | O MVP já exige motivo em suspender, excluir e moderar. Obrigatória nas ações que mudam status ou excluem; opcional nas demais. |
 | EA-065-02 | Total de ações em 30 dias, com variação e média diária | `228-2395` | CCD102 | |
@@ -114,7 +114,11 @@ IMEDIATA REQUERIDA", "Custódia congelada", "slabs vintage", "leilões", "Algori
 Malicioso Detectado", "rede neural anti-fraude", o hash da mensagem e os botões de banir direto na fila (a fila abre o
 modal de sanção do caso de uso 99). Em Relatórios (12/11/2026): "Taxa de atualização: Tempo Real", "Digest SHA-256",
 "Assinatura HSM", "Assinado HSM", gráficos na prévia e no PDF, "retenção de cohort", "funil de conversão", "Conselho
-Administrativo", "Data Warehouse e BI" e a granularidade ("Consol. Mensal", "Diária") no período.
+Administrativo", "Data Warehouse e BI" e a granularidade ("Consol. Mensal", "Diária") no período. Em Solicitações (12/11/2026): "Registro de Ativo Físico
+Histórico", "Hub de Franquia Raiz & Taxonomia", "Hi-Res / 1200DPI", "Inspecionar Raw", "PSA Spec", "SHA-256 Hash
+Verificado", "arquivos criptográficos", "API GraphQL e Banco Central", "slots de binder", "Fórum de Curadoria",
+"Projeção de novos álbuns", "Transações estimadas/mês", a comunidade do solicitante e as raridades "Secret Promo", "L",
+"SR" e "SEC" (fora do seed).
 
 ## 4. Telas conferidas
 
@@ -143,3 +147,6 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   `841-3443`, dispensar denúncia `841-3947`, aplicar sanção ao autor `841-4977`, operação concluída `841-5508`.
   Relatórios (12/11/2026): confirmar exportação `843-442`, relatório exportado `843-1246`, sem dados `843-1674`,
   arquivo expirado `843-844`, histórico vazio `843-2068`.
+  Solicitações (12/11/2026): aprovar `847-390`, recusar `847-883` e com o motivo obrigatório `847-1380`, solicitação
+  aprovada `847-2864`, já processada `847-1878`, erro ao aprovar `847-2371`. A tela de votação do cliente (CCD103)
+  fica para a revisão do painel do cliente.
