@@ -1,6 +1,6 @@
 # CCD098 — Gerenciar Dados Complementares do Usuário
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #602 `CCD098-Gerenciar Dados Complementares do Usuário` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [98-gerenciar-dados-complementares-do-usuario.md](../../docs/Casos-De-Uso/98-gerenciar-dados-complementares-do-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
