@@ -6,7 +6,7 @@
 - **Caso de uso:** [94-validar-cadastro-de-vendedor.md](../../docs/Casos-De-Uso/94-validar-cadastro-de-vendedor.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista em 2026-11-13 (L7, Felipe Consulim) e em 2026-11-16 (L8, Felipe Consulim)
 
 ## Objetivo
 
@@ -19,7 +19,7 @@
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `94`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | Lista "Cadastros dos Vendedores Recentes" no Dashboard com nome, e-mail, CNPJ ou CPF, status da análise (Em análise, Pendente, Aprovado, Reprovado) e total de pendentes; ações por linha só "Ver informações" e, em análise, "Validar Cadastro" | Tela | `94`, FP 1–2, FP 5 e FA 4; EA-058-05; `escopo-adicional.md` §3 |
 | R3 | Filtro por status e botão "Atualizar Fila" | Campo | `94`, FP 3–4; EA-058-05 |
-| R4 | Card "Lojistas & Credenciamento" com aprovados, pendentes e conversão (aprovados ÷ analisados, contando os cadastros decididos no período pela data da decisão — L7) e o atalho "Analisar Fila" | Campo | EA-058-06; EA-058-07; L7 |
+| R4 | Card "Lojistas & Credenciamento" com aprovados, pendentes e conversão (aprovados ÷ analisados, contando os cadastros decididos no período pela data da decisão — L8) e o atalho "Analisar Fila" | Campo | EA-058-06; EA-058-07; L8 |
 | R5 | Dossiê com dados da empresa, responsável legal, dados bancários e Pix, endereço comercial e documentos | Tela | `94`, FP 5–6; DBML `seller_verifications`, `seller_documents` |
 | R6 | Visualizar e validar cada documento (`VALIDATED`, com quem e quando) | Ação | `94`, FP 7–8; DBML `seller_documents` |
 | R7 | Anotações internas com autor e data, nunca mostradas ao vendedor | Ação | `94`, FP 9–10; DBML `seller_verification_notes` |
@@ -63,14 +63,14 @@
 | Dashboard, lista de vendedores (30 dias, 7D, Hoje) | `208-1240`, `247-2499`, `247-3539` | R2–R4 | ✅ Bate (ajustado em 11/11/2026) |
 | Dashboard, filtro de status aberto | `795-3961` | R3 | ✅ Bate |
 | Gestão de Usuários, selo "Em análise" | `208-1793` | R12 | ✅ Bate (ajustado em 11/11/2026) |
-| Validar Cadastro (painel) | `246-1201` | R5–R10 | ⚠️ Divergente (ainda não revisado no Figma) |
-| Dossiê do vendedor (Em análise e Aprovado) | `252-1723`, `252-2837` | R5–R8 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Validar Cadastro (painel, gaveta sobre o Dashboard) | `246-1201` | R5–R10 | ✅ Bate (revisado em 13/11/2026, L7) |
 | Exportar Relatórios, card "Auditoria de Lojistas" | `228-1236` | R13 | ✅ Bate (revisado em 12/11/2026) |
 
 Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
 
 - O painel mostra "Anunciada", "Score de Reputação" e "Chargebacks", que dependem do marketplace (CCD097).
 - As abas "Segurança" e "Auditoria" e o botão "Consultar" (Receita Federal) não têm conteúdo desenhado nem documentação.
+- O mapa e "Raio de entrega Express" no endereço comercial não têm origem na documentação nem no DER (L7).
 
 ## Fora do escopo
 
@@ -79,6 +79,8 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 - Reputação, volume anunciado e chargebacks — CCD097.
 - Notificar pendência — CCD095 (pelo dossiê, não pela linha da lista).
 - Botões "Logs" e "Notificar Lojista" e status com motivo ("Pendente Doc Pix") na lista do Dashboard: retirados do Figma em 11/11/2026.
+- Frames `252-1723`/`252-2837` ("Dossiê do vendedor", página cheia via Gestão de Usuários): exploração anterior do mesmo R5, não usada — ver L7.
+- Mapa e "Raio de entrega Express" no endereço comercial (frame `246-1201`): sem origem na documentação nem no DER.
 
 ## Lacunas e decisões
 
@@ -90,4 +92,5 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 | L4 | Tipos de documento (proposta: `CNPJ_CARD` e `ADDRESS_PROOF`, como no Figma) | `CNPJ_CARD` e `ADDRESS_PROOF`, como no Figma | `94`, FP 6 |
 | L5 | "Analisar Fila" (proposta: abre a lista filtrada em pendentes) | Abre a lista filtrada em pendentes | `94`, FP 3 |
 | L6 | Onde aparece o "Em análise" na Gestão de Usuários (EA-059-04)? | Como selo ao lado do papel Vendedor; a coluna Status continua só com Ativo, Suspenso e Bloqueado. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 2; EA-059-04 |
-| L7 | A conversão conta os cadastros criados no período ou os decididos no período? (apontado na revisão do backend, PR #26: um cadastro de 40 dias aprovado ontem ficava fora de "Últimos 30 dias") | Os decididos: aprovados e reprovados entram pelo `reviewed_at` dentro do período; em análise e pendentes continuam pelo `created_at`. Decisão do PO (Felipe Consulim, 16/11/2026) | esta spec (R4, CA8); `plano.md`, contrato do `summary`; `escopo-adicional.md`, EA-058-07 |
+| L7 | O Figma tem duas telas pro dossiê do vendedor (R5): a gaveta sobre o Dashboard (`246-1201`, já decidida no `plano.md`) e uma página cheia via Gestão de Usuários (`252-1723`/`252-2837`), incompatíveis entre si. Qual seguir? | A gaveta sobre o Dashboard (`246-1201`); os frames `252-1723`/`252-2837` ficam fora de uso, como exploração anterior do mesmo requisito. Decisão do PO (Felipe Consulim, 13/11/2026) | esta spec (Fora do escopo); `plano.md`, Decisões técnicas |
+| L8 | A conversão conta os cadastros criados no período ou os decididos no período? (apontado na revisão do backend, PR #26: um cadastro de 40 dias aprovado ontem ficava fora de "Últimos 30 dias") | Os decididos: aprovados e reprovados entram pelo `reviewed_at` dentro do período; em análise e pendentes continuam pelo `created_at`. Decisão do PO (Felipe Consulim, 16/11/2026) | esta spec (R4, CA8); `plano.md`, contrato do `summary`; `escopo-adicional.md`, EA-058-07 |

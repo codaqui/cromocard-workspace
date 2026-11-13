@@ -1,6 +1,6 @@
 # Plano — CCD094 Validar Cadastro de Vendedor
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026; revista em 13/11/2026 (L7 — confirma a gaveta sobre o Dashboard, frame `246-1201`)
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -27,7 +27,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | Método e caminho | Entrada | Sucesso | Erros | Requisitos |
 |---|---|---|---|---|
 | `GET /api/v1/admin/seller-verifications` | `status`, `page`, `pageSize` | `200` lista paginada | — | R2, R3 |
-| `GET /api/v1/admin/seller-verifications/summary` | período | `200` `{ approved, pending, conversionRate }` (aprovados e reprovados contados pelo `reviewed_at` no período, L7) | — | R4 |
+| `GET /api/v1/admin/seller-verifications/summary` | período | `200` `{ approved, pending, conversionRate }` (aprovados e reprovados contados pelo `reviewed_at` no período, L8) | — | R4 |
 | `GET /api/v1/admin/seller-verifications/:id` | — | `200` dossiê com documentos e notas | `404` | R5 |
 | `POST /api/v1/admin/seller-verifications/:id/documents/:documentId/validate` | — | `200` | `404`, `409` | R6, R11 |
 | `POST /api/v1/admin/seller-verifications/:id/notes` | `{ content }` | `201` | `400`, `404` | R7 |
