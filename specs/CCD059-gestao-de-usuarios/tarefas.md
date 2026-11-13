@@ -34,18 +34,18 @@
 
 ## Revisão de 11/11/2026 — a criar no Azure
 
-- [ ] **T11** · Estender `GET /users/:id` com endereços e ações administrativas, e tirar o motivo da reativação —
+- [x] **T11** · Estender `GET /users/:id` com endereços e ações administrativas, e tirar o motivo da reativação —
   R4, R19, R20 · CA5, CA10
   - Pronto quando: `GET /users/:id` devolve `addresses[]` e `adminActions[]` (do `audit_logs`), `POST
     /users/:id/reactivate` não exige `reason`, e `admin-users.service.spec.ts` cobre CA5 e CA10.
 
 ## Revisão de 12/11/2026 — a criar no Azure
 
-- [ ] **T12** · Expandir a `UserDetailPage` com endereços, ações administrativas, "Membro desde", status e o quadro
+- [x] **T12** · Expandir a `UserDetailPage` com endereços, ações administrativas, "Membro desde", status e o quadro
   "Autenticação" — R4, R20 · CA10, CA11
   - Pronto quando: `UserDetailPage.spec.tsx` cobre CA10 e CA11, e "Aplicar sanção"/"Bloqueado" aparecem indisponíveis
     (CCD099).
-- [ ] **T13** · Mover o reenvio do link de ativação para o `UserFormModal` (edição) e tirar o motivo do diálogo de
+- [x] **T13** · Mover o reenvio do link de ativação para o `UserFormModal` (edição) e tirar o motivo do diálogo de
   reativar — CCD098 R15 · R19
   - Pronto quando: `UserFormModal.spec.tsx` cobre o checkbox condicional a `!emailVerified`, e
     `SuspendUserDialog.spec.tsx` cobre a reativação sem motivo.
