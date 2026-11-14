@@ -1,6 +1,6 @@
 # Plano — CCD059 Gestão de Usuários
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -54,3 +54,12 @@ Todas com `authenticate` + `authorize('ADMIN')`.
 | CA1–CA7 | `admin-users.service.spec.ts` · integração |
 | CA2, CA6, CA8 | `UserFormModal.spec.tsx` · `DeleteUserDialog.spec.tsx` |
 | CA9 | integração |
+
+## Revisão de 11/11/2026 (L7, L8)
+
+- R3: a lista ganha a coluna de data de cadastro (`createdAt`) e mostra os papéis como Cliente, Vendedor e
+  Administrador.
+- R4: em vez do detalhe na própria lista, a seleção abre `/backoffice/usuarios/:id` (página do usuário). O
+  `GET /admin/users/:id` devolve também os endereços e `adminActions` (últimas entradas do `audit_logs` com
+  `entity_type = USER` e `entity_id` do usuário).
+- Testes: CA1 inclui as colunas; CA10 é novo (`users.service.spec.ts` e `UserDetailPage.spec.tsx`).

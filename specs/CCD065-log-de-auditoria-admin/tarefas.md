@@ -10,6 +10,9 @@
 - [ ] **T2** · Criar rotas de leitura do log de auditoria — R1 · CA6 · AB#588
   - Pronto quando: as rotas aparecem no `/docs` e respondem `403` para quem não é ADMIN.
 
+- [ ] **T6** · Adicionar a ação `USER_ROLE_UPDATED` à lista fechada do log — R10 · L5 · AB#340
+  - Pronto quando: `audit-logs.service.spec.ts` grava a ação sem motivo e `GET /admin/audit-logs?action=USER_ROLE_UPDATED` responde `200`.
+
 ## Frontend — `apps/cromocard-frontend`, branch `feature/340-log-de-auditoria`
 
 - [ ] **T3** [P] · Criar api, queries, types e rótulos das ações do log — R4 · AB#589
@@ -31,4 +34,4 @@
 | R3–R6 | T1, T3, T4 |
 | R7, R9 | T4 |
 | R8 | T1 |
-| R10 | T1, T3 |
+| R10 | T1, T3, T6 |

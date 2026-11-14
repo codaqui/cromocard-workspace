@@ -9,9 +9,9 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa a opção "Gestão de Usuários". |  |
-|  | 2. O sistema apresenta a lista de usuários cadastrados, sem os excluídos, com nome, e-mail, papel, status e data de cadastro, e permite buscar por nome ou e-mail e filtrar por papel e por status. |
+|  | 2. O sistema apresenta a lista de usuários cadastrados, sem os excluídos, com nome, e-mail, papel (Cliente, Vendedor ou Administrador), status (Ativo, Suspenso ou Bloqueado) e data de cadastro, e permite buscar por nome ou e-mail e filtrar por papel e por status. Um vendedor com o credenciamento em análise mostra o selo "Em análise" ao lado do papel, sem mudar o status. |
 | 3. O administrador seleciona um usuário ou escolhe a opção de cadastrar um novo usuário. |  |
-|  | 4. O sistema apresenta os dados e as opções disponíveis para gerenciamento: editar, alterar o papel, suspender, reativar e excluir. |
+|  | 4. O sistema apresenta a página do usuário, com os dados pessoais, o contato, os endereços, as ações administrativas já feitas sobre ele (lidas do log de auditoria) e as opções disponíveis para gerenciamento: editar, alterar o papel, suspender, reativar e excluir. |
 | 5. O administrador informa ou altera os dados do usuário (nome, e-mail e papel). |  |
 |  | 6. O sistema valida os dados informados. |
 |  | 7. O sistema registra as alterações realizadas. No cadastro, envia ao usuário um convite por e-mail com o link para definir a senha; a conta nasce com o e-mail confirmado e o aceite dos termos fica para o primeiro acesso. |

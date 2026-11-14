@@ -25,7 +25,7 @@ Ambas com `authenticate` + `authorize('ADMIN')`; sem rotas de escrita (R8).
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/domains/admin/audit-logs/audit-logs.validator.ts` | filtros | R5 |
+| `src/domains/admin/audit-logs/audit-logs.validator.ts` | filtros; ação `USER_ROLE_UPDATED` na lista fechada (L5) | R5, R10 |
 | `audit-logs.repository.ts` | consultas com o admin incluído mesmo excluído | R3, R4, R8 |
 | `audit-logs.service.ts` + `.spec.ts` | lista, detalhe e total de 30 dias | R3–R6 |
 | `audit-logs.controller.ts` · `.routes.ts` · `.swagger.ts` | rotas de leitura | R1 |
@@ -35,7 +35,7 @@ Ambas com `authenticate` + `authorize('ADMIN')`; sem rotas de escrita (R8).
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `src/features/admin/audit-logs/` (api, queries, types, labels das ações) | chamadas e rótulos | R4, R10 |
-| `pages/AuditLogsPage/` | total, filtros, tabela e `Drawer` com o detalhe | R2–R7, R9 |
+| `pages/AuditLogsPage/` · `components/` · `hooks/useAuditLogFilters.ts` | total, filtros (ID do admin validado e clique no responsável, L6), tabela e `Drawer` com o detalhe | R2–R7, R9 |
 
 ## Testes
 
@@ -44,3 +44,10 @@ Ambas com `authenticate` + `authorize('ADMIN')`; sem rotas de escrita (R8).
 | CA1–CA3, CA5 | `audit-logs.service.spec.ts` · integração |
 | CA4 | `AuditLogsPage.spec.tsx` |
 | CA6 | integração |
+
+## Revisão de 12/11/2026 (L4)
+
+- R4: a data é formatada no frontend (DD/MM/AAAA HH:MM, `America/Sao_Paulo`); o alvo aparece encurtado na tabela e
+  completo no painel.
+- R6: `AuditLogDetailsDrawer` mostra também o IP (`ip_address`, CCD102).
+- R7: o estado vazio desabilita "Extrair Logs" (`849-383`).

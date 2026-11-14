@@ -1,6 +1,6 @@
 # Plano — CCD098 Gerenciar Dados Complementares do Usuário
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -64,5 +64,18 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - O campo do login passa de `email` para `login`, com o e-mail ainda aceito. **Confirmado em 2026-11-10** (Felipe Consulim).
-- A tela de detalhe (R13) é a `UserDetailPage` da CCD059 (`/backoffice/users/:id`), não uma gaveta — ver L4 revista no `spec.md`.
 - O `DeleteUserDialog` da CCD059 é o mesmo componente desta story; o formato de confirmação do R11 vale para toda exclusão de usuário.
+
+## Revisão de 11/11/2026 (L6)
+
+- R13: o detalhe deixa de ser gaveta lateral e vira a página do usuário (`/backoffice/users/:id`), compartilhada
+  com a CCD059; esta story acrescenta @, telefone, CPF mascarado, último login e IP.
+
+## Ajustes da revisão dos PRs (14/11/2026)
+
+- `GET /users/:id` devolve `activationPending` (sem senha e sem Google). É a regra do reenvio (R15/CA8): o
+  checkbox "Reenviar link de ativação" do modal de editar (`804-1682`) só aparece quando ela é verdadeira e começa
+  desmarcado. O `passwordHash` nunca sai na resposta.
+- A lista não traz o CPF: a edição manda só os campos alterados, para não apagar o que o formulário não carregou.
+- `changedFields` do `USER_UPDATED` guarda só o que mudou de fato.
+- `seller_verifications.address_id` ganha a FK para `addresses` (DBML, Ref da linha 979), numa migration própria.

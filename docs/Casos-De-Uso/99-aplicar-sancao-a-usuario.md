@@ -8,7 +8,7 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O administrador abre uma denúncia na Fila de Moderação ou seleciona um usuário na Gestão de Usuários. |  |
+| 1. O administrador seleciona "Aplicar sanção ao autor" numa denúncia da Fila de Moderação ou abre a página de um usuário na Gestão de Usuários. |  |
 |  | 2. O sistema apresenta o usuário com o número de advertências anteriores e as sanções disponíveis: advertir, suspender temporariamente e banir definitivamente. |
 | 3. O administrador escolhe a sanção. |  |
 |  | 4. O sistema solicita a justificativa e, na suspensão, o prazo: 3, 7, 15 ou 30 dias. |
@@ -23,7 +23,7 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O administrador escolhe "Remover Mensagem & Advertir Usuário" numa denúncia. |  |
+| 1. O administrador escolhe "Remover Mensagem & Advertir Usuário" numa denúncia e informa a justificativa. |  |
 |  | 2. O sistema remove a mensagem denunciada, aplica a advertência e resolve a denúncia. |
 |  | 3. O prazo de uma suspensão termina. |
 |  | 4. O sistema volta o status do usuário para Ativo. |

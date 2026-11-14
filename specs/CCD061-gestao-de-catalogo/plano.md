@@ -60,3 +60,15 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 ## Decisões técnicas
 
 - Biblioteca `csv-parse` para o CSV: ADR-050.
+
+## Revisão de 12/11/2026 (L6–L8)
+
+- R6: o `catalog.validator.ts` exige `categoryId`, `rarityId`, `languageId` e a imagem da frente para publicar
+  (`status = ACTIVE`); o rascunho da CCD106 continua exigindo só o nome. CA8 entra no `catalog.service.spec.ts`.
+- R3: `GET /cards` aceita `status` (`ACTIVE` ou `DRAFT`, CCD106) além de `albumId`, `categoryId`, `rarityId` e `year`;
+  a tela mostra os chips dos filtros ativos e "Limpar todos os filtros".
+- R5: `status` do álbum no formulário e na lista.
+- R15: o `CategoryFormModal` tem nome, tipo, categoria pai, descrição e selo; o slug é gerado no backend (CCD104).
+- R16: `DeleteCatalogItemDialog` pede a confirmação antes do `DELETE`; CA9 no teste da página.
+- Telas novas: `832-7170`, `832-5744`, `832-1149`, `832-2217`, `832-3295`, `832-3837`, `832-1683`, `832-8603`,
+  `833-9661`, `833-9132`, `833-10832`.

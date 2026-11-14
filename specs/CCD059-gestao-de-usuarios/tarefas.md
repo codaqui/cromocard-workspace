@@ -32,13 +32,19 @@
 - [ ] **T10** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#549
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
 
+## Revisão de 11/11/2026 — a criar no Azure
+
+- [ ] **T11** · Criar página do usuário com dados, endereços e ações administrativas — R3, R4 · CA1, CA10
+  - Pronto quando: `GET /admin/users/:id` devolve endereços e `adminActions`, a lista tem a coluna de cadastro e
+    `UserDetailPage.spec.tsx` cobre o CA10.
+
 ## Cobertura
 
 | Requisito | Tarefas |
 |---|---|
 | R1 | T4 |
 | R2 | T7 |
-| R3, R4 | T2, T7 |
+| R3, R4 | T2, T7, T11 |
 | R5–R7 | T1–T3, T6, T8 |
 | R8, R9 | T2, T3, T6, T9 |
 | R10, R11 | T1, T3, T8 |

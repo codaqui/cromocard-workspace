@@ -93,7 +93,8 @@ No repositório do frontend (`apps/cromocard-frontend`):
 |---|---|
 | Servidor, rede, VPN, backup e segurança dos repositórios | Lucas |
 | Pipeline (CI e deploy), Compose e observabilidade | Duarte |
-| Repositórios, branches e aprovação de produção | Daniel (PO), com o Lucas |
+| Repositórios e branches | Daniel, com o Lucas |
+| Validação de ADRs e specs e aprovação de produção | Felipe Consulim (PO) |
 
 Para pedir acesso à VPN ou ao banco de homologação, siga o `docs/ONBOARDING.md` do backend. SSH no servidor
 é só para a infraestrutura.

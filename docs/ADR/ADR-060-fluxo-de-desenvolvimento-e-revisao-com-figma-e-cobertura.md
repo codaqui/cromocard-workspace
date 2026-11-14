@@ -2,7 +2,7 @@
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-11-09
-- **Decisores:** Daniel Andrade
+- **Decisores:** Daniel Andrade (proposta); validação: Felipe Consulim (PO)
 - **Substitui parcialmente:** ADR-008 (limite de cobertura), ADR-046 (ausência de limite de cobertura) e ADR-047 (regra de
   divergência com o Figma e skills do fluxo)
 

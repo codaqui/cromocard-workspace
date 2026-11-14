@@ -12,6 +12,9 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 - Um ADR `Proposto` aguarda validação do PO. Depois de validado, atualize o campo
   `Status` do arquivo e, se fizer sentido, replique o resultado no work item `#270`
   do Azure DevOps.
+- O PO do projeto é o **Felipe Consulim**. Os ADRs aceitos antes de 11/11/2026 citam o
+  Daniel Andrade como PO no campo `Decisores`; pela regra acima, eles não são editados,
+  e esse registro fica como histórico. Daqui em diante, a validação é do Felipe.
 - Ao criar um ADR novo, use o próximo número sequencial e o modelo abaixo.
 
 ## Índice

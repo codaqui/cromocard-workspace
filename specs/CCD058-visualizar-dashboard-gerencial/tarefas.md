@@ -28,6 +28,16 @@
 - [x] **T8** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#539
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
 
+## Revisão de 11/11/2026 — a criar no Azure
+
+- [ ] **T9** · Agrupar a série de cadastros por hora, dia ou mês conforme o período — R18 · CA3
+  - Pronto quando: `dashboard.service.spec.ts` e a integração cobrem `today`, `30d` e `1y`.
+- [ ] **T10** · Limitar a lista de vendedores recentes aos 5 mais recentes — R9 · CA4
+  - Pronto quando: a rota devolve 5 itens sem `meta` de paginação e o teste de integração passa.
+- [ ] **T11** [P] · Ajustar gráfico, lista e cards do Dashboard à revisão — R9, R17, R18 · CA3, CA4, CA9
+  - Pronto quando: o eixo segue `granularity`, a lista tem "Ver todos" sem paginação e o `DashboardPage.spec.tsx` cobre
+    o CA9.
+
 ## Cobertura
 
 | Requisito | Tarefas |
@@ -37,8 +47,10 @@
 | R4 | T5 |
 | R5–R7 | T1, T6 |
 | R8 | T1, T7 |
-| R9 | T1, T3, T7 |
+| R9 | T1, T3, T7, T10, T11 |
 | R10, R11 | T1, T2, T5, T6 |
 | R12, R13 | T2, T6 |
 | R14, R15 | T1 |
 | R16 | T6 |
+| R17 | T11 |
+| R18 | T9, T11 |
