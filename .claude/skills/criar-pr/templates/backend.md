@@ -38,7 +38,7 @@ AB#
 - [ ] Sem `console.log`, sem código comentado, sem segredos no código
 
 ## Revisão
-- [ ] Passou pelo `/revisar-codigo` (padrões e spec)
+- [ ] Passou pelo `/cromocard-revisor` (padrões e spec)
 
 ## Observações para o revisor
 <!-- Decisões tomadas, dúvidas, pontos de atenção. Screenshots do Swagger/Insomnia se ajudar. -->

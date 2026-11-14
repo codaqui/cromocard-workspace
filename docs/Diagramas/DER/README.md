@@ -1,93 +1,35 @@
 # DER - CromoCard (Sistema de Gestao de Cartas Colecionaveis)
 
-Modelo de dados derivado dos **Casos de Uso / User Stories** em `../Casos-De-Uso/`
+Modelo de dados derivado dos **Casos de Uso / User Stories** em `../../Casos-De-Uso/`
 e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + PostgreSQL).
 
-**50 entidades organizadas em 8 modulos.** Nomes de tabelas, colunas e enums em **ingles** (glossario PT → EN no fim deste arquivo). Os 3 diagramas existem nos dois formatos.
+**50 entidades organizadas em 8 modulos, 90 chaves estrangeiras e 27 enums.** Nomes de tabelas, colunas e
+enums em **ingles** (glossario PT → EN no fim deste arquivo). O DER e escrito em DBML para o
+[dbdiagram.io](https://dbdiagram.io/d); cada diagrama tem o `.dbml` e o print tirado do site.
 
 ## Estrutura
 
 ```
 DER/
-├── puml/                              -> PlantUML  (plantuml.com / VS Code)
-│   ├── 01-diagrama-entidades.puml
-│   ├── 02-diagrama-relacionamentos.puml
-│   └── 03-der-completo.puml
-├── dbdiagram.io/                      -> DBML      (dbdiagram.io/d)
-│   ├── 01-diagrama-entidades.dbml
-│   ├── 02-diagrama-relacionamentos.dbml
-│   └── 03-der-completo.dbml
-└── chartdb/                           -> DDL SQL   (app.chartdb.io e outros)
-    ├── schema-cromocard.sql
-    └── schema-cromocard-sem-enums.sql
+├── 01-diagrama-entidades.dbml          entidades e atributos, sem ligacoes
+├── 01-diagrama-entidades-dbdiagram.png
+├── 02-diagrama-relacionamentos.dbml    so as chaves (PK/FK) e as ligacoes
+├── 02-diagrama-relacionamentos.png
+├── 03-der-completo.dbml                atributos e ligacoes - FONTE DA VERDADE do modelo
+├── 03-der-completo.png
+└── README.md
 ```
 
-## Pasta `chartdb/` (DDL SQL)
+O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e mudam junto.
 
-O ChartDB nao le DBML - ele importa **script SQL**. Os dois arquivos foram
-gerados a partir de `dbdiagram.io/03-der-completo.dbml`, entao nao divergem do
-modelo: 50 tabelas, 90 chaves estrangeiras, 27 enums.
+## Como gerar o print
 
-1. Abra <https://app.chartdb.io>.
-2. Escolha importar a partir de **script SQL** e selecione o dialeto **PostgreSQL**.
-3. Cole `schema-cromocard.sql` inteiro.
-4. Se a ferramenta reclamar dos `CREATE TYPE ... AS ENUM`, use
-   `schema-cromocard-sem-enums.sql`: as colunas viram `VARCHAR(30)` e os valores
-   possiveis ficam anotados no comentario ao lado de cada coluna.
+1. Abra <https://dbdiagram.io/d>, apague o exemplo e cole todo o conteudo do `.dbml`.
+2. Confira que o canto inferior esquerdo mostra **0 errors**.
+3. Recolha o painel de codigo, use o botao de enquadrar o diagrama e tire o print. Exportar
+   (PDF/PNG/SVG) pelo botao Export exige login.
 
-O mesmo SQL serve para **dbdiagram.io** (Import > From PostgreSQL), DrawSQL,
-QuickDBD, pgModeler - e para criar o banco de verdade.
-
-> As chaves estrangeiras ficam todas em `ALTER TABLE` no final do arquivo, entao
-> a ordem de criacao das tabelas nao importa e nao ha erro de referencia futura.
-
-| # | Diagrama | O que mostra |
-|---|---|---|
-| 01 | **Entidades** | Todas as entidades com atributos, tipos, PK/FK/UQ e obrigatoriedade. **Sem** linhas de relacionamento. |
-| 02 | **Relacionamentos** | Todas as entidades com **apenas as chaves** (PK/FK) + todas as ligacoes com cardinalidade. Caixas pequenas, linhas legiveis. |
-| 03 | **DER completo** | Atributos **e** relacionamentos juntos - a visao final do modelo. |
-
-## Como gerar a imagem para o relatorio
-
-### PlantUML (`puml/`)
-1. Abra <https://www.plantuml.com/plantuml/uml/>.
-2. Cole o conteudo do `.puml`.
-3. Clique em **SVG**, nao PNG. Para baixar: botao direito na imagem ->
-   "Salvar imagem como...".
-4. No VS Code: extensao *PlantUML* -> `Alt+D` (preview) -> botao direito -> *Export*.
-
-> **Use SVG, nao PNG.** O servidor publico do PlantUML corta o PNG em 4096px.
-> O diagrama 03 tem 6055px de altura, entao o PNG sai truncado (falta o modulo
-> "Usuarios" no rodape). Em SVG sai inteiro e o texto fica nitido em qualquer zoom.
-
-### Layout: por que os diagramas 02 e 03 usam `left to right direction`
-
-Sem essa linha o PlantUML monta uma **tira** larga e baixa, que nao cabe legivel
-na pagina e estoura o limite do PNG:
-
-| Diagrama | sem `left to right` | com `left to right` |
-|---|---|---|
-| 02 Relacionamentos | 4513 x 1354 (corta `denuncia`) | **1889 x 3553** |
-| 03 DER completo | 7938 x 2018 (corta metade) | **3265 x 6055** |
-
-O diagrama 01 nao precisa disso: ele nao tem linhas de relacionamento e usa uma
-grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
-
-> Nota: nas legendas dos `.puml`, o caractere `|` da notacao pe-de-galinha e
-> escrito como `&#124;`. Escrito cru, ele e interpretado como separador de
-> celula da tabela e quebra a legenda.
-
-### dbdiagram.io (`dbdiagram.io/`)
-1. Abra <https://dbdiagram.io/d>.
-2. Apague o exemplo e cole todo o conteudo do `.dbml`.
-3. As tabelas ja vem coloridas por modulo e agrupadas em *TableGroup*.
-4. Use **Export -> PDF/PNG** (ou *Print*) para o relatorio.
-
-> Dica: no dbdiagram voce pode arrastar as caixas antes de exportar. Como cada
-> modulo tem uma cor propria de cabecalho, basta juntar as caixas da mesma cor
-> para o desenho ficar organizado em blocos.
-
-## Cores por modulo (iguais nos dois formatos)
+## Cores por modulo (`headercolor` no DBML)
 
 | # | Modulo | Cor | Entidades |
 |---|---|---|---|
@@ -110,7 +52,7 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 | `albums`, `cards`, `categories`, `rarities`, `languages`, `card_conditions`, `card_photos` | 08-10 Albuns, 13 Visualizar Cartas, 24-32 Buscas/Filtros, 30-31 Detalhes, 61 Gestao de Catalogo, 104 Ordenar Categorias Padrao, 105 Duplicar Carta, 106 Rascunho de Carta |
 | `collections`, `user_albums`, `collection_cards` | 07 Resumo, 12 Compartilhar Colecao, 14-18 Marcar/Quantidade/Remover, 19 Progresso, 22 Adicionar Carta, 35 Resetar Progresso, 36 Portfolio |
 | `price_history` | 75 Historico de Precos |
-| `groups`, `group_members`, `group_join_requests` | 39 Explorar/Entrar em Grupos, 43 Criar e Administrar Grupo, 64 Aprovar Solicitacoes |
+| `groups`, `group_members`, `group_join_requests` | 39 Explorar/Entrar em Grupos, 43 Criar e Administrar Grupo, 57 Favoritar Grupo, 62 Gestao de Comunidade |
 | `group_messages`, `polls`, `poll_options`, `poll_votes` | 42 Historico do Grupo, 44 Chat do Grupo, 41 Silenciar, 62 Gestao de Comunidade |
 | `conversations`, `conversation_participants`, `messages`, `user_blocks` | 45 Responder Mensagem, 46 Visualizar Mensagens, 47 Moderar Contatos, 73 Entrar em Contato |
 | `listings`, `listing_photos` | 84 Criar / 85 Editar / 86 Excluir / 87 Pausar / 88 Reativar Anuncio, 76 Anuncios Ativos |
@@ -120,8 +62,8 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 | `favorites` | 55 Favoritar Album, 56 Favoritar Carta, 57 Favoritar Grupo |
 | `price_alerts` | Configurar Alertas de Preco (futuro) |
 | `notifications`, `global_notifications` | 53 Visualizar Notificacoes, 54 Limpar Central, 60 Disparar Notificacao Global, 100 Agendar e 101 Segmentar Notificacao Global |
-| `reports` | 40 Denunciar Mensagem, 50 Denunciar Perfil, 82 Denunciar Anuncio, 83 Denunciar Vendedor, 90 Denunciar Usuario |
-| `catalog_requests` | 21/23 Solicitar Cadastro de Carta, Solicitar Album, 64 Aprovar Solicitacoes |
+| `reports` | 40 Denunciar Mensagem, 47 Moderar Contatos, 50 Denunciar Perfil, 62 Gestao de Comunidade, 82 Denunciar Anuncio, 83 Denunciar Vendedor, 90 Denunciar Usuario, 99 Aplicar Sancao |
+| `catalog_requests` | 10 Solicitar Album, 21/23 Solicitar Cadastro da Carta, 64 Aprovar Solicitacoes, 103 Votar em Solicitacao de Catalogo |
 | `audit_logs` | 65 Log de Auditoria Admin, 102 Exportar Log de Auditoria |
 | `global_settings` | 66 Configuracoes Globais, 96 Evolucao de Cadastros (meta mensal) |
 | `seller_verifications`, `seller_documents`, `seller_verification_notes` | 94 Validar Cadastro de Vendedor, 95 Notificar Pendencia Cadastral |
@@ -145,12 +87,8 @@ grade 3x3 de modulos (ligacoes invisiveis no fim do arquivo).
 - Entidades associativas (N:N) com PK composta: `user_achievements`, `poll_votes`, `conversation_participants`.
 - Enums centralizados no topo dos arquivos `.dbml`.
 - `favorites` e `reports` usam alvo polimorfico: FKs opcionais + coluna discriminadora (`type` / `target_type`).
-- Constraints FK no SQL: `fk_<tabela>_<coluna>`.
-- Notacao de cardinalidade: pe-de-galinha no PlantUML (`||--o{`) e `>` / `-` no DBML.
+- Notacao de cardinalidade no DBML: `>` (muitos para um) e `-` (um para um).
 - Comentarios, notas e legendas dos diagramas continuam em portugues.
-
-> **SVGs desatualizados:** os `.svg` destas pastas foram gerados antes da traducao para ingles
-> da tabela `refresh_tokens`, dos UUIDs, do soft delete e das colunas de tempo. Reexportar: `.puml` no plantuml.com (SVG) e `.dbml` no dbdiagram.io.
 
 ## Glossario PT → EN
 

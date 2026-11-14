@@ -1,9 +1,11 @@
 @startuml CromoCard_Diagrama_Casos_de_Uso
 
 ' ============================================================
-' CROMOCARD - Diagrama de Casos de Uso (CCD001 a CCD046)
+' CROMOCARD - Diagrama de Casos de Uso (CCD001 a CCD107)
+' Fonte: docs/Casos-De-Uso/ (um arquivo por caso de uso)
 ' ============================================================
 
+left to right direction
 skinparam actorStyle awesome
 skinparam packageStyle rectangle
 skinparam usecase {
@@ -23,11 +25,13 @@ skinparam defaultFontSize 11
 actor "Visitante" as Visitante
 actor "Cliente" as Cliente
 actor "Administrador\ndo Grupo" as AdminGrupo
-actor "Usuário" as Usuario
+actor "Vendedor" as Vendedor
+actor "Administrador" as Admin
 
 ' Herança entre atores
 Cliente --|> Visitante
 AdminGrupo --|> Cliente
+Vendedor --|> Cliente
 
 ' ============================================================
 ' 1. PAINEL PÚBLICO (Home, Login, Cadastro)
@@ -50,7 +54,7 @@ Visitante --> UC006
 
 ' Relacionamentos
 UC004 ..> UC006 : <<extend>>\nEsqueceu a senha
-UC003 ..> UC004 : <<include>>\nApós cadastro, redireciona ao login
+UC003 ..> UC004 : <<include>>\nApós confirmar o e-mail,\nleva ao login
 
 ' ============================================================
 ' 2. PAINEL CLIENTE - Dashboard e Álbuns
@@ -187,12 +191,200 @@ UC043 ..> UC039 : <<extend>>\nCriar novo grupo\nse busca não retorna
 package "5. Chat Pessoal (Conversas)" {
   usecase "Responder Mensagem\nEspecífica\n(CCD045)" as UC045
   usecase "Visualizar\nMensagens\n(CCD046)" as UC046
+  usecase "Moderar Contatos\nPrivados\n(CCD047)" as UC047
 }
 
-Usuario --> UC045
-Usuario --> UC046
+Cliente --> UC045
+Cliente --> UC046
+Cliente --> UC047
 
 UC045 ..> UC046 : <<include>>\nRequer visualização\nda conversa
+
+' ============================================================
+' 6. PERFIL E CONFIGURAÇÕES
+' ============================================================
+package "6. Perfil e Configurações" {
+  usecase "Editar Dados\ndo Perfil\n(CCD048)" as UC048
+  usecase "Exibir Vitrine\nde Conquistas\n(CCD049)" as UC049
+  usecase "Denunciar Perfil\n(CCD050)" as UC050
+  usecase "Configurar Privacidade\ne Senha\n(CCD051)" as UC051
+  usecase "Exclusão da Conta\n(CCD052)" as UC052
+}
+
+Cliente --> UC048
+Cliente --> UC049
+Cliente --> UC050
+Cliente --> UC051
+Cliente --> UC052
+
+' ============================================================
+' 7. NOTIFICAÇÕES E FAVORITOS
+' ============================================================
+package "7. Notificações e Favoritos" {
+  usecase "Visualizar\nNotificações\n(CCD053)" as UC053
+  usecase "Limpar Central de\nNotificações\n(CCD054)" as UC054
+  usecase "Favoritar Álbum\n(CCD055)" as UC055
+  usecase "Favoritar Carta\n(CCD056)" as UC056
+  usecase "Favoritar Grupo\n(CCD057)" as UC057
+}
+
+Cliente --> UC053
+Cliente --> UC054
+Cliente --> UC055
+Cliente --> UC056
+Cliente --> UC057
+
+UC054 ..> UC053 : <<extend>>\nMarcar todas como lidas
+UC041 ..> UC053 : <<extend>>\nDeixa de receber\nalertas do grupo
+
+' ============================================================
+' 8. BACKOFFICE (Administração)
+' ============================================================
+package "8. BackOffice (Administração)" {
+  usecase "Visualizar Dashboard\nGerencial\n(CCD058)" as UC058
+  usecase "Gestão de Usuários\n(CCD059)" as UC059
+  usecase "Disparar Notificação\nGlobal\n(CCD060)" as UC060
+  usecase "Gestão de Catálogo\n(CCD061)" as UC061
+  usecase "Gestão de Comunidade\n(CCD062)" as UC062
+  usecase "Exportar Relatórios\nGerenciais\n(CCD063)" as UC063
+  usecase "Aprovar Solicitações\n(CCD064)" as UC064
+  usecase "Log de Auditoria\nAdmin\n(CCD065)" as UC065
+  usecase "Configurações\nGlobais\n(CCD066)" as UC066
+}
+
+Admin --> UC058
+Admin --> UC059
+Admin --> UC060
+Admin --> UC061
+Admin --> UC062
+Admin --> UC063
+Admin --> UC064
+Admin --> UC065
+Admin --> UC066
+
+UC064 ..> UC010 : <<extend>>\nAnalisa a solicitação\nde álbum
+UC064 ..> UC023 : <<extend>>\nAnalisa a solicitação\nde carta
+UC062 ..> UC040 : <<extend>>\nModera a mensagem\ndenunciada
+
+' ============================================================
+' 8. BACKOFFICE - Escopo Adicional (vindo do Figma) ++
+' ============================================================
+package "8. BackOffice - Escopo Adicional ++" {
+  usecase "Validar Cadastro\nde Vendedor ++\n(CCD094)" as UC094
+  usecase "Notificar Pendência\nCadastral ++\n(CCD095)" as UC095
+  usecase "Acompanhar Evolução\nde Cadastros ++\n(CCD096)" as UC096
+  usecase "Visualizar Indicadores\nFinanceiros ++\n(CCD097)" as UC097
+  usecase "Gerenciar Dados\nComplementares\ndo Usuário ++\n(CCD098)" as UC098
+  usecase "Aplicar Sanção\na Usuário ++\n(CCD099)" as UC099
+  usecase "Agendar Notificação\nGlobal ++\n(CCD100)" as UC100
+  usecase "Segmentar Notificação\nGlobal ++\n(CCD101)" as UC101
+  usecase "Exportar Log\nde Auditoria ++\n(CCD102)" as UC102
+  usecase "Ordenar Categorias\nPadrão ++\n(CCD104)" as UC104
+  usecase "Duplicar Carta ++\n(CCD105)" as UC105
+  usecase "Salvar Rascunho\nde Carta ++\n(CCD106)" as UC106
+  usecase "Consultar Histórico\nde Relatórios ++\n(CCD107)" as UC107
+}
+
+Admin --> UC094
+Admin --> UC095
+Admin --> UC098
+Admin --> UC099
+
+UC096 ..> UC058 : <<extend>>
+UC097 ..> UC058 : <<extend>>
+UC095 ..> UC094 : <<extend>>\nCadastro com pendência
+UC098 ..> UC059 : <<extend>>
+UC099 ..> UC059 : <<extend>>
+UC099 ..> UC062 : <<extend>>\nA partir da\nfila de moderação
+UC100 ..> UC060 : <<extend>>\nAgendar horário
+UC101 ..> UC060 : <<extend>>\nPúblico e canais
+UC102 ..> UC065 : <<extend>>
+UC104 ..> UC066 : <<extend>>
+UC105 ..> UC061 : <<extend>>
+UC106 ..> UC061 : <<extend>>
+UC107 ..> UC063 : <<extend>>
+
+' ============================================================
+' 3. MINHA COLEÇÃO - Escopo Adicional ++
+' ============================================================
+package "3. Minha Coleção - Escopo Adicional ++" {
+  usecase "Votar em Solicitação\nde Catálogo ++\n(CCD103)" as UC103
+}
+
+Cliente --> UC103
+Admin --> UC103
+
+' ============================================================
+' 2. PAINEL CLIENTE - Marketplace (comprador) ***
+' ============================================================
+package "2. Painel Cliente - Marketplace ***" {
+  usecase "Buscar por\nVendedor ***\n(CCD067)" as UC067
+  usecase "Ordenar por\nMenor Preço ***\n(CCD068)" as UC068
+  usecase "Ordenar por\nMaior Preço ***\n(CCD069)" as UC069
+  usecase "Ordenar por\nAvaliações ***\n(CCD070)" as UC070
+  usecase "Ordenar por\nMais Recentes ***\n(CCD071)" as UC071
+  usecase "Comprar ***\n(CCD072)" as UC072
+  usecase "Entrar em\nContato ***\n(CCD073)" as UC073
+  usecase "Visualizar\nFotos ***\n(CCD074)" as UC074
+  usecase "Visualizar Histórico\nde Preços ***\n(CCD075)" as UC075
+  usecase "Visualizar Anúncios\nAtivos ***\n(CCD076)" as UC076
+  usecase "Visualizar\nPedidos ***\n(CCD077)" as UC077
+  usecase "Mostrar Todas\nas Cartas ***\n(CCD078)" as UC078
+  usecase "Visualizar Quantidade\nDisponível ***\n(CCD079)" as UC079
+  usecase "Visualizar Dados\ndo Vendedor ***\n(CCD080)" as UC080
+  usecase "Visualizar\nAvaliações ***\n(CCD081)" as UC081
+  usecase "Denunciar\nAnúncio ***\n(CCD082)" as UC082
+  usecase "Denunciar\nVendedor ***\n(CCD083)" as UC083
+}
+
+Cliente --> UC072
+Cliente --> UC073
+Cliente --> UC076
+Cliente --> UC077
+Cliente --> UC078
+Cliente --> UC082
+Cliente --> UC083
+
+UC067 ..> UC078 : <<extend>>
+UC068 ..> UC078 : <<extend>>
+UC069 ..> UC078 : <<extend>>
+UC070 ..> UC078 : <<extend>>
+UC071 ..> UC078 : <<extend>>
+UC074 ..> UC078 : <<extend>>\nAo abrir o anúncio
+UC075 ..> UC078 : <<extend>>\nAo abrir o anúncio
+UC079 ..> UC078 : <<extend>>\nAo abrir o anúncio
+UC080 ..> UC078 : <<extend>>\nAo abrir o anúncio
+UC081 ..> UC080 : <<extend>>
+UC073 ..> UC046 : <<include>>\nAbre a conversa
+
+' ============================================================
+' 9. PAINEL VENDEDOR
+' ============================================================
+package "9. Painel Vendedor" {
+  usecase "Criar Anúncio\n(CCD084)" as UC084
+  usecase "Editar Anúncio\n(CCD085)" as UC085
+  usecase "Excluir Anúncio\n(CCD086)" as UC086
+  usecase "Pausar Anúncio\n(CCD087)" as UC087
+  usecase "Reativar Anúncio\n(CCD088)" as UC088
+  usecase "Visualizar\nPropostas\n(CCD089)" as UC089
+  usecase "Denunciar Usuário\n(CCD090)" as UC090
+  usecase "Editar Perfil\n(CCD091)" as UC091
+  usecase "Visualizar Total\nde Vendas\n(CCD092)" as UC092
+  usecase "Visualizar Cartas\nMais Vendidas\n(CCD093)" as UC093
+}
+
+Vendedor --> UC084
+Vendedor --> UC085
+Vendedor --> UC086
+Vendedor --> UC087
+Vendedor --> UC088
+Vendedor --> UC089
+Vendedor --> UC090
+Vendedor --> UC091
+Vendedor --> UC092
+Vendedor --> UC093
+
+UC088 ..> UC087 : <<extend>>\nAnúncio pausado
 
 ' ============================================================
 ' NOTAS
@@ -210,6 +402,9 @@ note as N1
   <b>Legenda:</b>
   **  = Funcionalidade futura
   *** = Funcionalidade futura (Marketplace)
+  ++  = Escopo adicional (veio do Figma)
+  O Painel Vendedor depende do
+  marketplace (ADR-027)
   
   <<include>> = O caso de uso base
   sempre invoca o incluído

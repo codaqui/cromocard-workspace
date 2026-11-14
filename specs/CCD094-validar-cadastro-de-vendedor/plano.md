@@ -1,6 +1,6 @@
 # Plano — CCD094 Validar Cadastro de Vendedor
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -18,7 +18,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Tabela | Migration | O que muda | Requisitos |
 |---|---|---|---|
-| `seller_verifications` | `create_seller_verifications_table` | tabela e enum `seller_verification_status` | R5, R8, R9 |
+| `seller_verifications` | ~~`create_seller_verifications_table`~~ **já criada pela CCD098** | A CCD098 (`create_seller_verifications_table`, 2026-11) adiantou a tabela inteira, copiada do DBML, para viabilizar a busca por CNPJ na Gestão de Usuários antes desta story existir. Esta story não cria migration nova aqui: usa a tabela como está. A CCD098 também criou `addresses` e a FK `fk_seller_verifications_address_id` (migration `add_address_fk_to_seller_verifications`). | R5, R8, R9 |
 | `seller_documents` | `create_seller_documents_table` | tabela e enum `seller_document_status` | R6 |
 | `seller_verification_notes` | `create_seller_verification_notes_table` | tabela | R7 |
 
@@ -65,3 +65,11 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 - Novo `notifications.type`: `SELLER_REVIEW` (ADR-051, item 2).
 - O painel abre como gaveta lateral sobre o Dashboard, como no Figma.
+
+## Revisão de 11/11/2026 (L6)
+
+- R2: a linha da lista do Dashboard tem só "Ver informações" e, em análise, "Validar Cadastro"; "Notificar
+  Pendência" fica no dossiê (CCD095). O filtro de status inclui Reprovado.
+- R12: na Gestão de Usuários, o status da análise vira um selo ao lado do papel Vendedor, sem mudar a coluna Status
+  (`admin-users.repository.ts` devolve `verificationStatus`; o frontend mostra o selo).
+- Testes: o CA11 entra no teste da lista de usuários do frontend.

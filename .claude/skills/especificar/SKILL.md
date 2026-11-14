@@ -44,12 +44,12 @@ A partir do modelo, preencha:
   (o que a tela mostra, o status HTTP, o dado gravado) e os `R` que ele confere. Critério sem requisito não entra.
 - **Dados:** as tabelas, colunas e enums do DBML que a tarefa lê ou grava, com as regras (obrigatória, única,
   default). Migrations e arquivos ficam para o plano.
-- **Telas:** a matriz resumida por tela (requisitos que ela mostra e o veredito), o que o Figma mostra errado e o que
-  falta nele.
-- **Fora do escopo:** os extras do Figma (com a user story a que pertencem, ou "não está na documentação") e o que o
-  analista apontou como fora.
-- **Lacunas e decisões:** os conflitos e as lacunas do analista, todos `pendente`. Não preencha decisão por
-  suposição.
+- **Telas:** a matriz resumida por tela (requisitos que ela mostra e o veredito), as diferenças em relação à
+  documentação e o que falta no Figma.
+- **Fora do escopo:** os extras do Figma que pertencem a outra user story (diga qual) e o que o analista apontou como
+  fora.
+- **Lacunas e decisões:** os conflitos e as lacunas do analista, cada divergência com o Figma e cada item que só existe
+  nele, este com a pergunta "faz sentido implementar?". Todos `pendente`. Não preencha decisão por suposição.
 
 Acrescente ou atualize a linha da spec no índice de `specs/README.md`.
 
@@ -64,13 +64,13 @@ Spec: specs/<pasta>/spec.md (Rascunho) — <n> requisitos, <n> critérios de ace
 (ou: nenhuma lacuna; pronta para o PO validar)
 
 ### Figma
-<veredito; onde está errado e o que falta, para o designer>
+<veredito; as diferenças em relação à documentação, cada uma como lacuna>
 ```
 
 Depois, ofereça (sem fazer):
 
 - levar as lacunas ao PO; com as decisões em mãos, atualizar o caso de uso (regra de negócio) e a spec;
-- publicar as divergências do Figma como comentário no work item (escrita no board: só com pedido explícito);
+- publicar as diferenças em relação ao Figma como comentário no work item (escrita no board: só com pedido explícito);
 - abrir o PR da spec no workspace (`/criar-pr workspace`).
 
 Quando o usuário disser que o PO aprovou: status `Aprovada`, linha **Aprovação** com a data e quem aprovou, índice

@@ -76,7 +76,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   carta excluída não é alterada. Restaurar pelo número vale só no cadastro (ADR-015, item 7). Decidido em 2026-10-30
   com Lucas Oliveira Lima.
 - Importação CSV (R13, L3): as colunas são as da L3, sem imagem; as cartas importadas entram sem imagem e o admin envia
-  a frente depois pela edição. A frente obrigatória (`61`, FP 5; L4) vale para o formulário. Cada linha acha o álbum
+  a frente depois pela edição. A frente obrigatória (`61`, FP 5; L4 e L6) contra a carta importada sem imagem está pendente (L12). Cada linha acha o álbum
   pelo título e a categoria pelo nome (só categorias do tipo `CARD`), sem diferenciar maiúsculas, a raridade pelo nome e
   o idioma pelo código (`pt-BR`, `en`…). Referência não encontrada ou ambígua, nome em branco, número repetido no
   arquivo ou já usado no álbum entram em `details` como `<linha>.<coluna>` e nada é gravado; o número de uma carta
@@ -90,15 +90,15 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   segundo passo dentro do mesmo modal. Os `details` de um `400` vão para os campos (ADR-042); os outros erros aparecem
   como mensagem no modal ou no diálogo. O modelo do CSV vem pelo `api.getBlob`, novo em `src/lib/http.ts`, que também
   converte um erro devolvido como `Blob` em `ApiError`. Os selects de álbum e categoria carregam a primeira página
-  (até 100) e sempre incluem o item já escolhido (L6). Decidido em 2026-11-05 e 2026-11-06 com Lucas Oliveira Lima.
-- Tipo da categoria (L7, L9): a `catalogService` confere o tipo num lugar só (`ensureCategory(id, tipo)`): álbum com
+  (até 100) e sempre incluem o item já escolhido (L9). Decidido em 2026-11-05 e 2026-11-06 com Lucas Oliveira Lima.
+- Tipo da categoria (L10, L11): a `catalogService` confere o tipo num lugar só (`ensureCategory(id, tipo)`): álbum com
   categoria `ALBUM`, carta com categoria `CARD` e categoria pai do mesmo tipo da filha; trocar o tipo de uma categoria
   em uso também é recusado. Outro tipo responde `422 CATEGORY_TYPE_MISMATCH`. Na importação, a coluna `category` só
   encontra categorias `CARD`, e o nome de uma categoria de álbum vira o erro `<linha>.category` do `CSV_INVALID`. O seed ganha a categoria de álbum "Pokémon TCG" para o álbum "Pokémon Base
   Set". Decidido em 2026-11-08 com Lucas Oliveira Lima.
 - Leitura do CSV pelo `csv-parse` com `columns` (ADR-050, item 2): o cabeçalho é conferido contra as colunas esperadas
   e uma coluna faltando ou a mais vira o erro `<linha>.columns`. Decidido em 2026-11-08 com Lucas Oliveira Lima.
-- Filtro por tipo nas categorias (L6, L9): `GET /categories` aceita `type` (`ALBUM`/`CARD`), e os selects de categoria do
+- Filtro por tipo nas categorias (L9, L11): `GET /categories` aceita `type` (`ALBUM`/`CARD`), e os selects de categoria do
   frontend pedem só o tipo que cabe (álbum ou carta), em vez de buscar 100 categorias e separar no navegador. Decidido em
   2026-11-10 com Lucas Oliveira Lima, a partir da revisão do backend.
 - Editar a carta para o número de uma carta excluída (R7): o índice único (`album_id`, `number`) vale também para as linhas
@@ -112,3 +112,15 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 - **Dívida:** a `catalogService` cuida de álbuns, cartas, categorias e referências (cerca de 290 linhas). Dividir em
   `AlbumsService`, `CardsService` e `CategoriesService` atrás de uma fachada fica para uma Task própria, de preferência
   na CCD064, que mexe nas mesmas regras. Decidido em 2026-11-08 com Lucas Oliveira Lima.
+
+## Revisão de 12/11/2026 (L6–L8)
+
+- R6: o `catalog.validator.ts` exige `categoryId`, `rarityId`, `languageId` e a imagem da frente para publicar
+  (`status = ACTIVE`); o rascunho da CCD106 continua exigindo só o nome. CA8 entra no `catalog.service.spec.ts`.
+- R3: `GET /cards` aceita `status` (`ACTIVE` ou `DRAFT`, CCD106) além de `albumId`, `categoryId`, `rarityId` e `year`;
+  a tela mostra os chips dos filtros ativos e "Limpar todos os filtros".
+- R5: `status` do álbum no formulário e na lista.
+- R15: o `CategoryFormModal` tem nome, tipo, categoria pai, descrição e selo; o slug é gerado no backend (CCD104).
+- R16: `DeleteCatalogItemDialog` pede a confirmação antes do `DELETE`; CA9 no teste da página.
+- Telas novas: `832-7170`, `832-5744`, `832-1149`, `832-2217`, `832-3295`, `832-3837`, `832-1683`, `832-8603`,
+  `833-9661`, `833-9132`, `833-10832`.

@@ -1,6 +1,6 @@
 # ADR-038 — Web e BackOffice num único SPA, separados por rota e papel
 
-- **Status:** Aceito
+- **Status:** Aceito (substituído parcialmente por ADR-058: não há aplicativo mobile)
 - **Data:** 2026-10-17
 - **Decisores:** Equipe CromoCard
 - **Substitui parcialmente:** ADR-021 (a separação entre Aplicação Web e Painel BackOffice; o app mobile continua separado)

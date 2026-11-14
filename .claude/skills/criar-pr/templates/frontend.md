@@ -45,7 +45,7 @@ teste (diga qual) · ⏳ fica para outro PR (diga qual). Evidência: GIF do flux
 - [ ] Sem `console.log`, sem código comentado
 
 ## Revisão
-- [ ] Passou pelo `/revisar-codigo` (padrões e spec)
+- [ ] Passou pelo `/cromocard-revisor` (padrões e spec)
 
 ## Observações para o revisor
 <!-- Decisões tomadas, dúvidas, pontos de atenção. Prints da tela ajudam. -->

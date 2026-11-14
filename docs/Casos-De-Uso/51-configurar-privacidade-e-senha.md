@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Configurar Privacidade e Senha |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário configure suas preferências de privacidade e altere a senha de acesso à conta. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir uma conta ativa. |
 
 ### Fluxo Principal

@@ -26,8 +26,8 @@ Responda em português.
 3. **User story**: a linha da tarefa em `docs/Casos-De-Uso/user-stories.md`. `**` = Futuro, `***` = Futuro
    Marketplace, `++` = Escopo Adicional (`escopo-adicional.md`), sem marcador = MVP.
 4. **Dados**: entidades envolvidas pela rastreabilidade em `docs/Diagramas/DER/README.md` e detalhes (colunas,
-   enums, obrigatoriedade, unicidade) no `docs/Diagramas/DER/dbdiagram.io/03-der-completo.dbml`.
-5. **Fluxo**: `docs/Diagramas/Diagrama-Atividades/Diagrama_Atividades.c4`, quando cobrir o CCD (vai até CCD066).
+   enums, obrigatoriedade, unicidade) no `docs/Diagramas/DER/03-der-completo.dbml`.
+5. **Fluxo**: `docs/Diagramas/Diagrama-Atividades/Diagrama_Atividades.c4`, a `dynamic view` do CCD (vai até CCD107).
 6. **Regras de arquitetura** que mudam o comportamento da tarefa (só as relevantes): soft delete (ADR-015),
    paginação e status HTTP (ADR-011), auth e papéis (ADR-005, ADR-043), auditoria de ação admin (ADR-034).
 

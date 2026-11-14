@@ -1,6 +1,6 @@
 # ADR-023 — Stack do aplicativo mobile: React Native
 
-- **Status:** Aceito (validado pelo PO em 29/10/2026, na revisão da issue #2)
+- **Status:** Substituído por ADR-058
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 

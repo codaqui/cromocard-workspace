@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Moderar Contatos Privados |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário gerencie seus contatos e conversas privadas, podendo bloquear ou remover contatos conforme necessário. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir pelo menos um contato ou conversa privada. |
 
 ### Fluxo Principal
@@ -23,4 +23,4 @@
 |---|---|
 | 1. O usuário cancela a confirmação da ação. |  |
 |  | 2. O sistema mantém o contato sem alterações. |
-|  | 1. Caso o contato já esteja bloqueado, o sistema informa o status atual e disponibiliza a opção de desbloqueio. |
+|  | 3. Caso o contato já esteja bloqueado, o sistema informa o status atual e disponibiliza a opção de desbloqueio. |

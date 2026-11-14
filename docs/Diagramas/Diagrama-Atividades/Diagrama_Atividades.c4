@@ -80,25 +80,17 @@ model {
       planos, e permite administradores gerenciarem usuarios, catalogo e comunidade
     '
 
-    appWeb = container 'Aplicacao Web' {
-      technology 'React + Vite'
-      description 'SPA usada por visitantes e clientes para navegar, gerenciar colecao, grupos, chat e marketplace'
+    appWeb = container 'Aplicacao Web (SPA)' {
+      technology 'React 19 + TypeScript + Vite'
+      description 'Areas Publica e Cliente do SPA unico (ADR-038), acessado pelo navegador do computador ou do celular: visitantes, clientes e vendedores navegam, gerenciam colecao, grupos, chat e marketplace'
       style {
         shape browser
       }
     }
 
-    appMobile = container 'Aplicativo Mobile' {
-      technology 'React Native'
-      description 'App usado por visitantes e clientes com as mesmas funcionalidades da web, otimizado para uso mobile'
-      style {
-        shape mobile
-      }
-    }
-
-    backofficeApp = container 'Painel BackOffice' {
-      technology 'React + Vite'
-      description 'SPA usada por administradores para gestao e moderacao da plataforma'
+    backofficeApp = container 'Aplicacao Web (SPA) - BackOffice' {
+      technology 'React 19 + TypeScript + Vite'
+      description 'Area /backoffice do mesmo SPA (ADR-038), restrita ao papel ADMIN: gestao e moderacao da plataforma'
       style {
         shape browser
       }
@@ -164,7 +156,7 @@ model {
     }
 
     msgTempoReal = container 'Servico de Mensageria em Tempo Real' {
-      technology 'Node.js + WebSocket'
+      technology 'Node.js + Socket.IO'
       description 'Entrega mensagens de chat pessoal e de grupo em tempo real; conexao autenticada via JWT'
       style {
         shape queue
@@ -200,22 +192,17 @@ model {
   // ---------------------------------------------------------------
 
   visitante -> appWeb 'Explora destaques, busca conteudo, cria conta e faz login' 'HTTPS'
-  visitante -> appMobile 'Explora destaques, busca conteudo, cria conta e faz login' 'HTTPS'
 
   cliente -> appWeb 'Gerencia colecao, participa de grupos, conversa em tempo real, compra/vende cartas e configura o proprio perfil' 'HTTPS'
-  cliente -> appMobile 'Gerencia colecao, participa de grupos, conversa em tempo real, compra/vende cartas e configura o proprio perfil' 'HTTPS'
 
   vendedor -> appWeb 'Cria e gerencia anuncios, propostas e metricas de venda' 'HTTPS'
-  vendedor -> appMobile 'Cria e gerencia anuncios, propostas e metricas de venda' 'HTTPS'
 
   administrador -> backofficeApp 'Administra usuarios, catalogo, comunidade e configuracoes da plataforma' 'HTTPS'
 
   appWeb -> api 'Consome' 'JSON/HTTPS, JWT no header Authorization'
-  appMobile -> api 'Consome' 'JSON/HTTPS, JWT no header Authorization'
   backofficeApp -> api 'Consome' 'JSON/HTTPS, JWT no header Authorization'
 
-  appWeb -> msgTempoReal 'Troca mensagens' 'WebSocket, autenticado via JWT'
-  appMobile -> msgTempoReal 'Troca mensagens' 'WebSocket, autenticado via JWT'
+  appWeb -> msgTempoReal 'Troca mensagens' 'WebSocket (Socket.IO), autenticado via JWT'
 
   msgTempoReal -> modAutenticacao 'Valida token JWT da conexao'
   msgTempoReal -> bancoDados 'Persiste mensagens' 'SQL via Prisma ORM'
@@ -261,7 +248,6 @@ views {
 
     include *,
       appWeb,
-      appMobile,
       backofficeApp,
       msgTempoReal,
       bancoDados,
@@ -273,8 +259,8 @@ views {
   // DIAGRAMAS DE ATIVIDADE - FLUXO PRINCIPAL DE CADA CASO DE USO
   //
   // Convencao: o passo parte do ator, atravessa o frontend (Aplicacao Web,
-  // que possui as mesmas funcionalidades do Aplicativo Mobile conforme o
-  // Diagrama 2), chega ao modulo responsavel da API e, quando o caso de uso
+  // o SPA unico; o BackOffice e a area /backoffice do mesmo SPA - ADR-038;
+  // nao ha aplicativo mobile - ADR-058), chega ao modulo responsavel da API e, quando o caso de uso
   // exige persistencia ou consulta, ao Banco de Dados.
   // ===============================================================
 
@@ -320,37 +306,48 @@ views {
     title 'CCD003 - Criar Conta'
     description '''
       **Ator:** Visitante
-      **Pre-condicao:** estar na tela Home ou com a barra de busca visivel.
-      **Fluxo alternativo:** conforme registrado no caso de uso, exibir mensagem quando a
-      consulta nao retorna resultado.
+      **Pre-condicao:** estar na Home ou na tela de Login.
+      **Fluxo alternativo:** campo invalido ou termos nao aceitos indicam o campo e nao registram;
+      e-mail ja cadastrado informa "E-mail ja cadastrado" e oferece o reenvio da confirmacao se a
+      conta nao confirmou o e-mail; e-mail de conta excluida oferece a reativacao (CCD052); falha
+      no envio do e-mail mantem o cadastro e permite o reenvio, respeitando o limite de pedidos;
+      link expirado ou invalido informa e oferece o reenvio.
     '''
 
     visitante -> appWeb '1. seleciona a opcao Cadastrar'
-    appWeb -> visitante '2. solicita os dados de cadastro e a selecao do tipo de usuario'
+    appWeb -> visitante '2. solicita nome, e-mail, senha, confirmacao da senha e o tipo de usuario (Cliente ou Vendedor)'
     visitante -> appWeb '3. informa os campos solicitados e aceita os termos de uso'
     appWeb -> modAutenticacao '3. envia os dados de cadastro'
-    modAutenticacao -> bancoDados '4. valida os campos preenchidos e a disponibilidade do e-mail'
-    modAutenticacao -> bancoDados '5. registra o usuario'
-    modAutenticacao -> appWeb '5. confirma o cadastro'
-    appWeb -> visitante '5. exibe mensagem de sucesso'
+    modAutenticacao -> bancoDados '4. valida os campos (senha forte) e a disponibilidade do e-mail, sem diferenciar maiusculas'
+    modAutenticacao -> bancoDados '5. registra o usuario com o e-mail ainda nao confirmado'
+    modAutenticacao -> appWeb '5. envia o link de confirmacao (valido por 24 horas)'
+    appWeb -> visitante '5. mostra a tela Confirme seu e-mail, com a opcao de reenviar'
+    visitante -> appWeb '6. abre o link de confirmacao recebido'
+    appWeb -> modAutenticacao '6. envia o token de confirmacao'
+    modAutenticacao -> bancoDados '7. confirma o e-mail do usuario'
+    appWeb -> visitante '7. leva a tela de Login com a mensagem E-mail confirmado'
   }
 
   dynamic view ccd004_realizar_login {
     title 'CCD004 - Realizar Login'
     description '''
       **Ator:** Visitante
-      **Pre-condicao:** possuir cadastro ativo e estar na tela de Login.
-      **Fluxo alternativo:** caso as credenciais nao coincidam com a base de dados,
-      emitir a mensagem de erro "E-mail ou senha incorretos".
+      **Pre-condicao:** possuir cadastro ativo, com o e-mail confirmado, e estar na tela de Login.
+      **Fluxo alternativo:** credenciais que nao coincidem (inclusive em conta so Google) emitem
+      "E-mail ou senha incorretos"; e-mail nao confirmado informa e oferece o reenvio; conta
+      suspensa informa a suspensao; conta excluida oferece a reativacao (CCD052); login com
+      Google vincula a conta existente ou cria uma conta de Cliente; "Sair" no cabecalho encerra
+      a sessao e volta para a area publica.
     '''
 
     visitante -> appWeb '1. acessa a tela de Login'
-    appWeb -> visitante '2. apresenta os campos de credenciais e opcoes de login social'
-    visitante -> appWeb '3. informa e-mail e senha e clica em entrar'
+    appWeb -> visitante '2. apresenta e-mail, senha, a opcao Lembrar de mim (desmarcada) e o login com Google'
+    visitante -> appWeb '3. informa e-mail e senha, marca ou nao Lembrar de mim e clica em entrar'
     appWeb -> modAutenticacao '3. envia as credenciais'
-    modAutenticacao -> bancoDados '4. valida os campos preenchidos e o e-mail informado'
-    modAutenticacao -> appWeb '5. inicia a sessao e emite o token JWT'
-    appWeb -> cliente '5. redireciona para a Dashboard do Painel Cliente'
+    modAutenticacao -> bancoDados '4. confere o e-mail, sem diferenciar maiusculas, e a senha'
+    modAutenticacao -> bancoDados '5. grava a sessao (30 dias com Lembrar de mim; sem ela, ate fechar o navegador)'
+    modAutenticacao -> appWeb '5. emite o token JWT e o refresh token'
+    appWeb -> visitante '5. redireciona para a area do papel: Painel Cliente ou BackOffice (ou para a pagina protegida pedida antes)'
   }
 
   dynamic view ccd005_central_ajuda_faq {
@@ -374,18 +371,25 @@ views {
     description '''
       **Ator:** Visitante
       **Pre-condicao:** estar na tela de Login e selecionar a opcao de recuperacao.
-      **Fluxo alternativo:** caso o e-mail nao possua formato valido, emitir mensagem de erro.
-      Por seguranca, nao informar se o e-mail nao existe na base, apenas exibir mensagem
-      generica de envio.
+      **Fluxo alternativo:** e-mail em formato invalido emite mensagem de erro; e-mail inexistente,
+      ou conta suspensa ou excluida, nao recebe nada e ve a mesma confirmacao generica; link
+      expirado, invalido ou ja usado informa e oferece pedir um novo; conta so Google pode criar
+      uma senha pelo link e passa a entrar dos dois jeitos.
     '''
 
     visitante -> appWeb '1. seleciona a opcao Esqueci minha senha'
     appWeb -> visitante '2. solicita o preenchimento do e-mail cadastrado'
     visitante -> appWeb '3. informa o e-mail solicitado'
     appWeb -> modAutenticacao '3. envia o e-mail informado'
-    modAutenticacao -> bancoDados '4. verifica se o e-mail existe na base de dados'
+    modAutenticacao -> bancoDados '4. verifica se o e-mail pertence a uma conta ativa'
+    modAutenticacao -> bancoDados '5. grava o token de redefinicao (1 hora, uso unico) e invalida os anteriores'
     modAutenticacao -> appWeb '5. envia o link de redefinicao para o e-mail'
-    appWeb -> visitante '5. exibe a confirmacao na tela'
+    appWeb -> visitante '5. exibe uma confirmacao generica de envio'
+    visitante -> appWeb '6. abre o link e informa a senha nova e a confirmacao'
+    appWeb -> modAutenticacao '6. envia o token e a senha nova'
+    modAutenticacao -> bancoDados '7. valida o link e a senha, grava a senha nova, encerra as sessoes e confirma o e-mail'
+    modAutenticacao -> appWeb '7. envia o e-mail avisando da troca de senha'
+    appWeb -> visitante '8. leva a tela de Login com a mensagem Senha alterada'
   }
 
   // ---------------------------------------------------------------
@@ -1254,18 +1258,18 @@ views {
       **Pre-condicao:** estar autenticado e possuir permissao para acessar o dashboard gerencial.
       **Fluxo alternativo:** sem dados disponiveis, o sistema informa que nao existem dados
       para apresentacao; filtros sem informacoes retornam aviso de que nao foram encontrados
-      dados para os filtros selecionados.
+      dados para os filtros selecionados; ao alterar os filtros, o dashboard e atualizado.
     '''
 
     administrador -> backofficeApp '1. acessa a opcao Dashboard Gerencial'
     backofficeApp -> modAdministracao '2. solicita os dados gerenciais'
-    modAdministracao -> bancoDados '2. carrega os dados gerenciais disponiveis'
-    modAdministracao -> backofficeApp '3. retorna os principais indicadores'
-    backofficeApp -> administrador '3. apresenta os indicadores e informacoes da plataforma'
+    modAdministracao -> bancoDados '2. carrega os dados gerenciais, so de registros nao excluidos'
+    modAdministracao -> backofficeApp '3. retorna os indicadores, o grafico de novos cadastros e os cadastros de vendedores recentes'
+    backofficeApp -> administrador '3. apresenta total de usuarios, cartas do catalogo, novos cadastros, grafico e a lista com Ver informacoes'
     administrador -> backofficeApp '4. visualiza os indicadores apresentados'
-    administrador -> backofficeApp '5. seleciona um periodo ou filtro, quando disponivel'
+    administrador -> backofficeApp '5. seleciona um periodo (Hoje, 7 dias, 30 dias ou 1 ano; padrao 30 dias) ou um intervalo de datas'
     backofficeApp -> modAdministracao '6. envia o filtro selecionado'
-    modAdministracao -> bancoDados '6. processa o filtro selecionado'
+    modAdministracao -> bancoDados '6. processa o filtro, cortando os dias pelo horario de Brasilia'
     modAdministracao -> backofficeApp '7. retorna os indicadores conforme os filtros'
     administrador -> backofficeApp '8. consulta os dados apresentados no dashboard'
   }
@@ -1275,22 +1279,27 @@ views {
     description '''
       **Ator:** Administrador
       **Pre-condicao:** estar autenticado e possuir permissao para a gestao de usuarios.
-      **Fluxo alternativo:** dados invalidos ou incompletos sao identificados e informados ao
-      administrador, que corrige e o sistema valida novamente; ao cancelar, o sistema retorna
-      para a lista de usuarios.
+      **Fluxo alternativo:** dados invalidos ou incompletos sao informados ao administrador,
+      que corrige e o sistema valida novamente; ao cancelar, o sistema retorna para a lista de
+      usuarios; suspender, excluir ou rebaixar a propria conta, ou o ultimo administrador ativo,
+      e impedido com o motivo.
     '''
 
     administrador -> backofficeApp '1. acessa a opcao Gestao de Usuarios'
-    backofficeApp -> modAdministracao '2. solicita a lista de usuarios'
-    modAdministracao -> bancoDados '2. consulta os usuarios cadastrados'
-    backofficeApp -> administrador '2. apresenta a lista de usuarios cadastrados'
+    backofficeApp -> modAdministracao '2. solicita a lista de usuarios, com busca e filtros'
+    modAdministracao -> bancoDados '2. consulta os usuarios nao excluidos por nome, e-mail, papel e status'
+    backofficeApp -> administrador '2. apresenta nome, e-mail, papel, status e data de cadastro'
     administrador -> backofficeApp '3. seleciona um usuario ou escolhe cadastrar um novo usuario'
-    backofficeApp -> administrador '4. apresenta os dados e as opcoes de gerenciamento'
-    administrador -> backofficeApp '5. informa ou altera os dados do usuario'
+    backofficeApp -> administrador '4. apresenta os dados e as opcoes: editar, alterar papel, suspender, reativar e excluir'
+    administrador -> backofficeApp '5. informa ou altera nome, e-mail e papel'
     backofficeApp -> modAdministracao '5. envia os dados informados'
     modAdministracao -> modAdministracao '6. valida os dados informados'
-    modAdministracao -> bancoDados '7. registra as alteracoes realizadas'
+    modAdministracao -> bancoDados '7. registra as alteracoes; no cadastro, cria a conta com e-mail confirmado'
+    modAdministracao -> modAutenticacao '7. envia o convite por e-mail com o link para definir a senha'
     backofficeApp -> administrador '8. apresenta mensagem confirmando a operacao'
+    administrador -> backofficeApp '9. escolhe suspender ou excluir um usuario e informa o motivo'
+    backofficeApp -> modAdministracao '10. envia a acao e o motivo'
+    modAdministracao -> bancoDados '10. muda o status ou exclui a conta (soft delete), encerra as sessoes e grava o log de auditoria'
   }
 
   dynamic view ccd060_notificacao_global {
@@ -1304,13 +1313,16 @@ views {
     '''
 
     administrador -> backofficeApp '1. acessa a opcao Notificacao Global'
-    backofficeApp -> administrador '2. apresenta a tela para criacao da notificacao'
-    administrador -> backofficeApp '3. informa o titulo e o conteudo da notificacao'
+    backofficeApp -> modAdministracao '2. solicita o historico de disparos'
+    modAdministracao -> bancoDados '2. consulta os disparos, dos mais recentes para os mais antigos'
+    backofficeApp -> administrador '2. apresenta a tela de criacao e o historico dos disparos'
+    administrador -> backofficeApp '3. informa o titulo, o conteudo e, opcionalmente, o link de destino'
     backofficeApp -> modAdministracao '4. envia as informacoes preenchidas'
     modAdministracao -> modAdministracao '4. valida as informacoes preenchidas'
     administrador -> backofficeApp '5. confirma o envio da notificacao'
     backofficeApp -> modAdministracao '5. confirma o disparo'
-    modAdministracao -> modNotificacoes '6. envia a notificacao para os usuarios da plataforma'
+    modAdministracao -> modNotificacoes '6. envia a notificacao na central de notificacoes a todos os usuarios nao excluidos e nao suspensos, menos o proprio administrador'
+    modNotificacoes -> bancoDados '6. grava as notificacoes dos destinatarios'
     modAdministracao -> bancoDados '7. registra o disparo da notificacao'
     backofficeApp -> administrador '8. informa que a notificacao foi enviada com sucesso'
   }
@@ -1321,22 +1333,26 @@ views {
       **Ator:** Administrador
       **Pre-condicao:** estar autenticado e possuir permissao para gerenciar o catalogo.
       **Fluxo alternativo:** dados invalidos sao informados para correcao e o sistema valida
-      novamente; item com vinculos que impedem a exclusao tem a remocao bloqueada com
-      informacao do motivo.
+      novamente; item com vinculos que impedem a exclusao (album com cartas; categoria com
+      albuns, cartas ou subcategorias; carta usada em colecoes) tem a remocao bloqueada com o motivo.
     '''
 
     administrador -> backofficeApp '1. acessa a opcao Gestao de Catalogo'
     backofficeApp -> modAdministracao '2. solicita os itens do catalogo'
-    modAdministracao -> bancoDados '2. consulta os itens cadastrados no catalogo'
-    backofficeApp -> administrador '2. apresenta os itens cadastrados'
+    modAdministracao -> bancoDados '2. consulta cartas, albuns e categorias'
+    backofficeApp -> administrador '2. apresenta os itens nas abas de cartas, albuns e categorias'
     administrador -> backofficeApp '3. seleciona a opcao de cadastrar, editar ou remover um item'
     backofficeApp -> administrador '4. apresenta o formulario ou as opcoes correspondentes'
-    administrador -> backofficeApp '5. informa ou altera os dados do item'
-    backofficeApp -> modAdministracao '5. envia os dados informados'
+    administrador -> backofficeApp '5. informa ou altera os dados do item; na carta, envia a imagem da frente e, opcionalmente, a do verso'
+    backofficeApp -> modAdministracao '5. envia os dados e as imagens'
     modAdministracao -> modAdministracao '6. valida os dados informados'
     administrador -> backofficeApp '7. confirma a operacao'
-    modAdministracao -> bancoDados '8. registra a operacao realizada'
+    modAdministracao -> bancoDados '8. registra a operacao; o total de cartas do album e calculado pelas cartas dele'
     backofficeApp -> administrador '9. atualiza o catalogo e confirma a operacao'
+    administrador -> backofficeApp '10. importa cartas por um arquivo CSV, a partir do modelo para baixar'
+    backofficeApp -> modAdministracao '10. envia o arquivo CSV'
+    modAdministracao -> bancoDados '11. valida todas as linhas e so grava se todas estiverem corretas'
+    backofficeApp -> administrador '11. confirma a importacao ou informa as linhas com problema'
   }
 
   dynamic view ccd062_gestao_comunidade {
@@ -1344,43 +1360,53 @@ views {
     description '''
       **Ator:** Administrador
       **Pre-condicao:** estar autenticado e possuir permissao para gerenciar grupos.
-      **Fluxo alternativo:** dados invalidos ou incompletos sao informados para correcao e
-      revalidados; ao cancelar, o sistema encerra a operacao sem realizar alteracoes.
+      **Fluxo alternativo:** acao confirmada sem motivo e recusada (motivo obrigatorio) e
+      revalidada apos a correcao; ao cancelar, o sistema encerra a operacao sem alteracoes.
     '''
 
     administrador -> backofficeApp '1. acessa a opcao Gestao de Comunidade'
-    backofficeApp -> modAdministracao '2. solicita os grupos existentes'
-    modAdministracao -> bancoDados '2. consulta os grupos existentes'
-    backofficeApp -> administrador '2. apresenta os grupos existentes'
-    administrador -> backofficeApp '3. seleciona um grupo ou escolhe criar um novo grupo'
-    backofficeApp -> administrador '4. apresenta as informacoes e opcoes disponiveis'
-    administrador -> backofficeApp '5. informa ou altera os dados do grupo'
-    backofficeApp -> modAdministracao '5. envia os dados do grupo'
-    modAdministracao -> modAdministracao '6. valida os dados informados'
+    backofficeApp -> modAdministracao '2. solicita os indicadores e os grupos'
+    modAdministracao -> bancoDados '2. consulta grupos ativos, mensagens dos ultimos 7 dias e denuncias pendentes'
+    backofficeApp -> administrador '2. apresenta os indicadores e os grupos existentes'
+    administrador -> backofficeApp '3. seleciona um grupo'
+    backofficeApp -> administrador '4. apresenta as opcoes: suspender, reativar e excluir'
+    administrador -> backofficeApp '5. escolhe a acao e informa o motivo'
+    backofficeApp -> administrador '6. solicita a confirmacao'
     administrador -> backofficeApp '7. confirma a operacao'
-    modAdministracao -> bancoDados '8. registra as alteracoes'
+    backofficeApp -> modAdministracao '7. envia a acao e o motivo'
+    modAdministracao -> bancoDados '8. registra a alteracao e o motivo no log de auditoria'
     backofficeApp -> administrador '9. atualiza a lista de grupos e confirma a operacao'
+    administrador -> backofficeApp '10. abre a fila de mensagens denunciadas'
+    backofficeApp -> modAdministracao '11. solicita as denuncias pendentes'
+    modAdministracao -> bancoDados '11. consulta autor, grupo, texto, motivo e quem denunciou'
+    administrador -> backofficeApp '12. remove a mensagem ou dispensa a denuncia, informando o motivo'
+    backofficeApp -> modAdministracao '13. envia a decisao'
+    modAdministracao -> bancoDados '13. remove a mensagem, resolve ou dispensa a denuncia e grava o log de auditoria'
   }
 
   dynamic view ccd063_exportar_relatorios {
     title 'CCD063 - Exportar Relatorios Gerenciais'
     description '''
       **Ator:** Administrador
-      **Pre-condicao:** estar autenticado e possuir permissao para gerar relatorios gerenciais.
-      **Fluxo alternativo:** filtros sem dados geram aviso de que nao foram encontrados dados;
-      ao cancelar a exportacao, o sistema encerra a operacao sem gerar o arquivo.
+      **Pre-condicao:** estar autenticado e possuir permissao para exportar relatorios.
+      **Fluxo alternativo:** filtros sem dados geram aviso de que nao foram encontrados dados e
+      o administrador pode alterar os filtros; ao cancelar a exportacao, o sistema encerra a
+      operacao sem gerar o arquivo.
     '''
 
-    administrador -> backofficeApp '1. acessa a opcao de relatorios gerenciais'
-    backofficeApp -> administrador '2. apresenta os relatorios e filtros disponiveis'
+    administrador -> backofficeApp '1. acessa a opcao Exportar Relatorios'
+    backofficeApp -> administrador '2. apresenta os relatorios Novos cadastros e Catalogo, os filtros e o historico das exportacoes'
     administrador -> backofficeApp '3. seleciona o tipo de relatorio e os filtros desejados'
     backofficeApp -> modAdministracao '4. envia os filtros selecionados'
     modAdministracao -> bancoDados '4. processa os filtros selecionados'
     modAdministracao -> backofficeApp '5. apresenta os dados do relatorio'
-    administrador -> backofficeApp '6. seleciona a opcao Exportar e confirma a operacao'
-    backofficeApp -> modAdministracao '7. solicita a geracao do arquivo'
-    modAdministracao -> backofficeApp '7. gera o arquivo do relatorio'
-    backofficeApp -> administrador '8. disponibiliza o arquivo para o administrador'
+    administrador -> backofficeApp '6. seleciona Exportar e escolhe o formato (CSV ou PDF)'
+    administrador -> backofficeApp '7. confirma a operacao'
+    backofficeApp -> modAdministracao '8. solicita a geracao do arquivo'
+    modAdministracao -> bancoDados '8. registra a exportacao no log de auditoria'
+    backofficeApp -> administrador '9. disponibiliza o arquivo para o administrador'
+    administrador -> backofficeApp '10. seleciona Baixar numa exportacao do historico'
+    backofficeApp -> modAdministracao '11. gera o arquivo de novo, com o mesmo tipo, filtros e formato'
   }
 
   dynamic view ccd064_aprovar_solicitacoes {
@@ -1390,21 +1416,25 @@ views {
       **Pre-condicao:** estar autenticado e existir pelo menos uma solicitacao pendente
       (ex.: solicitacao de album CCD010 ou de cadastro de carta CCD023).
       **Fluxo alternativo:** solicitacao ja processada gera aviso de que nao esta mais
-      disponivel para aprovacao; ao cancelar, o sistema retorna para a lista de solicitacoes.
+      disponivel para aprovacao; ao cancelar, o sistema retorna para a lista de solicitacoes;
+      ao recusar com motivo obrigatorio, a solicitacao fica recusada, o solicitante e avisado e
+      a acao vai para o log de auditoria.
     '''
 
     administrador -> backofficeApp '1. acessa a opcao Solicitacoes'
     backofficeApp -> modAdministracao '2. solicita as pendencias'
     modAdministracao -> bancoDados '2. consulta as solicitacoes pendentes'
     backofficeApp -> administrador '2. apresenta as solicitacoes pendentes'
-    administrador -> backofficeApp '3. seleciona a solicitacao e os filtros desejados'
+    administrador -> backofficeApp '3. seleciona uma solicitacao'
     backofficeApp -> administrador '4. apresenta os detalhes da solicitacao'
     administrador -> backofficeApp '5. analisa as informacoes'
-    administrador -> backofficeApp '6. seleciona a opcao Aprovar e confirma a operacao'
-    backofficeApp -> modAdministracao '7. envia a aprovacao'
-    modAdministracao -> bancoDados '7. registra a aprovacao'
-    modAdministracao -> bancoDados '8. atualiza o status da solicitacao'
-    backofficeApp -> administrador '9. informa que a solicitacao foi aprovada'
+    administrador -> backofficeApp '6. seleciona a opcao Aprovar'
+    administrador -> backofficeApp '7. confirma a operacao'
+    backofficeApp -> modAdministracao '8. envia a aprovacao'
+    modAdministracao -> bancoDados '8. registra a aprovacao e cria o item no catalogo como foi sugerido'
+    modAdministracao -> bancoDados '9. atualiza o status da solicitacao e grava o log de auditoria'
+    modAdministracao -> modNotificacoes '9. avisa o solicitante por notificacao'
+    backofficeApp -> administrador '10. informa que a solicitacao foi aprovada'
   }
 
   dynamic view ccd065_log_auditoria {
@@ -1418,14 +1448,14 @@ views {
 
     administrador -> backofficeApp '1. acessa a opcao Log de Auditoria'
     backofficeApp -> modAdministracao '2. solicita os registros administrativos'
-    modAdministracao -> bancoDados '2. consulta os registros de acoes administrativas'
+    modAdministracao -> bancoDados '2. consulta as acoes administrativas, das mais recentes para as mais antigas'
     backofficeApp -> administrador '2. apresenta os registros de acoes administrativas'
-    administrador -> backofficeApp '3. aplica filtros de pesquisa, quando necessario'
+    administrador -> backofficeApp '3. filtra por administrador, tipo de acao, tipo de entidade, periodo e ID do alvo'
     backofficeApp -> modAdministracao '4. envia os filtros informados'
     modAdministracao -> bancoDados '4. processa os filtros informados'
-    backofficeApp -> administrador '5. apresenta os registros correspondentes'
+    backofficeApp -> administrador '5. apresenta os registros correspondentes, com a acao descrita em portugues'
     administrador -> backofficeApp '6. seleciona um registro'
-    backofficeApp -> administrador '7. apresenta os detalhes da acao registrada'
+    backofficeApp -> administrador '7. apresenta os detalhes da acao registrada, inclusive o motivo'
   }
 
   dynamic view ccd066_configuracoes_globais {
@@ -1440,14 +1470,14 @@ views {
 
     administrador -> backofficeApp '1. acessa a opcao Configuracoes Globais'
     backofficeApp -> modAdministracao '2. solicita as configuracoes disponiveis'
-    modAdministracao -> bancoDados '2. consulta as configuracoes disponiveis'
+    modAdministracao -> bancoDados '2. consulta banner da Home, categorias padrao e templates de notificacao'
     backofficeApp -> administrador '2. apresenta as configuracoes disponiveis'
     administrador -> backofficeApp '3. seleciona uma configuracao'
     backofficeApp -> administrador '4. apresenta os valores atuais da configuracao'
     administrador -> backofficeApp '5. altera os valores desejados'
     backofficeApp -> modAdministracao '6. valida as informacoes inseridas'
     administrador -> backofficeApp '7. confirma as alteracoes'
-    modAdministracao -> bancoDados '8. salva as novas configuracoes'
+    modAdministracao -> bancoDados '8. salva as novas configuracoes e grava o log de auditoria; a Home publica passa a ler o banner salvo'
     backofficeApp -> administrador '9. confirma que as configuracoes foram atualizadas'
   }
 
@@ -1868,5 +1898,342 @@ views {
     modPagamentos -> bancoDados '2. filtra e ordena o historico de vendas agrupando pelas cartas de maior saida'
     modPagamentos -> appWeb '3. retorna o ranking'
     appWeb -> vendedor '3. exibe o ranking em formato de lista informando o volume de cada carta'
+  }
+
+  // ---------------------------------------------------------------
+  // 11. ESCOPO ADICIONAL - BACKOFFICE E COMUNIDADE (CCD094 a CCD107)
+  //     Vindos do prototipo no Figma (docs/Casos-De-Uso/escopo-adicional.md)
+  // ---------------------------------------------------------------
+
+  dynamic view ccd094_validar_cadastro_vendedor {
+    title 'CCD094 - Validar Cadastro de Vendedor'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador e existir pelo menos um cadastro de
+      vendedor aguardando analise.
+      **Fluxo alternativo:** ao Rejeitar, o sistema pede o motivo, muda o status para Reprovado,
+      grava o log de auditoria e avisa o vendedor; havendo pendencia, oferece Notificar Pendencia
+      (CCD095); ao fechar o dossie sem decidir, mantem o status atual.
+    '''
+
+    administrador -> backofficeApp '1. acessa a lista Cadastros dos Vendedores Recentes no Dashboard'
+    backofficeApp -> modAdministracao '2. solicita os cadastros de vendedores'
+    modAdministracao -> bancoDados '2. consulta nome, e-mail, CNPJ ou CPF, status da analise e total de pendentes'
+    backofficeApp -> administrador '2. apresenta os cadastros e a quantidade de pendentes'
+    administrador -> backofficeApp '3. filtra por status ou usa o atalho Analisar Fila'
+    backofficeApp -> administrador '4. atualiza a lista conforme o filtro'
+    administrador -> backofficeApp '5. seleciona Validar Cadastro de um vendedor em analise'
+    backofficeApp -> modAdministracao '6. solicita o dossie do vendedor'
+    modAdministracao -> bancoDados '6. consulta empresa, responsavel legal, dados bancarios, endereco e documentos'
+    backofficeApp -> administrador '6. apresenta o dossie do vendedor'
+    administrador -> backofficeApp '7. visualiza cada documento e o marca como validado'
+    modAdministracao -> bancoDados '8. registra a validacao do documento'
+    administrador -> backofficeApp '9. registra uma anotacao interna, quando necessario'
+    modAdministracao -> bancoDados '10. grava a anotacao com autor e data, sem exibi-la ao vendedor'
+    administrador -> backofficeApp '11. seleciona Validar Lojista'
+    backofficeApp -> modAdministracao '12. envia a aprovacao'
+    modAdministracao -> bancoDados '12. muda o status do cadastro para Aprovado (lojista certificado)'
+    modAdministracao -> bancoDados '13. registra a acao no log de auditoria'
+    backofficeApp -> administrador '14. informa que o cadastro foi aprovado'
+  }
+
+  dynamic view ccd095_notificar_pendencia_cadastral {
+    title 'CCD095 - Notificar Pendencia Cadastral'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador e o cadastro do vendedor estar em
+      analise ou pendente.
+      **Fluxo alternativo:** corpo da mensagem vazio e recusado; ao cancelar, o formulario fecha
+      sem enviar; se o e-mail falhar, a notificacao no site e mantida e o administrador e avisado;
+      prazo vencido mantem o cadastro Pendente para a decisao na CCD094.
+    '''
+
+    administrador -> backofficeApp '1. seleciona Notificar Lojista na lista ou Notificar Pendencia no dossie'
+    backofficeApp -> administrador '2. apresenta o formulario com o destinatario e os canais: notificacao no site e e-mail'
+    administrador -> backofficeApp '3. escolhe um modelo de mensagem pronto, quando houver um adequado'
+    backofficeApp -> administrador '4. preenche o corpo com o texto do modelo, o nome, o CNPJ e o prazo'
+    administrador -> backofficeApp '5. revisa ou escreve o corpo da mensagem'
+    administrador -> backofficeApp '6. escolhe o prazo: 24 horas, 48 horas (padrao), 72 horas ou 7 dias'
+    administrador -> backofficeApp '7. confirma o envio'
+    backofficeApp -> modAdministracao '8. envia a pendencia'
+    modAdministracao -> modAdministracao '8. valida as informacoes preenchidas'
+    modAdministracao -> modNotificacoes '9. envia a notificacao no site e o e-mail ao vendedor'
+    modAdministracao -> bancoDados '10. muda o status do cadastro para Pendente e grava o log de auditoria'
+    backofficeApp -> administrador '11. apresenta a confirmacao com destinatario, assunto, canais, horario e previa'
+  }
+
+  dynamic view ccd096_evolucao_cadastros {
+    title 'CCD096 - Acompanhar Evolucao de Cadastros'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** periodo sem cadastros informa que nao ha cadastros; sem meta mensal
+      configurada, mostra o total sem o percentual; a meta e alterada em Configuracoes Globais.
+    '''
+
+    administrador -> backofficeApp '1. acessa o Dashboard Gerencial'
+    backofficeApp -> modAdministracao '2. solicita a evolucao dos cadastros'
+    modAdministracao -> bancoDados '2. consulta os novos colecionadores, os lojistas certificados e a meta mensal'
+    backofficeApp -> administrador '2. apresenta o grafico Novos Cadastros vs Lojistas Certificados e os totais'
+    backofficeApp -> administrador '3. apresenta o percentual da meta mensal, a meta projetada e a variacao de cada indicador'
+    administrador -> backofficeApp '4. seleciona o periodo: Hoje, 7 dias, 30 dias ou 1 ano'
+    backofficeApp -> modAdministracao '5. envia o periodo'
+    modAdministracao -> bancoDados '5. agrupa os pontos por hora, dia ou mes'
+    backofficeApp -> administrador '5. atualiza o grafico'
+    administrador -> backofficeApp '6. passa o cursor sobre um ponto do grafico'
+    backofficeApp -> administrador '7. mostra o valor daquele ponto'
+  }
+
+  dynamic view ccd097_indicadores_financeiros {
+    title 'CCD097 - Visualizar Indicadores Financeiros'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador e o marketplace (compra, pedidos e
+      pagamentos) estar em funcionamento.
+      **Fluxo alternativo:** periodo sem movimentacao mostra os indicadores com valor zero.
+    '''
+
+    administrador -> backofficeApp '1. acessa o Dashboard Gerencial'
+    backofficeApp -> modAdministracao '2. solicita os indicadores financeiros'
+    modAdministracao -> bancoDados '2. soma os pagamentos recebidos e ainda nao liberados (custodia)'
+    modAdministracao -> bancoDados '3. calcula o valor liquidado no dia, os pedidos liberados e o valor retido em garantia'
+    modAdministracao -> bancoDados '4. calcula o volume anunciado e a nota de reputacao de cada vendedor'
+    backofficeApp -> administrador '4. apresenta os indicadores e a lista de vendedores'
+    administrador -> backofficeApp '5. seleciona o periodo: Hoje, 7 dias, 30 dias ou 1 ano'
+    backofficeApp -> administrador '6. atualiza os indicadores financeiros conforme o periodo'
+    administrador -> backofficeApp '7. seleciona Ver Livro Razao de Hoje'
+    backofficeApp -> modAdministracao '8. solicita os pagamentos e liberacoes do dia'
+    backofficeApp -> administrador '8. apresenta a lista dos pagamentos e liberacoes do dia'
+  }
+
+  dynamic view ccd098_dados_complementares_usuario {
+    title 'CCD098 - Gerenciar Dados Complementares do Usuario'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** nome de usuario ou CPF de outra conta informa o dado em uso; CPF,
+      telefone ou nome de usuario fora do formato indicam o campo; sem o envio do link de
+      ativacao, a conta e criada e o link pode ser reenviado depois; o usuario pode entrar
+      informando o nome de usuario no lugar do e-mail.
+    '''
+
+    administrador -> backofficeApp '1. acessa a Gestao de Usuarios'
+    backofficeApp -> modAdministracao '2. solicita a lista de usuarios'
+    modAdministracao -> bancoDados '2. consulta nome, @, ID, e-mail, telefone, papel, status, data e IP do ultimo acesso'
+    backofficeApp -> administrador '2. apresenta a lista de usuarios'
+    administrador -> backofficeApp '3. busca por nome, @, e-mail, CPF, CNPJ ou ID'
+    backofficeApp -> administrador '4. apresenta os usuarios encontrados'
+    administrador -> backofficeApp '5. seleciona + Novo Usuario ou edita um usuario'
+    backofficeApp -> administrador '6. apresenta nome completo, @, e-mail, CPF, telefone com DDD e papel de acesso'
+    administrador -> backofficeApp '7. preenche ou altera os dados complementares'
+    administrador -> backofficeApp '8. marca Enviar link de ativacao de conta por e-mail, no cadastro'
+    administrador -> backofficeApp '9. confirma a operacao'
+    backofficeApp -> modAdministracao '10. envia os dados'
+    modAdministracao -> bancoDados '10. valida que o @ e o CPF nao pertencem a outra conta'
+    modAdministracao -> bancoDados '11. grava os dados'
+    modAdministracao -> modAutenticacao '11. envia o link de ativacao com validade de 24 horas, se marcado'
+    modAdministracao -> bancoDados '12. registra a acao no log de auditoria'
+    backofficeApp -> administrador '12. confirma a operacao'
+  }
+
+  dynamic view ccd099_aplicar_sancao {
+    title 'CCD099 - Aplicar Sancao a Usuario'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** Remover Mensagem & Advertir Usuario remove a mensagem, adverte e
+      resolve a denuncia; o fim do prazo da suspensao volta o usuario para Ativo; Reativar volta
+      o status para Ativo com log de auditoria; sem justificativa, a sancao e recusada.
+    '''
+
+    administrador -> backofficeApp '1. abre uma denuncia na Fila de Moderacao ou seleciona um usuario'
+    backofficeApp -> modAdministracao '2. solicita o usuario e as advertencias anteriores'
+    modAdministracao -> bancoDados '2. consulta o usuario e as advertencias'
+    backofficeApp -> administrador '2. apresenta as sancoes: advertir, suspender temporariamente e banir'
+    administrador -> backofficeApp '3. escolhe a sancao'
+    backofficeApp -> administrador '4. solicita a justificativa e, na suspensao, o prazo (3, 7, 15 ou 30 dias)'
+    administrador -> backofficeApp '5. informa a justificativa e o prazo e confirma'
+    backofficeApp -> modAdministracao '5. envia a sancao'
+    modAdministracao -> bancoDados '6. advertencia: soma uma advertencia ao usuario'
+    modAdministracao -> modNotificacoes '6. avisa o usuario advertido por notificacao'
+    modAdministracao -> bancoDados '7. suspensao: status Suspenso ate o fim do prazo e sessoes encerradas'
+    modAdministracao -> bancoDados '8. banimento: status Bloqueado, sessoes encerradas e novos logins impedidos'
+    modAdministracao -> bancoDados '9. registra a sancao e a justificativa no log de auditoria'
+    backofficeApp -> administrador '10. confirma a sancao aplicada'
+  }
+
+  dynamic view ccd100_agendar_notificacao_global {
+    title 'CCD100 - Agendar Notificacao Global'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** data ou horario passados sao recusados; um agendamento na fila pode
+      ser cancelado (com log de auditoria); agendamentos nao sao editados: cancela e cria outro.
+    '''
+
+    administrador -> backofficeApp '1. preenche a notificacao na Central de Notificacoes'
+    administrador -> backofficeApp '2. escolhe Agendar Horario em vez de Disparo Imediato'
+    backofficeApp -> administrador '3. apresenta o calendario e o horario, no fuso de Brasilia (UTC-3)'
+    administrador -> backofficeApp '4. seleciona o dia e o horario do envio'
+    administrador -> backofficeApp '5. confirma o agendamento'
+    backofficeApp -> modAdministracao '6. envia o agendamento'
+    modAdministracao -> modAdministracao '6. valida que o horario esta pelo menos 5 minutos a frente'
+    modAdministracao -> bancoDados '7. grava a notificacao com o status Na fila e o log de auditoria'
+    backofficeApp -> administrador '8. informa o titulo, o publico e o horario programado'
+    modAdministracao -> modNotificacoes '9. no horario programado (job agendado), envia aos destinatarios'
+    modAdministracao -> bancoDados '9. muda o status para Entregue'
+    administrador -> backofficeApp '10. consulta o historico de disparos'
+    backofficeApp -> administrador '11. apresenta data e horario, titulo, publico, canal e status'
+  }
+
+  dynamic view ccd101_segmentar_notificacao_global {
+    title 'CCD101 - Segmentar Notificacao Global'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** publico sem usuarios impede o envio; sem nenhum canal escolhido, o
+      sistema informa que pelo menos um canal e obrigatorio.
+    '''
+
+    administrador -> backofficeApp '1. preenche a notificacao na Central de Notificacoes'
+    administrador -> backofficeApp '2. escolhe o publico: toda a base, colecionadores ativos ou vendedores'
+    backofficeApp -> modAdministracao '3. solicita o tamanho do publico'
+    modAdministracao -> bancoDados '3. conta os usuarios do publico escolhido'
+    backofficeApp -> administrador '3. mostra quantos usuarios fazem parte do publico'
+    administrador -> backofficeApp '4. escolhe os canais: notificacao na plataforma ou e-mail'
+    administrador -> backofficeApp '5. confirma o envio'
+    backofficeApp -> modAdministracao '6. envia o disparo segmentado'
+    modAdministracao -> modNotificacoes '6. envia a notificacao so ao publico, pelos canais escolhidos'
+    modAdministracao -> bancoDados '7. registra publico, canais e destinatarios no historico e no log de auditoria'
+    backofficeApp -> administrador '8. informa que a notificacao foi enviada, com o publico selecionado'
+  }
+
+  dynamic view ccd102_exportar_log_auditoria {
+    title 'CCD102 - Exportar Log de Auditoria'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** filtros sem registros nao geram o arquivo; mais de 10.000 registros
+      pedem para refinar os filtros.
+    '''
+
+    administrador -> backofficeApp '1. acessa o Log de Auditoria e aplica os filtros'
+    backofficeApp -> modAdministracao '2. solicita os registros filtrados'
+    modAdministracao -> bancoDados '2. consulta os registros correspondentes'
+    backofficeApp -> administrador '2. apresenta os registros'
+    administrador -> backofficeApp '3. seleciona Extrair Logs'
+    backofficeApp -> modAdministracao '4. solicita o arquivo'
+    modAdministracao -> modAdministracao '4. gera o CSV com data e hora, responsavel, acao, alvo e justificativa'
+    backofficeApp -> administrador '5. disponibiliza o arquivo para download'
+    modAdministracao -> bancoDados '6. registra a exportacao no log de auditoria'
+  }
+
+  dynamic view ccd103_votar_solicitacao_catalogo {
+    title 'CCD103 - Votar em Solicitacao de Catalogo'
+    description '''
+      **Atores:** Cliente, Administrador
+      **Pre-condicao:** cliente autenticado e uma solicitacao de categoria pendente aberta para votacao.
+      **Fluxo alternativo:** votar de novo troca o voto anterior; votar numa sugestao ja aprovada
+      ou recusada informa que a votacao foi encerrada.
+    '''
+
+    cliente -> appWeb '1. acessa a pagina Sugestoes da comunidade'
+    appWeb -> modColecao '2. solicita as sugestoes em votacao'
+    modColecao -> bancoDados '2. consulta as sugestoes pendentes e a contagem de votos'
+    appWeb -> cliente '2. apresenta as sugestoes com a descricao e os votos'
+    cliente -> appWeb '3. vota a favor, neutro ou contra'
+    appWeb -> modColecao '4. envia o voto'
+    modColecao -> bancoDados '4. registra o voto, um por cliente em cada sugestao'
+    appWeb -> cliente '5. atualiza a contagem de votos'
+    administrador -> backofficeApp '6. abre a solicitacao na Fila de Solicitacoes'
+    backofficeApp -> modAdministracao '7. solicita o quorum'
+    modAdministracao -> bancoDados '7. consulta total de votos, meta, percentual e a divisao dos votos'
+    backofficeApp -> administrador '7. apresenta o quorum da solicitacao'
+    administrador -> backofficeApp '8. aprova ou recusa considerando o resultado (CCD064)'
+    modAdministracao -> bancoDados '9. encerra a votacao da sugestao'
+  }
+
+  dynamic view ccd104_ordenar_categorias_padrao {
+    title 'CCD104 - Ordenar Categorias Padrao'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador e existir pelo menos uma categoria padrao.
+      **Fluxo alternativo:** sair sem salvar descarta as mudancas; a primeira categoria nao sobe
+      e a ultima nao desce (seta desabilitada).
+    '''
+
+    administrador -> backofficeApp '1. acessa Configuracoes Globais, em Ordenacao e Gestao de Categorias Padrao'
+    backofficeApp -> modAdministracao '2. solicita as categorias padrao'
+    modAdministracao -> bancoDados '2. consulta posicao, nome, slug, quantidade de cartas e selo'
+    backofficeApp -> administrador '2. apresenta as categorias na ordem atual'
+    administrador -> backofficeApp '3. move uma categoria pelas setas ou arrastando'
+    backofficeApp -> administrador '4. atualiza as posicoes na tela'
+    administrador -> backofficeApp '5. marca uma categoria como Fixado no topo'
+    backofficeApp -> administrador '6. coloca a categoria fixada na primeira posicao'
+    administrador -> backofficeApp '7. seleciona Salvar Ordem'
+    backofficeApp -> modAdministracao '8. envia a nova ordem'
+    modAdministracao -> bancoDados '8. grava a ordem e o log de auditoria'
+    backofficeApp -> administrador '9. confirma; menu, filtros e vitrine passam a seguir a nova ordem'
+  }
+
+  dynamic view ccd105_duplicar_carta {
+    title 'CCD105 - Duplicar Carta'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado com permissao para gerenciar o catalogo.
+      **Fluxo alternativo:** numeracao repetida no mesmo album e recusada; ao cancelar, o
+      formulario fecha sem criar a carta.
+    '''
+
+    administrador -> backofficeApp '1. seleciona Duplicar numa carta da Gestao de Catalogo'
+    backofficeApp -> modAdministracao '2. solicita os dados da carta de origem'
+    modAdministracao -> bancoDados '2. consulta a carta de origem'
+    backofficeApp -> administrador '2. abre o formulario preenchido, sem a numeracao e sem as imagens'
+    administrador -> backofficeApp '3. informa a numeracao, as imagens e ajusta os demais dados'
+    administrador -> backofficeApp '4. confirma o cadastro'
+    backofficeApp -> modAdministracao '5. envia a carta nova'
+    modAdministracao -> modAdministracao '5. valida os dados como num cadastro novo'
+    modAdministracao -> bancoDados '6. grava a nova carta e o log de auditoria'
+    backofficeApp -> administrador '6. confirma a operacao'
+  }
+
+  dynamic view ccd106_salvar_rascunho_carta {
+    title 'CCD106 - Salvar Rascunho de Carta'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado com permissao para gerenciar o catalogo.
+      **Fluxo alternativo:** publicar com campos obrigatorios vazios indica os campos e mantem o
+      rascunho; o rascunho pode ser excluido.
+    '''
+
+    administrador -> backofficeApp '1. preenche parte do formulario Cadastrar Nova Carta no Catalogo'
+    administrador -> backofficeApp '2. seleciona Salvar como Rascunho'
+    backofficeApp -> modAdministracao '3. envia o rascunho'
+    modAdministracao -> bancoDados '3. grava a carta como rascunho, exigindo so o nome'
+    modAdministracao -> modAdministracao '4. mantem o rascunho fora do catalogo, das buscas e das colecoes'
+    administrador -> backofficeApp '5. abre o rascunho pelo filtro Rascunhos da Gestao de Catalogo'
+    backofficeApp -> administrador '6. apresenta o formulario com os dados salvos'
+    administrador -> backofficeApp '7. completa os dados e seleciona Cadastrar Carta no Catalogo'
+    backofficeApp -> modAdministracao '8. envia a carta completa'
+    modAdministracao -> bancoDados '8. valida os campos obrigatorios, publica a carta e grava o log de auditoria'
+  }
+
+  dynamic view ccd107_historico_relatorios {
+    title 'CCD107 - Consultar Historico de Relatorios'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** relatorio com mais de 90 dias informa que o arquivo expirou e oferece
+      gerar de novo com os mesmos filtros; sem exportacoes, informa que o historico esta vazio.
+    '''
+
+    administrador -> backofficeApp '1. acessa Exportar Relatorios'
+    backofficeApp -> modAdministracao '2. solicita o historico de exportacoes'
+    modAdministracao -> bancoDados '2. consulta codigo, tipo, periodo, solicitante, data, formato e tamanho'
+    backofficeApp -> administrador '2. apresenta o historico de toda a equipe'
+    administrador -> backofficeApp '3. seleciona Baixar num relatorio do historico'
+    backofficeApp -> modAdministracao '4. solicita o arquivo ja gerado'
+    backofficeApp -> administrador '4. disponibiliza o mesmo arquivo da exportacao'
+    modAdministracao -> modAdministracao '5. mantem cada arquivo disponivel por 90 dias'
   }
 }

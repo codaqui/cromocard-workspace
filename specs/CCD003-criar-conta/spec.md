@@ -1,6 +1,6 @@
 # CCD003 — Criar Conta
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #108 `CCD003-Criar Conta`
 - **Caso de uso:** [03-criar-conta.md](../../docs/Casos-De-Uso/03-criar-conta.md)

@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Limpar Central de Notificações |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário remova as notificações apresentadas em sua central de notificações. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e possuir notificações na central. |
 
 ### Fluxo Principal

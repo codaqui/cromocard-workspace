@@ -7,6 +7,7 @@ title Diagrama de Contexto (C4 - Nivel 1) - Sistema de Gestao de Cartas Colecion
 
 Person(visitante, "Visitante", "Usuario nao autenticado que explora a plataforma antes de criar conta")
 Person(cliente, "Cliente", "Colecionador autenticado que gerencia sua colecao, participa de grupos, conversa com outros colecionadores e negocia cartas no marketplace")
+Person(vendedor, "Vendedor", "Lojista credenciado que anuncia e vende cartas no marketplace e acompanha propostas e vendas")
 Person(admin, "Administrador", "Responsavel pela gestao, moderacao e configuracao da plataforma")
 
 System(sistema, "Sistema de Gestao de Cartas Colecionaveis", "Permite colecionadores organizar albuns e cartas, participar de grupos da comunidade, conversar em tempo real, negociar cartas e assinar planos, e permite administradores gerenciarem usuarios, catalogo e comunidade")
@@ -16,6 +17,7 @@ System_Ext(transportadora, "Transportadora", "Empresa terceirizada responsavel p
 
 Rel(visitante, sistema, "Explora destaques, busca conteudo, cria conta e faz login")
 Rel(cliente, sistema, "Gerencia colecao, participa de grupos, conversa em tempo real, compra/vende cartas e configura o proprio perfil")
+Rel(vendedor, sistema, "Cria e gerencia anuncios, propostas e metricas de venda")
 Rel(admin, sistema, "Administra usuarios, catalogo, comunidade e configuracoes da plataforma")
 
 Rel(sistema, pagamento, "Processa pagamentos e assinaturas via", "HTTPS/Webhook")

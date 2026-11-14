@@ -1,7 +1,7 @@
 | Nome do Caso de Uso | Denunciar Perfil |
 |---|---|
 | Finalidade/Objetivo | Permitir que o usuário denuncie um perfil que esteja violando as regras da plataforma ou apresentando comportamento inadequado. |
-| Atores | Usuário |
+| Atores | Cliente |
 | Pré Condições | O usuário deve estar autenticado e ter acesso ao perfil que deseja denunciar. |
 
 ### Fluxo Principal

@@ -19,8 +19,10 @@ paths:
   DBML. O que não tem origem vai para **Lacunas e decisões**, nunca para os requisitos.
 - Lacuna decidida pelo time: regra de negócio → atualize o caso de uso (com confirmação do usuário) e cite o passo
   novo como origem; decisão técnica → ADR novo `Proposto`. A spec registra a decisão e aponta onde ela ficou.
-- Figma divergente da documentação: vale a documentação. A divergência fica na seção **Telas**, para o designer
-  corrigir, e não vira requisito nem lacuna.
+- Diferença entre o Figma e a documentação: a documentação vale até haver decisão, e o objetivo é ser o mais fiel
+  possível ao Figma. Cada diferença vira uma pergunta em **Lacunas e decisões**; o que só existe no Figma pergunta "faz
+  sentido implementar?". Se sim, ajuste a documentação e cite o passo novo como origem. Se não, registre em **Fora do
+  escopo** e na seção **Telas**.
 
 ## IDs fixos
 

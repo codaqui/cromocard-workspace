@@ -6,7 +6,7 @@
 - **Caso de uso:** [104-ordenar-categorias-padrao.md](../../docs/Casos-De-Uso/104-ordenar-categorias-padrao.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
 
 ## Objetivo
 
@@ -25,7 +25,7 @@
 | R7 | Sair sem salvar descarta as mudanças | Ação | `104`, FA 1–2 |
 | R8 | Setas desabilitadas na primeira e na última posição | Estado | `104`, FA 3–4 |
 | R9 | O slug é gerado do nome e é único; recriar com o mesmo nome restaura a categoria excluída | Regra | ADR-053, item 4; ADR-015, item 7 |
-| R10 | Selo de exibição (`STANDARD` ou `TRENDING`) editável no formulário de categoria | Campo | EA-066-01; DBML `categories.badge` |
+| R10 | Selo de exibição (`STANDARD` ou `TRENDING`, na tela "Padrão" e "Em alta") editável no formulário de categoria | Campo | EA-066-01; DBML `categories.badge` |
 
 ## Critérios de aceite
 
@@ -47,9 +47,10 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Configurações da plataforma — Módulo 2 | [228-3048](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=228-3048) | R2–R8, R10 | ✅ Bate |
+| Configurações Globais — Módulo 2 | [228-3048](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=228-3048) | R2–R8, R10 | ✅ Bate (ajustado em 12/11/2026: selos em português, nomes e números iguais ao Catálogo, Cancelar ao lado de Salvar ordem) |
+| Nova categoria (selo no formulário de categoria, desenhado em 12/11/2026) | [833-10832](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=833-10832) | R10 | ✅ Bate |
 
-- "Status: Exibição Primária/Normal" corresponde a fixada ou não.
+- O verso padrão na linha de cada categoria é da CCD066 (R17) e da CCD106.
 
 ## Fora do escopo
 
@@ -64,3 +65,4 @@
 | L2 | Quem define o selo? (proposta: o admin, no formulário de categoria da CCD061) | O admin, no formulário de categoria da CCD061 | `escopo-adicional.md`, EA-066-01 |
 | L3 | Slug das categorias que já existem (proposta: a migration gera) | A migration gera | plano.md (migration) |
 | L4 | Arrastar pelo teclado (proposta: as setas são a alternativa acessível) | As setas são a alternativa acessível | plano.md |
+| L3 | O Figma tinha "Adicionar nova categoria" no módulo | Sai; fica o link "Gerenciar categorias no Catálogo" (CCD061). Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | CCD066, Fora do escopo |

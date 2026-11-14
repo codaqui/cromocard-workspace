@@ -51,3 +51,11 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin`.
 | CA2–CA7 | `community-admin.service.spec.ts` · integração |
 | CA1, CA5 | `CommunityAdminPage.spec.tsx` |
 | CA8 | integração |
+
+## Revisão de 12/11/2026 (L6–L8)
+
+- R3: `GET /admin/community/groups` devolve também `accessType`, o criador e o volume (CCD097); a tabela tem paginação.
+- R4: `GroupDetailsDialog` com as informações e as ações conforme o status (L7); CA9 no teste da página.
+- R10: os diálogos de suspender, reativar, excluir, remover mensagem e dispensar têm o campo de motivo obrigatório e o
+  estado de erro; CA10 no teste do diálogo.
+- Telas novas: `841-4451`, `841-418`, `841-922`, `841-1427`, `841-1931`, `841-2939`, `841-3947`, `841-5508`.

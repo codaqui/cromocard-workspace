@@ -8,14 +8,14 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1.O cliente acessa os detalhes da carta. |  |
-| 2.O cliente seleciona a opção “Histórico de preços”. |  |
-|  | 3.O sistema busca os registros históricos de preços da carta. |
-|  | 4.O sistema organiza os dados por período. |
-|  | 5.O sistema exibe o histórico de preços ao cliente. |
+| 1. O cliente acessa os detalhes da carta. |  |
+| 2. O cliente seleciona a opção “Histórico de preços”. |  |
+|  | 3. O sistema busca os registros históricos de preços da carta. |
+|  | 4. O sistema organiza os dados por período. |
+|  | 5. O sistema exibe o histórico de preços ao cliente. |
 
 ### Fluxo Alternativo
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-|  | 1.Caso não existam dados históricos suficientes, o sistema informa: “Não há histórico de preços disponível para esta carta.” |
+|  | 1. Caso não existam dados históricos suficientes, o sistema informa: “Não há histórico de preços disponível para esta carta.” |

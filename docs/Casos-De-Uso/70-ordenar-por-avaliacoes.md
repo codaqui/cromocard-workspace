@@ -8,13 +8,13 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1.O cliente acessa a listagem de anúncios. |  |
-| 2.O cliente seleciona a opção “Ordenar por avaliações”. |  |
-|  | 3.O sistema organiza os anúncios considerando a avaliação dos vendedores. |
-|  | 4.O sistema atualiza a listagem com os resultados ordenados. |
+| 1. O cliente acessa a listagem de anúncios. |  |
+| 2. O cliente seleciona a opção “Ordenar por avaliações”. |  |
+|  | 3. O sistema organiza os anúncios considerando a avaliação dos vendedores. |
+|  | 4. O sistema atualiza a listagem com os resultados ordenados. |
 
 ### Fluxo Alternativo
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-|  | 1.Caso não existam avaliações suficientes, o sistema mantém a listagem e informa que alguns vendedores ainda não possuem avaliações. |
+|  | 1. Caso não existam avaliações suficientes, o sistema mantém a listagem e informa que alguns vendedores ainda não possuem avaliações. |

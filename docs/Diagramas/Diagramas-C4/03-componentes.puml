@@ -5,10 +5,9 @@ LAYOUT_WITH_LEGEND()
 
 title Diagrama de Componentes (C4 - Nivel 3) - API de Aplicacao
 
-Container(webApp, "Aplicacao Web", "React + Vite", "Usada por visitantes e clientes")
-Container(mobileApp, "Aplicativo Mobile", "React Native", "Usado por visitantes e clientes")
-Container(backofficeApp, "Painel BackOffice", "React + Vite", "Usada por administradores")
-Container(realtime, "Servico de Mensageria em Tempo Real", "Node.js + WebSocket", "Entrega mensagens de chat em tempo real")
+Container(webApp, "Aplicacao Web (SPA)", "React 19 + TypeScript + Vite", "Areas Publica e Cliente: visitantes, clientes e vendedores")
+Container(backofficeApp, "Aplicacao Web (SPA) - BackOffice", "React 19 + TypeScript + Vite", "Area /backoffice do mesmo SPA: administradores")
+Container(realtime, "Servico de Mensageria em Tempo Real", "Node.js + Socket.IO", "Entrega mensagens de chat em tempo real")
 ContainerDb(db, "Banco de Dados", "PostgreSQL", "Armazena os dados do sistema, acessado via Prisma ORM")
 
 System_Ext(pagamento, "Gateway de Pagamento", "Processa pagamentos e assinaturas")
@@ -27,21 +26,13 @@ Container_Boundary(api, "API de Aplicacao (Node.js + Express + Prisma)") {
 }
 
 Rel(webApp, compAuth, "Usa")
-Rel(mobileApp, compAuth, "Usa")
 Rel(webApp, compPublico, "Usa")
-Rel(mobileApp, compPublico, "Usa")
 Rel(webApp, compColecao, "Usa")
-Rel(mobileApp, compColecao, "Usa")
 Rel(webApp, compComunidade, "Usa")
-Rel(mobileApp, compComunidade, "Usa")
 Rel(webApp, compChat, "Usa")
-Rel(mobileApp, compChat, "Usa")
 Rel(webApp, compPerfil, "Usa")
-Rel(mobileApp, compPerfil, "Usa")
 Rel(webApp, compNotificacoes, "Usa")
-Rel(mobileApp, compNotificacoes, "Usa")
 Rel(webApp, compPagamentos, "Usa")
-Rel(mobileApp, compPagamentos, "Usa")
 Rel(backofficeApp, compAuth, "Usa")
 Rel(backofficeApp, compAdmin, "Usa")
 

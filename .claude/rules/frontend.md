@@ -17,7 +17,7 @@ http://localhost:3000) · `npm run format:check` · `npm run lint` · `npm run t
 
 - **Um SPA para Web e BackOffice** (ADR-038): área Pública (`PublicLayout`), Cliente (`CustomerLayout` +
   `RequireAuth`) e BackOffice em `/backoffice` (`AdminLayout` + `RequireRole role="ADMIN"`); rotas das features
-  com `lazy`. O mobile (React Native) é outro app. Guard do frontend é só navegação: quem autoriza é a API.
+  com `lazy`. Não há app mobile (ADR-058): o SPA atende o celular pelo navegador. Guard do frontend é só navegação: quem autoriza é a API.
 - **Stack** (ADR-039): React 19 + TypeScript strict (`noUncheckedIndexedAccess`) + Vite + React Router (data
   router) · TanStack Query + Axios · React Hook Form + Zod · CSS Modules · Vitest + Testing Library.
   Sem Redux/Zustand: o único estado global é a sessão (Context).
@@ -47,9 +47,10 @@ http://localhost:3000) · `npm run format:check` · `npm run lint` · `npm run t
   `src/features/auth/` (CCD004); no dev, as contas de teste vêm do `npm run db:seed` do backend.
 - **Estilos** (ADR-044): CSS Modules + tokens em `styles/tokens.css` — só `var(--…)`, nunca cor ou espaçamento
   solto; sem MUI/Chakra/Tailwind; os tokens seguem as variáveis do Figma.
-- **Telas a partir do Figma**: a documentação manda no conteúdo (campos, ações, mensagens, regras), o Figma manda
-  no visual. Antes de implementar uma tela, rode `/conferir-tarefa`. Reaproveite `src/components/` e os tokens em vez
-  de copiar o CSS gerado pelo Figma.
+- **Telas a partir do Figma**: a documentação é a fonte principal da verdade no conteúdo (campos, ações, mensagens,
+  regras), o Figma manda no visual, e o objetivo é ser o mais fiel possível a ele. O que o Figma mostra e a documentação
+  não tem recebe a pergunta "faz sentido implementar?"; se sim, ajuste a documentação e desenvolva. Reaproveite
+  `src/components/` e os tokens em vez de copiar o CSS gerado pelo Figma.
 - **Config** (ADR-045): `import.meta.env` só em `config/env.ts` (validado com Zod); `API_URL` em runtime via
   `/env.js` (`window.__ENV__`), uma imagem nginx sem root para homolog e produção. Nada de segredo no frontend.
 - **Código sem comentários**, como no backend.
@@ -60,4 +61,4 @@ http://localhost:3000) · `npm run format:check` · `npm run lint` · `npm run t
   `no-console`; Prettier; `tsc`.
 - Testes `*.spec.ts(x)` ao lado do arquivo, com Testing Library (busca por papel, label ou texto) e
   `renderWithProviders` para rotas e guards. Prioridade: `lib/`, guards, hooks e componentes com regra.
-- CI: format → lint → typecheck → test → build → imagem Docker. Ainda sem husky nem limite de cobertura.
+- CI: format → lint → typecheck → test → build → imagem Docker. Em cada PR, de 90% a 100% de cobertura em todo arquivo alterado (ADR-060). Ainda sem husky.
