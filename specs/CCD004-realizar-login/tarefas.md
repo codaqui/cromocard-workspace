@@ -72,3 +72,4 @@
 | R49 | T8 |
 | R50, R51 | T2 |
 | R52 | T9 |
+| R53 | CCD098 T4, T10 (fora das tarefas desta spec) |
