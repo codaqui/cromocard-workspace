@@ -46,7 +46,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `src/features/admin/users/` (api, queries, schemas) | campos e rotas novas | R3–R7, R15 |
-| `UsersPage` · `UserFormModal` | colunas, busca, total e campos | R2–R7, R12 |
+| `UsersPage` · `UserFormModal` | colunas, busca, total, campos e o checkbox "Reenviar link de ativação" na edição | R2–R7, R12, R15 |
 | `components/UserDetailDrawer/` · `DeleteUserDialog/` | detalhe e confirmação reforçada | R11, R13 |
 | `src/features/auth/components/LoginForm/` | rótulo "E-mail ou nome de usuário" | R10 |
 
@@ -62,6 +62,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - O campo do login passa de `email` para `login`, com o e-mail ainda aceito; a mudança no contrato da CCD004 é combinada com o Daniel antes do código.
+- **Revista em 2026-11-12** (revisão da CCD059): o reenvio do link de ativação (R15) sai do botão separado na página
+  de detalhe e vira o checkbox "Reenviar link de ativação" dentro do `UserFormModal` em modo de edição, condicional a
+  `!emailVerified`, como no frame `804-1682`.
 
 ## Revisão de 11/11/2026 (L6)
 
