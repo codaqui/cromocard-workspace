@@ -22,13 +22,13 @@
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/598-validar-cadastro-de-vendedor`
 
-- [ ] **T6** [P] · Criar api, queries e types do credenciamento — R2–R9 · AB#617
+- [x] **T6** [P] · Criar api, queries e types do credenciamento — R2–R9 · AB#617
   - Pronto quando: o typecheck passa.
-- [ ] **T7** · Criar lista de cadastros de vendedores e card de credenciamento no Dashboard — R2–R4, R12 · CA1, CA8 · AB#618
+- [x] **T7** · Criar lista de cadastros de vendedores e card de credenciamento no Dashboard — R2–R4, R12 · CA1, CA8 · AB#618
   - Pronto quando: `SellerRegistrationsTable.spec.tsx` cobre o filtro e o card.
   - **Revista em 13/11/2026:** a `RecentSellersTable` da CCD058 foi substituída pela `SellerRegistrationsTable` (mesma seção "Cadastros dos Vendedores Recentes" do Figma, agora alimentada pelo endpoint de seller-verifications, com CNPJ/status/filtro/"Validar Cadastro" — decisão do PO, Felipe Consulim). R12 (selo "Em análise") entra em `UsersTable.tsx`/`UsersListPage.spec.tsx`, cobrindo o CA11.
-  - **Revista em 14/11/2026:** reaberta pelo mesmo motivo do T1 — branch antiga divergiu demais do `develop` atual (reescreveu `UserDetailPage.tsx`, `UserFormModal.tsx` e removeu hooks que hoje existem). Referência em `feature/598-validar-cadastro-de-vendedor-referencia`.
-- [ ] **T8** · Criar painel Validar Cadastro com documentos, notas, aprovar e rejeitar — R5–R10 · CA2–CA6 · AB#619
+  - **Revista em 14/11/2026:** refeita do zero sobre o `develop` atual (mesmo motivo do T1). `RecentSellersTable` e o endpoint `listRecentSellers` do Dashboard, agora sem uso, foram removidos. Referência em `feature/598-validar-cadastro-de-vendedor-referencia`.
+- [x] **T8** · Criar painel Validar Cadastro com documentos, notas, aprovar e rejeitar — R5–R10 · CA2–CA6 · AB#619
   - Pronto quando: `SellerVerificationPanel.spec.tsx` cobre validar documento, aprovar e rejeitar sem motivo.
 
 ## Fechamento — workspace
