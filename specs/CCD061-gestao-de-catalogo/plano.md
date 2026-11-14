@@ -75,8 +75,9 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 - Editar a carta para um número que pertence a uma carta excluída do mesmo álbum responde `409 CARD_NUMBER_TAKEN`; a
   carta excluída não é alterada. Restaurar pelo número vale só no cadastro (ADR-015, item 7). Decidido em 2026-10-30
   com Lucas Oliveira Lima.
-- Importação CSV (R13, L3): as colunas são as da L3, sem imagem; as cartas importadas entram sem imagem e o admin envia
-  a frente depois pela edição. A frente obrigatória (`61`, FP 5; L4 e L6) contra a carta importada sem imagem está pendente (L12). Cada linha acha o álbum
+- Importação CSV (R13, L3): as colunas são as da L3, sem imagem; as cartas importadas entram como rascunho (`status = DRAFT`),
+  sem imagem, e o admin envia a frente pela edição para publicar, com a validação da L6 (L12, decidido em 2026-11-14 pelo
+  PO). Cada linha acha o álbum
   pelo título e a categoria pelo nome (só categorias do tipo `CARD`), sem diferenciar maiúsculas, a raridade pelo nome e
   o idioma pelo código (`pt-BR`, `en`…). Referência não encontrada ou ambígua, nome em branco, número repetido no
   arquivo ou já usado no álbum entram em `details` como `<linha>.<coluna>` e nada é gravado; o número de uma carta
@@ -124,3 +125,9 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 - R16: `DeleteCatalogItemDialog` pede a confirmação antes do `DELETE`; CA9 no teste da página.
 - Telas novas: `832-7170`, `832-5744`, `832-1149`, `832-2217`, `832-3295`, `832-3837`, `832-1683`, `832-8603`,
   `833-9661`, `833-9132`, `833-10832`.
+
+## Revisão de 14/11/2026 (L12)
+
+- R13: o `catalog-import.service` grava as cartas com `status = DRAFT`, e não `ACTIVE`; publicar depois passa pela
+  validação da L6 (frente obrigatória). CA5 no `catalog-import.service.spec.ts` confere que as cartas importadas saem
+  como rascunho e não aparecem na listagem pública.

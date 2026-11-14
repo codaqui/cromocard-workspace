@@ -28,7 +28,7 @@
 | R10 | Remover é soft delete | Regra | ADR-015, item 1 |
 | R11 | Item com vínculos que impedem a exclusão não é removido e o sistema informa o motivo (modal "Não é possível excluir esta carta") | Regra | `61`, FA 5–6 |
 | R12 | Imagens vão pelo `StorageProvider`; o banco guarda a URL | Regra | ADR-009 |
-| R13 | Importar cartas por CSV: modal com o modelo para baixar e o arquivo; tudo ou nada, com o total importado ou as linhas com erro | Ação | `61`, FP 10–11; user-stories.md §8 |
+| R13 | Importar cartas por CSV: modal com o modelo para baixar e o arquivo; tudo ou nada, com o total importado ou as linhas com erro; as cartas importadas entram como rascunho (L12) | Ação | `61`, FP 10–11; user-stories.md §8; L12 |
 | R14 | Cadastrar, editar e remover gravam `audit_logs` | Regra | `61`, FP 8; ADR-034 |
 | R15 | Categorias são cadastradas, editadas e removidas na aba "Categorias & Franquias": nome e tipo obrigatórios, categoria pai, descrição e selo (CCD104) opcionais, slug gerado pelo nome; raridades e idiomas vêm do seed | Ação | `61`, FP 2 e FP 5; EA-066-01 |
 | R16 | Excluir pede confirmação e grava `audit_logs` | Regra | `61`, FA 7–8 |
@@ -43,7 +43,7 @@
   responde `409`.
 - **CA4** (R10, R11) — **Dado** um álbum com cartas, **quando** tenta excluir, **então** a API responde `422` com o
   motivo; um álbum sem cartas é excluído (`204`).
-- **CA5** (R13) — **Dado** um CSV válido com 50 cartas, **quando** importa, **então** as 50 são criadas e a tela
+- **CA5** (R13) — **Dado** um CSV válido com 50 cartas, **quando** importa, **então** as 50 são criadas como rascunho (L12) e a tela
   mostra o resumo.
 - **CA6** (R13) — **Dado** um CSV com linhas inválidas, **quando** importa, **então** nada é gravado e a tela lista
   as linhas com erro.
@@ -102,4 +102,4 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L9 | Como escolher entre muitos álbuns e categorias nos selects? | Em aberto. A implementação carrega a primeira página (até 100, o máximo da API) e sempre inclui o item já escolhido na edição; as categorias vêm filtradas pelo tipo (`type`), então o limite vale para cada tipo; um select com busca fica para quando o catálogo passar de 100 | Só aqui, aguardando o PO |
 | L10 | A categoria pai precisa ser do mesmo tipo (`ALBUM`/`CARD`)? | Sim: a categoria pai é do mesmo tipo da filha (L11); pai de outro tipo, a própria categoria ou uma descendente responde `422` | L11; aguardando a validação do PO |
 | L11 | O tipo da categoria (`ALBUM`/`CARD`) é regra ou só rótulo? | Regra: álbum só aceita categoria `ALBUM`, carta só aceita categoria `CARD` (no formulário e na importação), e a categoria pai é do mesmo tipo da filha. Outro tipo responde `422 CATEGORY_TYPE_MISMATCH` | DBML `category_type`; aguardando a validação do PO |
-| L12 | A carta importada por CSV precisa da imagem da frente? O CSV não tem coluna de imagem (L3), e a L6 exige a frente para publicar | Pendente. A implementação cria a carta sem imagem e o admin envia a frente depois, pela edição; pela L6, essa carta não pode ficar publicada sem a frente | Só aqui, aguardando o PO |
+| L12 | A carta importada por CSV precisa da imagem da frente? O CSV não tem coluna de imagem (L3), e a L6 exige a frente para publicar | A carta importada entra como rascunho (`status = DRAFT`, o mesmo da CCD106), sem imagem, e não aparece no catálogo público; o admin envia a frente pela edição e só então a publica, com a validação da L6. O CSV continua sem coluna de imagem (L3). Decisão do PO (Daniel, 14/11/2026) | `61`, FP 11 |
