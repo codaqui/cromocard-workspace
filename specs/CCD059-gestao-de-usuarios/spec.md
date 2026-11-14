@@ -6,7 +6,7 @@
 - **Caso de uso:** [59-gestao-de-usuarios.md](../../docs/Casos-De-Uso/59-gestao-de-usuarios.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista em 2026-11-12, com as decisões de T11 (Felipe Consulim, PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista em 2026-11-12, com as decisões de T11 (Daniel Andrade, PO)
 
 ## Objetivo
 
@@ -112,5 +112,5 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L6 | Filtros da lista (proposta: busca por nome ou e-mail, papel, status) | Busca por nome ou e-mail e filtros de papel e de status | `59`, FP 2 |
 | L7 | Nome dos papéis e o "Em análise" do Figma na coluna de status | Papéis Cliente, Vendedor e Administrador; status só Ativo, Suspenso e Bloqueado; vendedor com credenciamento em análise ganha o selo "Em análise" ao lado do papel. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 2 |
 | L8 | O que a seleção do usuário abre? | A página do usuário (frames `649-1164` e `649-796`), com dados, contato, endereços, as ações administrativas sobre ele (do `audit_logs`) e as opções de gerenciamento. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 4; EA-059-03 |
-| L9 | Reativar exige motivo como suspender/excluir? O Figma (`804-2889`) mostra só confirmação, sem motivo, e o caso de uso nunca pediu motivo para reativar (proposta: tirar a exigência) | Não exige motivo: só confirmação. Decisão do PO (Felipe Consulim, 12/11/2026), na revisão da T11 | `59`, FP 11–12 |
-| L10 | A página do usuário (R4) deve trazer também "Membro desde", advertências, o indicador de status e o quadro "Autenticação" (frames `649-1164`/`649-796`), que a L8 não cobria? | Sim, completa como no Figma; "Aplicar sanção" e o status "Bloqueado" ficam visíveis mas indisponíveis, reservados à CCD099. Decisão do PO (Felipe Consulim, 12/11/2026) | `59`, FP 4; CCD099 |
+| L9 | Reativar exige motivo como suspender/excluir? O Figma (`804-2889`) mostra só confirmação, sem motivo, e o caso de uso nunca pediu motivo para reativar (proposta: tirar a exigência) | Não exige motivo: só confirmação. Decisão do PO (Daniel Andrade, confirmada em 14/11/2026), na revisão da T11 | `59`, FP 11–12 |
+| L10 | A página do usuário (R4) deve trazer também "Membro desde", advertências, o indicador de status e o quadro "Autenticação" (frames `649-1164`/`649-796`), que a L8 não cobria? | Sim, completa como no Figma; "Aplicar sanção" e o status "Bloqueado" ficam visíveis mas indisponíveis, reservados à CCD099. Decisão do PO (Daniel Andrade, confirmada em 14/11/2026) | `59`, FP 4; CCD099 |
