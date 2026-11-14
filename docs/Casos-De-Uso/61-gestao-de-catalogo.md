@@ -18,7 +18,7 @@
 |  | 8. O sistema registra a operação realizada. O total de cartas do álbum é calculado pelas cartas dele. |
 |  | 9. O sistema atualiza o catálogo e confirma a operação. |
 | 10. O administrador escolhe importar cartas por um arquivo CSV, a partir do modelo para baixar. |  |
-|  | 11. O sistema valida todas as linhas e só grava se todas estiverem corretas, informando quantas cartas foram importadas; havendo erro, informa as linhas com problema e não grava nenhuma. |
+|  | 11. O sistema valida todas as linhas e só grava se todas estiverem corretas, informando quantas cartas foram importadas. As cartas importadas entram como rascunho, sem imagem; o administrador envia a imagem da frente pela edição para publicá-las. Havendo erro, informa as linhas com problema e não grava nenhuma. |
 
 ### Fluxo Alternativo
 

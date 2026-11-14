@@ -1,9 +1,9 @@
 # CCD061 — Gestão de Catálogo
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #336 `CCD061-Gestão de Catálogo` · responsável Lucas Oliveira Lima · Sprint 06
-- **Caso de uso:** [61-gestao-de-catalogo.md](../../docs/Casos-De-Uso/61-gestao-de-catalogo.md) (a Finalidade foi copiada do caso 60)
+- **Caso de uso:** [61-gestao-de-catalogo.md](../../docs/Casos-De-Uso/61-gestao-de-catalogo.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
 - **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
@@ -17,7 +17,7 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401`/`403` | Permissão | `61`, Pré-condições; ADR-005, item 4 |
-| R2 | Tela em `/backoffice/catalogo`, item "Catálogo" do menu | Tela | `61`, FP 1; ADR-038 |
+| R2 | Tela em `/backoffice/catalog`, item "Catálogo" do menu | Tela | `61`, FP 1; ADR-038 |
 | R3 | Lista paginada dos itens do catálogo, sem excluídos, com busca por nome ou código; a aba de cartas filtra por franquia, álbum, raridade, ano e status (publicadas ou rascunhos) e mostra os chips dos filtros ativos | Tela | `61`, FP 2 (L7); ADR-011; ADR-015, item 5 |
 | R4 | Cadastrar, editar e remover cartas e álbuns | Ação | `61`, FP 3; user-stories.md §8 |
 | R5 | Álbum: `title` obrigatório (160); opcionais `publisher`, `year`, `description`, `cover_url`, `category_id` e `status` (Ativo ou Inativo) | Regra | `61`, FP 5; DBML `albums` |
@@ -28,7 +28,7 @@
 | R10 | Remover é soft delete | Regra | ADR-015, item 1 |
 | R11 | Item com vínculos que impedem a exclusão não é removido e o sistema informa o motivo (modal "Não é possível excluir esta carta") | Regra | `61`, FA 5–6 |
 | R12 | Imagens vão pelo `StorageProvider`; o banco guarda a URL | Regra | ADR-009 |
-| R13 | Importar cartas por CSV: modal com o modelo para baixar e o arquivo; tudo ou nada, com o total importado ou as linhas com erro | Ação | `61`, FP 10–11; user-stories.md §8 |
+| R13 | Importar cartas por CSV: modal com o modelo para baixar e o arquivo; tudo ou nada, com o total importado ou as linhas com erro; as cartas importadas entram como rascunho (L12) | Ação | `61`, FP 10–11; user-stories.md §8; L12 |
 | R14 | Cadastrar, editar e remover gravam `audit_logs` | Regra | `61`, FP 8; ADR-034 |
 | R15 | Categorias são cadastradas, editadas e removidas na aba "Categorias & Franquias": nome e tipo obrigatórios, categoria pai, descrição e selo (CCD104) opcionais, slug gerado pelo nome; raridades e idiomas vêm do seed | Ação | `61`, FP 2 e FP 5; EA-066-01 |
 | R16 | Excluir pede confirmação e grava `audit_logs` | Regra | `61`, FA 7–8 |
@@ -43,7 +43,7 @@
   responde `409`.
 - **CA4** (R10, R11) — **Dado** um álbum com cartas, **quando** tenta excluir, **então** a API responde `422` com o
   motivo; um álbum sem cartas é excluído (`204`).
-- **CA5** (R13) — **Dado** um CSV válido com 50 cartas, **quando** importa, **então** as 50 são criadas e a tela
+- **CA5** (R13) — **Dado** um CSV válido com 50 cartas, **quando** importa, **então** as 50 são criadas como rascunho (L12) e a tela
   mostra o resumo.
 - **CA6** (R13) — **Dado** um CSV com linhas inválidas, **quando** importa, **então** nada é gravado e a tela lista
   as linhas com erro.
@@ -99,3 +99,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L6 | Quais campos são obrigatórios para publicar uma carta? O Figma marcava quase todos; o DER exige só o nome, e a CCD106 CA4 barra o rascunho sem raridade | Nome, franquia, raridade, idioma e imagem da frente; álbum, numeração e ano são opcionais (o DER permite carta avulsa). Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `61`, FP 5 |
 | L7 | O filtro "Edição / Ano" do Figma | Dois filtros, Álbum e Ano, como no contrato (`albumId`, `year`), mais o filtro de status. Decisão do PO (Daniel, 12/11/2026) | `61`, FP 2; `escopo-adicional.md`, EA-061-03 |
 | L8 | Excluir pede confirmação? | Sim, com modal; a exclusão em lote também pede o motivo (CCD105). Decisão do PO (Daniel, 12/11/2026) | `61`, FA 7–8 |
+| L9 | Como escolher entre muitos álbuns e categorias nos selects? | Em aberto. A implementação carrega a primeira página (até 100, o máximo da API) e sempre inclui o item já escolhido na edição; as categorias vêm filtradas pelo tipo (`type`), então o limite vale para cada tipo; um select com busca fica para quando o catálogo passar de 100 | Só aqui, aguardando o PO |
+| L10 | A categoria pai precisa ser do mesmo tipo (`ALBUM`/`CARD`)? | Sim: a categoria pai é do mesmo tipo da filha (L11); pai de outro tipo, a própria categoria ou uma descendente responde `422` | L11; aguardando a validação do PO |
+| L11 | O tipo da categoria (`ALBUM`/`CARD`) é regra ou só rótulo? | Regra: álbum só aceita categoria `ALBUM`, carta só aceita categoria `CARD` (no formulário e na importação), e a categoria pai é do mesmo tipo da filha. Outro tipo responde `422 CATEGORY_TYPE_MISMATCH` | DBML `category_type`; aguardando a validação do PO |
+| L12 | A carta importada por CSV precisa da imagem da frente? O CSV não tem coluna de imagem (L3), e a L6 exige a frente para publicar | A carta importada entra como rascunho (`status = DRAFT`, o mesmo da CCD106), sem imagem, e não aparece no catálogo público; o admin envia a frente pela edição e só então a publica, com a validação da L6. O CSV continua sem coluna de imagem (L3). Decisão do PO (Daniel, 14/11/2026) | `61`, FP 11 |
