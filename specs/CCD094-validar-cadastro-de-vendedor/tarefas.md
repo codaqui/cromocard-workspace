@@ -5,24 +5,27 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/598-validar-cadastro-de-vendedor`
 
-- [ ] **T1** · Criar migrations e seed do credenciamento de vendedor — R5–R7 · AB#612
+- [x] **T1** · Criar migrations e seed do credenciamento de vendedor — R5–R7 · AB#612
   - Pronto quando: as 3 tabelas existem, uma migration por tabela, e o seed cria cadastros em cada status.
-- [ ] **T2** · Criar validator, errors e repository do credenciamento — R2, R3, R5, R14, R15 · AB#613
+  - **Revista em 13/11/2026:** `seller_verifications` já existia (fundação da CCD098); migrations novas: `seller_documents`, `seller_verification_notes`. Seed de cadastros de teste ainda não criado — só os dados usados pelos testes de integração.
+- [x] **T2** · Criar validator, errors e repository do credenciamento — R2, R3, R5, R14, R15 · AB#613
   - Pronto quando: o repository filtra por status e só muda cadastro em análise ou pendente.
-- [ ] **T3** · Criar service de validar documento, notas, aprovar e rejeitar com auditoria — R6–R11, R14 · CA3–CA7 · AB#614
+- [x] **T3** · Criar service de validar documento, notas, aprovar e rejeitar com auditoria — R6–R11, R14 · CA3–CA7 · AB#614
   - Pronto quando: `seller-verifications.service.spec.ts` cobre CA3–CA7.
-- [ ] **T4** · Criar rotas do credenciamento e o resumo do card — R1, R4 · CA8, CA10 · AB#615
+- [x] **T4** · Criar rotas do credenciamento e o resumo do card — R1, R4 · CA8, CA10 · AB#615
   - Pronto quando: as rotas aparecem no `/docs` e respondem `403` para quem não é ADMIN.
 - [ ] **T5** · Acrescentar o status da análise na lista de usuários e o relatório Auditoria de Lojistas — R12, R13 · CA9 · AB#616
   - Pronto quando: a lista de usuários traz `sellerVerificationStatus` e o relatório exporta em CSV e PDF.
+  - **Revista em 13/11/2026:** R12 feito (`users.repository.ts` devolve `verificationStatus`, `CA11` cobre em `admin-users.spec.ts`). R13 **bloqueado**: a CCD063 (`reports`) ainda não tem domínio implementado (router vazio) — decisão do PO (Felipe Consulim) de não criar um endpoint provisório fora da CCD063; volta quando a CCD063 existir.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/598-validar-cadastro-de-vendedor`
 
-- [ ] **T6** [P] · Criar api, queries e types do credenciamento — R2–R9 · AB#617
+- [x] **T6** [P] · Criar api, queries e types do credenciamento — R2–R9 · AB#617
   - Pronto quando: o typecheck passa.
-- [ ] **T7** · Criar lista de cadastros de vendedores e card de credenciamento no Dashboard — R2–R4, R12 · CA1, CA8 · AB#618
+- [x] **T7** · Criar lista de cadastros de vendedores e card de credenciamento no Dashboard — R2–R4, R12 · CA1, CA8 · AB#618
   - Pronto quando: `SellerRegistrationsTable.spec.tsx` cobre o filtro e o card.
-- [ ] **T8** · Criar painel Validar Cadastro com documentos, notas, aprovar e rejeitar — R5–R10 · CA2–CA6 · AB#619
+  - **Revista em 13/11/2026:** a `RecentSellersTable` da CCD058 foi substituída pela `SellerRegistrationsTable` (mesma seção "Cadastros dos Vendedores Recentes" do Figma, agora alimentada pelo endpoint de seller-verifications, com CNPJ/status/filtro/"Validar Cadastro" — decisão do PO, Felipe Consulim). R12 (selo "Em análise") entrou em `UsersTable.tsx`/`UsersListPage.spec.tsx`, cobrindo o CA11.
+- [x] **T8** · Criar painel Validar Cadastro com documentos, notas, aprovar e rejeitar — R5–R10 · CA2–CA6 · AB#619
   - Pronto quando: `SellerVerificationPanel.spec.tsx` cobre validar documento, aprovar e rejeitar sem motivo.
 
 ## Fechamento — workspace
