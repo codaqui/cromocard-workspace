@@ -18,6 +18,8 @@
 |  | 8. O sistema apresenta uma mensagem confirmando a operação. |
 | 9. O administrador escolhe suspender ou excluir um usuário e informa o motivo. |  |
 |  | 10. O sistema muda o status para suspenso ou exclui a conta (ela pode ser restaurada), encerra as sessões abertas do usuário e registra a ação e o motivo no log de auditoria. |
+| 11. O administrador reativa um usuário suspenso. |  |
+|  | 12. O sistema muda o status para ativo e registra a ação no log de auditoria, sem exigir motivo. |
 
 ### Fluxo Alternativo
 

@@ -47,7 +47,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `src/features/users/` (api, queries, schemas, types) | campos e rotas novas | R3–R7, R15 |
-| `pages/UsersListPage/` · `components/UsersTable/` | colunas (@, telefone, último acesso), busca e total | R2–R7, R12 |
+| `pages/UsersListPage/` · `components/UsersTable/` · modal de editar | colunas (@, telefone, último acesso), busca, total e o checkbox "Reenviar link de ativação" na edição | R2–R7, R12, R15 |
 | `pages/UserDetailPage/` (já existe, da CCD059) | acrescenta @, telefone, CPF e último acesso/IP | R13 |
 | `components/DeleteUserDialog/` (já existe, da CCD059) | confirmação reforçada (`EXCLUIR-`+primeiro nome, caixa "Estou ciente") | R11 |
 | `src/features/auth/components/LoginForm/` | rótulo "E-mail ou nome de usuário" | R10 |
@@ -65,6 +65,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 - O campo do login passa de `email` para `login`, com o e-mail ainda aceito. **Confirmado em 2026-11-10** (Felipe Consulim).
 - O `DeleteUserDialog` da CCD059 é o mesmo componente desta story; o formato de confirmação do R11 vale para toda exclusão de usuário.
+- **Revista em 2026-11-12** (revisão da CCD059): o reenvio do link de ativação (R15) sai do botão separado na página
+  de detalhe e vira o checkbox "Reenviar link de ativação" dentro do modal de editar, condicional a
+  `activationPending`, como no frame `804-1682`.
 
 ## Revisão de 11/11/2026 (L6)
 
