@@ -1,6 +1,6 @@
 ---
 name: cromocard-revisor
-description: Revisa um Pull Request ou uma branch do CromoCard (backend, frontend ou workspace) rodando o código de verdade. Roda todos os testes e linters, exige cobertura de 90% com testes reais e valida padrões e arquitetura, spec, se toda divergência entre Figma e documentação foi decidida e registrada, fidelidade ao Figma e responsividade em celular, tablet, laptop e desktop, e devolve um veredito com evidências. Use sempre que mandarem um PR para revisar, pedirem /cromocard-revisor, "revisa esse PR", "revisa a branch" ou "esse PR pode entrar?", mesmo sem citar a skill, e antes do /criar-pr.
+description: Revisa um Pull Request ou uma branch do CromoCard (backend, frontend ou workspace) rodando o código de verdade. Roda todos os testes e linters, exige cobertura de 90% com testes reais e valida padrões e arquitetura, spec, se toda divergência entre Figma e documentação foi decidida e registrada, fidelidade ao Figma e responsividade em celular, tablet, laptop e desktop, e devolve um veredito com evidências. Não corrige o código: publica os achados como comentários no PR, e quem corrige é o autor. Use sempre que mandarem um PR para revisar, pedirem /cromocard-revisor, "revisa esse PR", "revisa a branch" ou "esse PR pode entrar?", mesmo sem citar a skill, e antes do /criar-pr.
 argument-hint: "este PR \"<link ou número>\" | [backend|frontend|workspace] [base] [#work-item]"
 ---
 
@@ -13,15 +13,18 @@ Antes de começar, diga em uma ou duas frases o que entendeu que vai revisar. Si
 
 ## As regras da revisão
 
-1. **Primeiro o relatório.** Até o veredito, nada é alterado e a branch do usuário não muda: a revisão roda numa cópia à
-   parte. Correções só na Fase 8, com o sim do usuário.
+1. **A revisão não corrige.** Ela roda numa cópia à parte, a branch do usuário não muda, e o código do PR nunca é
+   alterado: nada de commit ou push na branch do autor, nem quando o ajuste parece pequeno ou o usuário pede. Quem
+   corrige é o autor, a partir dos comentários que a Fase 8 publica. Se pedirem a correção, explique isso; sendo o
+   usuário o autor, a correção é dele, na própria branch (por exemplo com a `/cromocard-desenvolver`).
 2. **Rodar, não presumir.** O que a descrição do PR afirma não é evidência. Checagens, fidelidade e responsividade são
    executadas aqui.
 3. **Seis eixos separados.** Não misture os achados: um código pode seguir os padrões e implementar a coisa errada, ou
    ser fiel ao Figma e quebrar no celular.
 4. **Nada de aprovar pela metade.** Eixo que se aplica e não pôde rodar deixa a revisão incompleta, nunca aprovada.
-5. **Nada sai daqui sem pedido.** Não comente, não aprove e não faça merge no GitHub nem escreva no Azure. Quem aprova o
-   PR é uma pessoa diferente de quem o escreveu (`.claude/rules/git.md`).
+5. **Só comentários saem daqui.** Pedir a revisão de um PR é pedir os comentários nele (Fase 8), sempre com o evento
+   `COMMENT`. Não aprove, não peça alterações formalmente (`APPROVE`/`REQUEST_CHANGES`), não faça merge e não escreva no
+   Azure. Quem aprova o PR é uma pessoa diferente de quem o escreveu (`.claude/rules/git.md`).
 6. **Todo achado explica a si mesmo**, em qualquer eixo, com as três partes abaixo. Um achado sem o motivo não ensina nada
    a quem escreveu e não deixa decidir se vale corrigir.
 
@@ -206,7 +209,7 @@ Diferenças aceitas, todas decididas: <lista | nenhuma>
 ## 6. Responsividade
 | Tela | 320 | 360 | 768 | 1024 | 1366 | 1920 | Frame |
 
-## O que corrigir, em ordem
+## O que o autor precisa corrigir, em ordem
 1. <arquivo:linha, ou tela e largura> · <regra> · <severidade>
    Problema: <…>
    Por que é ruim: <…>
@@ -215,20 +218,28 @@ Diferenças aceitas, todas decididas: <lista | nenhuma>
 Não validado: <o que não rodou e por quê | nada>
 ```
 
-## Fase 8. Arrumar e publicar
+## Fase 8. Comentar no PR e limpar
 
-Só depois do relatório. Pergunte com `AskUserQuestion`, cada item separado:
+Só depois do relatório. A revisão não corrige nada (regra 1): ela publica os achados no PR para o autor corrigir. Não
+pergunte se é para corrigir nem ofereça correção.
 
-**Corrigir os achados?** Opções: **Corrigir agora (Recomendado)** · Só os Bloqueantes · Só o relatório.
+**Revisão de branch, sem PR:** não há onde comentar. O relatório é a entrega, e quem escreveu corrige na própria branch
+antes do `/criar-pr`. Vá direto para a limpeza.
 
-- Corrija na cópia do PR, seguindo a **Sugestão** de cada achado, inclusive os de SOLID, Object Calisthenics e Design
-  Patterns. O que depender de uma decisão do autor ou da documentação vira pergunta, não suposição.
-- Depois, rode de novo as checagens e os eixos afetados e mostre o diff das correções.
-- Commit no padrão do `.claude/rules/git.md`. **Push só com um novo sim do usuário**, porque altera o PR de outra pessoa:
-  `git -C "$DIR" push origin HEAD:<headRefName>`. Nunca force push.
+**Revisão de PR:** publique a revisão no PR como comentários no código, sem perguntar, porque o pedido de revisão já é
+o pedido dos comentários. Se o usuário disser na chamada que não quer publicar, entregue só o relatório.
 
-**Publicar a revisão no PR?** Opções: Publicar como comentários no código · Não publicar. Nunca use `APPROVE` ou
-`REQUEST_CHANGES`: o evento é sempre `COMMENT`. Grave um JSON num arquivo temporário e envie:
+- O evento é sempre `COMMENT`. Nunca use `APPROVE` nem `REQUEST_CHANGES`.
+- Cada achado com linha no diff vira um comentário naquela linha, com as três partes. O que foi decidido pelo PO
+  durante a revisão (Fase 5) entra no comentário como **Decisão do PO nesta revisão**, para o autor saber que não é
+  sugestão.
+- O `body` leva o veredito, as tabelas de checagens e de cobertura, a prova da quebra e os achados sem linha no diff:
+  arquivos fora do diff, achados visuais (tela, `node-id`, largura), documentação e processo, todos com as três partes.
+- Antes de enviar, confira que cada `path` e `line` está entre as linhas acrescentadas do diff
+  (`git -C "$DIR" diff -U0 origin/<base>...HEAD`). Linha fora do diff faz a API recusar a revisão inteira: mova o
+  comentário para uma linha do diff no mesmo trecho ou para o `body`.
+
+Grave um JSON num arquivo temporário e envie:
 
 ```json
 {
@@ -250,8 +261,7 @@ Só depois do relatório. Pergunte com `AskUserQuestion`, cada item separado:
 gh api -X POST repos/<GitHub>/pulls/<n>/reviews --input <arquivo>
 ```
 
-Só linhas que aparecem no diff aceitam comentário. Achado fora do diff e achado visual vão no `body`, com as mesmas três
-partes.
+Mostre o link da revisão publicada (`html_url` da resposta) e um resumo curto do que o autor precisa corrigir.
 
 **Limpar.** Pare os servidores que você subiu, feche o navegador (`browser_close`), apague o banco `cromocard_pr_<n>` se o
 criou e remova as cópias com `git -C <caminho> worktree remove --force "$DIR"`. Copie antes os prints citados no relatório

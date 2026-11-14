@@ -105,7 +105,8 @@ flowchart TD
 
 - `/cromocard-revisor` roda o código e revisa em seis eixos: PR e checagens, com testes e cobertura; Padrões (ADRs, rules,
   SOLID, Object Calisthenics e Design Patterns); Spec (cada `R` e o contrato da API do plano comparado com o diff);
-  Decisões e documentação; Fidelidade ao Figma; e Responsividade.
+  Decisões e documentação; Fidelidade ao Figma; e Responsividade. Ela não corrige o código: num PR, publica os achados
+  como comentários (evento `COMMENT`), e quem corrige é o autor.
 - `/criar-pr` roda as checagens, faz push e abre o PR no app para `develop`, com o `AB#` e a seção **Spec**
   (requisitos e tarefas que o PR cobre).
 - Merge com 1 aprovação de outra pessoa e o CI verde, em squash (`.claude/rules/git.md`).
