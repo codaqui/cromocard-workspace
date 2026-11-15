@@ -6,7 +6,7 @@
 - **Caso de uso:** [99-aplicar-sancao-a-usuario.md](../../docs/Casos-De-Uso/99-aplicar-sancao-a-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-15, depois da correção da CA7 (Felipe Consulim)
 
 ## Objetivo
 
@@ -39,7 +39,7 @@
 - **CA4** (R3) — **Dado** o diálogo de sanção, **quando** o admin confirma sem justificativa, **então** a API responde `400`.
 - **CA5** (R8) — **Dado** uma denúncia de mensagem, **quando** o admin escolhe "Remover Mensagem & Advertir", **então** a mensagem some, o autor é advertido e a denúncia fica `RESOLVED`.
 - **CA6** (R9) — **Dado** uma suspensão vencida, **quando** o job roda, **então** o usuário volta a `ACTIVE`.
-- **CA7** (R10) — **Dado** um usuário bloqueado, **quando** o admin reativa com justificativa, **então** o status volta a `ACTIVE`.
+- **CA7** (R10) — **Dado** um usuário suspenso ou bloqueado, **quando** o admin reativa, **então** o status volta a `ACTIVE`.
 - **CA8** (R12) — **Dado** um grupo ativo, **quando** o admin adverte o grupo, **então** o status vira `WARNED` e a lista mostra o selo.
 - **CA9** (R13, R14) — **Dado** denúncias de spam e de discurso de ódio, **quando** o admin filtra por "Críticos", **então** a fila mostra só as críticas, com idade da conta, advertências e número de denúncias.
 - **CA10** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama uma das rotas, **então** recebe `403`.
@@ -90,3 +90,4 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 | L5 | Advertências acumuladas suspendem sozinhas? (proposta: não) | Não | `99`, FP 6 |
 | L6 | De onde o admin aplica a sanção na Gestão de Usuários? | Da página do usuário, pelo card "Ações sobre o usuário", num modal com advertir, suspender (3, 7, 15 ou 30 dias) e banir. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | EA-059-03; frames `804-2174` e `804-2531` |
 | L7 | Como a fila aplica sanção? O Figma tinha "Banir definitivamente" e "Banir temporariamente (3 dias)" direto na denúncia | Botões "Dispensar denúncia", "Remover mensagem", "Remover mensagem e advertir" e "Aplicar sanção ao autor", que abre o mesmo modal de Usuários. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `99`, FP 1 |
+| L8 | A CA7 pedia reativar "com justificativa", mas o frame `804-2889` mostra um confirm simples e o `SuspendUserDialog.tsx` (CCD059, já mergeado) já reativa sem justificativa | Reativar não exige justificativa, como no Figma, no caso de uso (FA 5-6) e no código já existente; a CA7 foi corrigida | esta spec, CA7; frame `804-2889` |
