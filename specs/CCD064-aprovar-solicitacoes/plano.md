@@ -48,3 +48,10 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog-
 | CA2–CA6 | `catalog-requests.service.spec.ts` · integração |
 | CA1, CA4 | `CatalogRequestsPage.spec.tsx` |
 | CA7 | integração |
+
+## Revisão de 12/11/2026 (L6, L7)
+
+- R3: a página lista os cards abertos com paginação e as abas por tipo; o código exibido é `#SOL-` + o início do id.
+- R6: `ApproveRequestDialog` resume o que será criado; R14: `RejectRequestDialog` com o motivo obrigatório e o erro.
+- R11: o `409` de solicitação processada devolve quem e quando, e a tela mostra o diálogo `847-1878`.
+- R16: o `409` do catálogo (número repetido) mostra o diálogo `847-2371` e a solicitação continua pendente.

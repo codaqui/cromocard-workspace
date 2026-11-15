@@ -1,6 +1,6 @@
 # Plano — CCD098 Gerenciar Dados Complementares do Usuário
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -20,12 +20,13 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | Tabela | Migration | O que muda | Requisitos |
 |---|---|---|---|
 | `users` | `add_profile_fields_to_users_table` | `username`, `phone`, `cpf`, `last_login_at`, `last_login_ip` | R2, R4, R8 |
+| `seller_verifications` | `create_seller_verifications_table` | tabela copiada do DBML (CCD094), criada aqui só para viabilizar a busca por CNPJ (R3/L2); `address_id` fica como coluna solta, sem FK, até a CCD094 criar `addresses` | R3 |
 
 ## Contrato da API
 
 | Método e caminho | Entrada | Sucesso | Erros | Requisitos |
 |---|---|---|---|---|
-| `GET /api/v1/users` (CCD059) | `q` também busca @, CPF, CNPJ e ID | acrescenta `username`, `phone`, `lastLoginAt`, `lastLoginIp`, `total` | — | R2, R3, R12 |
+| `GET /api/v1/users` (CCD059) | `q` também busca @, CPF, CNPJ e ID | acrescenta `username`, `phone`, `lastLoginAt`, `lastLoginIp`; o total já existe em `meta.total` (ADR-011) | — | R2, R3, R12 |
 | `POST /api/v1/users` · `PATCH /api/v1/users/:id` (CCD059) | acrescenta `username?`, `cpf?`, `phone?`, `sendActivation` | `201` / `200` | `400`, `409 USERNAME_TAKEN`, `409 CPF_TAKEN` | R4–R7, R9 |
 | `GET /api/v1/users/:id` | — | `200` todos os dados | `404` | R13 |
 | `POST /api/v1/users/:id/resend-activation` | — | `202` | `404`, `409 ALREADY_ACTIVATED` | R15 |
@@ -45,9 +46,10 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/features/admin/users/` (api, queries, schemas) | campos e rotas novas | R3–R7, R15 |
-| `UsersPage` · `UserFormModal` | colunas, busca, total e campos | R2–R7, R12 |
-| `components/UserDetailDrawer/` · `DeleteUserDialog/` | detalhe e confirmação reforçada | R11, R13 |
+| `src/features/users/` (api, queries, schemas, types) | campos e rotas novas | R3–R7, R15 |
+| `pages/UsersListPage/` · `components/UsersTable/` · modal de editar | colunas (@, telefone, último acesso), busca, total e o checkbox "Reenviar link de ativação" na edição | R2–R7, R12, R15 |
+| `pages/UserDetailPage/` (já existe, da CCD059) | acrescenta @, telefone, CPF e último acesso/IP | R13 |
+| `components/DeleteUserDialog/` (já existe, da CCD059) | confirmação reforçada (`EXCLUIR-`+primeiro nome, caixa "Estou ciente") | R11 |
 | `src/features/auth/components/LoginForm/` | rótulo "E-mail ou nome de usuário" | R10 |
 
 ## Testes
@@ -56,9 +58,27 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|
 | CA3–CA5, CA8 | `admin-users.service.spec.ts` · integração |
 | CA6 | `auth.service.spec.ts` |
-| CA1, CA2, CA7 | `UsersPage.spec.tsx` · `DeleteUserDialog.spec.tsx` |
+| CA1, CA2, CA7 | `UsersListPage.spec.tsx` · `DeleteUserDialog.spec.tsx` |
 | CA9 | integração |
 
 ## Decisões técnicas
 
-- O campo do login passa de `email` para `login`, com o e-mail ainda aceito; a mudança no contrato da CCD004 é combinada com o Daniel antes do código.
+- O campo do login passa de `email` para `login`, com o e-mail ainda aceito. **Confirmado em 2026-11-10** (Felipe Consulim).
+- O `DeleteUserDialog` da CCD059 é o mesmo componente desta story; o formato de confirmação do R11 vale para toda exclusão de usuário.
+- **Revista em 2026-11-12** (revisão da CCD059): o reenvio do link de ativação (R15) sai do botão separado na página
+  de detalhe e vira o checkbox "Reenviar link de ativação" dentro do modal de editar, condicional a
+  `activationPending`, como no frame `804-1682`.
+
+## Revisão de 11/11/2026 (L6)
+
+- R13: o detalhe deixa de ser gaveta lateral e vira a página do usuário (`/backoffice/users/:id`), compartilhada
+  com a CCD059; esta story acrescenta @, telefone, CPF mascarado, último login e IP.
+
+## Ajustes da revisão dos PRs (14/11/2026)
+
+- `GET /users/:id` devolve `activationPending` (sem senha e sem Google). É a regra do reenvio (R15/CA8): o
+  checkbox "Reenviar link de ativação" do modal de editar (`804-1682`) só aparece quando ela é verdadeira e começa
+  desmarcado. O `passwordHash` nunca sai na resposta.
+- A lista não traz o CPF: a edição manda só os campos alterados, para não apagar o que o formulário não carregou.
+- `changedFields` do `USER_UPDATED` guarda só o que mudou de fato.
+- `seller_verifications.address_id` ganha a FK para `addresses` (DBML, Ref da linha 979), numa migration própria.

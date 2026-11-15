@@ -59,3 +59,12 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - As consultas públicas do catálogo filtram `status = ACTIVE` no repository, num único ponto.
+
+## Revisão de 12/11/2026 (L5, L6)
+
+- R5: publicar valida nome, franquia, raridade, idioma e imagem da frente (mesma regra da CCD061, L6).
+- R4: o filtro de status da lista (`status=DRAFT`) mostra o selo "Rascunho" e esconde a ação duplicar.
+- R7: excluir o rascunho passa pelo `DeleteCatalogItemDialog` da CCD061; CA9 no teste da página.
+- R10: o aviso de duplicata tem o link "Ver carta existente".
+- Telas novas: rascunhos `832-4379`, excluir rascunho `832-5330`, possível duplicata `832-7887` e erros de
+  validação `832-7170`.

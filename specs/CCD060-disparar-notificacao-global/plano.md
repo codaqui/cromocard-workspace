@@ -1,6 +1,6 @@
 # Plano — CCD060 Disparar Notificação Global
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 12/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -51,3 +51,13 @@ Todas com `authenticate` + `authorize('ADMIN')`.
 
 - Entrega síncrona com `createMany` em lotes de 1.000; com a base do MVP não precisa de fila (ADR-010 cita BullMQ só
   como evolução).
+
+## Revisão de 12/11/2026 (L6–L8)
+
+- R7: o "Cancelar" é um botão ao lado do envio que limpa o formulário (não há mais o diálogo "Enviar para N
+  usuários?").
+- R11: o modal de sucesso mostra título, público, canais e destinatários (público e canais da CCD101; no MVP, "Toda a
+  base" e "Plataforma").
+- R16: `GET /admin/notifications` paginado (`page`, `pageSize`), sem filtro de período.
+- R17: `NotificationPreview` reproduz o item da central de notificações (sem moldura de celular).
+- Testes: CA3 reescrito e CA7 novo em `NotificationsPage.spec.tsx`.

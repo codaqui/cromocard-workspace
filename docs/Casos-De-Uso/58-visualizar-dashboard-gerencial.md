@@ -10,7 +10,7 @@
 |---|---|
 | 1. O administrador acessa a opção "Dashboard Gerencial". |  |
 |  | 2. O sistema carrega os dados gerenciais disponíveis, considerando só registros não excluídos. |
-|  | 3. O sistema apresenta os indicadores: total de usuários (todos os papéis, menos administradores), cartas do catálogo e novos cadastros no período; o gráfico da evolução dos novos cadastros; e a lista dos cadastros de vendedores recentes, com a opção "Ver informações", que abre o usuário na Gestão de Usuários. |
+|  | 3. O sistema apresenta os indicadores: total de usuários (todos os papéis, menos administradores), cartas do catálogo e novos cadastros no período; o gráfico da evolução dos novos cadastros; e a lista dos 5 cadastros de vendedores mais recentes, com a opção "Ver informações", que abre o usuário na Gestão de Usuários, e o atalho "Ver todos", que abre a Gestão de Usuários filtrada em vendedores. Os indicadores são os mesmos em qualquer período: o filtro só recalcula os valores. |
 | 4. O administrador visualiza os indicadores apresentados. |  |
 | 5. O administrador seleciona um período (Hoje, 7 dias, 30 dias ou 1 ano) ou um intervalo de datas. O padrão é 30 dias. |  |
 |  | 6. O sistema processa o filtro selecionado, cortando os dias pelo horário de Brasília. |

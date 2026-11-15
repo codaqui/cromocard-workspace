@@ -2,7 +2,7 @@
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-10-31
-- **Decisores:** Lucas Oliveira Lima (proposta); validação: Daniel Andrade (PO)
+- **Decisores:** Lucas Oliveira Lima (proposta); validação: Felipe Consulim (PO)
 - **Substitui parcialmente:** ADR-055, decisão 7 (só a visibilidade: "Os pacotes nascem privados"). O resto da
   decisão 7 continua: GHCR como registro, nome `ghcr.io/codaqui/cromocard-<serviço>:<sha>`, login do runner com o
   `GITHUB_TOKEN` do job (`packages: read`) e logout no fim, e o plano B com artifact e `docker load`.

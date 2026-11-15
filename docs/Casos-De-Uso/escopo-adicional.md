@@ -52,41 +52,41 @@ aprovadas.
 | EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados. A taxa de autenticação não entra: não tem origem de dado. |
 | EA-059-01 | Confirmação reforçada ao excluir (digitar o texto e marcar "Estou ciente") | `276-1735` | CCD098 | O texto "irreversível" contraria o soft delete (ADR-015). Texto de confirmação: `EXCLUIR-` + o primeiro nome em maiúsculas. O texto "irreversível" muda: a conta pode ser restaurada (ADR-015). |
 | EA-059-02 | Total de usuários no cabeçalho | `208-1793` | CCD098 | |
-| EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793` | CCD098 | Não há frame do detalhe. Gaveta lateral com os dados e as ações; o Gabriel desenha. |
-| EA-059-04 | Status "Em análise" (vendedor aguardando credenciamento) | `208-1793` | CCD094 | |
+| EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793`, `649-1164`, `649-796` | CCD098 | Página do usuário, um layout só para qualquer papel (decisão do PO em 11/11/2026, no lugar da gaveta lateral): dados pessoais, contato, endereços, ações (editar, aplicar sanção, reativar, excluir), advertências e as ações administrativas sobre o usuário lidas do `audit_logs`. O frame `649-796` mostra a própria conta do admin, com as ações bloqueadas (CCD059 FA 7–8). |
+| EA-059-04 | Status "Em análise" (vendedor aguardando credenciamento) | `208-1793` | CCD094 | Selo "Em análise" ao lado do papel Vendedor; a coluna Status mostra só Ativo, Suspenso e Bloqueado (decisão do PO em 11/11/2026). |
 | EA-060-01 | Link de destino da notificação | `208-2380` | **MVP** (CCD060, L4) | |
 | EA-060-02 | Pré-visualização da notificação num celular | `208-2380` | **MVP** (plano da CCD060) | Não há app mobile nem push (ADR-058): a prévia mostra como a notificação aparece na central de notificações da plataforma. |
 | EA-060-03 | Contadores de caracteres (título 80, corpo 240) | `208-2380` | **MVP** (CCD060) | Vale o DER: 120 e 500. |
 | EA-060-04 | Botão com o número de destinatários e aviso de envio | `208-2380` | **MVP** (plano da CCD060) | |
-| EA-060-05 | Histórico com público, canal e status | `208-2380` | CCD101 (público e canal), CCD100 (status) | O histórico em si é MVP (CCD060, L5). |
+| EA-060-05 | Histórico com público, canal e status | `208-2380` | CCD101 (público e canal), CCD100 (status) | O histórico em si é MVP (CCD060, L5). Paginado, sem o recorte de 30 dias; status "Na fila", "Entregue" e "Cancelado" (decisão do PO em 11/11/2026). |
 | EA-061-01 | Indicadores: total de álbuns, álbuns licenciados e pendentes de revisão | `208-2895` | CCD105 | Licenciado = álbum `ACTIVE`; pendente de revisão = solicitação de álbum `PENDING`. |
 | EA-061-02 | Código da carta e etiquetas de variante | `208-2895` | CCD105 | Código digitado, opcional e único; não é copiado ao duplicar. |
-| EA-061-03 | Filtro por edição/ano e chips de filtros ativos | `208-2895` | CCD105 | |
-| EA-061-04 | Seleção de várias cartas | `208-2895` | CCD105 | O Figma não desenha ação em lote (lacuna na spec). Ação em lote: excluir as selecionadas, com motivo. |
-| EA-061-05 | População base e preço médio por carta | `208-2895` | CCD097 | Depende de `price_history` e das vendas. População = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias. |
+| EA-061-03 | Filtros por álbum e por ano e chips de filtros ativos | `208-2895` | CCD105 | O filtro "Edição / Ano" do Figma virou dois filtros, Álbum e Ano, como no contrato da CCD061 (decisão do PO em 12/11/2026). |
+| EA-061-04 | Seleção de várias cartas | `208-2895`, `832-4908` | CCD105 | Ação em lote: excluir as selecionadas, com motivo obrigatório; as cartas usadas em coleções não são excluídas e o sistema avisa quais (decisão do PO em 12/11/2026). |
+| EA-061-05 | População e preço médio por carta | `208-2895` | CCD097 | Depende de `price_history` e das vendas. População = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias. Sem graduação PSA/BGS e sem variação do preço (retiradas do Figma em 12/11/2026). |
 | EA-061-06 | Ano de lançamento da carta | `278-3246` | CCD106 | |
-| EA-061-07 | Verso padrão da franquia aplicado automaticamente | `278-3246` | CCD106 | Verso padrão por categoria na chave `catalog.default_backs` de `global_settings`. |
-| EA-061-08 | Checagem de duplicidade antes de cadastrar | `278-3246` | CCD106 | Duplicata = mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear. |
+| EA-061-07 | Verso padrão da franquia aplicado automaticamente | `278-3246` | CCD106 | Verso padrão por categoria na chave `catalog.default_backs` de `global_settings`. Com ele, o verso é opcional no formulário. |
+| EA-061-08 | Checagem de duplicidade antes de cadastrar | `278-3246`, `832-7887` | CCD106 | Duplicata = mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear, com o link para a carta existente. |
 | EA-061-09 | Imagem com mínimo de 1200×1600 px | `278-3246` | CCD106 | |
 | EA-062-01 | Indicadores da comunidade | `220-3524` | **MVP** (CCD062, L5) | |
-| EA-062-02 | Status "Advertido por Regras" para grupo | `220-3524` | CCD099 | Só o selo "Advertido"; reativar volta a `ACTIVE`. |
+| EA-062-02 | Status "Advertido" para grupo | `220-3524`, `841-2435` | CCD099 | Só o selo "Advertido"; reativar volta a `ACTIVE`. Ação "Advertir", com motivo, na linha do grupo ativo e nos detalhes (decisão do PO em 12/11/2026). |
 | EA-062-03 | Volume custodiado e negociações ativas por grupo | `220-3524` | CCD097 | Volume = soma dos anúncios ativos compartilhados no grupo (mensagens `LISTING`). |
-| EA-062-04 | Categoria da denúncia e filtro da fila por gravidade | `220-3524` | CCD099 | Críticas: "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam". |
-| EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). |
-| EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | |
-| EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | |
+| EA-062-04 | Categoria da denúncia e filtro da fila por gravidade | `220-3524` | CCD099 | Críticas: "Spam/Golpe" e "Discurso de ódio/Ameaça"; filtros "Críticos" e "Spam". O Figma usa esses nomes desde 12/11/2026. |
+| EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). Retirada do Figma em 12/11/2026. |
+| EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | Em todas as denúncias da fila. |
+| EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | Primeiras linhas e total de registros, sem gráficos (decisão do PO em 12/11/2026). |
 | EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | |
-| EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | |
+| EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
-| EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. |
-| EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | |
+| EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). |
+| EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | Colunas Nº, código, nome, raridade e variantes; resumo por raridade do seed. |
 | EA-064-04 | Subcategorias a criar junto com a categoria sugerida | `228-1804` | CCD103 | |
 | EA-065-01 | Justificativa obrigatória em toda ação administrativa | `228-2395` | CCD102 | O MVP já exige motivo em suspender, excluir e moderar. Obrigatória nas ações que mudam status ou excluem; opcional nas demais. |
-| EA-065-02 | Total de ações em 30 dias, com variação e média diária | `228-2395` | CCD102 | |
+| EA-065-02 | Total de ações em 30 dias, com variação e média diária | `228-2395` | CCD102 | Variação em relação aos 30 dias anteriores, acrescentada ao Figma em 12/11/2026. |
 | EA-065-03 | Filtros rápidos | `228-2395` | CCD102 | Banimentos, Remoção de grupos e Mudança de papel. |
-| EA-065-04 | Busca por IP | `228-2395` | CCD102 | |
+| EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
-| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. |
+| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. |
 
 ## 3. O que não vira requisito
 
@@ -96,13 +96,66 @@ média", "Tempo real", "Live Sync", "rede neural anti-fraude", "API GraphQL e Ba
 "pré-validado via OCR", "protocolo de auditoria" e os prazos "Padrão Bacen". Se algum deles precisar virar
 funcionalidade, vira caso de uso novo.
 
+Também não entram, por decisão do PO em 11/11/2026 na revisão do Figma de Administração: no Dashboard, a taxa de
+autenticação, a taxa de conformidade anti-fraude, os botões "Logs" e "Notificar Lojista" na linha do vendedor, o
+status com motivo ("Pendente Doc Pix"), "leilões" e os nomes de eventos no eixo do gráfico; em Usuários, cargos,
+equipes, departamentos e permissões por módulo do administrador (o DER só tem o papel ADMIN), 2FA, sessões e
+dispositivos, observações internas sobre o usuário, nível "Ouro", reputação e pedidos do cliente na página do
+usuário, data de nascimento, "tipo de conta", coleções favoritas e preferências de entrega e pagamento. Em Notificação: push e
+pré-visualização num celular (não há app, ADR-058), canais "Push", público "Com Saldo", "telemetria", "Fila de
+Envio Operante", "Deeplink Validado", "Status Geral", certificado de operação, ID de transmissão, taxa de entrega
+projetada, SLA, assinatura SHA-256 e "Ver Fila de Disparos / Logs". Em Catálogo (12/11/2026): graduação PSA/BGS ("PSA 10", "BGS 9.5",
+"PSA GEM MT"), "Ultra Escasso", "Alta Demanda", população "no Brasil", variação do preço médio, "Código Vault", "Nome
+canônico", "Padrão TCG Oficial", hash SHA-256 da imagem, "Checksum de Metadados", espaço de cor da imagem, "+420 esta
+semana" e, no fundo do cadastro de carta, os indicadores "Total indexado", "Novas este mês", "Cartas raras/slabs" e
+"Aguardando homologação" e a busca global ⌘K. Em Comunidade (12/11/2026): franquia do grupo (o DER não liga grupo a
+categoria), "guilda", "Líder" (vira o criador, `groups.creator_id`), "99.2% em conformidade", "SLA 4ms", "AÇÃO
+IMEDIATA REQUERIDA", "Custódia congelada", "slabs vintage", "leilões", "Algoritmo Heurístico VaultShield", "Link
+Malicioso Detectado", "rede neural anti-fraude", o hash da mensagem e os botões de banir direto na fila (a fila abre o
+modal de sanção do caso de uso 99). Em Relatórios (12/11/2026): "Taxa de atualização: Tempo Real", "Digest SHA-256",
+"Assinatura HSM", "Assinado HSM", gráficos na prévia e no PDF, "retenção de cohort", "funil de conversão", "Conselho
+Administrativo", "Data Warehouse e BI" e a granularidade ("Consol. Mensal", "Diária") no período. Em Solicitações (12/11/2026): "Registro de Ativo Físico
+Histórico", "Hub de Franquia Raiz & Taxonomia", "Hi-Res / 1200DPI", "Inspecionar Raw", "PSA Spec", "SHA-256 Hash
+Verificado", "arquivos criptográficos", "API GraphQL e Banco Central", "slots de binder", "Fórum de Curadoria",
+"Projeção de novos álbuns", "Transações estimadas/mês", a comunidade do solicitante e as raridades "Secret Promo", "L",
+"SR" e "SEC" (fora do seed). Em Logs (12/11/2026): "Registro de alta integridade", "Filtros de Investigação", "Registros de
+Execução de Segurança", "Timestamp: ISO 8601", os milissegundos de cada linha, as barras coloridas do total, o cargo
+("staff") e o botão "Sair" só nesta tela. Em Configurações (12/11/2026): "BackOffice Engine • Sistema Central",
+"mensageria com custódia transacional", "showcase", "canvas", "Banner ativo no ar", "Imagem Master", "cards indexados",
+"Status: Exibição Primária/Normal", o botão global "Salvar Todas as Alterações" e "Adicionar Nova Categoria" (criar
+categoria fica no Catálogo).
+
 ## 4. Telas conferidas
 
-Administração: `208-1240`, `247-2499`, `247-3539`, `246-1201`, `246-2038`, `252-1375`, `252-1723`, `252-2837`,
+Administração: `208-1240`, `247-2499`, `247-3539`, `649-796`, `649-1164`, `246-1201`, `246-2038`, `252-1375`, `252-1723`, `252-2837`,
 `208-1793`, `276-1202`, `276-1735`, `208-2380`, `277-2689`, `277-2982`, `208-2895`, `278-3246`, `220-3524`,
 `228-1236`, `228-1804`, `228-2395`, `228-3048`. Login: `152-2587`, `238-1204`. Painel do vendedor `281-3729` e
 perfil `229-3585` só para procurar o envio dos documentos do vendedor (não existe).
 
-- O frame `208-2895` (Catálogo) está cortado à direita no próprio Figma.
+- O frame `208-2895` (Catálogo) estava cortado à direita; foi alargado na revisão de 12/11/2026.
 - Os frames `252-1723`, `252-2837` e `278-3246` aparecem como "Html → Body" no Figma: são o dossiê do vendedor (dois
   estados) e o cadastro de carta.
+- Revisão de 11/11/2026: o Dashboard e Usuários foram ajustados no Figma para ficarem iguais à documentação, e
+  ganharam os estados que faltavam. Dashboard: sem dados `795-1174`, filtro sem dados `795-1704`, meta não
+  configurada `795-2234`, Livro Razão de Hoje `795-2761`, intervalo de datas `795-3417`, filtro de status `795-3961`.
+  Usuários: erros de validação `804-1188`, editar `804-1682`, aplicar sanção `804-2174` e com a justificativa
+  obrigatória `804-2531`, reativar `804-2889`, operação concluída `804-3283`.
+  Notificação (12/11/2026): agendamento `277-2689` refeito, notificação enviada `277-2982`, agendada `821-1118`,
+  erros de validação `827-1523`, cancelar agendamento `827-2006`.
+  Catálogo (12/11/2026): cadastro de carta `278-3246` refeito, operação concluída `832-1149`, rascunhos `832-4379`,
+  excluir em lote `832-4908`, excluir rascunho `832-5330`, erros de validação `832-7170`, possível duplicata
+  `832-7887`, editar carta `832-5744`, duplicar carta `832-6457`, exclusão bloqueada `832-2217`, importar CSV
+  `832-3295`, importação com erro `832-3837`, importação concluída `832-1683`, álbuns `832-8603`, novo álbum
+  `833-9661`, categorias `833-9132`, nova categoria `833-10832`.
+  Comunidade (12/11/2026): detalhes do grupo `841-4451`, advertir `841-2435`, suspender `841-418` e com o motivo
+  obrigatório `841-922`, excluir `841-1427`, reativar `841-1931`, remover mensagem `841-2939`, remover e advertir
+  `841-3443`, dispensar denúncia `841-3947`, aplicar sanção ao autor `841-4977`, operação concluída `841-5508`.
+  Relatórios (12/11/2026): confirmar exportação `843-442`, relatório exportado `843-1246`, sem dados `843-1674`,
+  arquivo expirado `843-844`, histórico vazio `843-2068`.
+  Solicitações (12/11/2026): aprovar `847-390`, recusar `847-883` e com o motivo obrigatório `847-1380`, solicitação
+  aprovada `847-2864`, já processada `847-1878`, erro ao aprovar `847-2371`. A tela de votação do cliente (CCD103)
+  fica para a revisão do painel do cliente.
+  Logs (12/11/2026): nenhum registro encontrado `849-383`, logs extraídos `849-852`, nada para exportar `849-2265`,
+  limite de exportação `849-1794`; o painel de detalhes `749-624` ganhou o IP.
+  Configurações (12/11/2026): `228-3048` com os módulos de templates e metas e o verso padrão por franquia; link
+  inválido `859-661`, banner atualizado `859-1068`, editar template `859-1479`.
