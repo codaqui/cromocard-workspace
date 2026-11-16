@@ -1,12 +1,12 @@
 # CCD064 — Aprovar Solicitações
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #339 `CCD064-Aprovar Solicitações` · responsável Felipe Consulim · Sprint 07
 - **Caso de uso:** [64-aprovar-solicitacoes.md](../../docs/Casos-De-Uso/64-aprovar-solicitacoes.md) (pré-condições e passos 3, 7 e 8 têm texto do caso 63)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin, e em 2026-11-16, com as decisões L8–L11
 
 ## Objetivo
 
@@ -20,18 +20,18 @@
 | R2 | Tela em `/backoffice/solicitacoes`, item "Solicitações" do menu | Tela | `64`, FP 1; ADR-038 |
 | R3 | Lista das solicitações pendentes, paginada, com abas por tipo e contagem; cada solicitação aparece aberta (código `#SOL-`, tipo, solicitante e dados) | Tela | `64`, FP 2 (L6); DBML `request_status`; ADR-011 |
 | R4 | Tipos: carta, álbum e categoria | Regra | user-stories.md §8; DBML `catalog_request_type` |
-| R5 | O admin seleciona uma solicitação e vê o tipo e os dados sugeridos | Tela | `64`, FP 3–5; DBML `catalog_requests.data` |
+| R5 | O admin seleciona uma solicitação e vê o tipo e os dados sugeridos: na carta, nome, álbum, número, franquia, raridade, idioma e as imagens; no álbum, título, franquia, editora e ano; na categoria, nome e tipo | Tela | `64`, FP 3–5 (L8); DBML `catalog_requests.data` |
 | R6 | Botões "Aprovar" e "Recusar" iguais nos três tipos; Aprovar abre a confirmação com o que será criado | Ação | `64`, FP 6–7 (L7) |
 | R7 | Aprovar grava quem e quando (`reviewed_by_id`, `reviewed_at`) e muda o status para `APPROVED` | Regra | `64`, FP 7–8; DBML |
-| R8 | Aprovar carta ou álbum cria o item no catálogo e liga em `card_id`/`album_id` | Regra | DBML `catalog_requests` ("item criado após aprovação") |
+| R8 | Aprovar carta ou álbum cria o item no catálogo e liga em `card_id`/`album_id`. A carta entra publicada; o álbum entra sem cartas (L8, L9) | Regra | DBML `catalog_requests` ("item criado após aprovação"); `64`, FP 8 |
 | R9 | O item criado segue as regras do catálogo (CCD061) | Regra | DBML `albums`, `cards` |
 | R10 | O sistema informa que a solicitação foi aprovada | Mensagem | `64`, FP 9 |
 | R11 | Solicitação já processada não pode ser aprovada e o sistema informa quem a processou e quando | Regra | `64`, FA 1–2 |
 | R12 | Cancelar volta à lista sem aprovar | Ação | `64`, FA 3–4 |
 | R13 | Aprovar grava `audit_logs` | Regra | ADR-034 |
 | R14 | Recusar com motivo obrigatório (modal; sem motivo, a tela avisa): status `REJECTED`, motivo em `data.rejectionReason` e no `audit_logs` | Ação | `64`, FA 5–6; ADR-051, item 3 |
-| R16 | Conflito com o catálogo ao aprovar (ex.: número repetido no álbum) informa o motivo e mantém a solicitação pendente | Regra | `64`, FA 7–8; CA6 |
-| R15 | Aprovar ou recusar avisa o solicitante com uma notificação `CATALOG_REQUEST` | Regra | `64`, FP 9 e FA 6; ADR-051, item 2 |
+| R16 | Conflito com o catálogo ao aprovar (ex.: número repetido no álbum) ou falta de dado obrigatório para publicar a carta (franquia, raridade, idioma ou imagem da frente) informa o motivo e mantém a solicitação pendente | Regra | `64`, FA 7–8 (L8); CA6, CA8 |
+| R15 | Aprovar ou recusar avisa o solicitante com uma notificação `CATALOG_REQUEST`, com os textos do caso de uso | Regra | `64`, FP 9 e FA 6 (L11); ADR-051, item 2 |
 
 ## Critérios de aceite
 
@@ -39,8 +39,8 @@
   Cartas, Álbuns e Categorias com o número de pendentes.
 - **CA2** (R5–R10, R13) — **Dado** uma solicitação de carta pendente, **quando** o admin aprova e confirma, **então**
   a carta é criada no catálogo, a solicitação fica `APPROVED` com quem e quando, e o log registra.
-- **CA3** (R8) — **Dado** uma solicitação de álbum com lista de cartas, **quando** aprova, **então** o álbum e as
-  cartas são criados.
+- **CA3** (R8) — **Dado** uma solicitação de álbum, **quando** aprova, **então** o álbum é criado sem cartas e a
+  solicitação fica ligada a ele em `album_id` (L9).
 - **CA4** (R14) — **Dado** uma solicitação pendente, **quando** o admin recusa com motivo, **então** ela fica
   `REJECTED` e some da lista de pendentes.
 - **CA5** (R11) — **Dado** uma solicitação já aprovada, **quando** alguém tenta aprovar de novo, **então** a API
@@ -48,6 +48,8 @@
 - **CA6** (R9) — **Dado** uma carta sugerida com número que já existe no álbum, **quando** aprova, **então** a API
   responde `409` e a solicitação continua pendente.
 - **CA7** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama a rota, **então** recebe `403`.
+- **CA8** (R16) — **Dado** uma sugestão de carta sem idioma, **quando** o admin aprova, **então** a API responde `422`
+  com o campo que falta, nada é criado e a solicitação continua pendente.
 
 ## Dados
 
@@ -55,6 +57,8 @@
 |---|---|---|
 | `catalog_requests` | `requester_id`, `reviewed_by_id`, `card_id`, `album_id`, `type`, `data`, `status`, `reviewed_at` | fundação |
 | `albums`, `cards`, `categories` | — | criados pelo `catalogService` (CCD061) |
+| `notifications` | `user_id`, `title`, `message`, `type` | aviso ao solicitante (R15) |
+| `audit_logs` | `action`, `entity_type`, `entity_id`, `details` | aprovar e recusar (R13, R14) |
 
 ## Telas (Figma)
 
@@ -70,7 +74,11 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Já processada | `847-1878` | R11 | ✅ Bate |
 | Erro ao aprovar | `847-2371` | R16 | ✅ Bate |
 
-- Os campos extras da carta, o checklist do álbum, o quórum e as subcategorias são da CCD103.
+- Os campos extras da carta (ilustrador, população, justificativa, fontes), o checklist do álbum, o quórum e as
+  subcategorias são da CCD103.
+- **Diferenças do frame `228-1804`, decididas em 16/11/2026, a ajustar no Figma:** as abas seguem o caso de uso
+  ("Todas · Cartas · Álbuns · Categorias", L10); o card da carta mostra também franquia e idioma (L8); o rodapé do
+  álbum diz "Ao aprovar, o álbum entra no catálogo. As cartas são cadastradas depois, na Gestão de Catálogo." (L9).
 
 ## Fora do escopo
 
@@ -88,3 +96,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L5 | Corrigir o caso de uso 64 (texto do caso 63 nas pré-condições e nos passos 3, 7 e 8; acrescentar recusar) | Corrigido: pré-condições, passos 3, 7 e 8, e a recusa acrescentada | `64` |
 | L6 | Detalhe da solicitação: cards abertos ou tela própria? | Cards abertos na lista (cada card é o detalhe do FP 4), com paginação. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `64`, FP 2 |
 | L7 | O Figma tinha três nomes para aprovar ("Aprovar e Integrar", "Aprovar Álbum Oficial", "Criar Nova Franquia Oficial") | "Aprovar" e "Recusar" iguais nos três tipos; o modal diz o que será criado. Código `#SOL-` para todos. Decisão do PO (Daniel, 12/11/2026) | `64`, FP 6–7 |
+| L8 | A sugestão de carta só traz álbum, número e nome, mas a L6 da CCD061 exige franquia, raridade, idioma e imagem da frente para publicar. Como aprovar? | Como no Figma, a carta entra publicada: o cliente informa franquia, raridade, idioma e as imagens (frente obrigatória), e o card mostra franquia e idioma. Faltou dado obrigatório: `422`, a solicitação continua pendente. Decisão do PO (Daniel, 16/11/2026) | `23`, FP 2; `64`, FP 4, FP 8 e FA 7; `escopo-adicional.md`, EA-064-02 |
+| L9 | Aprovar um álbum cria também as cartas (o Figma mostra o checklist e o CA3 falava em lista de cartas)? | Não: cria só o álbum; as cartas são cadastradas depois na Gestão de Catálogo e vinculadas a ele. O checklist da CCD103 só é exibido e baixado. Decisão do PO (Daniel, 16/11/2026) | `64`, FP 8; CA3 |
+| L10 | Nome das abas: o Figma usa "Novas Cartas", "Novos Álbuns" e "Novas Categorias/Franquias" | Vale o caso de uso: "Todas · Cartas · Álbuns · Categorias", com o selo de pendentes; o Figma será ajustado. Nenhuma outra tela ou documento usa esses nomes. Decisão do PO (Daniel, 16/11/2026) | `64`, FP 2 |
+| L11 | Texto da notificação ao solicitante (o Figma não mostra) | Aprovada: "Sua sugestão foi aprovada" / "<nome do item> entrou no catálogo do CromoCard."; recusada: "Sua sugestão foi recusada" / "<nome do item> não foi aprovada. Motivo: <motivo>". Sem link. Decisão do PO (Daniel, 16/11/2026) | `64`, FP 9 e FA 6 |
