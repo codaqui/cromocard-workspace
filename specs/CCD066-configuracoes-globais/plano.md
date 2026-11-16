@@ -88,6 +88,9 @@ repetir.
 | `components/NotificationTemplatesModule/` · `TemplateDialog/` | lista, "Novo template" e "Editar template" no mesmo modal com contadores 120/500, excluir com `ConfirmDialog` | R11, R19 |
 | `components/GoalsModule/` | as duas metas, com a mensal vazia como "sem meta" | R16 |
 
+A feature `settings` tem as próprias chamadas de `GET /admin/catalog/categories` e `POST /uploads`, sem importar a
+feature `catalog` (CCD061), que só exporta as rotas no `index.ts`. Decisão de Gabriel Nascimento, 16/11/2026.
+
 Avisos (L23): "Banner atualizado", "Categorias padrão atualizadas", "Templates atualizados" e "Metas atualizadas", no
 `Toast`, com o mesmo formato do frame `859-1068`; erro sem campo vira aviso de erro no mesmo formato.
 

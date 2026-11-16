@@ -17,7 +17,7 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401`/`403` | Permissão | `66`, Pré-condições; ADR-005, item 4 |
-| R2 | Tela em `/backoffice/configuracoes`, item "Configurações" do menu | Tela | `66`, FP 1; ADR-038 |
+| R2 | Tela em `/backoffice/settings`, item "Configurações" do menu | Tela | `66`, FP 1; ADR-038 (L24) |
 | R3 | O sistema mostra as configurações e os valores atuais, lidos de `global_settings` | Tela | `66`, FP 2–4; DBML `global_settings` |
 | R4 | Cada módulo tem "Salvar" e "Cancelar" próprios (sem botão global), exceto o de templates, em que cada template é salvo no próprio formulário e excluído pela lista; o sistema valida antes de salvar | Ação | `66`, FP 2 e FP 5–7 (L6, L16) |
 | R5 | Ao salvar, grava o valor, `updated_by_id` e `updated_at` | Regra | `66`, FP 8; DBML |
@@ -123,3 +123,4 @@ Conferidas em 16/11/2026, sem mudança desde 15/11. Links: `https://www.figma.co
 | L21 | O frame `228-3048` diz "Formatos WEBP, PNG (Máx 4MB • 1920×600)" e o `/uploads` aceita PNG, JPG ou WEBP | Segue o Figma: o banner aceita WEBP e PNG até 4 MB, e 1920×600 é só o tamanho recomendado. Decisão de Gabriel Nascimento, 16/11/2026 | `66`, FP 6; R20 |
 | L22 | Em qual pasta do `/uploads` vai o verso padrão? (só existem `cards`, `albums` e `banners`) | Pasta `cards`, como os versos das cartas da CCD061, sem mudar o backend. Decisão de Gabriel Nascimento, 16/11/2026 | R12; `plano.md` |
 | L23 | Estados sem frame: confirmação de excluir template, "Novo template", avisos dos módulos 2 a 4, erro geral e carregando | No estilo da tela: `ConfirmDialog`, o modal do `859-1479` com o título "Novo template" e avisos no formato do "Banner atualizado". Decisão de Gabriel Nascimento, 16/11/2026 | R6; **Telas**; CA11 |
+| L24 | A spec dizia `/backoffice/configuracoes`, e o `paths.ts` da fundação e o menu já usam `/backoffice/settings`, como as outras rotas do BackOffice, em inglês | `/backoffice/settings`, mantendo o padrão do BackOffice. Decisão de Gabriel Nascimento, 16/11/2026 | R2 |
