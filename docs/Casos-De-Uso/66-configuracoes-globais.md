@@ -13,7 +13,7 @@
 | 3. O administrador seleciona uma configuração. |  |
 |  | 4. O sistema apresenta os valores atuais da configuração. |
 | 5. O administrador altera os valores desejados. Os templates de notificação são modelos de título e conteúdo que a tela de Disparar Notificação Global oferece para preencher: o administrador usa {campo} para os trechos que a pessoa completa naquela tela. |  |
-|  | 6. O sistema valida as informações inseridas: o link do botão do banner começa com https://, o nome de um template não se repete, a meta mensal de novos cadastros pode ficar vazia (sem meta) e a meta de votos é obrigatória. |
+|  | 6. O sistema valida as informações inseridas: o link do botão do banner começa com https://, a imagem do banner é WEBP ou PNG de até 4 MB (tamanho recomendado 1920×600), o nome de um template não se repete, a meta mensal de novos cadastros pode ficar vazia (sem meta) e a meta de votos é obrigatória. |
 | 7. O administrador confirma as alterações. |  |
 |  | 8. O sistema salva as novas configurações e registra a alteração no log de auditoria, com os valores antes e depois. O banner salvo passa a ser lido pela Home pública, sem login, mesmo quando está desligado: a Home é que decide não exibi-lo. |
 |  | 9. O sistema confirma que as configurações do módulo foram atualizadas. |
