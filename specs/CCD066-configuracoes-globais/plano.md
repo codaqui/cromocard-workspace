@@ -80,12 +80,16 @@ repetir.
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/features/admin/settings/` (api, queries, schemas) | chamadas e schemas que espelham o backend | R4, R7 |
-| `pages/SettingsPage/` | os quatro módulos, cada um com Salvar e Cancelar (menos o de templates) | R2–R8 |
-| `components/BannerModule/` | campos, upload e pré-visualização | R9, R12 |
-| `components/DefaultCategoriesModule/` | lista, adicionar e remover categoria padrão, trocar o verso (L9) | R10, R13, R17 |
-| `components/NotificationTemplatesModule/` · `TemplateDialog/` | lista, novo, editar e excluir com confirmação | R11, R19 |
-| `components/GoalsModule/` | as duas metas | R16 |
+| `src/features/admin/settings/` (`settings.types.ts`, `settings.schemas.ts`, `settings.api.ts`, `settings.queries.ts`) | tipos, schemas que espelham o `setting-schemas.ts` e o `settings.validator.ts`, chamadas das rotas do contrato e de `GET /admin/catalog/categories` (busca das franquias para adicionar) e `POST /uploads` | R4, R7, R12, R16, R20 |
+| `hooks/use<Módulo>Form.ts` | um formulário por módulo (React Hook Form + Zod), com Cancelar voltando aos valores carregados e os erros da API nos campos | R4, R7, R8 |
+| `pages/SettingsPage/` | cabeçalho e os quatro módulos, com carregando e erro; troca o `underConstructionRoute` | R2, R3, R6 |
+| `components/BannerModule/` | "Exibir Banner na Home", pré-visualização, campos e upload WEBP/PNG até 4 MB na pasta `banners` | R9, R12, R20 |
+| `components/DefaultCategoriesModule/` · `AddDefaultCategoryDialog/` | lista com nome, verso e remover; adicionar franquia (só raiz); "Trocar verso"/"Enviar verso" na pasta `cards`; botão "Salvar categorias" (L20, L22) | R10, R13, R17 |
+| `components/NotificationTemplatesModule/` · `TemplateDialog/` | lista, "Novo template" e "Editar template" no mesmo modal com contadores 120/500, excluir com `ConfirmDialog` | R11, R19 |
+| `components/GoalsModule/` | as duas metas, com a mensal vazia como "sem meta" | R16 |
+
+Avisos (L23): "Banner atualizado", "Categorias padrão atualizadas", "Templates atualizados" e "Metas atualizadas", no
+`Toast`, com o mesmo formato do frame `859-1068`; erro sem campo vira aviso de erro no mesmo formato.
 
 ## Testes
 
@@ -93,7 +97,7 @@ repetir.
 |---|---|
 | CA2–CA4, CA7, CA9, CA10 | `settings.service.spec.ts`, `settings-default-categories.service.spec.ts`, `catalog-default-categories.service.spec.ts` · integração |
 | CA6, CA8 | integração |
-| CA1, CA5 | `SettingsPage.spec.tsx` |
+| CA1–CA5, CA7, CA9–CA11 (tela) | `SettingsPage.spec.tsx` e o `.spec.tsx` de cada módulo |
 
 ## Decisões técnicas
 
