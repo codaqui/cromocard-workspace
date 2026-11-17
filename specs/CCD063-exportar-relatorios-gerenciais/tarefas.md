@@ -5,13 +5,13 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/338-exportar-relatorios`
 
-- [ ] **T1** · Criar validator, errors e repository dos relatórios — R4, R5, R10, R11, R15 · AB#574
+- [x] **T1** · Criar validator, errors e repository dos relatórios — R4, R5, R10, R11, R15 · AB#574
   - Pronto quando: o repository devolve as linhas de cadastros e de catálogo do período, sem excluídos.
-- [ ] **T2** · Criar exportadores CSV e PDF — R10 · CA2, CA3 · AB#575
+- [x] **T2** · Criar exportadores CSV e PDF — R10 · CA2, CA3 · AB#575
   - Pronto quando: os testes geram um CSV com BOM e `;` e um PDF com cabeçalho e tabela.
-- [ ] **T3** · Criar service de pré-visualização e exportação com auditoria — R6–R9, R12 · CA1, CA4 · AB#576
+- [x] **T3** · Criar service de pré-visualização e exportação com auditoria — R6–R9, R12 · CA1, CA4 · AB#576
   - Pronto quando: `reports.service.spec.ts` cobre os critérios e a exportação grava `EXPORT_REPORT`.
-- [ ] **T4** · Criar rotas de pré-visualização e exportação — R1 · CA6 · AB#577
+- [x] **T4** · Criar rotas de pré-visualização e exportação — R1 · CA6 · AB#577
   - Pronto quando: as 2 rotas aparecem no `/docs` e o download chega com o nome do arquivo.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/338-exportar-relatorios`
