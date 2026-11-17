@@ -1,6 +1,6 @@
 # ADR-061 — Chaves de configuração das metas e dos versos padrão
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 16/11/2026)
 - **Data:** 2026-11-16
 - **Decisores:** Gabriel Nascimento (proposta); validação: Felipe Consulim (PO)
 - **Substitui parcialmente:** ADR-051, item 1 (só a lista de chaves criadas pelo seed: "`home.banner` e
@@ -49,8 +49,7 @@ já na CCD066, mesmo com as stories que leem os valores ainda por fazer. Elas fo
 - A lista de chaves válidas fica no código (`SETTING_KEYS` e os schemas), testada. Uma chave nova entra na spec da
   própria story e em `SETTING_KEYS` e nos schemas, com teste; só pede ADR se mudar o formato do `value`, a leitura
   pública ou a auditoria.
-- Quando este ADR for aceito, o status do ADR-051 passa a `Aceito; item 1 substituído parcialmente pelo ADR-061`, e a
-  linha dele no índice é atualizada.
+- O status do ADR-051 é `Aceito; item 1 substituído parcialmente pelo ADR-061`, e a linha dele no índice diz o mesmo.
 
 ## Referências
 
