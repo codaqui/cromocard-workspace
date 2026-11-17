@@ -57,16 +57,24 @@
 
 ## Telas (Figma)
 
-Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
+Conferidas em 12/11/2026, depois do ajuste do Figma à documentação, e de novo em 16/11/2026, no início da
+implementação (L8–L10). Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Exportar Relatórios | `228-1236` | R3–R7, R10 | ✅ Bate |
-| Confirmar exportação | `843-442` | R8, R14 | ✅ Bate |
-| Relatório exportado | `843-1246` | R9 | ✅ Bate |
+| Exportar Relatórios | `228-1236` | R3–R7, R10 | ✅ Bate, com as diferenças decididas abaixo |
+| Confirmar exportação | `843-442` | R8, R14 | ✅ Bate, sem a frase do histórico (L10) |
+| Relatório exportado | `843-1246` | R9 | ✅ Bate, sem a menção ao histórico (L10) |
 | Sem dados para os filtros | `843-1674` | R12 | ✅ Bate |
 
 - O histórico, o arquivo expirado (`843-844`) e o histórico vazio (`843-2068`) são da CCD107.
+- Diferenças decididas em relação aos frames:
+  - "Auditoria de Lojistas" e "Volume Transacionado & Custódia" aparecem desabilitados, com o selo "Em breve" (L9).
+  - A confirmação não diz "O arquivo fica no histórico por 90 dias", e o aviso de exportado não diz "está no topo do
+    histórico": as duas frases voltam com a CCD107 (L10). A seção "Histórico de relatórios" aparece vazia até lá.
+  - O seletor de período é o mesmo do Dashboard (L7), com o botão "Personalizado" para o intervalo de datas.
+  - A amostra mostra três colunas de cada relatório (novos cadastros: nome, papel e cadastro; catálogo: nome,
+    franquia e cadastro), como a amostra do frame; o arquivo exportado leva todas as colunas.
 
 ## Fora do escopo
 
