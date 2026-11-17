@@ -9,13 +9,13 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa Configurações Globais, no módulo "Ordenação e Gestão de Categorias Padrão". |  |
-|  | 2. O sistema apresenta as categorias padrão na ordem atual, cada uma com a posição, o nome, o slug, a quantidade de cartas e o selo de exibição. |
+|  | 2. O sistema apresenta as categorias padrão na ordem atual, cada uma com a posição, o nome, o slug, a quantidade de cartas e o selo de exibição. A quantidade soma as cartas não excluídas ligadas à categoria ou às subcategorias dela, direto ou pelos álbuns delas. |
 | 3. O administrador move uma categoria para cima ou para baixo, pelas setas ou arrastando. |  |
 |  | 4. O sistema atualiza as posições na tela. |
 | 5. O administrador marca uma categoria como "Fixado no topo" pelo botão de alfinete da linha, quando necessário (só uma por vez). |  |
 |  | 6. O sistema coloca a categoria fixada na primeira posição, com o selo "Fixado no topo", e retira o fixado da categoria que estava fixada antes, se houver. |
 | 7. O administrador seleciona "Salvar Ordem". |  |
-|  | 8. O sistema grava a nova ordem e registra a ação no log de auditoria. |
+|  | 8. O sistema grava a nova ordem e a categoria fixada junto com as demais alterações do módulo (categorias padrão e versos, da Configurações Globais) e registra a ação no log de auditoria. |
 |  | 9. O sistema passa a exibir as categorias nessa ordem no menu, nos filtros e na vitrine e confirma a operação. |
 
 ### Fluxo Alternativo
@@ -27,4 +27,4 @@
 | 3. O administrador tenta mover para cima a primeira categoria ou para baixo a última. |  |
 |  | 4. O sistema mantém a posição, com a seta desabilitada. |
 | 5. O administrador seleciona o alfinete da categoria fixada. |  |
-|  | 6. O sistema retira o "Fixado no topo" da categoria. |
+|  | 6. O sistema retira o "Fixado no topo" da categoria, que continua na posição em que está até o administrador movê-la. |
