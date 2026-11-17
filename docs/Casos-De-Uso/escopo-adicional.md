@@ -75,7 +75,7 @@ aprovadas.
 | EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). Retirada do Figma em 12/11/2026. |
 | EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | Em todas as denúncias da fila. |
 | EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | Primeiras linhas e total de registros, sem gráficos (decisão do PO em 12/11/2026). |
-| EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | |
+| EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | Cadastros criados no período, com loja, CNPJ, e-mail do vendedor, status e data do cadastro (decisões de 17/11/2026, L9 e L10 da CCD094). |
 | EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
 | EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). |

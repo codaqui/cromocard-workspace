@@ -42,7 +42,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | `src/domains/admin/seller-verifications/` (validator, errors, repository) | filtros, dossiê e mudanças de status | R2, R3, R5, R14 |
 | `seller-verifications.service.ts` + `.spec.ts` | validar documento, notas, aprovar, rejeitar, auditoria e notificação | R6–R11, R14 |
 | controller · routes · swagger · module | rotas acima | R1, R4 |
-| `admin-users.repository.ts` · `reports` (tipo `SELLER_AUDIT`) | status da análise na lista e relatório | R12, R13 |
+| `admin-users.repository.ts` · `admin/reports` (tipo `seller-audit`: `GET /admin/reports/seller-audit` e `/export?format=csv\|pdf`, colunas `legalName`, `cnpj`, `email`, `status`, `createdAt`, filtro por `created_at`) | status da análise na lista e relatório | R12, R13 (L9, L10) |
 | `src/lib/logger` (redaction) | `cnpj` e `cpf` no `redact` | R15 |
 
 ## Frontend

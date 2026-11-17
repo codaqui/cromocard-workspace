@@ -20,6 +20,7 @@
   - Pronto quando: a lista de usuários traz `sellerVerificationStatus` e o relatório exporta em CSV e PDF.
   - **Revista em 13/11/2026:** R13 **bloqueado**: a CCD063 (`reports`) ainda não tem domínio implementado (router vazio) — decisão do PO (Felipe Consulim) de não criar um endpoint provisório fora da CCD063; volta quando a CCD063 existir.
   - **Revista em 14/11/2026:** R12 feito — `users.repository.ts` devolve `verificationStatus` (de `sellerVerification.status`), sem mudar `status` da conta; `CA11` cobre em `admin-users.spec.ts`.
+  - **Revista em 17/11/2026:** R13 feito depois do merge da CCD063 — tipo `seller-audit` no domínio `admin/reports` (colunas da L9, período pela data do cadastro da L10), com `CA9` em `tests/integration/admin-reports.spec.ts`; no frontend (PR #19), o card "Auditoria de Lojistas" deixa de ser "Em breve" e usa o tipo novo.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/598-validar-cadastro-de-vendedor`
 

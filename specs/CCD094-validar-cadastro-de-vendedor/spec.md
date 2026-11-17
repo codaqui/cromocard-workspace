@@ -6,7 +6,7 @@
 - **Caso de uso:** [94-validar-cadastro-de-vendedor.md](../../docs/Casos-De-Uso/94-validar-cadastro-de-vendedor.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista em 2026-11-13 (L7, Felipe Consulim) e em 2026-11-16 (L8, Felipe Consulim)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista em 2026-11-13 (L7, Felipe Consulim), em 2026-11-16 (L8, Felipe Consulim) e em 2026-11-17 (L9 e L10, Felipe Consulim)
 
 ## Objetivo
 
@@ -28,7 +28,7 @@
 | R10 | Fechar o dossiê sem decidir mantém o status | Ação | `94`, FA 7–8 |
 | R11 | Validar documento, aprovar e rejeitar gravam `audit_logs` com o motivo | Regra | `94`, FP 13 e FA 4; ADR-034; ADR-051, item 5 |
 | R12 | Na Gestão de Usuários, o vendedor com análise aberta mostra o selo "Em análise" ao lado do papel, sem mudar o status da conta | Campo | `59`, FP 2; EA-059-04 (L6) |
-| R13 | Relatório "Auditoria de Lojistas" (cadastros por status no período) em Exportar Relatórios | Ação | EA-063-02 |
+| R13 | Relatório "Auditoria de Lojistas" em Exportar Relatórios (CCD063): os cadastros criados no período, sem os excluídos, com loja, CNPJ, e-mail do vendedor, status e data do cadastro, com prévia e exportação em CSV e PDF | Ação | EA-063-02 (L9, L10) |
 | R14 | Só se decide cadastro `UNDER_REVIEW` ou `PENDING`; outro status responde `409` | Regra | `94`, Pré-condições |
 | R15 | CPF e CNPJ não aparecem nos logs da aplicação | Regra | ADR-019; ADR-052, Consequências |
 
@@ -42,7 +42,7 @@
 - **CA6** (R9) — **Dado** o diálogo de rejeição, **quando** o admin confirma sem motivo, **então** a API responde `400` e nada muda.
 - **CA7** (R14) — **Dado** um cadastro já aprovado, **quando** o admin tenta rejeitar, **então** a API responde `409`.
 - **CA8** (R4) — **Dado** 3 aprovados e 1 reprovado decididos no período, **quando** o admin abre o Dashboard, **então** o card mostra 3 aprovados e conversão de 75%.
-- **CA9** (R13) — **Dado** cadastros no período, **quando** o admin exporta "Auditoria de Lojistas" em CSV, **então** o arquivo lista os cadastros com o status.
+- **CA9** (R13) — **Dado** cadastros criados no período, **quando** o admin exporta "Auditoria de Lojistas" em CSV, **então** o arquivo lista os cadastros com loja, CNPJ, e-mail, status (em português) e data do cadastro, sem os criados fora do período nem os excluídos.
 - **CA10** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama uma das rotas, **então** recebe `403`.
 - **CA11** (R12) — **Dado** um vendedor ativo com cadastro em análise, **quando** o admin abre a Gestão de Usuários, **então** a linha mostra o papel Vendedor com o selo "Em análise" e o status Ativo.
 
@@ -64,7 +64,7 @@
 | Dashboard, filtro de status aberto | `795-3961` | R3 | ✅ Bate |
 | Gestão de Usuários, selo "Em análise" | `208-1793` | R12 | ✅ Bate (ajustado em 11/11/2026) |
 | Validar Cadastro (painel, gaveta sobre o Dashboard) | `246-1201` | R5–R10 | ✅ Bate (revisado em 13/11/2026, L7) |
-| Exportar Relatórios, card "Auditoria de Lojistas" | `228-1236` | R13 | ✅ Bate (revisado em 12/11/2026) |
+| Exportar Relatórios, card "Auditoria de Lojistas" | `228-1236` | R13 | ✅ Bate (revisado em 12/11/2026; conferido de novo em 17/11/2026 com o card habilitado, 5 colunas, L9) |
 
 Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
 
@@ -94,3 +94,5 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 | L6 | Onde aparece o "Em análise" na Gestão de Usuários (EA-059-04)? | Como selo ao lado do papel Vendedor; a coluna Status continua só com Ativo, Suspenso e Bloqueado. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 2; EA-059-04 |
 | L7 | O Figma tem duas telas pro dossiê do vendedor (R5): a gaveta sobre o Dashboard (`246-1201`, já decidida no `plano.md`) e uma página cheia via Gestão de Usuários (`252-1723`/`252-2837`), incompatíveis entre si. Qual seguir? | A gaveta sobre o Dashboard (`246-1201`); os frames `252-1723`/`252-2837` ficam fora de uso, como exploração anterior do mesmo requisito. Decisão do PO (Felipe Consulim, 13/11/2026) | esta spec (Fora do escopo); `plano.md`, Decisões técnicas |
 | L8 | A conversão conta os cadastros criados no período ou os decididos no período? (apontado na revisão do backend, PR #26: um cadastro de 40 dias aprovado ontem ficava fora de "Últimos 30 dias") | Os decididos: aprovados e reprovados entram pelo `reviewed_at` dentro do período; em análise e pendentes continuam pelo `created_at`. Decisão do PO (Felipe Consulim, 16/11/2026) | esta spec (R4, CA8); `plano.md`, contrato do `summary`; `escopo-adicional.md`, EA-058-07 |
+| L9 | Quais as 5 colunas do relatório "Auditoria de Lojistas"? O card do Figma (`228-1236`) diz só "Cadastros de vendedores por status no período · 5 colunas", sem nomeá-las | Loja (razão social), CNPJ, e-mail do vendedor, status da análise (Em análise, Pendente, Aprovado, Reprovado) e data do cadastro. Decisão do PO (Felipe Consulim, 17/11/2026) | esta spec (R13, CA9); `plano.md`; `escopo-adicional.md`, EA-063-02 |
+| L10 | O relatório filtra o período pela data do cadastro ou pela data da decisão (a L8 usa a decisão na conversão do card)? | Pela data do cadastro: lista os cadastros criados no período, com o status atual, inclusive os ainda em análise, como dizem o card do Figma e o CA9. Decisão do PO (Felipe Consulim, 17/11/2026) | esta spec (R13, CA9); `plano.md`; `escopo-adicional.md`, EA-063-02 |
