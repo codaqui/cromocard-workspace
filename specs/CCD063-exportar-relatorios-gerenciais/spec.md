@@ -1,12 +1,12 @@
 # CCD063 — Exportar Relatórios Gerenciais
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #338 `CCD063-Exportar Relatórios Gerenciais` · responsável Lucca Rocha · Sprint 07
 - **Caso de uso:** [63-exportar-relatorios-gerenciais.md](../../docs/Casos-De-Uso/63-exportar-relatorios-gerenciais.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN` (o texto do caso de uso repete a finalidade)
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-16 por Lucca Rocha, com as decisões L8–L10
 
 ## Objetivo
 
@@ -71,6 +71,8 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 ## Fora do escopo
 
 - O conteúdo dos relatórios "Auditoria de Lojistas" e "Volume Transacionado & Custódia" — CCD094 (R13) e CCD097 (R11).
+  Os dois cards aparecem desabilitados, com o selo "Em breve" (L9).
+- O histórico das exportações, o "Baixar" e o arquivo guardado por 90 dias (R16) — CCD107 (L10).
 - Gráficos no PDF e na prévia, "Assinatura HSM" e "Digest SHA-256": retirados do Figma em 12/11/2026.
 
 ## Lacunas e decisões
@@ -84,3 +86,6 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L5 | Corrigir o caso de uso 63 (FP 1 diz "Gestão de Comunidade"; pré-condições e numeração) | Corrigido: FP 1, pré-condições e numeração | `63` |
 | L6 | "Baixar": gerar de novo (caso de uso 63) ou o mesmo arquivo (caso de uso 107)? | O mesmo arquivo por 90 dias; depois, oferece gerar de novo com os mesmos filtros. O caso de uso 63 foi corrigido. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `63`, FP 10–11; `107` |
 | L7 | Opções de período | Hoje, 7 dias, 30 dias, 1 ano e intervalo de datas, como no Dashboard. Decisão do PO (Daniel, 12/11/2026) | `63`, FP 3 |
+| L8 | Quais as 6 colunas do relatório "Catálogo"? O card do Figma (`228-1236`) diz "Cartas e álbuns cadastrados no período, por franquia · 6 colunas", sem nomeá-las | Tipo (Carta ou Álbum), Nome, Número da carta, Álbum, Franquia (categoria) e Data de cadastro. Decisão de Lucca Rocha, 16/11/2026, no início da implementação | `63`, FP 2; R11 |
+| L9 | Os cards "Auditoria de Lojistas" e "Volume Transacionado & Custódia" aparecem nesta entrega? | Aparecem como no Figma, desabilitados e com o selo "Em breve"; a API aceita só `signups` e `catalog`. O conteúdo entra na CCD094 (R13) e na CCD097 (R11). Decisão de Lucca Rocha, 16/11/2026 | esta spec (Fora do escopo); R3 |
+| L10 | A seção "Histórico de relatórios" e a rota de histórico do plano (L3) ficam nesta story? | Não: o histórico, o "Baixar" e o aviso "está no topo do histórico" são da CCD107 (`report_exports`). A CCD063 entrega a prévia, a exportação e o `EXPORT_REPORT`; a seção de histórico aparece como no Figma e é preenchida pela CCD107. Decisão de Lucca Rocha, 16/11/2026 | esta spec (R16, Fora do escopo); `plano.md` |
