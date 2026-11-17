@@ -13,7 +13,7 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 ```
 cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
 ├── docs/                          documentação — a fonte da verdade; só guarda documentação
-│   ├── ADR/                       ADR-001…060 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
+│   ├── ADR/                       ADR-001…061 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–107), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
 │   ├── Diagramas/
 │   │   ├── DER/                   01-entidades, 02-relacionamentos, 03-der-completo (.dbml do dbdiagram.io + print .png) + README.md
