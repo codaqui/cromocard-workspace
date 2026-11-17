@@ -46,8 +46,9 @@ já na CCD066, mesmo com as stories que leem os valores ainda por fazer. Elas fo
 
 - O DER não muda: as chaves novas usam a tabela `global_settings` como o ADR-051 já previa.
 - A CCD096, a CCD103 e a CCD106 leem os valores pelo serviço de configurações, sem criar as próprias chaves.
-- A lista de chaves válidas fica no código (`SETTING_KEYS` e os schemas), testada; uma chave nova pede um ADR ou uma
-  atualização deste.
+- A lista de chaves válidas fica no código (`SETTING_KEYS` e os schemas), testada. Uma chave nova entra na spec da
+  própria story e em `SETTING_KEYS` e nos schemas, com teste; só pede ADR se mudar o formato do `value`, a leitura
+  pública ou a auditoria.
 - Quando este ADR for aceito, o status do ADR-051 passa a `Aceito; item 1 substituído parcialmente pelo ADR-061`, e a
   linha dele no índice é atualizada.
 
