@@ -2,8 +2,8 @@
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#608
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
-- Refeitas em 2026-11-17 sobre o código da CCD066. Os títulos de T1–T3 e T5–T7 mudaram e precisam ser atualizados nas
-  Tasks do Azure; T9 e T10 ainda não têm Task.
+- Refeitas em 2026-11-17 sobre o código da CCD066. No Azure, os títulos e as descrições de T1–T3 e T5–T7 foram
+  atualizados, a T4 (AB#697) está como `Removed`, e T9 e T10 ganharam as Tasks AB#918 e AB#919.
 
 ## Backend — `apps/cromocard-backend`, branch `feature/608-ordenar-categorias-padrao`
 
@@ -14,7 +14,7 @@
 - [ ] **T3** · Gerar slug e receber o selo no cadastro de categoria — R9, R10 · CA6, CA12, CA13 · AB#696
   - Pronto quando: `slug.spec.ts` e `catalog.service.spec.ts` cobrem CA6, CA12 e CA13, e o
     `tests/integration/admin-catalog.spec.ts` confirma o `409 SLUG_TAKEN` com duas ativas e a criação com uma excluída.
-- [ ] **T9** · Contar cartas e buscar por slug nas categorias do catálogo — R2, R11 · CA1, CA15
+- [ ] **T9** · Contar cartas e buscar por slug nas categorias do catálogo — R2, R11 · CA1, CA15 · AB#918
   - Pronto quando: a contagem soma cartas diretas e dos álbuns das subcategorias (Futebol no seed), e a busca
     `magic-the` encontra Magic: The Gathering no `GET /admin/catalog/categories`.
 - [ ] **T2** · Gravar a ordem e a categoria fixada no PATCH das categorias padrão com auditoria — R4, R5, R6 · CA2, CA3, CA7, CA8, CA11 · AB#695
@@ -30,7 +30,7 @@
 - [ ] **T7** · Acrescentar o selo e o slug no formulário de categoria — R9, R10 · CA6, CA13, CA14 · AB#700
   - Pronto quando: `CategoryForm.spec.tsx` cobre a prévia do slug, as três opções do selo e o `409 SLUG_TAKEN` no
     campo Nome, fiel ao `833-10832`.
-- [ ] **T10** · Mostrar slug, selo e quantidade de cartas na aba Categorias com busca por slug — R11 · CA14, CA15
+- [ ] **T10** · Mostrar slug, selo e quantidade de cartas na aba Categorias com busca por slug — R11 · CA14, CA15 · AB#919
   - Pronto quando: `CategoriesTab.spec.tsx` cobre as colunas e a busca, fiel ao fundo do `833-10832`.
 - [ ] **T6** · Criar a ordenação no módulo de categorias padrão com setas, arrastar, alfinete e salvar — R2–R4, R7, R8, R12 · CA1–CA4, CA8–CA10 · AB#699
   - Pronto quando: `useDefaultCategoriesEditor.spec.ts` e `DefaultCategoriesModule.spec.tsx` cobrem mover, arrastar,
