@@ -56,7 +56,8 @@ repetir.
 
 | Ação | `entity_type` · `entity_id` | `details` |
 |---|---|---|
-| `SETTING_UPDATED` | `SETTING` · id da configuração | `{ key, before, after }` (uma linha por chave gravada; as metas gravam as duas) |
+| `SETTING_UPDATED` | `SETTING` · id da configuração | `{ key, before, after }`, uma linha por gravação do banner ou dos templates |
+| `SETTING_UPDATED` (metas) | `SETTING` · sem `entity_id`, porque vale para as duas chaves | `{ keys, before, after }`, com `before` e `after` indexados pela chave: uma linha só para as duas metas |
 | `DEFAULT_CATEGORIES_UPDATED` | `SETTING` · id de `catalog.default_backs` | `{ before, after }` com as categorias e os versos |
 
 ## Backend
@@ -67,7 +68,7 @@ repetir.
 | `settings.validator.ts` | `{ value }` por chave, `default-categories`, `goals`, parâmetro `:key` (só schemas) | R4, R7, R10, R16 |
 | `settings.errors.ts` | `SETTING_NOT_FOUND` | R15 |
 | `settings.repository.ts` | ler as chaves e gravar `value` com `updated_by_id`, sempre dentro da transação | R3, R5 |
-| `settings.store.ts` | ler uma chave e gravar o valor com o `audit_logs` (antes e depois) na mesma transação | R5, R14 |
+| `settings.store.ts` | ler uma chave e gravar o valor com o `audit_logs` (antes e depois) na mesma transação; `saveAll` grava várias chaves com um registro só | R5, R14 |
 | `settings.service.ts` + `.spec.ts` | chaves editáveis por `/:key`, validar, gerar id dos templates, metas numa transação e leitura pública | R3–R7, R11, R14–R16 |
 | `settings-default-categories.service.ts` + `.spec.ts` | listar e trocar as categorias padrão com os versos numa transação, pelo `DefaultCategoriesService` do catálogo | R10, R13, R14, R17 |
 | `settings.controller.ts` · `settings.routes.ts` · `settings.swagger.ts` · `settings.module.ts` | rotas de admin no módulo que a fundação já montou em `/admin/settings` (ADMIN) | R1 |
