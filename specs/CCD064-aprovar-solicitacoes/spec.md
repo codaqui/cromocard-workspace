@@ -62,7 +62,7 @@
 
 ## Telas (Figma)
 
-Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
+Conferidas em 12/11/2026, depois do ajuste do Figma à documentação, e de novo em 16/11/2026 (L8–L10). Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<frame>`.
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
@@ -76,7 +76,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 
 - Os campos extras da carta (ilustrador, população, justificativa, fontes), o checklist do álbum, o quórum e as
   subcategorias são da CCD103.
-- **Diferenças do frame `228-1804`, decididas em 16/11/2026, a ajustar no Figma:** as abas seguem o caso de uso
+- **Ajustado no Figma em 16/11/2026** (frame `228-1804` e os textos de fundo dos `847-*`): as abas seguem o caso de uso
   ("Todas · Cartas · Álbuns · Categorias", L10); o card da carta mostra também franquia e idioma (L8); o rodapé do
   álbum diz "Ao aprovar, o álbum entra no catálogo. As cartas são cadastradas depois, na Gestão de Catálogo." (L9).
 
