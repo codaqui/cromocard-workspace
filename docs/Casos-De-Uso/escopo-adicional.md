@@ -49,7 +49,7 @@ aprovadas.
 | EA-058-04 | Novas cartas cadastradas na semana | `208-1240` | CCD096 | |
 | EA-058-05 | Colunas extras na lista de vendedores (CNPJ/CPF, reputação, volume, status da análise), filtro de status e "Atualizar Fila" | `208-1240` | CCD094 | Reputação e volume vêm da CCD097. |
 | EA-058-06 | Card "Lojistas & Credenciamento" (homologados, pendentes, "Analisar Fila") | `208-1240`, `247-2499` | CCD094 | |
-| EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados. A taxa de autenticação não entra: não tem origem de dado. |
+| EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados, contando os decididos no período pela data da decisão. A taxa de autenticação não entra: não tem origem de dado. |
 | EA-059-01 | Confirmação reforçada ao excluir (digitar o texto e marcar "Estou ciente") | `276-1735` | CCD098 | O texto "irreversível" contraria o soft delete (ADR-015). Texto de confirmação: `EXCLUIR-` + o primeiro nome em maiúsculas. O texto "irreversível" muda: a conta pode ser restaurada (ADR-015). |
 | EA-059-02 | Total de usuários no cabeçalho | `208-1793` | CCD098 | |
 | EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793`, `649-1164`, `649-796` | CCD098 | Página do usuário, um layout só para qualquer papel (decisão do PO em 11/11/2026, no lugar da gaveta lateral): dados pessoais, contato, endereços, ações (editar, aplicar sanção, reativar, excluir), advertências e as ações administrativas sobre o usuário lidas do `audit_logs`. O frame `649-796` mostra a própria conta do admin, com as ações bloqueadas (CCD059 FA 7–8). |

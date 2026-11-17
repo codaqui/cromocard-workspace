@@ -19,7 +19,7 @@
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `94`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | Lista "Cadastros dos Vendedores Recentes" no Dashboard com nome, e-mail, CNPJ ou CPF, status da análise (Em análise, Pendente, Aprovado, Reprovado) e total de pendentes; ações por linha só "Ver informações" e, em análise, "Validar Cadastro" | Tela | `94`, FP 1–2, FP 5 e FA 4; EA-058-05; `escopo-adicional.md` §3 |
 | R3 | Filtro por status e botão "Atualizar Fila" | Campo | `94`, FP 3–4; EA-058-05 |
-| R4 | Card "Lojistas & Credenciamento" com aprovados, pendentes e conversão (aprovados ÷ analisados) e o atalho "Analisar Fila" | Campo | EA-058-06; EA-058-07 |
+| R4 | Card "Lojistas & Credenciamento" com aprovados, pendentes e conversão (aprovados ÷ analisados, contando os cadastros decididos no período pela data da decisão — L7) e o atalho "Analisar Fila" | Campo | EA-058-06; EA-058-07; L7 |
 | R5 | Dossiê com dados da empresa, responsável legal, dados bancários e Pix, endereço comercial e documentos | Tela | `94`, FP 5–6; DBML `seller_verifications`, `seller_documents` |
 | R6 | Visualizar e validar cada documento (`VALIDATED`, com quem e quando) | Ação | `94`, FP 7–8; DBML `seller_documents` |
 | R7 | Anotações internas com autor e data, nunca mostradas ao vendedor | Ação | `94`, FP 9–10; DBML `seller_verification_notes` |
@@ -41,7 +41,7 @@
 - **CA5** (R9, R11) — **Dado** um cadastro em análise, **quando** o admin rejeita informando o motivo, **então** o status vira `REJECTED`, o vendedor recebe a notificação e o log registra o motivo.
 - **CA6** (R9) — **Dado** o diálogo de rejeição, **quando** o admin confirma sem motivo, **então** a API responde `400` e nada muda.
 - **CA7** (R14) — **Dado** um cadastro já aprovado, **quando** o admin tenta rejeitar, **então** a API responde `409`.
-- **CA8** (R4) — **Dado** 3 aprovados e 1 reprovado, **quando** o admin abre o Dashboard, **então** o card mostra 3 aprovados e conversão de 75%.
+- **CA8** (R4) — **Dado** 3 aprovados e 1 reprovado decididos no período, **quando** o admin abre o Dashboard, **então** o card mostra 3 aprovados e conversão de 75%.
 - **CA9** (R13) — **Dado** cadastros no período, **quando** o admin exporta "Auditoria de Lojistas" em CSV, **então** o arquivo lista os cadastros com o status.
 - **CA10** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama uma das rotas, **então** recebe `403`.
 - **CA11** (R12) — **Dado** um vendedor ativo com cadastro em análise, **quando** o admin abre a Gestão de Usuários, **então** a linha mostra o papel Vendedor com o selo "Em análise" e o status Ativo.
@@ -90,3 +90,4 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 | L4 | Tipos de documento (proposta: `CNPJ_CARD` e `ADDRESS_PROOF`, como no Figma) | `CNPJ_CARD` e `ADDRESS_PROOF`, como no Figma | `94`, FP 6 |
 | L5 | "Analisar Fila" (proposta: abre a lista filtrada em pendentes) | Abre a lista filtrada em pendentes | `94`, FP 3 |
 | L6 | Onde aparece o "Em análise" na Gestão de Usuários (EA-059-04)? | Como selo ao lado do papel Vendedor; a coluna Status continua só com Ativo, Suspenso e Bloqueado. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `59`, FP 2; EA-059-04 |
+| L7 | A conversão conta os cadastros criados no período ou os decididos no período? (apontado na revisão do backend, PR #26: um cadastro de 40 dias aprovado ontem ficava fora de "Últimos 30 dias") | Os decididos: aprovados e reprovados entram pelo `reviewed_at` dentro do período; em análise e pendentes continuam pelo `created_at`. Decisão do PO (Felipe Consulim, 16/11/2026) | esta spec (R4, CA8); `plano.md`, contrato do `summary`; `escopo-adicional.md`, EA-058-07 |
