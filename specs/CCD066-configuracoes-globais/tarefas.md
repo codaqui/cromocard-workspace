@@ -21,7 +21,7 @@
 
 - [x] **T4** [P] · Criar api, queries e schemas das configurações — R4, R7, R12, R16, R20 · AB#595
   - Pronto quando: os schemas espelham o backend e o typecheck passa.
-- [ ] **T5** · Criar tela de configurações com banner, categorias padrão, templates e metas — R2–R13, R16, R17, R19, R20 · CA1–CA5, CA7, CA9–CA11 · AB#596
+- [x] **T5** · Criar tela de configurações com banner, categorias padrão, templates e metas — R2–R13, R16, R17, R19, R20 · CA1–CA5, CA7, CA9–CA11 · AB#596
   - Pronto quando: os testes da página e dos módulos cobrem salvar, erro por campo e cancelar em cada módulo, e a tela
     bate com os frames `228-3048`, `859-661`, `859-1068` e `859-1479` (com as diferenças da L9 e da L20) em todas as
     larguras.
