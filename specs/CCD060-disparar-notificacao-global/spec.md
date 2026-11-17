@@ -1,12 +1,12 @@
 # CCD060 — Disparar Notificação Global
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #335 `CCD060-Disparar Notificação Global` · responsável Daniel Andrade · Sprint 07
 - **Caso de uso:** [60-disparar-notificacao-global.md](../../docs/Casos-De-Uso/60-disparar-notificacao-global.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-16, com a entrega conjunta da CCD060, CCD100 e CCD101 (L9–L14)
 
 ## Objetivo
 
@@ -21,8 +21,8 @@
 | R2 | Tela em `/backoffice/notificacoes`, item "Notificação" do menu | Tela | `60`, FP 1–2; ADR-038 |
 | R3 | Campo título, obrigatório, até 120 caracteres | Campo | `60`, FP 3 e FA 1; DBML `global_notifications.title` |
 | R4 | Campo conteúdo, obrigatório, até 500 caracteres | Campo | `60`, FP 3 e FA 1; DBML `global_notifications.content` |
-| R5 | Validação antes do envio, indicando os campos que faltam (`400` com `details`) | Regra | `60`, FP 4 e FA 1–4; ADR-006 |
-| R6 | Confirmar o envio | Ação | `60`, FP 5 |
+| R5 | Validação antes do envio, com a mensagem ao lado de cada campo ("Informe o título.", "Informe a mensagem.", "Use até 120 caracteres.", "Use até 500 caracteres.") e "Corrija os campos destacados para continuar." no aviso (`400` com `details`) | Regra | `60`, FP 4 e FA 1–4; ADR-006 (L14) |
+| R6 | Confirmar o envio no botão "Enviar notificação para N usuários" | Ação | `60`, FP 5–6 (L11) |
 | R7 | Botão "Cancelar" ao lado do envio limpa o formulário sem enviar | Ação | `60`, FA 5–6 (L6) |
 | R8 | O envio gera uma linha em `notifications` para cada usuário da plataforma, ligada ao disparo | Regra | `60`, FP 6; user-stories.md §8; DBML `notifications.global_notification_id` |
 | R9 | A notificação entregue nasce não lida, com o título e o conteúdo do disparo | Estado | DBML `notifications` |
@@ -30,10 +30,11 @@
 | R11 | Modal "Notificação enviada" com título, público, canais e quantidade de destinatários, e os botões "Ver histórico de disparos" e "Voltar à central" | Mensagem | `60`, FP 8 (L7) |
 | R12 | Resposta `201` com o disparo criado | Regra | ADR-011 |
 | R13 | O disparo grava `audit_logs` | Regra | ADR-034; `.claude/rules/backend.md` |
-| R14 | Recebem todos os usuários não excluídos e não suspensos, menos o próprio admin | Regra | `60`, FP 6 |
-| R15 | Link de destino opcional, copiado para `reference_link` de cada notificação | Campo | `60`, FP 3; DBML `notifications.reference_link` |
+| R14 | Recebem todos os usuários ativos (`status = ACTIVE`, não excluídos), menos o próprio admin | Regra | `60`, FP 7 (L10) |
+| R15 | Link de destino opcional, caminho do site começando com "/" ou endereço http(s), até 255 caracteres, copiado para `reference_link` de cada notificação | Campo | `60`, FP 3 (L12); DBML `notifications.reference_link` |
 | R16 | Histórico paginado dos disparos, dos mais recentes para os mais antigos, sem recorte de período | Tela | `60`, FP 2 (L8); ADR-011 |
-| R17 | Pré-visualização de como a notificação aparece na central de notificações da plataforma | Tela | `60`, FP 2; EA-060-02; ADR-058 |
+| R17 | Pré-visualização de como a notificação aparece na central de notificações da plataforma, com o ícone do CromoCard no lugar da miniatura | Tela | `60`, FP 2; EA-060-02; ADR-058 (L13) |
+| R18 | Aviso "Antes de enviar" e botão de envio com a quantidade de destinatários | Mensagem | `60`, FP 5; EA-060-04 (L11) |
 
 ## Critérios de aceite
 
@@ -48,6 +49,8 @@
 - **CA5** (R11) — **Dado** o envio concluído, **quando** a API responde, **então** a tela mostra a confirmação com o
   total de destinatários e o histórico ganha a linha.
 - **CA6** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama a rota, **então** recebe `403`.
+- **CA8** (R18) — **Dado** 3 usuários ativos além do admin, **quando** o admin abre a tela, **então** o aviso e o botão dizem "3 usuários".
+- **CA9** (R15) — **Dado** o link "albuns/copa" (sem "/" nem http), **quando** envia, **então** a API responde `400` e a tela indica o campo.
 - **CA7** (R17) — **Dado** título e conteúdo digitados, **quando** o admin olha a pré-visualização, **então** vê a
   notificação como item da central de notificações, com o título, o começo do texto e "agora".
 
@@ -70,12 +73,13 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Erros de validação | `827-1523` | R5 | ✅ Bate |
 
 - Os seletores de público e canais são da CCD101; agendamento, status "Na fila"/"Cancelado" e cancelar agendamento,
-  da CCD100.
+  da CCD100. As três stories são entregues juntas, num PR por app (L9).
+- A miniatura de imagem da prévia vira o ícone do CromoCard (L13).
 
 ## Fora do escopo
 
 - Push do sistema operacional e e-mail: o DER só tem notificação dentro da plataforma, e não há app mobile (ADR-058).
-- Agendamento e segmentação por público.
+- Agendamento e segmentação por público: ficam nas specs da CCD100 e da CCD101, entregues no mesmo PR (L9).
 - Itens do Figma antigo que não entram (decisão de 12/11/2026, `escopo-adicional.md` §3): push, pré-visualização
   num celular, "telemetria", certificado de operação, ID de transmissão, taxa de entrega projetada, SLA e SHA-256.
 
@@ -90,4 +94,10 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L5 | Valor de `notifications.type` (proposta: `GLOBAL`) e histórico (proposta: lista dos disparos, mais recentes primeiro) | `type = GLOBAL`; histórico dos disparos, dos mais recentes para os mais antigos | `60`, FP 2; ADR-051, item 2 |
 | L6 | O que faz o "Cancelar" do formulário? | Limpa o formulário sem enviar. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `60`, FA 5–6 |
 | L7 | Como é a confirmação do envio? | Modal "Notificação enviada" com título, público, canais e destinatários; "Ver histórico de disparos" leva ao histórico da própria tela. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `60`, FP 8 |
+| L9 | Público, canais e agendamento do formulário ficam para a CCD100/CCD101? | Não: as três stories (CCD060, CCD100 e CCD101) são feitas agora, num PR por app com AB#335 AB#604 AB#605. O histórico e o modal mostram público, canais e status reais. Decisão do PO (Daniel, 16/11/2026) | esta spec; specs CCD100 e CCD101 (L6/L7); `escopo-adicional.md` EA-060-05 |
+| L10 | Usuário `BLOCKED` recebe? | Não: só `ACTIVE`, não excluídos, menos o admin. Decisão do PO (Daniel, 16/11/2026) | `60`, FP 7 |
+| L11 | Como é a confirmação sem o diálogo? | Aviso "Antes de enviar" e botão com o total de destinatários (EA-060-04); clicar no botão confirma. Decisão do PO (Daniel, 16/11/2026) | `60`, FP 5–6; EA-060-04 |
+| L12 | Formato do link de destino | Caminho começando com "/" ou URL http(s), até 255 caracteres. Decisão do PO (Daniel, 16/11/2026) | `60`, FP 3 |
+| L13 | Miniatura da prévia (a notificação não tem imagem) | Ícone do CromoCard no lugar da imagem. Decisão do PO (Daniel, 16/11/2026) | `60`, FP 2; EA-060-02 |
+| L14 | Mensagens de validação que o frame não desenha | No estilo de "Informe o título.", ao lado do rótulo. Decisão do PO (Daniel, 16/11/2026) | `60`, FA 2 |
 | L8 | O histórico tem recorte de 30 dias? | Não: paginado, do mais recente ao mais antigo. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `60`, FP 2; ADR-011 |

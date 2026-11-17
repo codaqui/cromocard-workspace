@@ -1,12 +1,12 @@
 # CCD100 — Agendar Notificação Global
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #604 `CCD100-Agendar Notificação Global` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [100-agendar-notificacao-global.md](../../docs/Casos-De-Uso/100-agendar-notificacao-global.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-16, com a entrega conjunta (CCD060 L9)
 
 ## Objetivo
 
@@ -72,3 +72,4 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L3 | Frequência do job (proposta: a cada minuto) | A cada minuto | plano.md, Decisões técnicas (ADR-010) |
 | L4 | Editar um agendamento (proposta: não; cancelar e criar de novo) | Não; cancelar e criar de novo | `100`, FA 5–6 |
 | L5 | Onde se cancela um agendamento? | No botão "Cancelar agendamento" da linha "Na fila", com modal de confirmação; a linha passa a "Cancelado". Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `100`, FA 3–4 |
+| L6 | Quando esta story é feita? | Agora, junto com a CCD060 e a CCD101, num PR por app (AB#335 AB#604 AB#605); contrato consolidado no plano da CCD060. Decisão do PO (Daniel, 16/11/2026) | spec CCD060 (L9) |
