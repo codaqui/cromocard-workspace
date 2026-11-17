@@ -1,7 +1,6 @@
 # Plano — CCD104 Ordenar Categorias Padrão
 
-- **Spec:** [spec.md](spec.md). **Feito sobre a spec em Rascunho**, a pedido, para o PO aprovar a spec, o plano e o
-  ADR-062 no mesmo PR
+- **Spec:** [spec.md](spec.md). Spec aprovada pelo PO em 2026-11-17, junto com o ADR-062
 - **Repositórios:** backend · frontend
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade · refeito em 2026-11-17 por Lucas Oliveira Lima sobre o código da
   CCD066 (backend `develop` em `8e4d3ea`; frontend no PR 21, `d6f9dbc`)
@@ -20,7 +19,7 @@ por slug. No frontend, a linha do Módulo 2 da CCD066 ganha posição, alça, se
 - **CCD066** — backend no `develop` (#28): rota, serviço, auditoria e versos que este plano estende. **Frontend no PR
   21**, ainda aberto: as tarefas de frontend começam depois do merge dele.
 - **CCD061** — cadastro de categoria e aba Categorias, no `develop`.
-- **ADR-062** (Proposto) — índice único parcial do slug; o PO valida com esta spec.
+- **ADR-062** (Aceito) — índice único parcial do slug.
 
 ## Dados
 
