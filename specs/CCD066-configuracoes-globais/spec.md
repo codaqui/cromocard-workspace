@@ -1,12 +1,12 @@
 # CCD066 — Configurações Globais
 
-- **Status:** Em implementação
+- **Status:** Rascunho
 - **Fase:** MVP
 - **User story:** #341 `CCD066-Configurações Globais` · responsável Gabriel Nascimento · Sprint 07
 - **Caso de uso:** [66-configuracoes-globais.md](../../docs/Casos-De-Uso/66-configuracoes-globais.md) (passos 6–7 e o FA com colunas e números trocados)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade · revisada em 2026-11-15 por Gabriel Nascimento (L9–L19) e em 2026-11-16, na análise do Figma para o frontend (L20–L23)
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-15 com as decisões L9–L19, Gabriel Nascimento (o Daniel confirma no PR do workspace); reaprovada em 2026-11-16 com as decisões L20–L23, Gabriel Nascimento
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin. As decisões L9–L24 foram tomadas por Gabriel Nascimento em 15 e 16/11/2026 e aguardam a confirmação do PO, Felipe Consulim, no PR do workspace (#32)
 
 ## Objetivo
 
@@ -33,7 +33,7 @@
 | R13 | Só categorias não excluídas aparecem e podem ser padrão | Regra | ADR-015, item 5 |
 | R14 | Alterar configuração grava `audit_logs` com os valores antes e depois: `SETTING_UPDATED` (banner, templates e metas) e `DEFAULT_CATEGORIES_UPDATED` (categorias padrão e versos), `entity_type` `SETTING` | Regra | `66`, FP 8; ADR-034; ADR-051, itens 4–5 (L13) |
 | R15 | Leitura pública do banner em `GET /api/v1/settings/public/home.banner`, sem autenticação: devolve o banner mesmo desligado (`enabled: false`), e outra chave responde `404` | Regra | `66`, FP 8; ADR-051, item 1 (L17) |
-| R18 | O seed cria as chaves `dashboard.monthly_signup_goal` (4000), `catalog.voting_goal` (200) e `catalog.default_backs` (vazio), e grava o link do banner com `https://` | Regra | `66`, FP 2 (L7, L8, L10, L12); ADR-051, item 1 |
+| R18 | O seed cria as chaves `dashboard.monthly_signup_goal` (4000), `catalog.voting_goal` (200) e `catalog.default_backs` (vazio), e grava o link do banner com `https://` | Regra | `66`, FP 2 (L7, L8, L10, L12); ADR-061 |
 | R19 | O título e o texto dos templates aceitam `{campo}` como texto comum, sem validação própria | Regra | `66`, FP 5 (L18) |
 | R20 | A imagem do banner é WEBP ou PNG de até 4 MB, com 1920×600 como tamanho recomendado (não bloqueia outra dimensão) | Regra | `66`, FP 6 (L21) |
 
@@ -109,7 +109,7 @@ Conferidas em 16/11/2026, sem mudança desde 15/11. Links: `https://www.figma.co
 | L7 | Onde ficam as metas da CCD096 e da CCD103? | Módulo 4, "Metas": meta mensal de novos cadastros (4.000) e meta de votos das sugestões (200). Decisão do PO (Daniel, 12/11/2026) | `66`, FP 2 |
 | L8 | Onde se define o verso padrão de cada franquia (CCD106)? | Na linha da categoria, no módulo 2. Decisão do PO (Daniel, 12/11/2026) | `66`, FP 2 |
 | L9 | O frame `228-3048` não mostra como marcar ou desmarcar uma categoria como padrão (R10, CA4) | Mantém o R10: o módulo 2 ganha "Adicionar categoria padrão" e remover na linha, no estilo do módulo. Decisão de Gabriel Nascimento, 15/11/2026 | `66`, FP 2; **Telas** |
-| L10 | R16 e R17 entram agora, mesmo com as stories que leem os valores (CCD096, CCD103, CCD106) ainda por fazer? | Sim: o seed cria as três chaves com schema próprio, e as outras stories só leem. Decisão de Gabriel Nascimento, 15/11/2026 | R18 |
+| L10 | R16 e R17 entram agora, mesmo com as stories que leem os valores (CCD096, CCD103, CCD106) ainda por fazer? | Sim: o seed cria as três chaves com schema próprio, e as outras stories só leem. Decisão de Gabriel Nascimento, 15/11/2026 | R18; ADR-061 |
 | L11 | `PATCH` ou `PUT` em `/admin/settings/:key` (o plano tinha os dois) | `PATCH`, como manda o ADR-011, trocando o `value` inteiro e devolvendo o recurso atualizado. Decisão de Gabriel Nascimento, 15/11/2026 | ADR-011; `plano.md` |
 | L12 | Que link o banner aceita? (o frame `859-661` diz "começando com https://") | Só `https://`, como no Figma; o seed passa a gravar um link `https`. Decisão de Gabriel Nascimento, 15/11/2026 | `66`, FP 6 |
 | L13 | Códigos de `audit_logs.action` das configurações | `SETTING_UPDATED` e `DEFAULT_CATEGORIES_UPDATED`, com `entity_type` `SETTING` e os valores antes e depois em `details`. Decisão de Gabriel Nascimento, 15/11/2026 | `66`, FP 8; ADR-051, itens 4–5 |

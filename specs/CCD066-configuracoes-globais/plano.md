@@ -104,4 +104,6 @@ Avisos (L23): "Banner atualizado", "Categorias padrão atualizadas", "Templates 
 
 ## Decisões técnicas
 
-Sem ADR novo: as chaves seguem o ADR-051, item 1, os verbos o ADR-011 e a auditoria o ADR-034 e o ADR-051, itens 4–5.
+As chaves das metas e dos versos (`dashboard.monthly_signup_goal`, `catalog.voting_goal` e `catalog.default_backs`)
+estão no ADR-061 (Proposto), que substitui parcialmente o item 1 do ADR-051. O resto segue os ADRs existentes: o
+formato das chaves o ADR-051, item 1, os verbos o ADR-011 e a auditoria o ADR-034 e o ADR-051, itens 4–5.
