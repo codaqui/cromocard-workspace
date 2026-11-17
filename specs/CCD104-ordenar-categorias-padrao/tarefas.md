@@ -10,7 +10,9 @@
 - [ ] **T1** · Criar migration de exibição em categories com slug, ordem inicial e índice parcial — R9, R13 · CA16 · AB#694
   - Pronto quando: a migration `add_display_fields_to_categories_table` cria as 4 colunas e o índice
     `categories_slug_key` `WHERE deleted_at IS NULL` (conferido no SQL gerado); o `prisma migrate dev` não acusa
-    diferença; as categorias do seed têm slug, as padrão estão em ordem alfabética e nenhuma está fixada.
+    diferença; o `tests/integration/migrations/add-display-fields-to-categories.spec.ts` roda a migration sobre
+    categorias já gravadas e cobre o CA16 (slug, sufixo `-2`, ordem alfabética, nenhuma fixada); e as categorias do
+    seed têm slug.
 - [ ] **T3** · Gerar slug e receber o selo no cadastro de categoria — R9, R10 · CA6, CA12, CA13 · AB#696
   - Pronto quando: `slug.spec.ts` e `catalog.service.spec.ts` cobrem CA6, CA12 e CA13, e o
     `tests/integration/admin-catalog.spec.ts` confirma o `409 SLUG_TAKEN` com duas ativas e a criação com uma excluída.

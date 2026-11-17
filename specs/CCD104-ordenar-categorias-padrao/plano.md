@@ -29,8 +29,12 @@ por slug. No frontend, a linha do Módulo 2 da CCD066 ganha posição, alça, se
 | `categories` | sim, sem as 4 colunas | `add_display_fields_to_categories_table` | `slug varchar(100)` nulo permitido, `display_order int not null default 0`, `is_pinned bool not null default false`, `badge varchar(20)` nulo permitido, copiados do DBML (ADR-053, item 10). Na mesma migration: o slug das existentes com sufixo para repetidos, `display_order` em ordem alfabética e o índice `categories_slug_key` `WHERE deleted_at IS NULL` (R13, ADR-062) |
 
 - O índice parcial fica no `schema.prisma` como `@@unique([slug], map: "categories_slug_key", where: raw("deleted_at IS NULL"))`,
-  com a preview feature `partialIndexes` no `generator client`. Testado com o `prisma validate` do 7.10.0. Se o SQL
-  gerado sair sem o `WHERE`, o índice vai em SQL na migration, e o ADR-062 é corrigido antes do merge.
+  com a preview feature `partialIndexes` no `generator client`. Testado com o Prisma 7.10.0 num PostgreSQL 18
+  descartável: o SQL gerado tem o `WHERE (deleted_at IS NULL)` e, depois de aplicado, o `migrate diff` entre as
+  migrations e o schema sai vazio (ADR-062, item 1).
+- O slug das categorias existentes é gerado em SQL na própria migration (o `migrate diff` só cria a coluna e o
+  índice): mesmas regras do `slugify` (sem acentos, minúsculas, `a-z0-9` e hífens), sufixo `-2`, `-3`… por
+  `created_at` entre as não excluídas, e o índice criado depois do preenchimento.
 - `badge` fica `varchar(20)`, como no DBML, validado no Zod com `STANDARD` e `TRENDING` (R10).
 
 ## Contrato da API
@@ -140,7 +144,7 @@ importa do catálogo só pelo `index.ts` (ADR-040).
 | CA13 | 409 com duas ativas; cria com uma excluída sem restaurá-la | `catalog.service.spec.ts` · `tests/integration/admin-catalog.spec.ts` (índice parcial real) |
 | CA14 | selo "Em alta" e "Nenhum" no formulário, no módulo e na aba | `CategoryForm.spec.tsx` · `CategoriesTab.spec.tsx` |
 | CA15 | busca pelo slug encontra a categoria | `tests/integration/admin-catalog.spec.ts` · `CategoriesTab.spec.tsx` |
-| CA16 | a migration gera slug e ordem alfabética, sem fixada | `tests/integration/admin-settings.spec.ts` (com o seed) |
+| CA16 | a migration gera slug, sufixo nos repetidos e ordem alfabética, sem fixada | `tests/integration/migrations/add-display-fields-to-categories.spec.ts`: cria um schema temporário com a `categories` de antes da migration, grava categorias (duas que geram o mesmo slug, uma com acento e uma excluída), roda o `migration.sql` nesse schema e confere slug, sufixo, `display_order` e `is_pinned = false`. O seed não serve aqui: ele grava o slug sozinho |
 
 ## Decisões técnicas
 
