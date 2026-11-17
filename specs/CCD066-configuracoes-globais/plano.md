@@ -1,6 +1,7 @@
 # Plano — CCD066 Configurações Globais
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22, reaprovada em 2026-11-12 e de novo em 2026-11-15 (L9–L19)
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22 e reaprovada em 2026-11-12; as decisões L9–L24 aguardam a
+  confirmação do PO (spec em Rascunho)
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade · revisado em 2026-11-15 por Gabriel Nascimento
 
 ## Solução

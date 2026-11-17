@@ -35,7 +35,7 @@
 | R15 | Leitura pública do banner em `GET /api/v1/settings/public/home.banner`, sem autenticação: devolve o banner mesmo desligado (`enabled: false`), e outra chave responde `404` | Regra | `66`, FP 8; ADR-051, item 1 (L17) |
 | R18 | O seed cria as chaves `dashboard.monthly_signup_goal` (4000), `catalog.voting_goal` (200) e `catalog.default_backs` (vazio), e grava o link do banner com `https://` | Regra | `66`, FP 2 (L7, L8, L10, L12); ADR-061 |
 | R19 | O título e o texto dos templates aceitam `{campo}` como texto comum, sem validação própria | Regra | `66`, FP 5 (L18) |
-| R20 | A imagem do banner é WEBP ou PNG de até 4 MB, com 1920×600 como tamanho recomendado (não bloqueia outra dimensão) | Regra | `66`, FP 6 (L21) |
+| R20 | A tela só envia imagem do banner em WEBP ou PNG de até 4 MB, com 1920×600 como tamanho recomendado (não bloqueia outra dimensão). A validação é da tela: a API aceita o que o `/uploads` aceita (PNG, JPG ou WEBP até 4 MB) | Regra | `66`, FP 6 (L21) |
 
 ## Critérios de aceite
 
