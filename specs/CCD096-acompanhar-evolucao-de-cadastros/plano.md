@@ -62,3 +62,20 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
   A resposta da evolução manda `goalPercent: null` fora de `30d`; o `KpiCard` esconde o percentual quando é `null`
   (mesmo caminho do R7).
 - Testes: o CA8 (7 dias, sem percentual) entra em `dashboard.service.spec.ts` e no teste do card.
+
+## Revisão de 17/11/2026 (L4–L6)
+
+- **Contrato do resumo** — acrescenta `kpis.collectors` e `kpis.sellers` (totais por papel, R10),
+  `kpis.newCardsThisWeek` (R11), `kpis.usersVariation` (percentual inteiro; `null` quando o período anterior é zero e
+  o atual não, para o "novo" da L2) e `goal: { monthly, percent | null } | null` (`goal` é `null` sem meta, R7;
+  `percent` só em `30d`, L3).
+- **Contrato da evolução** — `{ bucket: 'hour' | 'day' | 'month', points: [{ at, collectors, sellers }], totals:
+  { collectors, sellers } }`, com todos os pontos do período, inclusive os zerados.
+- **Intervalo personalizado** — até 1 dia agrupa por hora, até 92 dias por dia e acima disso por mês; os atalhos caem
+  nas regras do R4.
+- **Lojistas certificados** — `seller_verifications` com `status = APPROVED`, contados por `reviewed_at`.
+- **Meta** — lida pela service exportada pelo módulo de configurações (o dashboard não importa o repository de outro
+  domínio).
+- **Seed (L6)** — cadastros aprovados para alguns vendedores do seed, com `reviewed_at` nos últimos meses.
+- **Frontend** — o `SignupsChart` (mensal) dá lugar ao `SignupsEvolutionChart`; a mensagem do R6 fica dentro do card
+  do gráfico, como no frame `795-1704`.
