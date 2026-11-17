@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa a opção "Configurações Globais". |  |
-|  | 2. O sistema apresenta as configurações disponíveis, cada uma num módulo com os botões Salvar e Cancelar: banner da Home, categorias padrão (quais franquias são padrão, a ordem e o verso padrão de cada uma), templates de notificação (lista, novo, editar e excluir) e metas (meta mensal de novos cadastros e meta de votos das sugestões de categoria). No módulo de templates não há Salvar e Cancelar do módulo: cada template é salvo no próprio formulário e excluído pela lista. |
+|  | 2. O sistema apresenta as configurações disponíveis, cada uma num módulo com os botões Salvar e Cancelar: banner da Home, categorias padrão (quais franquias são padrão e o verso padrão de cada uma), templates de notificação (lista, novo, editar e excluir) e metas (meta mensal de novos cadastros e meta de votos das sugestões de categoria). No módulo de templates não há Salvar e Cancelar do módulo: cada template é salvo no próprio formulário e excluído pela lista. |
 | 3. O administrador seleciona uma configuração. |  |
 |  | 4. O sistema apresenta os valores atuais da configuração. |
 | 5. O administrador altera os valores desejados. Os templates de notificação são modelos de título e conteúdo que a tela de Disparar Notificação Global oferece para preencher: o administrador usa {campo} para os trechos que a pessoa completa naquela tela. |  |
