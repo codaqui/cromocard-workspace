@@ -1,12 +1,12 @@
 # CCD099 — Aplicar Sanção a Usuário
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #603 `CCD099-Aplicar Sanção a Usuário` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [99-aplicar-sancao-a-usuario.md](../../docs/Casos-De-Uso/99-aplicar-sancao-a-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-15, depois da correção da CA7 (Felipe Consulim)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-15, depois da correção da CA7 (Felipe Consulim); revista em 2026-11-17 (L9 e L10, Felipe Consulim)
 
 ## Objetivo
 
@@ -18,7 +18,7 @@
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `99`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | As sanções ficam na fila de moderação (botão "Aplicar sanção ao autor" em cada denúncia) e na página do usuário (card "Ações sobre o usuário", com o número de advertências), num modal com as três sanções e as advertências anteriores | Tela | `99`, FP 1–2 (L7); EA-059-03 |
-| R3 | Justificativa obrigatória em toda sanção e prazo na suspensão | Campo | `99`, FP 4–5 e FA 7–8 |
+| R3 | Justificativa obrigatória em toda sanção (até 255 caracteres na advertência, L9) e prazo em toda suspensão, inclusive a da lista de usuários (L10) | Campo | `99`, FP 4–5 e FA 7–8; L9; L10 |
 | R4 | Advertir cria um registro em `user_warnings` e notifica o usuário | Ação | `99`, FP 6; DBML `user_warnings` |
 | R5 | Suspender por prazo: `SUSPENDED` com `suspended_until`, revoga as sessões e a lista mostra o prazo | Ação | `99`, FP 7; DBML `users.suspended_until` |
 | R6 | Banir definitivamente: `BLOCKED`, revoga as sessões e impede o login | Ação | `99`, FP 8; ADR-053, item 1 |
@@ -91,3 +91,5 @@ Links: `https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=<fr
 | L6 | De onde o admin aplica a sanção na Gestão de Usuários? | Da página do usuário, pelo card "Ações sobre o usuário", num modal com advertir, suspender (3, 7, 15 ou 30 dias) e banir. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | EA-059-03; frames `804-2174` e `804-2531` |
 | L7 | Como a fila aplica sanção? O Figma tinha "Banir definitivamente" e "Banir temporariamente (3 dias)" direto na denúncia | Botões "Dispensar denúncia", "Remover mensagem", "Remover mensagem e advertir" e "Aplicar sanção ao autor", que abre o mesmo modal de Usuários. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `99`, FP 1 |
 | L8 | A CA7 pedia reativar "com justificativa", mas o frame `804-2889` mostra um confirm simples e o `SuspendUserDialog.tsx` (CCD059, já mergeado) já reativa sem justificativa | Reativar não exige justificativa, como no Figma, no caso de uso (FA 5-6) e no código já existente; a CA7 foi corrigida | esta spec, CA7; frame `804-2889` |
+| L9 | Até quantos caracteres vai a justificativa da advertência? A API aceitava até 500, mas `user_warnings.reason` é `VARCHAR(255)` no DER, e entre 256 e 500 a gravação falhava com erro 500 (revisão do PR #27, item 2) | Até 255 caracteres, o tamanho da coluna no DER, no backend e no frontend (diálogo de sanção e "Remover Mensagem & Advertir"). As demais justificativas continuam até 500. Decisão do PO (Felipe Consulim, 17/11/2026) | esta spec (R3); `plano.md`, contrato |
+| L10 | A suspensão pode ficar sem prazo? O "Suspender" da lista de usuários (CCD059) suspendia sem prazo, e essa suspensão nunca expirava porque o job (R9) só reativa as que têm data (revisão do PR #27, item 3) | Não: toda suspensão tem prazo (3, 7, 15 ou 30 dias). O "Suspender" da lista ganha o campo "Prazo da suspensão", com 7 dias por padrão. Decisão do PO (Felipe Consulim, 17/11/2026) | esta spec (R3); CCD059, R19; `59`, FP 9–10 |
