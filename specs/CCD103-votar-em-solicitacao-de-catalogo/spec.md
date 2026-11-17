@@ -63,6 +63,8 @@
 | Sugestões da comunidade — sem sugestões | [1038-2740](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1038-2740) | R2 | ✅ Desenhada em 17/11/2026 (L7) |
 
 - A tela de votação do cliente foi desenhada em 17/11/2026 a partir do layout de "Painel principal de notificações" (`490-796`), com o item "Sugestões" no menu (L7).
+- Na implementação, o aviso de votação encerrada (`1038-2242`) ganhou o "×" de fechar, igual ao componente de aviso do sistema; o frame foi ajustado no mesmo dia.
+- Os cartões da fila mantêm os campos que a CCD064 já mostrava e o frame `228-1804` não desenha: "Número" na carta, "Franquia" no álbum e "Tipo" na categoria.
 - "Arquivos criptográficos de autenticação", "API GraphQL e Banco Central", "Fórum de Curadoria" e as projeções da categoria
   saíram do Figma em 12/11/2026. O selo de votos mostra "340 votos • 97,4% a favor".
 
