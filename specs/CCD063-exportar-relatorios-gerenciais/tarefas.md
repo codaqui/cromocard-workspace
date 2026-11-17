@@ -16,9 +16,9 @@
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/338-exportar-relatorios`
 
-- [ ] **T5** [P] · Criar types, api e queries dos relatórios — R9 · AB#578
+- [x] **T5** [P] · Criar types, api e queries dos relatórios — R9 · AB#578
   - Pronto quando: o download por `blob` funciona e o typecheck passa.
-- [ ] **T6** · Criar página de Relatórios com pré-visualização e exportação (histórico da CCD107, L10) — R2–R8, R12–R14 · CA1, CA4, CA5 · AB#579
+- [x] **T6** · Criar página de Relatórios com pré-visualização e exportação (histórico da CCD107, L10) — R2–R8, R12–R14 · CA1, CA4, CA5 · AB#579
   - Pronto quando: `ReportsPage.spec.tsx` cobre filtro vazio, cancelar e exportar.
 
 ## Fechamento — workspace
