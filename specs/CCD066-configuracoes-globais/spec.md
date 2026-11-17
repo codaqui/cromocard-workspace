@@ -1,12 +1,12 @@
 # CCD066 — Configurações Globais
 
-- **Status:** Rascunho
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #341 `CCD066-Configurações Globais` · responsável Gabriel Nascimento · Sprint 07
 - **Caso de uso:** [66-configuracoes-globais.md](../../docs/Casos-De-Uso/66-configuracoes-globais.md) (passos 6–7 e o FA com colunas e números trocados)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade · revisada em 2026-11-15 por Gabriel Nascimento (L9–L19) e em 2026-11-16, na análise do Figma para o frontend (L20–L23)
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin. As decisões L9–L24 foram tomadas por Gabriel Nascimento em 15 e 16/11/2026 e aguardam a confirmação do PO, Felipe Consulim, no PR do workspace (#32)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-16, Felipe Consulim (PO), que confirmou as decisões L9–L24 tomadas por Gabriel Nascimento em 15 e 16/11/2026 e aceitou o ADR-061
 
 ## Objetivo
 

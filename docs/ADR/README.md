@@ -71,7 +71,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [048](ADR-048-tokens-de-email-e-google-no-frontend.md) | Backend | Tokens de confirmação de e-mail e de redefinição de senha; client ID do Google no frontend | Aceito |
 | [049](ADR-049-middlewares-http-da-autenticacao.md) | Backend | Middlewares HTTP da autenticação: `express-rate-limit` e `cookie-parser` | Aceito |
 | [050](ADR-050-upload-e-arquivos-csv-e-pdf.md) | Backend | Upload de imagens e arquivos CSV e PDF: `multer`, `csv-parse` e `pdfkit` | Aceito |
-| [051](ADR-051-convencoes-das-colunas-flexiveis-do-backoffice.md) | Dados | Convenções das colunas flexíveis do BackOffice (`global_settings`, `notifications.type`, `catalog_requests.data`, `audit_logs`) | Aceito |
+| [051](ADR-051-convencoes-das-colunas-flexiveis-do-backoffice.md) | Dados | Convenções das colunas flexíveis do BackOffice (`global_settings`, `notifications.type`, `catalog_requests.data`, `audit_logs`) | Aceito (item 1 substituído parcialmente pelo 061) |
 | [052](ADR-052-credenciamento-de-vendedor-no-modelo-de-dados.md) | Dados | Credenciamento de vendedor no modelo de dados (`seller_verifications`, documentos e notas) | Aceito |
 | [053](ADR-053-colunas-e-tabelas-do-escopo-adicional-do-backoffice.md) | Dados | Colunas, enums e tabelas do escopo adicional do BackOffice | Aceito |
 | [054](ADR-054-tabelas-do-marketplace-para-indicadores.md) | Dados | Tabelas do marketplace criadas (só leitura) para os indicadores financeiros | Aceito |
@@ -81,7 +81,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [058](ADR-058-sem-aplicativo-mobile.md) | Frontend | Sem aplicativo mobile: o CromoCard é só web (substitui o 023) | Aceito |
 | [059](ADR-059-provedor-de-email-por-ambiente.md) | Infraestrutura | Provedor de e-mail por ambiente: Ethereal em homologação e Resend (SMTP) em produção | Proposto |
 | [060](ADR-060-fluxo-de-desenvolvimento-e-revisao-com-figma-e-cobertura.md) | Processo | Fluxo de desenvolvimento e revisão: decisão sobre o Figma, cobertura de 90% e skills únicas (substitui parcialmente 008, 046 e 047) | Proposto |
-| [061](ADR-061-chaves-de-configuracao-das-metas-e-dos-versos.md) | Dados | Chaves de configuração das metas e dos versos padrão em `global_settings` (substitui parcialmente o item 1 do 051) | Proposto |
+| [061](ADR-061-chaves-de-configuracao-das-metas-e-dos-versos.md) | Dados | Chaves de configuração das metas e dos versos padrão em `global_settings` (substitui parcialmente o item 1 do 051) | Aceito |
 
 ## Modelo
 
