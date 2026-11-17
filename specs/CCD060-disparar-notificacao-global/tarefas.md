@@ -7,22 +7,22 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/335-notificacao-global`
 
-- [ ] **T1** · Criar validator e repository de notificações globais com entrega em transação — R3–R5, R8–R10, R14, R15 · AB#561
+- [x] **T1** · Criar validator e repository de notificações globais com entrega em transação — R3–R5, R8–R10, R14, R15 · AB#561
   - Pronto quando: o repository grava o disparo, as notificações e o total numa transação.
-- [ ] **T1a** · Criar as migrations de agendamento e de público e canais — CCD100 R5 · CCD101 R6 · AB#663 AB#671
+- [x] **T1a** · Criar as migrations de agendamento e de público e canais — CCD100 R5 · CCD101 R6 · AB#663 AB#671
   - Pronto quando: as colunas e o enum existem e o `schema.prisma` bate com o DBML.
-- [ ] **T2** · Criar service de disparo com público, canais, agendamento, cancelar, auditoria e e-mail — R8, R13, R14 · CA1, CA4 · CCD100 CA1, CA2, CA4 · CCD101 CA2–CA4 · AB#562 AB#664 AB#672
+- [x] **T2** · Criar service de disparo com público, canais, agendamento, cancelar, auditoria e e-mail — R8, R13, R14 · CA1, CA4 · CCD100 CA1, CA2, CA4 · CCD101 CA2–CA4 · AB#562 AB#664 AB#672
   - Pronto quando: `global-notifications.service.spec.ts` cobre esses critérios.
-- [ ] **T2a** · Criar job de envio das notificações agendadas — CCD100 R7 · CA3 · AB#665
+- [x] **T2a** · Criar job de envio das notificações agendadas — CCD100 R7 · CA3 · AB#665
   - Pronto quando: `send-scheduled-notifications.job.spec.ts` cobre CA3.
-- [ ] **T3** · Criar rotas de disparo, histórico, contagem e cancelar — R1, R12 · CA2, CA6 · AB#563 AB#666 AB#673
+- [x] **T3** · Criar rotas de disparo, histórico, contagem e cancelar — R1, R12 · CA2, CA6 · AB#563 AB#666 AB#673
   - Pronto quando: as rotas aparecem no `/docs` e respondem como no contrato.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/335-notificacao-global`
 
-- [ ] **T4** [P] · Criar api, queries e schema de notificação global — R3–R5, R15 · AB#564 AB#667 AB#674
+- [x] **T4** [P] · Criar api, queries e schema de notificação global — R3–R5, R15 · AB#564 AB#667 AB#674
   - Pronto quando: o schema espelha o validator e o typecheck passa.
-- [ ] **T5** · Criar tela de notificação global com público, canais, agendamento, pré-visualização, confirmação e histórico — R2, R6, R7, R11, R16–R18 · CA2, CA3, CA5, CA7–CA9 · CCD100 CA4, CA5, CA7 · CCD101 CA1, CA5 · AB#565 AB#668 AB#669 AB#675 AB#676
+- [x] **T5** · Criar tela de notificação global com público, canais, agendamento, pré-visualização, confirmação e histórico — R2, R6, R7, R11, R16–R18 · CA2, CA3, CA5, CA7–CA9 · CCD100 CA4, CA5, CA7 · CCD101 CA1, CA5 · AB#565 AB#668 AB#669 AB#675 AB#676
   - Pronto quando: `GlobalNotificationPage.spec.tsx` cobre envio, agendamento, erro, cancelar e histórico.
 
 ## Fechamento — workspace
