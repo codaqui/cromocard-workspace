@@ -35,7 +35,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [012](ADR-012-socket-io.md) | Backend | Biblioteca de tempo real: Socket.IO | Aceito |
 | [013](ADR-013-git-flow.md) | Processo | Git Flow: main · homolog · development · feature + Conventional Commits | Aceito |
 | [014](ADR-014-ids-uuid-v7.md) | Dados | Identificadores: UUID v7 (PostgreSQL 18) | Aceito |
-| [015](ADR-015-soft-delete.md) | Dados | Exclusão de dados: soft delete com `deleted_at` | Aceito (ampliado pelo 016) |
+| [015](ADR-015-soft-delete.md) | Dados | Exclusão de dados: soft delete com `deleted_at` | Aceito (ampliado pelo 016; exceção ao item 7 proposta no 062) |
 | [016](ADR-016-colunas-de-tempo-timestamptz.md) | Dados | `created_at`/`updated_at`/`deleted_at` em todas as tabelas + `timestamptz` | Aceito |
 | [017](ADR-017-convencoes-de-codigo.md) | Processo | Convenções de código e contribuição (pt-BR nos comentários, npm, alias `@/`, template de PR) | Aceito |
 | [018](ADR-018-configuracao-e-ambientes.md) | Backend | Configuração e ambientes (local, test, homolog, produção; `.env`; segredos) | Proposto |

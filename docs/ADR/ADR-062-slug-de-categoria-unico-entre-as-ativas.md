@@ -25,8 +25,11 @@ categoria ativa responde `409 SLUG_TAKEN` e que a categoria excluída não é re
 1. Garanta a unicidade de `categories.slug` com um **índice único parcial** no PostgreSQL:
    `CREATE UNIQUE INDEX categories_slug_key ON categories (slug) WHERE deleted_at IS NULL`. Descreva-o no
    `schema.prisma` com `@@unique([slug], map: "categories_slug_key", where: raw("deleted_at IS NULL"))` e a preview
-   feature `partialIndexes` do Prisma (7.10), para o `migrate dev` conhecer o índice e não o apagar. Se a preview
-   feature não gerar o `WHERE`, o índice vai em SQL na migration, e este item é corrigido antes de o ADR ser aceito.
+   feature `partialIndexes` do Prisma (7.10), para o `migrate dev` conhecer o índice e não o apagar. Testado em
+   17/11/2026 num PostgreSQL 18 descartável, com o schema do `develop` do backend: o `prisma migrate diff` gerou
+   `CREATE UNIQUE INDEX "categories_slug_key" ON "categories"("slug") WHERE (deleted_at IS NULL)`; depois de aplicar
+   a migration, o diff entre as migrations e o schema ficou vazio (o `migrate dev` não apaga nem recria o índice); e
+   o banco aceitou um slug repetido de uma categoria excluída e recusou o de duas ativas.
 2. Ao criar ou renomear uma categoria, gere o slug a partir do nome (sem acentos, minúsculas e hífens) e, se ele já
    pertencer a outra categoria não excluída, responda `409 SLUG_TAKEN` no campo `name`. Uma categoria excluída com o
    mesmo slug não bloqueia e **não é restaurada**.
