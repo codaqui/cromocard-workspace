@@ -16,7 +16,7 @@
 |  | 6. O sistema coloca a categoria fixada na primeira posição, com o selo "Fixado no topo", e retira o fixado da categoria que estava fixada antes, se houver. |
 | 7. O administrador seleciona "Salvar Ordem". |  |
 |  | 8. O sistema grava a nova ordem e a categoria fixada junto com as demais alterações do módulo (categorias padrão e versos, da Configurações Globais) e registra a ação no log de auditoria. |
-|  | 9. O sistema passa a exibir as categorias nessa ordem no menu, nos filtros e na vitrine e confirma a operação. |
+|  | 9. O sistema confirma a operação. A ordem gravada aqui é a que o menu, os filtros e a vitrine seguem, nos casos Visualizar Destaques e Buscar por Categoria. |
 
 ### Fluxo Alternativo
 

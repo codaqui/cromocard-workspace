@@ -2175,7 +2175,7 @@ views {
     administrador -> backofficeApp '7. seleciona Salvar Ordem'
     backofficeApp -> modAdministracao '8. envia a lista das categorias padrao, na ordem, com a fixada e os versos'
     modAdministracao -> bancoDados '8. grava a ordem, a fixada e o log de auditoria'
-    backofficeApp -> administrador '9. confirma; menu, filtros e vitrine passam a seguir a nova ordem'
+    backofficeApp -> administrador '9. confirma; menu, filtros e vitrine seguem a ordem gravada nas CCD001 e CCD027'
   }
 
   dynamic view ccd105_duplicar_carta {
