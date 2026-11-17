@@ -14,11 +14,11 @@
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/600-acompanhar-evolucao-de-cadastros`
 
-- [ ] **T4** [P] · Criar api e queries da evolução de cadastros — R2, R3 · AB#630
+- [x] **T4** [P] · Criar api e queries da evolução de cadastros — R2, R3 · AB#630
   - Pronto quando: o typecheck passa.
-- [ ] **T5** · Criar gráfico de evolução com tooltip e estado vazio — R2, R4–R6 · CA5 · AB#631
+- [x] **T5** · Criar gráfico de evolução com tooltip e estado vazio — R2, R4–R6 · CA5 · AB#631
   - Pronto quando: `SignupsEvolutionChart.spec.tsx` cobre o tooltip e o estado vazio.
-- [ ] **T6** · Atualizar os cards de KPI com meta, variação e divisão por papel — R3, R7, R9–R11 · AB#632
+- [x] **T6** · Atualizar os cards de KPI com meta, variação e divisão por papel — R3, R7, R9–R11 · AB#632
   - Pronto quando: os cards mostram a meta e a variação com os dados do seed.
 
 ## Fechamento — workspace
