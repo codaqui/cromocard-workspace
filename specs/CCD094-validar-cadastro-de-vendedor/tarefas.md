@@ -8,6 +8,7 @@
 - [x] **T1** · Criar migrations e seed do credenciamento de vendedor — R5–R7 · AB#612
   - Pronto quando: as 3 tabelas existem, uma migration por tabela, e o seed cria cadastros em cada status.
   - **Revista em 14/11/2026:** `seller_verifications` já existia (fundação da CCD098); migrations novas: `seller_documents`, `seller_verification_notes`, refeitas do zero sobre o `develop` atual (`6f71bf5`). Seed de cadastros de teste ainda não criado — só os dados usados pelos testes de integração.
+  - **Revista em 16/11/2026:** seed criado na revisão do PR #26 (L1): `seller-verifications.seed.ts` com um cadastro de cada status, endereço comercial e os documentos `CNPJ_CARD` e `ADDRESS_PROOF`.
 - [x] **T2** · Criar validator, errors e repository do credenciamento — R2, R3, R5, R14, R15 · AB#613
   - Pronto quando: o repository filtra por status e só muda cadastro em análise ou pendente.
 - [x] **T3** · Criar service de validar documento, notas, aprovar e rejeitar com auditoria — R6–R11, R14 · CA3–CA7 · AB#614
