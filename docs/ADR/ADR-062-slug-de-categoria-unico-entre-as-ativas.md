@@ -1,6 +1,6 @@
 # ADR-062 — Slug de categoria único só entre as categorias não excluídas
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito
 - **Data:** 2026-11-17
 - **Decisores:** Lucas Oliveira Lima (proposta, na CCD104); validação: Felipe Consulim (PO)
 

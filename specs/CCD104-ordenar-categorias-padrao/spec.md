@@ -1,12 +1,12 @@
 # CCD104 — Ordenar Categorias Padrão
 
-- **Status:** Rascunho
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #608 `CCD104-Ordenar Categorias Padrão` · responsável Lucas Oliveira Lima · Sprint 07
 - **Caso de uso:** [104-ordenar-categorias-padrao.md](../../docs/Casos-De-Uso/104-ordenar-categorias-padrao.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade · revisada em 2026-11-16 e 2026-11-17 por Lucas Oliveira Lima (L6–L18)
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16. As decisões L6–L18 foram tomadas por Lucas Oliveira Lima em 16 e 17/11/2026 e aguardam a confirmação do PO, Felipe Consulim, no PR do workspace, junto com o ADR-062
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16. As decisões L6–L18 foram tomadas por Lucas Oliveira Lima em 16 e 17/11/2026 e aprovadas por Felipe Consulim (PO) em 2026-11-17, no PR #39 do workspace, junto com o ADR-062 (Aceito)
 
 ## Objetivo
 
