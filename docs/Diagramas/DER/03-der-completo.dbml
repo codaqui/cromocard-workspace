@@ -32,11 +32,6 @@ Enum privacy {
   PRIVATE
 }
 
-Enum category_type {
-  ALBUM
-  CARD
-}
-
 Enum album_status {
   ACTIVE
   INACTIVE
@@ -306,7 +301,6 @@ Table categories [headercolor: #2E7D5B] {
   id                 uuid          [pk, default: `uuidv7()`]
   parent_category_id uuid          [note: 'Hierarquia: selecao / time']
   name               varchar(90)   [not null]
-  type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
   slug               varchar(100) [note: 'Gerado a partir do nome e refeito ao renomear (CCD104)']
@@ -367,7 +361,7 @@ Table albums [headercolor: #2E7D5B] {
 Table cards [headercolor: #2E7D5B] {
   id              uuid         [pk, default: `uuidv7()`]
   album_id        uuid         [note: 'Nulo = carta avulsa / portfolio']
-  category_id     uuid
+  category_id     uuid         [note: 'Franquia; com album, e a franquia do album (ADR-063)']
   rarity_id       uuid
   language_id     uuid
   name            varchar(160) [not null]

@@ -31,11 +31,6 @@ Enum privacy {
   PRIVATE
 }
 
-Enum category_type {
-  ALBUM
-  CARD
-}
-
 Enum album_status {
   ACTIVE
   INACTIVE
@@ -299,7 +294,6 @@ Table categories [headercolor: #2E7D5B] {
   id                 uuid          [pk, default: `uuidv7()`]
   parent_category_id uuid          [note: 'FK -> categories.id (selecao / time)']
   name               varchar(90)   [not null]
-  type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
   slug               varchar(100)
