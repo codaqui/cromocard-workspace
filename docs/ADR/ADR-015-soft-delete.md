@@ -1,6 +1,6 @@
 # ADR-015 — Exclusão de dados: soft delete com `deleted_at`
 
-- **Status:** Aceito (item 2 ampliado pelo ADR-016: `deleted_at` em todas as tabelas)
+- **Status:** Aceito (item 2 ampliado pelo ADR-016: `deleted_at` em todas as tabelas; exceção ao item 7 no ADR-062)
 - **Data:** 2026-09-28
 - **Decisores:** Equipe CromoCard
 
