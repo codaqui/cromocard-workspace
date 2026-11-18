@@ -134,15 +134,15 @@ Enums: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Painel Login (com abas Fazer Login / Criar Conta) | [152-2587](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=152-2587) | R1–R7 | ⚠️ Divergente |
-| Painel Login (versão antiga, sem abas) | [77-533](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=77-533) | R1–R7 | Substituída pela 152-2587 (L3) |
+| Painel Login (com abas Fazer Login / Criar Conta) | [152-2587](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=152-2587) | R1–R7, R53 | ✅ Bate (ajustada em 18/11/2026) |
+| Login, erro ao entrar | [1067-823](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=1067-823) | R11, R48 | ✅ Bate (nova em 18/11/2026) |
+| Painel Login (versão antiga, sem abas) | [77-533](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=77-533) | — | No Arquivo do Figma (L3) |
 
-- **Onde o Figma está errado** (vale a documentação): 152-2587 — o campo "E-mail ou ID colecionador" aceita ID; a
-  documentação pede e-mail (R2) e o DER não tem ID de colecionador.
-- **O que falta no Figma:** mensagens de conta suspensa e de conta excluída (R12–R14), estado de carregando no botão e
-  o "Sair" nos cabeçalhos das áreas Cliente e BackOffice (R35).
-- O Figma mostra "Lembrar de mim por 30 dias", "Esqueceu a senha?" e "Google", que batem com R5–R7. Não mostra
-  Facebook (ver L1).
+- Na revisão da Área Pública (18/11/2026), o campo passou a se chamar "E-mail ou nome de usuário" (EA-004-01, R10 da
+  CCD098), o texto de apoio ficou simples e o botão "Entrar" leva à tela inicial do cliente (`284-5290`).
+- **Fica sem tela própria:** as mensagens de e-mail não confirmado, conta suspensa e conta excluída (R12–R14) usam o
+  mesmo aviso da tela `1067-823`, com os textos do caso de uso; o estado de carregando no botão e o "Sair" nos
+  cabeçalhos das áreas Cliente e BackOffice (R35).
 
 ## Fora do escopo
 
