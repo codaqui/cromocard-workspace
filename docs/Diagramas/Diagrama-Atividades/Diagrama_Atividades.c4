@@ -280,7 +280,7 @@ views {
     appWeb -> modAcessoPublico '2. solicita destaques, cartas e noticias'
     modAcessoPublico -> bancoDados '2. carrega os itens em destaque'
     modAcessoPublico -> appWeb '2. retorna os carrosseis'
-    appWeb -> visitante '2. apresenta carrosseis de destaques, cartas e noticias'
+    appWeb -> visitante '2. apresenta carrosseis de destaques, cartas e noticias, e as categorias padrao na ordem da CCD104'
     visitante -> appWeb '3. navega pelas categorias e itens em destaque'
   }
 
@@ -696,7 +696,8 @@ views {
       **Pre-condicao:** estar autenticado e na tela de pesquisa de cartas.
       **Observacao:** os casos de uso CCD024 (nome), CCD025 (numero), CCD026 (colecao),
       CCD027 (categoria), CCD028 (raridade) e CCD029 (idioma) possuem o mesmo fluxo
-      principal, alterando apenas o criterio informado no filtro.
+      principal, alterando apenas o criterio informado no filtro. No CCD027, o filtro lista as
+      categorias padrao na ordem definida na CCD104, com a fixada no topo.
       **Fluxo alternativo:** se nao houver correspondencia, exibir a mensagem
       "Nenhuma carta encontrada com os termos informados".
     '''
@@ -1340,12 +1341,12 @@ views {
     administrador -> backofficeApp '1. acessa a opcao Gestao de Catalogo'
     backofficeApp -> modAdministracao '2. solicita os itens do catalogo'
     modAdministracao -> bancoDados '2. consulta cartas, albuns e categorias'
-    backofficeApp -> administrador '2. apresenta os itens nas abas de cartas, albuns e categorias'
+    backofficeApp -> administrador '2. apresenta os itens nas abas de cartas, albuns e categorias; na de categorias, com slug, selo e quantidade de cartas e busca por nome ou slug'
     administrador -> backofficeApp '3. seleciona a opcao de cadastrar, editar ou remover um item'
     backofficeApp -> administrador '4. apresenta o formulario ou as opcoes correspondentes'
     administrador -> backofficeApp '5. informa ou altera os dados do item; na carta, envia a imagem da frente e, opcionalmente, a do verso'
     backofficeApp -> modAdministracao '5. envia os dados e as imagens'
-    modAdministracao -> modAdministracao '6. valida os dados informados'
+    modAdministracao -> modAdministracao '6. valida os dados informados; o slug da categoria, gerado do nome, nao repete o de outra categoria nao excluida'
     administrador -> backofficeApp '7. confirma a operacao'
     modAdministracao -> bancoDados '8. registra a operacao; o total de cartas do album e calculado pelas cartas dele'
     backofficeApp -> administrador '9. atualiza o catalogo e confirma a operacao'
@@ -2159,21 +2160,22 @@ views {
       **Ator:** Administrador
       **Pre-condicao:** estar autenticado como administrador e existir pelo menos uma categoria padrao.
       **Fluxo alternativo:** sair sem salvar descarta as mudancas; a primeira categoria nao sobe
-      e a ultima nao desce (seta desabilitada).
+      e a ultima nao desce (seta desabilitada); o alfinete da categoria fixada a desafixa, e ela
+      continua na posicao em que esta.
     '''
 
     administrador -> backofficeApp '1. acessa Configuracoes Globais, em Ordenacao e Gestao de Categorias Padrao'
     backofficeApp -> modAdministracao '2. solicita as categorias padrao'
-    modAdministracao -> bancoDados '2. consulta posicao, nome, slug, quantidade de cartas e selo'
+    modAdministracao -> bancoDados '2. consulta posicao, nome, slug, selo e quantidade de cartas (da categoria e das subcategorias, direto ou pelos albuns)'
     backofficeApp -> administrador '2. apresenta as categorias na ordem atual'
     administrador -> backofficeApp '3. move uma categoria pelas setas ou arrastando'
     backofficeApp -> administrador '4. atualiza as posicoes na tela'
-    administrador -> backofficeApp '5. marca uma categoria como Fixado no topo'
-    backofficeApp -> administrador '6. coloca a categoria fixada na primeira posicao'
+    administrador -> backofficeApp '5. marca uma categoria como Fixado no topo pelo alfinete da linha'
+    backofficeApp -> administrador '6. coloca a categoria fixada na primeira posicao e retira o fixado da anterior'
     administrador -> backofficeApp '7. seleciona Salvar Ordem'
-    backofficeApp -> modAdministracao '8. envia a nova ordem'
-    modAdministracao -> bancoDados '8. grava a ordem e o log de auditoria'
-    backofficeApp -> administrador '9. confirma; menu, filtros e vitrine passam a seguir a nova ordem'
+    backofficeApp -> modAdministracao '8. envia a lista das categorias padrao, na ordem, com a fixada e os versos'
+    modAdministracao -> bancoDados '8. grava a ordem, a fixada e o log de auditoria'
+    backofficeApp -> administrador '9. confirma; menu, filtros e vitrine seguem a ordem gravada nas CCD001 e CCD027'
   }
 
   dynamic view ccd105_duplicar_carta {

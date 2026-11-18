@@ -35,7 +35,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [012](ADR-012-socket-io.md) | Backend | Biblioteca de tempo real: Socket.IO | Aceito |
 | [013](ADR-013-git-flow.md) | Processo | Git Flow: main · homolog · development · feature + Conventional Commits | Aceito |
 | [014](ADR-014-ids-uuid-v7.md) | Dados | Identificadores: UUID v7 (PostgreSQL 18) | Aceito |
-| [015](ADR-015-soft-delete.md) | Dados | Exclusão de dados: soft delete com `deleted_at` | Aceito (ampliado pelo 016) |
+| [015](ADR-015-soft-delete.md) | Dados | Exclusão de dados: soft delete com `deleted_at` | Aceito (ampliado pelo 016; exceção ao item 7 no 062) |
 | [016](ADR-016-colunas-de-tempo-timestamptz.md) | Dados | `created_at`/`updated_at`/`deleted_at` em todas as tabelas + `timestamptz` | Aceito |
 | [017](ADR-017-convencoes-de-codigo.md) | Processo | Convenções de código e contribuição (pt-BR nos comentários, npm, alias `@/`, template de PR) | Aceito |
 | [018](ADR-018-configuracao-e-ambientes.md) | Backend | Configuração e ambientes (local, test, homolog, produção; `.env`; segredos) | Proposto |
@@ -71,7 +71,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [048](ADR-048-tokens-de-email-e-google-no-frontend.md) | Backend | Tokens de confirmação de e-mail e de redefinição de senha; client ID do Google no frontend | Aceito |
 | [049](ADR-049-middlewares-http-da-autenticacao.md) | Backend | Middlewares HTTP da autenticação: `express-rate-limit` e `cookie-parser` | Aceito |
 | [050](ADR-050-upload-e-arquivos-csv-e-pdf.md) | Backend | Upload de imagens e arquivos CSV e PDF: `multer`, `csv-parse` e `pdfkit` | Aceito |
-| [051](ADR-051-convencoes-das-colunas-flexiveis-do-backoffice.md) | Dados | Convenções das colunas flexíveis do BackOffice (`global_settings`, `notifications.type`, `catalog_requests.data`, `audit_logs`) | Aceito |
+| [051](ADR-051-convencoes-das-colunas-flexiveis-do-backoffice.md) | Dados | Convenções das colunas flexíveis do BackOffice (`global_settings`, `notifications.type`, `catalog_requests.data`, `audit_logs`) | Aceito (item 1 substituído parcialmente pelo 061) |
 | [052](ADR-052-credenciamento-de-vendedor-no-modelo-de-dados.md) | Dados | Credenciamento de vendedor no modelo de dados (`seller_verifications`, documentos e notas) | Aceito |
 | [053](ADR-053-colunas-e-tabelas-do-escopo-adicional-do-backoffice.md) | Dados | Colunas, enums e tabelas do escopo adicional do BackOffice | Aceito |
 | [054](ADR-054-tabelas-do-marketplace-para-indicadores.md) | Dados | Tabelas do marketplace criadas (só leitura) para os indicadores financeiros | Aceito |
@@ -81,6 +81,8 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [058](ADR-058-sem-aplicativo-mobile.md) | Frontend | Sem aplicativo mobile: o CromoCard é só web (substitui o 023) | Aceito |
 | [059](ADR-059-provedor-de-email-por-ambiente.md) | Infraestrutura | Provedor de e-mail por ambiente: Ethereal em homologação e Resend (SMTP) em produção | Proposto |
 | [060](ADR-060-fluxo-de-desenvolvimento-e-revisao-com-figma-e-cobertura.md) | Processo | Fluxo de desenvolvimento e revisão: decisão sobre o Figma, cobertura de 90% e skills únicas (substitui parcialmente 008, 046 e 047) | Proposto |
+| [061](ADR-061-chaves-de-configuracao-das-metas-e-dos-versos.md) | Dados | Chaves de configuração das metas e dos versos padrão em `global_settings` (substitui parcialmente o item 1 do 051) | Aceito |
+| [062](ADR-062-slug-de-categoria-unico-entre-as-ativas.md) | Dados | Slug de categoria único só entre as não excluídas, com índice parcial e sem restaurar (exceção ao item 7 do 015) | Aceito |
 
 ## Modelo
 

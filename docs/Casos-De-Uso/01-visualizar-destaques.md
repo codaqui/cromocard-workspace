@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O Visitante tera acesso a tela home da aplicação. |  |
-|  | 2. O sistema Carrega e apresenta carroséis de destaques, cartas e notícias. |
+|  | 2. O sistema Carrega e apresenta carroséis de destaques, cartas e notícias, e as categorias padrão na ordem definida em Ordenar Categorias Padrão, com a fixada no topo. |
 | 3. O visitante navega pelas categorias e itens em destaque. |  |
 
 ### Fluxo Alternativo
