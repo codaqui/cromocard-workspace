@@ -194,7 +194,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD101](CCD101-segmentar-notificacao-global/spec.md) | Segmentar Notificação Global | Escopo Adicional | Planejada | #605 |
 | [CCD102](CCD102-exportar-log-de-auditoria/spec.md) | Exportar Log de Auditoria | Escopo Adicional | Planejada | #606 |
 | [CCD103](CCD103-votar-em-solicitacao-de-catalogo/spec.md) | Votar em Solicitação de Catálogo | Escopo Adicional | Planejada | #607 |
-| [CCD104](CCD104-ordenar-categorias-padrao/spec.md) | Ordenar Categorias Padrão | Escopo Adicional | Em implementação | #608 |
+| [CCD104](CCD104-ordenar-categorias-padrao/spec.md) | Ordenar Categorias Padrão | Escopo Adicional | Implementada | #608 |
 | [CCD105](CCD105-duplicar-carta/spec.md) | Duplicar Carta | Escopo Adicional | Planejada | #609 |
 | [CCD106](CCD106-salvar-rascunho-de-carta/spec.md) | Salvar Rascunho de Carta | Escopo Adicional | Planejada | #610 |
 | [CCD107](CCD107-consultar-historico-de-relatorios/spec.md) | Consultar Histórico de Relatórios | Escopo Adicional | Planejada | #611 |

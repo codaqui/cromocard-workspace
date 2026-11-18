@@ -1,12 +1,12 @@
 # CCD104 — Ordenar Categorias Padrão
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #608 `CCD104-Ordenar Categorias Padrão` · responsável Lucas Oliveira Lima · Sprint 07
 - **Caso de uso:** [104-ordenar-categorias-padrao.md](../../docs/Casos-De-Uso/104-ordenar-categorias-padrao.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade · revisada em 2026-11-16, 2026-11-17 e 2026-11-18 por Lucas Oliveira Lima (L6–L22)
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16; reaprovada em 2026-11-17, quando o PO, Felipe Consulim, confirmou as decisões L6–L18 (tomadas por Lucas Oliveira Lima em 16 e 17/11/2026) e aceitou o ADR-062; L21 e L22 confirmadas pelo PO em 2026-11-18, na revisão do PR #27; L19 e L20 (Lucas Oliveira Lima, 2026-11-17) aguardam a confirmação do PO ao mesclar o PR #43 do workspace
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16; reaprovada em 2026-11-17, quando o PO, Felipe Consulim, confirmou as decisões L6–L18 (tomadas por Lucas Oliveira Lima em 16 e 17/11/2026) e aceitou o ADR-062; L21 e L22 confirmadas pelo PO em 2026-11-18, na revisão do PR #27; L19 e L20 (Lucas Oliveira Lima, 2026-11-17) confirmadas pelo PO ao mesclar o PR #43 do workspace, em 2026-11-18
 
 ## Objetivo
 
@@ -103,7 +103,7 @@
 | L16 | Arrastar no celular: nativo do navegador ou biblioteca nova? | Nativo do navegador (HTML5), sem dependência nem ADR; no toque e no teclado, as setas. Decisão de Lucas Oliveira Lima, 17/11/2026 | R3; Fora do escopo |
 | L17 | Mensagem de sucesso, estado sem categoria padrão, ação de auditoria e dados dos CAs | Reaproveita o aviso "Categorias padrão atualizadas", o estado vazio e a ação `DEFAULT_CATEGORIES_UPDATED` da CCD066; os CAs usam as categorias do seed. Decisão de Lucas Oliveira Lima, 17/11/2026 | R5, R12; CAs |
 | L18 | O frame diz "Salvar ordem"; a CCD066 (L20) chamou o botão de "Salvar categorias", porque ele não salvava ordem | Segue o Figma: "Salvar ordem". Decisão de Lucas Oliveira Lima, 17/11/2026 | Telas |
-| L19 | O Figma (`228-3048`) chama o módulo de "Módulo 2: Categorias padrão", e o `104` (FP 1) dizia "Ordenação e Gestão de Categorias Padrão" | Segue o Figma e a CCD066, já mesclada: "Módulo 2: Categorias padrão"; o FP 1 do `104` foi ajustado. Decisão de Lucas Oliveira Lima, 17/11/2026 | `104`, FP 1; Telas |
-| L20 | No Figma (`228-3048`, `833-10832`) o selo "Padrão" aparece nas categorias padrão e o Pokémon só tem "Em alta": o `badge` depende de `is_default`? | Independente: o admin escolhe o selo (Nenhum, Padrão ou Em alta) e uma categoria padrão pode ficar sem selo ou com "Em alta". O selo "Fixado no topo" aparece junto do selo de exibição. Decisão de Lucas Oliveira Lima, 17/11/2026 | R2, R4, R10; L15 |
+| L19 | O Figma (`228-3048`) chama o módulo de "Módulo 2: Categorias padrão", e o `104` (FP 1) dizia "Ordenação e Gestão de Categorias Padrão" | Segue o Figma e a CCD066, já mesclada: "Módulo 2: Categorias padrão"; o FP 1 do `104` foi ajustado. Decisão de Lucas Oliveira Lima, 17/11/2026, confirmada pelo PO (Felipe Consulim) ao mesclar o PR #43, em 18/11/2026 | `104`, FP 1; Telas |
+| L20 | No Figma (`228-3048`, `833-10832`) o selo "Padrão" aparece nas categorias padrão e o Pokémon só tem "Em alta": o `badge` depende de `is_default`? | Independente: o admin escolhe o selo (Nenhum, Padrão ou Em alta) e uma categoria padrão pode ficar sem selo ou com "Em alta". O selo "Fixado no topo" aparece junto do selo de exibição. Decisão de Lucas Oliveira Lima, 17/11/2026, confirmada pelo PO (Felipe Consulim) ao mesclar o PR #43, em 18/11/2026 | R2, R4, R10; L15 |
 | L21 | O que acontece quando o admin move a categoria fixada ou passa outra por cima dela? (achado da revisão do backend e do frontend) | Bloqueia: a fixada não desce e nenhuma outra a ultrapassa, com as setas desabilitadas e o arrastar sem efeito; ela só sai do topo ao ser desafixada. Decisão de Lucas Oliveira Lima, 17/11/2026, confirmada pelo PO (Felipe Consulim) na revisão do PR #27, em 18/11/2026 | `104`, FA 7–8; R14; CA17 |
 | L22 | A aba Categorias do Catálogo mostrava a descrição da categoria; o frame `833-10832` mostra só nome, slug e selo na coluna "Nome e slug" | Segue o Figma: a lista não mostra a descrição, que continua no formulário de edição. Decisão do PO (Felipe Consulim) na revisão do PR #27, 18/11/2026 | `61`, FP 2; R11; Telas |
