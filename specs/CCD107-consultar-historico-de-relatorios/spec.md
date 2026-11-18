@@ -22,16 +22,18 @@
 | R4 | Cada arquivo fica disponível por 90 dias | Regra | `107`, FP 5; ADR-053, item 9 |
 | R5 | Arquivo vencido: informa e oferece gerar de novo com os mesmos filtros | Regra | `107`, FA 1–2 |
 | R6 | Histórico vazio mostra a mensagem | Estado | `107`, FA 3–4 |
-| R7 | Um job apaga do storage os arquivos vencidos | Regra | ADR-053, item 9; ADR-010 |
+| R7 | Um job apaga do storage os arquivos vencidos; a linha continua no histórico como "Expirado" (L5) | Regra | ADR-053, item 9; ADR-010; Figma `228-1236` e `843-844` |
+| R8 | A confirmação da exportação avisa que "o arquivo fica no histórico por 90 dias" e o aviso de exportado diz que ele "está no topo do histórico" (L7) | Tela | Figma `843-442` e `843-1246`; CCD063, tela de exportação |
 
 ## Critérios de aceite
 
 - **CA1** (R2) — **Dado** três exportações feitas por admins diferentes, **quando** o admin abre Relatórios, **então** vê as três com código, tipo, período, solicitante, data, formato e tamanho.
 - **CA2** (R3) — **Dado** uma exportação de ontem, **quando** o admin clica em "Baixar", **então** recebe o mesmo arquivo.
 - **CA3** (R5) — **Dado** uma exportação com mais de 90 dias, **quando** o admin clica em "Baixar", **então** a API responde `410` e a tela oferece gerar de novo.
-- **CA4** (R7) — **Dado** arquivos vencidos, **quando** o job roda, **então** os arquivos somem do storage e as linhas ficam com `deleted_at`.
+- **CA4** (R7) — **Dado** arquivos vencidos, **quando** o job roda, **então** os arquivos somem do storage e as linhas continuam no histórico, marcadas como "Expirado" (sem `deleted_at`).
 - **CA5** (R6) — **Dado** nenhuma exportação, **quando** o admin abre Relatórios, **então** vê a mensagem de histórico vazio.
 - **CA6** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama uma das rotas, **então** recebe `403`.
+- **CA7** (R8) — **Dado** o admin na tela de exportação, **quando** confirma e a exportação termina, **então** a confirmação fala dos 90 dias no histórico e o aviso diz que o arquivo está no topo do histórico, que já mostra a nova linha.
 
 ## Dados
 
@@ -50,6 +52,8 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Histórico vazio | `843-2068` | R6 | ✅ Bate |
 
 - "Assinado HSM" e "Digest SHA-256" saíram do Figma em 12/11/2026.
+- Reconferidas em 18/11/2026: o diálogo de `843-844` diz que o arquivo "passou dos 90 dias e foi apagado" e oferece "Fechar" e "Gerar de novo" (L5); o vazio de `843-2068` diz "Ainda não há relatórios exportados. Os relatórios que a equipe exportar aparecem aqui por 90 dias."; o código do Figma é numérico (L6).
+- Confirmação (`843-442`) e aviso de exportado (`843-1246`): as frases do histórico voltam com esta story (R8, L7).
 
 ## Fora do escopo
 
@@ -63,3 +67,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L2 | Substitui o histórico lido de `audit_logs` na CCD063? (proposta: sim; a CCD063 continua gravando `EXPORT_REPORT`) | Sim; a CCD063 continua gravando `EXPORT_REPORT` | plano.md; ADR-053, item 9 |
 | L3 | Como o arquivo é servido? (proposta: rota autenticada `GET /admin/reports/exports/:id/file`, sem URL pública) | Rota autenticada `GET /admin/reports/exports/:id/file`, sem URL pública | plano.md |
 | L4 | O que a coluna de status do histórico mostra? (o Figma tinha "Assinado HSM") | "Disponível até DD/MM/AAAA" ou "Expirado", a partir de `expires_at`. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | esta spec (R2) |
+| L5 | A CA4 mandava preencher `deleted_at` nas linhas vencidas, o que as tiraria do histórico; o Figma (`228-1236`, `843-844`) mostra a linha "Expirado" e o diálogo "Gerar de novo" | O job apaga só o arquivo do storage; a linha fica, sem `deleted_at`, e o download responde `410 EXPORT_EXPIRED`. Decisão de Lucca Rocha (18/11/2026), na conferência da spec com o Figma | esta spec (R7, CA4) |
+| L6 | Como montar o código `#REP-9482` do Figma, se `report_exports` não tem coluna sequencial? | `#REP-` + os 4 últimos caracteres do `id`, em maiúsculas, como o `#SOL-` da CCD064; o DER não muda. Decisão de Lucca Rocha (18/11/2026) | esta spec (R2) |
+| L7 | As frases do histórico na confirmação (`843-442`) e no aviso de exportado (`843-1246`) ficaram de fora na CCD063 até existir o histórico | Voltam nesta story; o aviso provisório "O histórico de exportações chega em breve" dá lugar ao histórico e ao vazio de `843-2068`. Decisão de Lucca Rocha (18/11/2026) | esta spec (R8, CA7) |
+| L8 | Quantas linhas por página no histórico? (o Figma mostra 4, sem paginação visível) | 10 por página, paginação offset `page`/`pageSize` (ADR-011), com o paginador do BackOffice | plano.md |
