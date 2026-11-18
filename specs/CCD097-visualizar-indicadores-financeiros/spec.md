@@ -1,6 +1,6 @@
 # CCD097 — Visualizar Indicadores Financeiros
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #601 `CCD097-Visualizar Indicadores Financeiros` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [97-visualizar-indicadores-financeiros.md](../../docs/Casos-De-Uso/97-visualizar-indicadores-financeiros.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)

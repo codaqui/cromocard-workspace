@@ -5,14 +5,15 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/601-visualizar-indicadores-financeiros`
 
-- [ ] **T1** · Criar migrations e seed das tabelas do marketplace usadas nos indicadores — R2–R5, R9, R10 · AB#634
+- [x] **T1** · Criar migrations e seed das tabelas do marketplace usadas nos indicadores — R2–R5, R9, R10 · AB#634
   - Pronto quando: as 5 tabelas existem, uma migration por tabela, e o seed cria pedidos e pagamentos em cada status.
-- [ ] **T2** · Criar consultas dos indicadores financeiros e do livro razão — R2–R4, R6–R8 · CA1–CA4 · AB#635
+- [x] **T2** · Criar consultas dos indicadores financeiros e do livro razão — R2–R4, R6–R8 · CA1–CA4 · AB#635
   - Pronto quando: `finance.service.spec.ts` cobre CA1–CA4.
-- [ ] **T3** · Criar consultas de volume e reputação por vendedor, população e preço por carta e volume por grupo — R5, R9, R10 · CA5, CA6 · AB#636
+- [x] **T3** · Criar consultas de volume e reputação por vendedor, população e preço por carta e volume por grupo — R5, R9, R10 · CA5, CA6 · AB#636
   - Pronto quando: `finance.service.spec.ts` cobre CA5 e CA6.
 - [ ] **T4** · Criar rotas dos indicadores financeiros e o relatório de volume e custódia — R1, R11 · CA7, CA8 · AB#637
   - Pronto quando: as rotas aparecem no `/docs` e o relatório exporta em CSV e PDF.
+  - Andamento (18/11/2026): rotas `/admin/finance/*` feitas e no `/docs`; falta o relatório `FINANCE`, que espera o merge da CCD107 (L11).
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/601-visualizar-indicadores-financeiros`
 
