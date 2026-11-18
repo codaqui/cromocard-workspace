@@ -1,6 +1,6 @@
 # CCD061 — Gestão de Catálogo
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #336 `CCD061-Gestão de Catálogo` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [61-gestao-de-catalogo.md](../../docs/Casos-De-Uso/61-gestao-de-catalogo.md)
