@@ -28,3 +28,5 @@
 |  | 4. O sistema mantém a posição, com a seta desabilitada. |
 | 5. O administrador seleciona o alfinete da categoria fixada. |  |
 |  | 6. O sistema retira o "Fixado no topo" da categoria, que continua na posição em que está até o administrador movê-la. |
+| 7. O administrador tenta mover para baixo a categoria fixada ou passar outra categoria por cima dela. |  |
+|  | 8. O sistema mantém a posição, com a seta desabilitada: a categoria fixada fica sempre no topo até ser desafixada. |

@@ -121,11 +121,11 @@ importa do catálogo só pelo `index.ts` (ADR-040).
 | `catalog/components/CategoriesTab/` | coluna "Nome e slug" (slug abaixo do nome e selo), coluna "Cartas" e busca "Buscar por nome ou slug…" | R11 |
 | `admin/settings/settings.types.ts` · `settings.api.ts` | `slug`, `badge`, `isPinned`, `cardsCount` em `DefaultCategory`; `isPinned` em `DefaultCategoryInput` | R2, R5 |
 | `admin/settings/hooks/useDefaultCategoriesDraft` (em `useDefaultCategoriesEditor.ts`) | `moveUp`, `moveDown`, `moveTo(origem, destino)` e `togglePin` (fixar move para o topo e desafixa a anterior; desafixar não move); `save` envia a ordem e o `isPinned` | R3–R5, R7 |
-| `admin/settings/components/DefaultCategoriesModule/DefaultCategoryRow.tsx` | alça, posição, nome, selos ("Fixado no topo" e o do `badge`), "Slug: /x • N cartas", verso (já existe), alfinete e setas, desabilitadas nas pontas | R2–R4, R8 |
+| `admin/settings/components/DefaultCategoryRow/DefaultCategoryRow.tsx` | alça, posição, nome, selos ("Fixado no topo" e o do `badge`), "Slug: /x • N cartas", verso (já existe), alfinete e setas, desabilitadas nas pontas | R2–R4, R8 |
 | `admin/settings/components/DefaultCategoriesModule/DefaultCategoriesModule.tsx` | arrastar nativo (`draggable`, `onDragStart`/`onDragOver`/`onDrop`) pela alça; botão "Salvar ordem" (L18) | R3, R5 |
 
 - **Estados:** carregando, erro e vazio já existem na CCD066 (R12).
-- **Componentes reaproveitados:** `Icon` (acrescentar `pushPin`, `dragIndicator`, `arrowUpward`, `arrowDownward` se faltarem),
+- **Componentes reaproveitados:** `Icon` (acrescentar `pushPin`, `dragIndicator`, `expandLess`, `expandMore` se faltarem),
   `ModuleActions`, `SettingsModule`, `TitleCell`, `CountCell` e `FranchiseBadge` do Catálogo.
 
 ## Testes

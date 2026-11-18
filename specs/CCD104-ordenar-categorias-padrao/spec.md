@@ -29,6 +29,7 @@
 | R11 | A aba Categorias do Catálogo mostra o slug abaixo do nome, o selo, a quantidade de cartas (mesma regra do R2) e busca por nome ou slug | Tela | `61`, FP 2; EA-061-10 (L15) |
 | R12 | Ao salvar, o aviso "Categorias padrão atualizadas" da CCD066; sem nenhuma categoria padrão, o módulo mostra só "Adicionar categoria padrão" | Mensagem | `104`, FP 9 e Pré-condições (L17) |
 | R13 | A migration gera o slug das categorias existentes (repetidos ganham sufixo `-2`, `-3`…, pela ordem de criação) e numera `display_order` em ordem alfabética, sem nenhuma fixada | Regra | ADR-062, item 3 (L3, L14) |
+| R14 | A categoria fixada fica sempre no topo: ela não desce e nenhuma outra passa por cima dela (setas desabilitadas e arrastar sem efeito) até ser desafixada | Estado | `104`, FA 7–8 (L21) |
 
 ## Critérios de aceite
 
@@ -48,6 +49,7 @@
 - **CA14** (R10, R11) — **Dado** o formulário de categoria, **quando** o admin salva com "Em alta", **então** o selo aparece no módulo e na aba Categorias; **quando** salva com "Nenhum", **então** a categoria fica sem selo.
 - **CA15** (R11) — **Dado** a aba Categorias do Catálogo, **quando** o admin busca `magic-the`, **então** encontra Magic: The Gathering pelo slug, com o selo e a quantidade de cartas na linha.
 - **CA16** (R13) — **Dado** categorias já gravadas antes da migration, duas delas com nomes que geram o mesmo slug ("Pokémon TCG" e "Pokemon TCG"), **quando** ela roda, **então** cada uma tem slug, a criada depois ganha o sufixo `-2`, as categorias padrão ficam em ordem alfabética e nenhuma fica fixada.
+- **CA17** (R14) — **Dado** Pokémon fixada na primeira posição, **quando** o admin olha a seta para baixo de Pokémon e a seta para cima da segunda linha, ou arrasta outra categoria para cima de Pokémon, **então** as setas estão desabilitadas e a ordem não muda.
 
 ## Dados
 
@@ -103,3 +105,4 @@
 | L18 | O frame diz "Salvar ordem"; a CCD066 (L20) chamou o botão de "Salvar categorias", porque ele não salvava ordem | Segue o Figma: "Salvar ordem". Decisão de Lucas Oliveira Lima, 17/11/2026 | Telas |
 | L19 | O Figma (`228-3048`) chama o módulo de "Módulo 2: Categorias padrão", e o `104` (FP 1) dizia "Ordenação e Gestão de Categorias Padrão" | Segue o Figma e a CCD066, já mesclada: "Módulo 2: Categorias padrão"; o FP 1 do `104` foi ajustado. Decisão de Lucas Oliveira Lima, 17/11/2026 | `104`, FP 1; Telas |
 | L20 | No Figma (`228-3048`, `833-10832`) o selo "Padrão" aparece nas categorias padrão e o Pokémon só tem "Em alta": o `badge` depende de `is_default`? | Independente: o admin escolhe o selo (Nenhum, Padrão ou Em alta) e uma categoria padrão pode ficar sem selo ou com "Em alta". O selo "Fixado no topo" aparece junto do selo de exibição. Decisão de Lucas Oliveira Lima, 17/11/2026 | R2, R4, R10; L15 |
+| L21 | O que acontece quando o admin move a categoria fixada ou passa outra por cima dela? (achado da revisão do backend e do frontend) | Bloqueia: a fixada não desce e nenhuma outra a ultrapassa, com as setas desabilitadas e o arrastar sem efeito; ela só sai do topo ao ser desafixada. Decisão de Lucas Oliveira Lima, 17/11/2026 | `104`, FA 7–8; R14; CA17 |
