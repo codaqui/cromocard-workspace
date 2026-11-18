@@ -68,3 +68,13 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 - R7: o `LedgerModal` ganha as colunas hora, pedido, comprador, vendedor, tipo e valor, e o rodapé com os totais
   recebido, liberado e retido. A rota do livro razão devolve `totals: { received, released, retained }`.
 - Testes: CA2 e CA3 reescritos em `finance.service.spec.ts` e `LedgerModal.spec.tsx`.
+
+## Revisão de 18/11/2026 (L8–L11)
+
+- L8: entrega = `orders.updated_at` de `DELIVERED`; pagamento recebido = `payments.updated_at` de `APPROVED`. O seed
+  grava essas datas de forma controlada.
+- L9: `custody` não depende do período; `settled`, `settledOrders` e `retained` seguem `period`/`from`/`to` (o mesmo
+  filtro do Dashboard). Contrato do resumo: `{ custodyCents, settledCents, settledOrders, retainedCents }`.
+- L10: `GET /admin/finance/ledger` com `date`, `page` e `pageSize` (10 por padrão) devolve `{ data, meta }`, com
+  `meta.totals: { receivedCents, releasedCents, retainedCents }`.
+- L11: T1–T4 saem de `develop`; o relatório `FINANCE` da T4 espera o merge da CCD107; T5–T7 esperam o merge da CCD096.

@@ -59,10 +59,12 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Dashboard - filtro Hoje | `247-3539` | R2–R4, R6 | ✅ Bate |
 | Dashboard - Livro Razão de Hoje | `795-2761` | R7 | ✅ Bate |
 | Dashboard - filtro sem dados | `795-1704` | R8 | ✅ Bate |
-| Validar Cadastro | `246-1201` | R5 | ⚠️ Divergente (ainda não revisado no Figma) |
+| Validar Cadastro | `246-1201` | R5 | ⚠️ Divergente (ainda não revisado no Figma; a lista de vendedores desta story é a do Dashboard, frame `208-1240`) |
 | Catálogo | `208-2895` | R9 | ✅ Bate (revisado em 12/11/2026: população em unidades e preço médio de 30 dias, sem graduação PSA/BGS nem variação) |
 | Exportar Relatórios, card "Volume Transacionado & Custódia" | `228-1236` | R11 | ✅ Bate (revisado em 12/11/2026) |
 | Comunidade | `220-3524` | R10 | ✅ Bate (revisado em 12/11/2026: volume e "N negociações ativas" em todos os grupos) |
+
+- Reconferidas em 18/11/2026 (`208-1240`, `795-2761`, `795-1704`, `208-2895`): custódia, liquidado e retido num card ao lado do gráfico de evolução; reputação (estrelas e nota) e volume anunciado ("R$ 0 · Nenhum anúncio ativo") na tabela "Cadastros dos Vendedores Recentes"; Livro Razão em modal com os três totais e a paginação (L10); estado vazio com "Não houve movimentação no período." (L9); catálogo com população em "un." e preço médio "média 30 dias".
 
 ## Fora do escopo
 
@@ -81,3 +83,7 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L5 | Volume por grupo (proposta: soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING`) | Soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING` | `escopo-adicional.md`, EA-062-03 |
 | L6 | O card mostra custódia, liquidado e garantia juntos? O que é "liquidado" fora do filtro Hoje? | Os três sempre juntos; "liquidado no período" (no filtro Hoje, "liquidado hoje"). Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `97`, FP 3 |
 | L7 | Colunas do Livro Razão de Hoje | Hora, pedido, comprador, vendedor, tipo (pagamento ou liberação) e valor, mais os totais recebido, liberado e retido. Frame `795-2761`. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `97`, FP 8 |
+| L8 | O DBML não tem data de entrega nem de pagamento: de onde saem o liquidado, o retido e as linhas do Livro Razão? | Entrega = `orders.updated_at` do pedido `DELIVERED`; pagamento recebido = `payments.updated_at` do pagamento `APPROVED`. As tabelas são só de leitura (ADR-054); quando o marketplace existir, ele cria colunas próprias (`delivered_at`, `paid_at`). Liquidado = entregue no período (CA2); retido = entregue há menos de 7 dias, mostrado à parte; "Liberação ao vendedor" no Livro Razão = entrega no dia. Decisão de Lucca Rocha (18/11/2026), na conferência com o Figma | esta spec (R3, R4, R7) |
+| L9 | Custódia depende do filtro de período? O frame `795-1704` mostra R$ 0,00 num período sem movimentação | Não: a custódia é a posição atual (R2) e não muda com o filtro; liquidado, pedidos liberados e retido seguem o período e zeram no estado vazio. Decisão de Lucca Rocha (18/11/2026) | esta spec (R2, R8) |
+| L10 | O Livro Razão mostra "6 de 1.096 movimentações": como listar todas? | Paginado, 10 por página, das mais recentes para as mais antigas, com o paginador no rodapé do modal e os totais do dia sempre visíveis. Decisão de Lucca Rocha (18/11/2026) | plano.md |
+| L11 | Ordem de entrega com a CCD096 (gráfico do Dashboard) e a CCD107 (Relatórios), ainda em PR | Backend (T1–T4) agora, a partir de `develop`; o relatório de volume (R11) entra depois do merge da CCD107; o frontend (T5–T7) começa depois do merge da CCD096. Decisão de Lucca Rocha (18/11/2026) | tarefas.md |
