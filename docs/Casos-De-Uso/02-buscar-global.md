@@ -12,7 +12,7 @@
 |  | 2. O sistema habilita o campo para digitação. |
 | 3. O visitante informa o termo desejado (ex: nome da carta) e submete a busca. |  |
 |  | 4. O sistema valida o termo e realiza a consulta no banco de dados. |
-|  | 5. O sistema apresenta os resultados encontrados na tela. |
+|  | 5. O sistema apresenta os resultados agrupados em Cartas (anúncios ativos), Usuários, Grupos e Álbuns, com abas para ver só um grupo; cada carta leva ao perfil da carta. |
 
 ### Fluxo Alternativo
 

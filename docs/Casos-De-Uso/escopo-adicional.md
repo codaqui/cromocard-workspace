@@ -42,7 +42,7 @@ aprovadas.
 
 | Código | Item do protótipo | Tela | Entra em | Observação |
 |---|---|---|---|---|
-| EA-004-01 | Entrar com "e-mail ou ID colecionador" | `152-2587` | CCD098 | O "ID colecionador" é o nome de usuário (@) da CCD098. |
+| EA-004-01 | Entrar com "e-mail ou ID colecionador" | `152-2587` | CCD098 | O "ID colecionador" é o nome de usuário (@) da CCD098. O Figma passou a dizer "E-mail ou nome de usuário" na revisão da Área Pública (18/11/2026). |
 | EA-058-01 | Intervalo de datas personalizado | `208-1240` | **MVP** (CCD058, L4) | |
 | EA-058-02 | Variação de cada indicador em relação ao período anterior | `208-1240` | CCD096 | |
 | EA-058-03 | Total de usuários separado em colecionadores e lojistas | `208-1240` | CCD096 | |
@@ -88,6 +88,8 @@ aprovadas.
 | EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
 | EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. O selo é opcional ("Nenhum" = sem selo), e a quantidade soma as cartas da categoria e das subcategorias, direto ou pelos álbuns (decisões de 17/11/2026, L13 e L15 da CCD104). |
+| EA-001-01 | Menu lateral do visitante: Início, Marketplace, Pesquisar, Categorias, Comunidades, Como funciona e Central de ajuda; logado, também Álbuns, Perfil e Configurações | `178-1214` e as demais telas públicas | CCD001 | Revisão da Área Pública (18/11/2026). O item "Recursos" sai. |
+| EA-001-02 | Página "Como funciona": os 4 passos da compra, as garantias (pagamento retido, vendedor verificado, suporte, preços) e a taxa de 5% por venda | `675-23513` | CCD005 | Página estática, sem dados (18/11/2026). |
 
 ## 3. O que não vira requisito
 
@@ -124,7 +126,14 @@ Execução de Segurança", "Timestamp: ISO 8601", os milissegundos de cada linha
 ("staff") e o botão "Sair" só nesta tela. Em Configurações (12/11/2026): "BackOffice Engine • Sistema Central",
 "mensageria com custódia transacional", "showcase", "canvas", "Banner ativo no ar", "Imagem Master", "cards indexados",
 "Status: Exibição Primária/Normal", o botão global "Salvar Todas as Alterações" e "Adicionar Nova Categoria" (criar
-categoria fica no Catálogo).
+categoria fica no Catálogo). Na Área Pública (18/11/2026): as telas Categoria `675-22400`, Em alta e rankings `675-22920`, Notícias
+`675-24385` e Lojas em destaque `675-24792` (sem caso de uso; Notícias também não tem tabela no DER), que foram
+para o Arquivo do Figma; "notícias" na Home; "tokenize", "autenticação espectral", "carteira física com seguro
+nominal", "liquidação instantânea", "cofre de cartas" (o vendedor envia direto ao comprador), "Garantia 100%",
+"Validação com seguro" e "saldo"; os selos "Aceita troca", "Envio imediato", "Frete grátis", "1º dono", "Vendedor
+Gold", "Vendedor PRO" e "Lojista verificado"; graduação PSA/BGS/CGC; produtos lacrados e lotes; filtro de
+localização e "somente verificados"; "estado de referência" da carta do catálogo; as colunas Idioma e Negociação
+nos anúncios; "Alerta de preço" (futuro) e "Compartilhar" no perfil da carta; "Quero trocar" e o chat do suporte.
 
 ## 4. Telas conferidas
 
@@ -160,3 +169,10 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   limite de exportação `849-1794`; o painel de detalhes `749-624` ganhou o IP.
   Configurações (12/11/2026): `228-3048` com os módulos de templates e metas e o verso padrão por franquia; link
   inválido `859-661`, banner atualizado `859-1068`, editar template `859-1479`.
+- Revisão da Área Pública (18/11/2026): Login `152-2587` e Criar conta `238-1204` (tipo de conta, sem Google no
+  cadastro) ajustados; telas novas de autenticação: erro ao entrar `1067-823`, confirme seu e-mail `1067-897`, esqueci
+  minha senha `1067-969`, link enviado `1067-1041`, redefinir senha `1067-1115`. Home `178-1214` (seção "Mais
+  procuradas"), Explorar marketplace `675-20577`, Busca `675-21216`, Perfil da carta `675-25998` e variações,
+  Entre para continuar `675-30471`, Como funciona `675-23513` e FAQ `675-23950` ajustados; telas novas: Detalhe do
+  anúncio `1067-1272`, anúncio indisponível `1067-1761`, marketplace sem resultados `1067-2277`, busca sem resultados
+  `1067-2699`. A Home logada com notificações (`478-2859`) foi para a seção de Notificações.
