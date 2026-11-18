@@ -21,7 +21,7 @@
 | R3 | Lista paginada dos itens do catálogo, sem excluídos, com busca por nome ou código; a aba de cartas filtra por franquia, álbum, raridade, ano e status (publicadas ou rascunhos) e mostra os chips dos filtros ativos | Tela | `61`, FP 2 (L7); ADR-011; ADR-015, item 5 |
 | R4 | Cadastrar, editar e remover cartas e álbuns | Ação | `61`, FP 3; user-stories.md §8 |
 | R5 | Álbum: `title` obrigatório (160); opcionais `publisher`, `year`, `description`, `cover_url`, `category_id` e `status` (Ativo ou Inativo) | Regra | `61`, FP 5; DBML `albums` |
-| R6 | Carta: para publicar, `name` (160), `category_id` (franquia), `rarity_id`, `language_id` e a imagem da frente são obrigatórios; opcionais `album_id`, `number`, `description` e o verso | Regra | `61`, FP 5 (L6); DBML `cards` |
+| R6 | Carta: para publicar, `name` (160), `category_id` (franquia), `rarity_id`, `language_id` e a imagem da frente são obrigatórios; opcionais `album_id`, `number`, `description` e o verso. Com álbum que tem franquia, a franquia da carta é a do álbum (L11) | Regra | `61`, FP 5 (L6, L11); DBML `cards`; ADR-063 |
 | R7 | Número único dentro do álbum (`album_id`, `number`); recadastrar uma carta excluída restaura a linha | Regra | DBML `cards.indexes`; ADR-015, item 7 |
 | R8 | Validação com erros por campo e confirmação antes de gravar | Regra | `61`, FP 4–7 e FA 1–4 |
 | R9 | O sistema confirma a operação ("Carta cadastrada no catálogo") e atualiza a lista | Mensagem | `61`, FP 8–9 |
@@ -30,7 +30,7 @@
 | R12 | Imagens vão pelo `StorageProvider`; o banco guarda a URL | Regra | ADR-009 |
 | R13 | Importar cartas por CSV: modal com o modelo para baixar e o arquivo; tudo ou nada, com o total importado ou as linhas com erro; as cartas importadas entram como rascunho (L12) | Ação | `61`, FP 10–11; user-stories.md §8; L12 |
 | R14 | Cadastrar, editar e remover gravam `audit_logs` | Regra | `61`, FP 8; ADR-034 |
-| R15 | Categorias são cadastradas, editadas e removidas na aba "Categorias & Franquias": nome e tipo obrigatórios, categoria pai, descrição e selo (CCD104) opcionais, slug gerado pelo nome; raridades e idiomas vêm do seed | Ação | `61`, FP 2 e FP 5; EA-066-01 |
+| R15 | Categorias são cadastradas, editadas e removidas na aba "Categorias & Franquias": nome obrigatório (sem tipo, L11), categoria pai, descrição e selo (CCD104) opcionais, slug gerado pelo nome; raridades e idiomas vêm do seed | Ação | `61`, FP 2 e FP 5; EA-066-01 |
 | R16 | Excluir pede confirmação e grava `audit_logs` | Regra | `61`, FA 7–8 |
 
 ## Critérios de aceite
@@ -52,13 +52,16 @@
   responde `400` no campo `rarityId`; sem álbum e sem numeração, a carta é cadastrada.
 - **CA9** (R16) — **Dado** um álbum sem cartas, **quando** o admin clica em excluir, **então** a tela pede a
   confirmação e só exclui depois dela, registrando o log.
+- **CA10** (R6, L11) — **Dado** um álbum da franquia Futebol, **quando** o admin cadastra uma carta nele com outra
+  franquia, **então** a API responde `422 CARD_CATEGORY_MISMATCH`; ao escolher o álbum no formulário, a franquia
+  Futebol já vem preenchida.
 
 ## Dados
 
 | Tabela | Colunas usadas | Observação |
 |---|---|---|
 | `albums`, `cards`, `card_photos` | ver R5–R7 | fundação |
-| `categories`, `rarities`, `languages` | `name`, `type`, `parent_category_id`, `sort_order`, `code` | referências dos formulários; gestão de categorias em L1 |
+| `categories`, `rarities`, `languages` | `name`, `parent_category_id`, `sort_order`, `code` | referências dos formulários; gestão de categorias em L1 |
 
 ## Telas (Figma)
 
@@ -77,8 +80,8 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Importação concluída | `832-1683` | R13 | ✅ Bate |
 | Álbuns | `832-8603` | R3, R5 | ✅ Bate |
 | Novo álbum | `833-9661` | R4, R5 | ✅ Bate |
-| Categorias & Franquias | `833-9132` | R15 | ✅ Bate |
-| Nova categoria | `833-10832` | R15 | ✅ Bate |
+| Categorias & Franquias | `833-9132` | R15 | ✅ Bate (coluna e filtro "Tipo" removidos do Figma em 18/11/2026, L11) |
+| Nova categoria | `833-10832` | R15 | ✅ Bate (campo "Tipo" removido do Figma em 18/11/2026, L11) |
 
 ## Fora do escopo
 
@@ -99,7 +102,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L6 | Quais campos são obrigatórios para publicar uma carta? O Figma marcava quase todos; o DER exige só o nome, e a CCD106 CA4 barra o rascunho sem raridade | Nome, franquia, raridade, idioma e imagem da frente; álbum, numeração e ano são opcionais (o DER permite carta avulsa). Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `61`, FP 5 |
 | L7 | O filtro "Edição / Ano" do Figma | Dois filtros, Álbum e Ano, como no contrato (`albumId`, `year`), mais o filtro de status. Decisão do PO (Daniel, 12/11/2026) | `61`, FP 2; `escopo-adicional.md`, EA-061-03 |
 | L8 | Excluir pede confirmação? | Sim, com modal; a exclusão em lote também pede o motivo (CCD105). Decisão do PO (Daniel, 12/11/2026) | `61`, FA 7–8 |
-| L9 | Como escolher entre muitos álbuns e categorias nos selects? | Em aberto. A implementação carrega a primeira página (até 100, o máximo da API) e sempre inclui o item já escolhido na edição; as categorias vêm filtradas pelo tipo (`type`), então o limite vale para cada tipo; um select com busca fica para quando o catálogo passar de 100 | Só aqui, aguardando o PO |
-| L10 | A categoria pai precisa ser do mesmo tipo (`ALBUM`/`CARD`)? | Sim: a categoria pai é do mesmo tipo da filha (L11); pai de outro tipo, a própria categoria ou uma descendente responde `422` | L11; aguardando a validação do PO |
-| L11 | O tipo da categoria (`ALBUM`/`CARD`) é regra ou só rótulo? | Regra: álbum só aceita categoria `ALBUM`, carta só aceita categoria `CARD` (no formulário e na importação), e a categoria pai é do mesmo tipo da filha. Outro tipo responde `422 CATEGORY_TYPE_MISMATCH` | DBML `category_type`; aguardando a validação do PO |
+| L9 | Como escolher entre muitos álbuns e categorias nos selects? | Em aberto. A implementação carrega a primeira página (até 100, o máximo da API) e sempre inclui o item já escolhido na edição; as categorias vêm todas juntas, sem tipo (L11); um select com busca fica para quando o catálogo passar de 100 | Só aqui, aguardando o PO |
+| L10 | A categoria pai precisa ser do mesmo tipo (`ALBUM`/`CARD`)? | Não há mais tipo (L11): a categoria pai pode ser qualquer categoria, menos a própria ou uma descendente dela (`422 CATEGORY_PARENT_INVALID`). Decisão do Daniel em 18/11/2026, na revisão do catálogo em homologação | ADR-063 (Proposto, aguardando o PO) |
+| L11 | O tipo da categoria (`ALBUM`/`CARD`) é regra ou só rótulo? | Nenhum dos dois: o tipo sai do modelo. A mesma franquia serve a álbuns e cartas. A carta com álbum que tem franquia precisa ter a franquia do álbum (`422 CARD_CATEGORY_MISMATCH`, também na importação, no campo `<linha>.category`); escolher o álbum no formulário preenche a franquia; trocar a franquia do álbum troca a das cartas dele. Decisão do Daniel em 18/11/2026: com o tipo como regra, a carta do Brasileirão não aceitava a franquia "Brasileirão" (criada como álbum), e o seed tinha "Pokémon" e "Pokémon TCG" duplicadas | `61`, FP 5, 6 e 11; ADR-063 (Proposto, aguardando o PO) |
 | L12 | A carta importada por CSV precisa da imagem da frente? O CSV não tem coluna de imagem (L3), e a L6 exige a frente para publicar | A carta importada entra como rascunho (`status = DRAFT`, o mesmo da CCD106), sem imagem, e não aparece no catálogo público; o admin envia a frente pela edição e só então a publica, com a validação da L6. O CSV continua sem coluna de imagem (L3). Decisão do PO (Daniel, 14/11/2026) | `61`, FP 11 |
