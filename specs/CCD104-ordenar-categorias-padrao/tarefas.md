@@ -26,15 +26,15 @@
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/608-ordenar-categorias-padrao` (depois do merge do PR 21)
 
-- [ ] **T5** [P] · Acrescentar slug, selo, fixada, ordem e quantidade aos tipos, schemas e api das categorias — R2, R5, R9, R10 · AB#698
+- [x] **T5** [P] · Acrescentar slug, selo, fixada, ordem e quantidade aos tipos, schemas e api das categorias — R2, R5, R9, R10 · AB#698
   - Pronto quando: `catalog` e `admin/settings` tipam os campos novos, `categoryBadgeLabels` sai pelo `index.ts` do
     catálogo, `src/lib/slug.ts` passa nos mesmos exemplos do backend e o typecheck passa.
-- [ ] **T7** · Acrescentar o selo e o slug no formulário de categoria — R9, R10 · CA6, CA13, CA14 · AB#700
+- [x] **T7** · Acrescentar o selo e o slug no formulário de categoria — R9, R10 · CA6, CA13, CA14 · AB#700
   - Pronto quando: `CategoryForm.spec.tsx` cobre a prévia do slug, as três opções do selo e o `409 SLUG_TAKEN` no
     campo Nome, fiel ao `833-10832`.
-- [ ] **T10** · Mostrar slug, selo e quantidade de cartas na aba Categorias com busca por slug — R11 · CA14, CA15 · AB#919
+- [x] **T10** · Mostrar slug, selo e quantidade de cartas na aba Categorias com busca por slug — R11 · CA14, CA15 · AB#919
   - Pronto quando: `CategoriesTab.spec.tsx` cobre as colunas e a busca, fiel ao fundo do `833-10832`.
-- [ ] **T6** · Criar a ordenação no módulo de categorias padrão com setas, arrastar, alfinete e salvar — R2–R4, R7, R8, R12 · CA1–CA4, CA8–CA10 · AB#699
+- [x] **T6** · Criar a ordenação no módulo de categorias padrão com setas, arrastar, alfinete e salvar — R2–R4, R7, R8, R12 · CA1–CA4, CA8–CA10 · AB#699
   - Pronto quando: `useDefaultCategoriesEditor.spec.ts` e `DefaultCategoriesModule.spec.tsx` cobrem mover, arrastar,
     fixar, desafixar, setas nas pontas, "Cancelar" e "Salvar ordem", fiel ao `228-3048` com as diferenças decididas, e
     a matriz de responsividade passa.
