@@ -1,12 +1,12 @@
 # CCD104 — Ordenar Categorias Padrão
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #608 `CCD104-Ordenar Categorias Padrão` · responsável Lucas Oliveira Lima · Sprint 07
 - **Caso de uso:** [104-ordenar-categorias-padrao.md](../../docs/Casos-De-Uso/104-ordenar-categorias-padrao.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
-- **Data:** 2026-10-22 · **Autor:** Daniel Andrade · revisada em 2026-11-16 e 2026-11-17 por Lucas Oliveira Lima (L6–L18)
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16; reaprovada em 2026-11-17, quando o PO, Felipe Consulim, confirmou as decisões L6–L18 (tomadas por Lucas Oliveira Lima em 16 e 17/11/2026) e aceitou o ADR-062
+- **Data:** 2026-10-22 · **Autor:** Daniel Andrade · revisada em 2026-11-16, 2026-11-17 e 2026-11-18 por Lucas Oliveira Lima (L6–L22)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16; reaprovada em 2026-11-17, quando o PO, Felipe Consulim, confirmou as decisões L6–L18 (tomadas por Lucas Oliveira Lima em 16 e 17/11/2026) e aceitou o ADR-062; L21 e L22 confirmadas pelo PO em 2026-11-18, na revisão do PR #27; L19 e L20 (Lucas Oliveira Lima, 2026-11-17) aguardam a confirmação do PO ao mesclar o PR #43 do workspace
 
 ## Objetivo
 
@@ -26,7 +26,7 @@
 | R8 | Setas desabilitadas na primeira e na última posição | Estado | `104`, FA 3–4 (L7) |
 | R9 | O slug é gerado do nome e refeito quando a categoria é renomeada; é único entre as categorias não excluídas: repetido responde `409 SLUG_TAKEN` no campo nome; uma categoria excluída com o mesmo slug não bloqueia e não é restaurada | Regra | `61`, FP 5–6; ADR-053, item 4; ADR-062 (L14) |
 | R10 | Selo de exibição opcional no formulário de categoria: "Nenhum" (nulo), "Padrão" (`STANDARD`) ou "Em alta" (`TRENDING`), começando em "Nenhum" | Campo | `61`, FP 5; EA-066-01; DBML `categories.badge` (L15) |
-| R11 | A aba Categorias do Catálogo mostra o slug abaixo do nome, o selo, a quantidade de cartas (mesma regra do R2) e busca por nome ou slug | Tela | `61`, FP 2; EA-061-10 (L15) |
+| R11 | A aba Categorias do Catálogo mostra o slug abaixo do nome, o selo, a quantidade de cartas (mesma regra do R2) e busca por nome ou slug; a lista não mostra a descrição, que fica no formulário de edição | Tela | `61`, FP 2; EA-061-10 (L15, L22) |
 | R12 | Ao salvar, o aviso "Categorias padrão atualizadas" da CCD066; sem nenhuma categoria padrão, o módulo mostra só "Adicionar categoria padrão" | Mensagem | `104`, FP 9 e Pré-condições (L17) |
 | R13 | A migration gera o slug das categorias existentes (repetidos ganham sufixo `-2`, `-3`…, pela ordem de criação) e numera `display_order` em ordem alfabética, sem nenhuma fixada | Regra | ADR-062, item 3 (L3, L14) |
 | R14 | A categoria fixada fica sempre no topo: ela não desce e nenhuma outra passa por cima dela (setas desabilitadas e arrastar sem efeito) até ser desafixada | Estado | `104`, FA 7–8 (L21) |
