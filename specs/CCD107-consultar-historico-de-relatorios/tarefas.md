@@ -5,22 +5,22 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/611-historico-de-relatorios`
 
-- [ ] **T1** · Criar migration de report_exports — R2, R4 · AB#719
+- [x] **T1** · Criar migration de report_exports — R2, R4 · AB#719
   - Pronto quando: a tabela existe e o `schema.prisma` bate com o DBML.
-- [ ] **T2** · Guardar o arquivo exportado no storage e registrar em report_exports — R2, R4 · CA1 · AB#720
+- [x] **T2** · Guardar o arquivo exportado no storage e registrar em report_exports — R2, R4 · CA1 · AB#720
   - Pronto quando: `reports.service.spec.ts` cobre CA1.
-- [ ] **T3** · Criar histórico e download com expiração — R3, R5, R6 · CA2, CA3 · AB#721
+- [x] **T3** · Criar histórico e download com expiração — R3, R5, R6 · CA2, CA3 · AB#721
   - Pronto quando: `reports.service.spec.ts` cobre CA2 e CA3.
-- [ ] **T4** · Criar job de limpeza dos relatórios vencidos — R7 · CA4 · AB#722
+- [x] **T4** · Criar job de limpeza dos relatórios vencidos — R7 · CA4 · AB#722
   - Pronto quando: `cleanup-expired-reports.job.spec.ts` cobre CA4.
-- [ ] **T5** · Criar rota de download do relatório — R1 · CA6 · AB#723
+- [x] **T5** · Criar rota de download do relatório — R1 · CA6 · AB#723
   - Pronto quando: a rota aparece no `/docs` e responde `403` para quem não é ADMIN.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/611-historico-de-relatorios`
 
-- [ ] **T6** [P] · Criar api e queries do histórico de relatórios — R2, R3 · AB#724
+- [x] **T6** [P] · Criar api e queries do histórico de relatórios — R2, R3 · AB#724
   - Pronto quando: o typecheck passa.
-- [ ] **T7** · Atualizar o histórico da tela de Relatórios com Baixar, vencido e vazio — R2, R3, R5, R6, R8 · CA5, CA7 · AB#725
+- [x] **T7** · Atualizar o histórico da tela de Relatórios com Baixar, vencido e vazio — R2, R3, R5, R6, R8 · CA5, CA7 · AB#725
   - Pronto quando: `ReportsPage.spec.tsx` cobre o vencido, o vazio e as frases do histórico na confirmação e no aviso.
 
 ## Fechamento — workspace
