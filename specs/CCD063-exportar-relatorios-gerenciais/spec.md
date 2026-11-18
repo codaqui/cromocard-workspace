@@ -1,6 +1,6 @@
 # CCD063 — Exportar Relatórios Gerenciais
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #338 `CCD063-Exportar Relatórios Gerenciais` · responsável Lucca Rocha · Sprint 07
 - **Caso de uso:** [63-exportar-relatorios-gerenciais.md](../../docs/Casos-De-Uso/63-exportar-relatorios-gerenciais.md)
