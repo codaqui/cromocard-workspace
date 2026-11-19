@@ -1,6 +1,6 @@
 # CCD099 — Aplicar Sanção a Usuário
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #603 `CCD099-Aplicar Sanção a Usuário` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [99-aplicar-sancao-a-usuario.md](../../docs/Casos-De-Uso/99-aplicar-sancao-a-usuario.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
