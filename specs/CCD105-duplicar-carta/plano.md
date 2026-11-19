@@ -69,7 +69,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|
 | CA3, CA5, CA7, CA9 | `catalog.service.spec.ts` |
 | CA5 com carta excluída (L7) | integração de `POST /cards` — o índice parcial aceita o código de uma carta excluída e recusa o de uma ativa |
-| CA4 | `catalog.service.spec.ts` (resumo) |
+| CA4 | integração de `GET /summary` (as contagens são do banco); o `catalog.service.spec.ts` só confere que o service devolve o resumo |
 | CA8 | integração das rotas de resumo e de exclusão em lote (`403` vem do middleware da rota, não do service) |
 | CA10 | integração de `GET /cards?q=` (a busca é um filtro do Prisma, só o banco real prova) |
 | CA1, CA2 | `CardFormModal.spec.tsx` |
