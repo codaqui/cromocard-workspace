@@ -68,6 +68,7 @@ aprovadas.
 | EA-061-07 | Verso padrão da franquia aplicado automaticamente | `278-3246` | CCD106 | Verso padrão por categoria na chave `catalog.default_backs` de `global_settings`. Com ele, o verso é opcional no formulário. |
 | EA-061-08 | Checagem de duplicidade antes de cadastrar | `278-3246`, `832-7887` | CCD106 | Duplicata = mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear, com o link para a carta existente. |
 | EA-061-09 | Imagem com mínimo de 1200×1600 px | `278-3246` | CCD106 | |
+| EA-061-10 | Slug, selo e quantidade de cartas na aba de categorias, com busca por nome ou slug | `833-10832` (fundo) | CCD104 | `61`, FP 2. Decisão de 17/11/2026 (L15 da CCD104). |
 | EA-062-01 | Indicadores da comunidade | `220-3524` | **MVP** (CCD062, L5) | |
 | EA-062-02 | Status "Advertido" para grupo | `220-3524`, `841-2435` | CCD099 | Só o selo "Advertido"; reativar volta a `ACTIVE`. Ação "Advertir", com motivo, na linha do grupo ativo e nos detalhes (decisão do PO em 12/11/2026). |
 | EA-062-03 | Volume custodiado e negociações ativas por grupo | `220-3524` | CCD097 | Volume = soma dos anúncios ativos compartilhados no grupo (mensagens `LISTING`). |
@@ -86,7 +87,7 @@ aprovadas.
 | EA-065-03 | Filtros rápidos | `228-2395` | CCD102 | Banimentos, Remoção de grupos e Mudança de papel. |
 | EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
-| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. |
+| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. O selo é opcional ("Nenhum" = sem selo), e a quantidade soma as cartas da categoria e das subcategorias, direto ou pelos álbuns (decisões de 17/11/2026, L13 e L15 da CCD104). |
 
 ## 3. O que não vira requisito
 

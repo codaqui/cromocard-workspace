@@ -9,11 +9,11 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa a opção "Gestão de Catálogo". |  |
-|  | 2. O sistema apresenta os itens cadastrados no catálogo, nas abas de cartas, álbuns e categorias, com busca por nome ou código, filtros e paginação. A aba de cartas filtra por franquia, álbum, raridade, ano e status (publicadas ou rascunhos) e mostra os filtros ativos. Raridades e idiomas vêm prontos e não são editados aqui. |
+|  | 2. O sistema apresenta os itens cadastrados no catálogo, nas abas de cartas, álbuns e categorias, com busca por nome ou código, filtros e paginação. A aba de cartas filtra por franquia, álbum, raridade, ano e status (publicadas ou rascunhos) e mostra os filtros ativos. A aba de categorias mostra o slug abaixo do nome, o selo de exibição e a quantidade de cartas (como em Ordenar Categorias Padrão), sem a descrição, que fica só no formulário de edição, e a busca dela aceita nome ou slug. Raridades e idiomas vêm prontos e não são editados aqui. |
 | 3. O administrador seleciona a opção de cadastrar, editar ou remover um item, ou seleciona várias cartas para excluir de uma vez. |  |
 |  | 4. O sistema apresenta o formulário ou as opções correspondentes. |
-| 5. O administrador informa ou altera os dados do item. Na carta, informa o nome, a franquia, a raridade e o idioma (obrigatórios para publicar) e, se quiser, o álbum, a numeração, o código, as variantes, o ano de lançamento e a descrição; envia a imagem da frente (obrigatória) e a do verso (opcional; sem verso, a carta usa o verso padrão da franquia). No álbum, só o título é obrigatório. Na categoria, o nome e o tipo são obrigatórios e o slug é gerado a partir do nome. |  |
-|  | 6. O sistema valida os dados informados. A numeração não pode se repetir no mesmo álbum, e o código não pode se repetir no catálogo. |
+| 5. O administrador informa ou altera os dados do item. Na carta, informa o nome, a franquia, a raridade e o idioma (obrigatórios para publicar) e, se quiser, o álbum, a numeração, o código, as variantes, o ano de lançamento e a descrição; envia a imagem da frente (obrigatória) e a do verso (opcional; sem verso, a carta usa o verso padrão da franquia). No álbum, só o título é obrigatório. Na categoria, o nome e o tipo são obrigatórios, o selo de exibição é opcional (Nenhum, Padrão ou Em alta) e o slug é gerado a partir do nome, acompanhando o nome quando a categoria é renomeada. |  |
+|  | 6. O sistema valida os dados informados. A numeração não pode se repetir no mesmo álbum, o código não pode se repetir no catálogo, e o slug da categoria não pode repetir o de outra categoria não excluída. |
 | 7. O administrador confirma a operação. |  |
 |  | 8. O sistema registra a operação realizada. O total de cartas do álbum é calculado pelas cartas dele. |
 |  | 9. O sistema atualiza o catálogo e confirma a operação. |

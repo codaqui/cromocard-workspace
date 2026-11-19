@@ -8,7 +8,7 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O cliente seleciona a categoria desejada no filtro de busca. |  |
+| 1. O cliente seleciona a categoria desejada no filtro de busca, que lista as categorias padrão na ordem definida em Ordenar Categorias Padrão, com a fixada no topo. |  |
 |  | 2. O sistema filtra as cartas que pertencem à categoria selecionada. |
 |  | 3. O sistema exibe a lista de cartas encontradas. |
 | 4. O cliente seleciona a carta desejada na lista de resultados. |  |
