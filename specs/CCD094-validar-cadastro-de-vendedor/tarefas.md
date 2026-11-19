@@ -32,11 +32,13 @@
   - **Revista em 14/11/2026:** refeita do zero sobre o `develop` atual (mesmo motivo do T1). `RecentSellersTable` e o endpoint `listRecentSellers` do Dashboard, agora sem uso, foram removidos. Referência em `feature/598-validar-cadastro-de-vendedor-referencia`.
 - [x] **T8** · Criar painel Validar Cadastro com documentos, notas, aprovar e rejeitar — R5–R10 · CA2–CA6 · AB#619
   - Pronto quando: `SellerVerificationPanel.spec.tsx` cobre validar documento, aprovar e rejeitar sem motivo.
+  - **Revista em 18/11/2026** (revisão do Daniel no PR #19): o card "Lojistas & Credenciamento" passou para a linha de indicadores do Dashboard e o "Analisar Fila" filtra em Pendente (L5, L12); o painel ganhou a largura do frame, as abas "Dados Cadastrais & Fiscais" e "Docs", campos em caixas e ícones nas seções (L11, L13). Testes em `DashboardKpis.spec.tsx`, `DashboardPage.spec.tsx` e `SellerVerificationPanel.spec.tsx`.
 
 ## Fechamento — workspace
 
-- [ ] **T9** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#620
+- [x] **T9** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#620
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
+  - **Feita em 19/11/2026:** backend #26 (`e1e04a9`) e frontend #19 (`b6c8605`) mesclados em `develop`; ponteiros `apps/*` atualizados para esses commits.
 
 ## Cobertura
 

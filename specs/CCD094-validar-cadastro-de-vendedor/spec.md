@@ -1,6 +1,6 @@
 # CCD094 — Validar Cadastro de Vendedor
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #598 `CCD094-Validar Cadastro de Vendedor` · responsável Daniel Andrade · Sprint 06
 - **Caso de uso:** [94-validar-cadastro-de-vendedor.md](../../docs/Casos-De-Uso/94-validar-cadastro-de-vendedor.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
