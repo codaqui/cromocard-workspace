@@ -22,7 +22,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Tabela | Migration | O que muda | Requisitos |
 |---|---|---|---|
-| `cards` | `add_code_and_variants_to_cards_table` | `code` (`varchar(30)`, único), `variants` (`varchar(120)`), copiadas do DBML | R8 |
+| `cards` | `add_code_and_variants_to_cards_table` | `code` (`varchar(30)`, com índice único parcial `cards_code_key` `WHERE deleted_at IS NULL`, ADR-063), `variants` (`varchar(120)`), copiadas do DBML | R8 |
 
 ## Contrato da API
 
@@ -31,27 +31,26 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | `GET /api/v1/admin/catalog/summary` | — | `200` `{ albums, licensedAlbums, pendingAlbumRequests }` | `401`, `403` | R1, R7 |
 | `GET /api/v1/admin/catalog/cards` (CCD061) | acrescenta `year` (ano do álbum, `albums.year`); o `q` passa a buscar também em `code` | acrescenta `code`, `variants` em cada carta | `401`, `403` | R8, R9, R11 |
 | `POST` · `PATCH /api/v1/admin/catalog/cards` (CCD061) | acrescenta `code?`, `variants?` | `201` / `200` | `409 CARD_NUMBER_TAKEN` (CCD061), `409 CARD_CODE_TAKEN` com `details: [{ field: 'code', message: 'Este código já está em uso por <nome>.' }]` | R3–R5, R8 |
+| `POST /api/v1/admin/catalog/cards/bulk-delete` | `{ ids, reason }` | `200` `{ deleted: [ids], skipped: [{ id, name, number }] }` | `400` (lista vazia ou sem motivo), `401`, `403` | R1, R10 |
 
 - Resumo (L8): `albums` = álbuns não excluídos (`ACTIVE` e `INACTIVE`); `licensedAlbums` = álbuns `ACTIVE`;
   `pendingAlbumRequests` = `catalog_requests` com `type = ALBUM` e `status = PENDING`, não excluídas.
-| `POST /api/v1/admin/catalog/cards/bulk-delete` | `{ ids, reason }` | `200` `{ deleted: [ids], skipped: [{ id, name, number }] }` | `400` (lista vazia ou sem motivo), `401`, `403` | R1, R10 |
-
 - A carta não tem ano próprio (o `release_year` é da CCD106): o filtro `year` filtra pelo ano do álbum.
 - Na exclusão em lote, as cartas usadas em coleções vão em `skipped` e não geram erro (L6); o motivo vai no
   `details` do `audit_logs` de cada carta excluída.
-- Excluir uma carta (`DELETE /cards/:id` da CCD061 ou em lote) grava `code = null` junto com o `deleted_at` e guarda o
-  código antigo no `details` do `audit_logs` (L7). Assim o `409 CARD_CODE_TAKEN` só aparece para carta ativa, e a
-  carta restaurada pela numeração (`saveNewCard` → `restore`) recebe o `code` do formulário.
+- Código único só entre as cartas não excluídas (L7, ADR-063): a exclusão não mexe no `code`, e o
+  `409 CARD_CODE_TAKEN` só aparece quando o código é de uma carta ativa. A carta restaurada pela numeração
+  (`saveNewCard` → `restore`) recebe o `code` do formulário.
 
 ## Backend
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/schema.prisma` + migration | colunas novas | R8 |
+| `database/schema.prisma` + migration | colunas novas e `@@unique([code], map: "cards_code_key", where: raw("deleted_at IS NULL"))` (ADR-063) | R8 |
 | `src/domains/catalog/catalog.validator.ts` (+ `.spec.ts`) | `code` e `variants` no criar e editar, `year` na lista de cartas, corpo da exclusão em lote | R3, R8–R10 |
 | `src/domains/catalog/catalog.errors.ts` | `CardCodeTakenError` (`409 CARD_CODE_TAKEN`, com o nome da carta dona no `details`, L10) | R8 |
-| `src/domains/catalog/catalog-cards.repository.ts` | gravar e devolver `code` e `variants`, busca também por `code`, filtro por ano do álbum, exclusão em lote, `softDelete` limpando o `code` (L7) | R8–R11 |
-| `src/domains/catalog/catalog.service.ts` (+ `.spec.ts`) | código único, resumo, exclusão em lote com auditoria e cartas puladas, código antigo no `details` da exclusão (L7) | R4, R5, R7–R10 |
+| `src/domains/catalog/catalog-cards.repository.ts` | gravar e devolver `code` e `variants`, busca também por `code`, filtro por ano do álbum, exclusão em lote, dono ativo de um código | R8–R11 |
+| `src/domains/catalog/catalog.service.ts` (+ `.spec.ts`) | código único entre as ativas (L7), resumo, exclusão em lote com auditoria e cartas puladas | R4, R5, R7–R10 |
 | `catalog.controller.ts` · `catalog.routes.ts` · `catalog.swagger.ts` | rotas de resumo e de exclusão em lote | R1, R7, R10 |
 
 ## Frontend
@@ -69,7 +68,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | Critério | Onde |
 |---|---|
 | CA3, CA5, CA7, CA9 | `catalog.service.spec.ts` |
-| CA5 com carta excluída (L7) | `catalog.service.spec.ts` — o código de uma carta excluída pode ser usado de novo |
+| CA5 com carta excluída (L7) | integração de `POST /cards` — o índice parcial aceita o código de uma carta excluída e recusa o de uma ativa |
 | CA4 | `catalog.service.spec.ts` (resumo) |
 | CA8 | integração das rotas de resumo e de exclusão em lote (`403` vem do middleware da rota, não do service) |
 | CA10 | integração de `GET /cards?q=` (a busca é um filtro do Prisma, só o banco real prova) |
@@ -80,6 +79,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - A duplicação é só no frontend (L1).
+- Código único só entre as cartas não excluídas, com índice parcial: ADR-063 (Proposto), exceção ao item 7 do ADR-015.
 
 ## Revisão de 12/11/2026 (L5, L6)
 
@@ -96,7 +96,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 - Filtro `year` definido como o ano do álbum.
 - Resumo sem dependência do código da CCD064.
 - CA8 passa para os testes de integração e CA9 entra na tabela de testes.
-- L7: excluir a carta libera o código (`code = null`), com o código antigo no `details` do `audit_logs`.
+- L7: o código é único só entre as cartas não excluídas, com índice parcial (ADR-063); a primeira proposta, gravar
+  `code = null` ao excluir, foi trocada ao achar o ADR-062.
 - Conferência com o Figma (L8–L13): indicadores do Figma no lugar dos da CCD061, busca por código (R11, CA10),
   mensagem de código repetido com o nome da carta, campos copiados ao duplicar, elementos da CCD106 desabilitados e
   aviso das cartas puladas no estilo da tela.

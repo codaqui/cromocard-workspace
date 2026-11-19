@@ -6,20 +6,20 @@
 ## Backend — `apps/cromocard-backend`, branch `feature/609-duplicar-carta`
 
 - [ ] **T1** · Criar migration de código e variantes em cards — R8 · AB#702
-  - Pronto quando: as colunas existem e o `schema.prisma` bate com o DBML.
+  - O `code` ganha o índice único parcial `cards_code_key` (`WHERE deleted_at IS NULL`, ADR-063).
+  - Pronto quando: as colunas e o índice existem e o `schema.prisma` bate com o DBML.
 - [ ] **T2** · Acrescentar código e variantes no validator e no service de cartas — R4, R5, R8, R11 · CA3, CA5, CA10 · AB#703
   - Arquivos: `catalog.validator.ts`, `catalog.errors.ts`, `catalog-cards.repository.ts`, `catalog.service.ts`.
   - O `409 CARD_CODE_TAKEN` traz "Este código já está em uso por <nome>." no campo `code` (L10); o `q` busca também
     no `code` (R11).
-  - Excluir a carta grava `code = null` e guarda o código antigo no `details` do log (L7).
-  - Pronto quando: `catalog.service.spec.ts` cobre CA3, CA5 e o reuso do código de uma carta excluída (L7).
+  - O código de uma carta excluída não bloqueia (L7, ADR-063).
+  - Pronto quando: `catalog.service.spec.ts` cobre CA3 e CA5.
 - [ ] **T3** · Criar resumo do catálogo, filtro por ano e exclusão em lote com auditoria — R7, R9, R10 · CA4, CA7, CA9 · AB#704
-  - O filtro `year` usa o ano do álbum; a exclusão em lote devolve `{ deleted, skipped }`, sem `422`, e também libera
-    o `code` das cartas excluídas (L7).
+  - O filtro `year` usa o ano do álbum; a exclusão em lote devolve `{ deleted, skipped }`, sem `422`.
   - Pronto quando: `catalog.service.spec.ts` cobre CA4, CA7 e CA9.
 - [ ] **T4** · Criar rotas de resumo e exclusão em lote do catálogo — R1 · CA8 · AB#705
-  - Pronto quando: as rotas aparecem no `/docs` e o teste de integração cobre o `403` para quem não é ADMIN (CA8) e
-    a busca por código (CA10).
+  - Pronto quando: as rotas aparecem no `/docs` e o teste de integração cobre o `403` para quem não é ADMIN (CA8),
+    a busca por código (CA10) e o reuso do código de uma carta excluída (L7).
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/609-duplicar-carta`
 
