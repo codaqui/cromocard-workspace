@@ -6,7 +6,7 @@
 - **Caso de uso:** [95-notificar-pendencia-cadastral.md](../../docs/Casos-De-Uso/95-notificar-pendencia-cadastral.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); tela 246-2038 reconferida em 14/11/2026 (Felipe Consulim), depois do merge da CCD059/098; revista em 2026-11-19 (L5, Felipe Consulim)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); tela 246-2038 reconferida em 14/11/2026 (Felipe Consulim), depois do merge da CCD059/098; revista em 2026-11-19 (L5 a L7, Felipe Consulim)
 
 ## Objetivo
 
@@ -51,15 +51,17 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Notificar lojista — pendência cadastral | [246-2038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=246-2038) | R3–R6 | ✅ Bate (reconferido em 14/11/2026) |
-| Notificação enviada ao lojista | [252-1375](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=252-1375) | R9 | ✅ Bate |
+| Notificar lojista — pendência cadastral | [246-2038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=246-2038) | R3–R6 | ✅ Bate (reconferido em 14/11/2026 e em 19/11/2026) |
+| Notificação enviada ao lojista | [252-1375](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=252-1375) | R9 | ✅ Bate (reconferido em 19/11/2026; assunto fixo, L6; sem o ID de operação, L7) |
 
 - "Protocolo de auditoria" e "Padrão Bacen" são efeito visual (`escopo-adicional.md`, seção 3).
+- Na confirmação, o assunto é o fixo do e-mail ("Pendência no seu cadastro de vendedor — CromoCard"), e não um assunto por modelo (L6); o rodapé mostra só o status da entrega, sem o "ID de Operação" (L7). O cabeçalho do modal fica alinhado à esquerda, como os outros modais do projeto.
 
 ## Fora do escopo
 
 - Editar os modelos pela tela de Configurações.
 - Ação automática quando o prazo vence.
+- Assunto do e-mail por modelo e o "ID de Operação" da confirmação (`252-1375`): L6 e L7.
 - "Notificar Lojista" na linha da lista de cadastros do Dashboard: retirado do Figma em 11/11/2026 (L5).
 
 ## Lacunas e decisões
@@ -71,3 +73,5 @@
 | L3 | Variáveis do modelo (proposta: `{nome}`, `{cnpj}` e `{prazo}`) | `{nome}`, `{cnpj}` e `{prazo}` | `95`, FP 4 |
 | L4 | O que acontece quando o prazo vence? (proposta: nada automático; o admin decide pela CCD094) | Nada automático; o admin decide pela CCD094 | `95`, FA 7–8 |
 | L5 | De onde se abre o formulário? O caso 95 (FP 1) citava "Notificar Lojista" na lista de cadastros, mas a revisão do Figma de 11/11/2026 tirou esse botão da linha do vendedor (`escopo-adicional.md` §3), e o `246-1201` mostra só "Notificar Pendência" no rodapé do dossiê | Só pelo dossiê: "Notificar Pendência" no rodapé do painel "Validar Cadastro", ao lado de "Rejeitar" e "Validar Lojista". Decisão do PO (Felipe Consulim, 19/11/2026) | `95`, FP 1; esta spec (R2, CA1, Fora do escopo) |
+| L6 | O `252-1375` mostra um assunto por modelo ("Pendência na chave Pix cadastrada"), mas os modelos de `seller.pending_templates` só têm `key`, `title` e `body`. O assunto muda por modelo? | Não: o e-mail e a confirmação usam o assunto fixo "Pendência no seu cadastro de vendedor — CromoCard". Decisão do PO (Felipe Consulim, 19/11/2026) | esta spec (Telas, Fora do escopo) |
+| L7 | O rodapé do `252-1375` mostra "ID de Operação: #NOTIF-… • Status: Entregue", e não há ID de operação no DER nem na API | Mostra só o status, a partir do `emailDelivered` ("Entregue" ou "E-mail não entregue"); o ID fica de fora como efeito visual, como o "Protocolo de auditoria" (`escopo-adicional.md` §3). Decisão do PO (Felipe Consulim, 19/11/2026) | esta spec (Telas, Fora do escopo) |
