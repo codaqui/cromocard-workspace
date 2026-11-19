@@ -1,12 +1,12 @@
 # CCD095 — Notificar Pendência Cadastral
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #599 `CCD095-Notificar Pendência Cadastral` · responsável Daniel Andrade · Sprint 06
 - **Caso de uso:** [95-notificar-pendencia-cadastral.md](../../docs/Casos-De-Uso/95-notificar-pendencia-cadastral.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); tela 246-2038 reconferida em 14/11/2026 (Felipe Consulim), depois do merge da CCD059/098; revista em 2026-11-19 (L5, Felipe Consulim)
 
 ## Objetivo
 
@@ -17,7 +17,7 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN`; `401` sem token, `403` para outro papel | Permissão | `95`, Pré-condições; ADR-005, item 4; ADR-011 |
-| R2 | "Notificar Lojista" na lista e "Notificar Pendência" no dossiê abrem o formulário de pendência | Ação | `95`, FP 1 |
+| R2 | "Notificar Pendência" no dossiê (painel "Validar Cadastro") abre o formulário de pendência | Ação | `95`, FP 1 (L5) |
 | R3 | Formulário com o destinatário (nome e e-mail) e os canais notificação no site e e-mail | Tela | `95`, FP 2 |
 | R4 | Modelos de mensagem prontos que preenchem o corpo com os dados do vendedor | Campo | `95`, FP 3–4 |
 | R5 | Corpo da mensagem obrigatório e editável | Campo | `95`, FP 5 e FA 1–2 |
@@ -31,7 +31,7 @@
 
 ## Critérios de aceite
 
-- **CA1** (R2, R3) — **Dado** um cadastro em análise, **quando** o admin clica em "Notificar Lojista", **então** o formulário mostra nome, e-mail e os dois canais.
+- **CA1** (R2, R3) — **Dado** um cadastro em análise, **quando** o admin clica em "Notificar Pendência" no dossiê, **então** o formulário mostra nome, e-mail e os dois canais.
 - **CA2** (R4, R5) — **Dado** o formulário aberto, **quando** o admin escolhe "Chave Pix divergente do CNPJ", **então** o corpo vem preenchido com o nome e o CNPJ do vendedor e pode ser editado.
 - **CA3** (R6–R8) — **Dado** o corpo preenchido e o prazo de 48 horas, **quando** o admin envia, **então** o vendedor recebe a notificação e o e-mail, o cadastro fica `PENDING` com o prazo e o log registra.
 - **CA4** (R9) — **Dado** o envio concluído, **quando** a confirmação aparece, **então** mostra destinatário, assunto, canais, horário e a prévia.
@@ -51,7 +51,7 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Notificar lojista — pendência cadastral | [246-2038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=246-2038) | R3–R6 | ⚠️ Divergente |
+| Notificar lojista — pendência cadastral | [246-2038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=246-2038) | R3–R6 | ✅ Bate (reconferido em 14/11/2026) |
 | Notificação enviada ao lojista | [252-1375](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=252-1375) | R9 | ✅ Bate |
 
 - "Protocolo de auditoria" e "Padrão Bacen" são efeito visual (`escopo-adicional.md`, seção 3).
@@ -60,6 +60,7 @@
 
 - Editar os modelos pela tela de Configurações.
 - Ação automática quando o prazo vence.
+- "Notificar Lojista" na linha da lista de cadastros do Dashboard: retirado do Figma em 11/11/2026 (L5).
 
 ## Lacunas e decisões
 
@@ -69,3 +70,4 @@
 | L2 | Modelos iniciais (proposta: "Chave Pix divergente do CNPJ" e "Endereço não informado", do Figma, criados pelo seed e sem edição nesta story) | "Chave Pix divergente do CNPJ" e "Endereço não informado", do Figma, criados pelo seed e sem edição nesta story | `95`, FP 3 |
 | L3 | Variáveis do modelo (proposta: `{nome}`, `{cnpj}` e `{prazo}`) | `{nome}`, `{cnpj}` e `{prazo}` | `95`, FP 4 |
 | L4 | O que acontece quando o prazo vence? (proposta: nada automático; o admin decide pela CCD094) | Nada automático; o admin decide pela CCD094 | `95`, FA 7–8 |
+| L5 | De onde se abre o formulário? O caso 95 (FP 1) citava "Notificar Lojista" na lista de cadastros, mas a revisão do Figma de 11/11/2026 tirou esse botão da linha do vendedor (`escopo-adicional.md` §3), e o `246-1201` mostra só "Notificar Pendência" no rodapé do dossiê | Só pelo dossiê: "Notificar Pendência" no rodapé do painel "Validar Cadastro", ao lado de "Rejeitar" e "Validar Lojista". Decisão do PO (Felipe Consulim, 19/11/2026) | `95`, FP 1; esta spec (R2, CA1, Fora do escopo) |
