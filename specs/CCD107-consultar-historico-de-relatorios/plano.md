@@ -61,3 +61,17 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 - R2: a coluna "Disponível até" mostra a data de `expires_at` ou "Expirado"; no expirado, "Baixar" abre o diálogo
   "Este arquivo expirou" com "Gerar de novo" (`843-844`).
 - R6: o estado de histórico vazio segue o frame `843-2068`.
+
+## Revisão de 18/11/2026 (L5–L8)
+
+- R7/CA4 (L5): o job apaga do storage os arquivos com `expires_at` vencido e não preenche `deleted_at`; a linha
+  continua no histórico como "Expirado". Apagar um arquivo que já sumiu não é erro, então o job pode rodar de novo.
+- R2 (L6): o código `#REP-XXXX` é montado no frontend com os 4 últimos caracteres do `id`, em maiúsculas.
+- R8 (L7): `ExportConfirmDialog` e o aviso de exportado voltam a citar o histórico (`843-442`, `843-1246`); a exportação
+  invalida a query do histórico para a nova linha aparecer no topo.
+- L8: `GET /admin/reports/exports` usa `pageSize` 10 por padrão, ordenado por `created_at` desc.
+- L3 (implementação): o storage local publica tudo em `/uploads`; os relatórios vão para um storage privado
+  (`STORAGE_LOCAL_PRIVATE_DIR`, `createPrivateStorageProvider`), nunca servido em `/uploads`, e saem só pela rota
+  autenticada. O `StorageProvider` ganhou `read(key)`.
+- A chave do arquivo é `reports/<uuid>/<nome do arquivo>` e vai na coluna `file_url`; o nome do download sai da chave.
+- `410 EXPORT_EXPIRED` vale para `expires_at` vencido e também para arquivo que já sumiu do storage.
