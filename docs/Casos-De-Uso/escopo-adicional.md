@@ -49,7 +49,7 @@ aprovadas.
 | EA-058-04 | Novas cartas cadastradas na semana | `208-1240` | CCD096 | |
 | EA-058-05 | Colunas extras na lista de vendedores (CNPJ/CPF, reputação, volume, status da análise), filtro de status e "Atualizar Fila" | `208-1240` | CCD094 | Reputação e volume vêm da CCD097. |
 | EA-058-06 | Card "Lojistas & Credenciamento" (homologados, pendentes, "Analisar Fila") | `208-1240`, `247-2499` | CCD094 | |
-| EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados. A taxa de autenticação não entra: não tem origem de dado. |
+| EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados, contando os decididos no período pela data da decisão. A taxa de autenticação não entra: não tem origem de dado. |
 | EA-059-01 | Confirmação reforçada ao excluir (digitar o texto e marcar "Estou ciente") | `276-1735` | CCD098 | O texto "irreversível" contraria o soft delete (ADR-015). Texto de confirmação: `EXCLUIR-` + o primeiro nome em maiúsculas. O texto "irreversível" muda: a conta pode ser restaurada (ADR-015). |
 | EA-059-02 | Total de usuários no cabeçalho | `208-1793` | CCD098 | |
 | EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793`, `649-1164`, `649-796` | CCD098 | Página do usuário, um layout só para qualquer papel (decisão do PO em 11/11/2026, no lugar da gaveta lateral): dados pessoais, contato, endereços, ações (editar, aplicar sanção, reativar, excluir), advertências e as ações administrativas sobre o usuário lidas do `audit_logs`. O frame `649-796` mostra a própria conta do admin, com as ações bloqueadas (CCD059 FA 7–8). |
@@ -76,7 +76,7 @@ aprovadas.
 | EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). Retirada do Figma em 12/11/2026. |
 | EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | Em todas as denúncias da fila. |
 | EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | Primeiras linhas e total de registros, sem gráficos (decisão do PO em 12/11/2026). |
-| EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | |
+| EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | Cadastros criados no período, com loja, CNPJ, e-mail do vendedor, status e data do cadastro (decisões de 17/11/2026, L9 e L10 da CCD094). |
 | EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
 | EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). |
