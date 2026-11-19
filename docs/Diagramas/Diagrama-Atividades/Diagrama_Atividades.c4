@@ -1949,7 +1949,7 @@ views {
       prazo vencido mantem o cadastro Pendente para a decisao na CCD094.
     '''
 
-    administrador -> backofficeApp '1. seleciona Notificar Lojista na lista ou Notificar Pendencia no dossie'
+    administrador -> backofficeApp '1. seleciona Notificar Pendencia no dossie do vendedor'
     backofficeApp -> administrador '2. apresenta o formulario com o destinatario e os canais: notificacao no site e e-mail'
     administrador -> backofficeApp '3. escolhe um modelo de mensagem pronto, quando houver um adequado'
     backofficeApp -> administrador '4. preenche o corpo com o texto do modelo, o nome, o CNPJ e o prazo'
