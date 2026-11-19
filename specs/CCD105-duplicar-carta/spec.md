@@ -6,7 +6,7 @@
 - **Caso de uso:** [105-duplicar-carta.md](../../docs/Casos-De-Uso/105-duplicar-carta.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-19 por Lucas Oliveira Lima, com a revisão do plano e as decisões L7–L13
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-19 por Lucas Oliveira Lima, com a revisão do plano e as decisões L7–L13, e de novo com a L14
 
 ## Objetivo
 
@@ -38,7 +38,7 @@
 - **CA6** (R9) — **Dado** filtros de franquia e álbum aplicados, **quando** o admin clica em "Limpar todos os filtros", **então** a lista volta sem filtros.
 - **CA7** (R10) — **Dado** cinco cartas selecionadas, **quando** o admin exclui em lote com motivo, **então** as cinco recebem `deleted_at` e o log registra cada uma.
 - **CA8** (R1) — **Dado** um token de `CUSTOMER`, **quando** chama uma das rotas, **então** recebe `403`.
-- **CA9** (R10) — **Dado** cinco cartas selecionadas, duas delas em coleções, **quando** o admin exclui em lote com motivo, **então** só as três sem coleção recebem `deleted_at` e o aviso lista as duas que ficaram.
+- **CA9** (R10) — **Dado** cinco cartas selecionadas, duas delas em coleções, **quando** o admin exclui em lote com motivo, **então** só as três sem coleção recebem `deleted_at` e o aviso lista as duas que ficaram. Depende da CCD014 para valer de ponta a ponta (L14).
 - **CA10** (R11) — **Dado** uma carta com o código `CRD-POK-0004`, **quando** o admin busca `POK-0004`, **então** a carta aparece na lista.
 
 ## Dados
@@ -71,6 +71,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação, e de novo
 - População e preço médio — CCD097.
 - Importação em lote por CSV — CCD061.
 - "+420 esta semana" no total de álbuns: sem origem, retirado do Figma em 12/11/2026.
+- Consultar `collection_cards` para saber se a carta está em coleções — CCD014 (L14).
 - Funcionar o rascunho, o ano de lançamento, o verso padrão e a checagem de carta parecida — CCD106 (aqui só aparecem
   desabilitados, L12).
 
@@ -91,3 +92,4 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação, e de novo
 | L11 | Quais dados o "Duplicar" copia (`832-6457` copia também nome, variantes e descrição) | Seguir o Figma: nome, franquia, álbum, raridade, idioma, variantes e descrição; numeração, código e imagens vazios. Decisão de Lucas Oliveira Lima em 19/11/2026 | `105`, FP 2 |
 | L12 | Elementos da CCD106 nos frames (ano de lançamento, rascunho, verso padrão, carta parecida, filtro de status, etiqueta "Rascunho") | Ano de lançamento, "Salvar como Rascunho" e filtro de status desabilitados até a CCD106; verso padrão e aviso de carta parecida ocultos, porque mostrariam dados que não existem. Decisão de Lucas Oliveira Lima em 19/11/2026 | spec.md, Telas e Fora do escopo |
 | L13 | O aviso das cartas que ficaram na exclusão em lote não tem frame | Fazer no estilo da tela: quantas saíram e o nome e o número das que ficaram. Decisão de Lucas Oliveira Lima em 19/11/2026 | `escopo-adicional.md`, EA-061-04 |
+| L14 | A checagem "carta em coleções" (R10, CA9; CCD061 L2) depende de `collection_cards`, que só nasce com a CCD014. O que vale até lá? | Pendência explícita: a checagem é uma dependência obrigatória do catálogo; até a CCD014 o módulo injeta uma implementação "ainda sem coleções", que não bloqueia nenhuma carta (uma ou em lote). A CCD014 troca essa implementação pela consulta real. O CA9 só vale de ponta a ponta depois da CCD014. Decisão de Lucas Oliveira Lima em 19/11/2026, na revisão da CCD105 | `escopo-adicional.md`, EA-061-04; plano.md, Decisões técnicas |

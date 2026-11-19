@@ -80,6 +80,12 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 - A duplicação é só no frontend (L1).
 - Código único só entre as cartas não excluídas, com índice parcial: ADR-063 (Proposto), exceção ao item 7 do ADR-015.
+- Carta em coleções (L14): `CardUsage` é dependência obrigatória do `CatalogService` e do `CardsBulkDeleteService`, com
+  `cardIdsInCollections(ids)` (uma consulta para o lote). Até a CCD014, o `catalog.module.ts` injeta
+  `noCollectionsYet`, que devolve lista vazia; a CCD014 troca pela consulta em `collection_cards`.
+- A exclusão em lote grava o `deleted_at` e os `audit_logs` de cada carta na mesma transação (`runInTransaction`,
+  como em `seller-verifications`).
+- Os contratos que o catálogo recebe de fora (`CardUsage`, `CatalogAuditLog`) ficam em `catalog.ports.ts`.
 
 ## Revisão de 12/11/2026 (L5, L6)
 
@@ -98,6 +104,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 - CA8 passa para os testes de integração e CA9 entra na tabela de testes.
 - L7: o código é único só entre as cartas não excluídas, com índice parcial (ADR-063); a primeira proposta, gravar
   `code = null` ao excluir, foi trocada ao achar o ADR-062.
+- Revisão do código (L14): checagem de coleções explícita, lote e auditoria na mesma transação, uma consulta de
+  uso para o lote, contratos em `catalog.ports.ts`, sem comentários no código e `CardsTab` dividido.
 - Conferência com o Figma (L8–L13): indicadores do Figma no lugar dos da CCD061, busca por código (R11, CA10),
   mensagem de código repetido com o nome da carta, campos copiados ao duplicar, elementos da CCD106 desabilitados e
   aviso das cartas puladas no estilo da tela.

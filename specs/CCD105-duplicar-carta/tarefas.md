@@ -21,6 +21,11 @@
   - Pronto quando: as rotas aparecem no `/docs` e o teste de integração cobre o `403` para quem não é ADMIN (CA8),
     a busca por código (CA10) e o reuso do código de uma carta excluída (L7).
 
+- [ ] **T9** · Ligar a checagem de coleções e auditar o lote na mesma transação — R10 · CA7, CA9 · AB#704
+  - `CardUsage` obrigatório com `cardIdsInCollections(ids)`; o módulo injeta `noCollectionsYet` até a CCD014 (L14).
+  - `softDeleteMany` e o `audit_logs` de cada carta numa transação; contratos em `catalog.ports.ts`.
+  - Pronto quando: `catalog.service.spec.ts` cobre CA7, CA9 e a falha da auditoria desfazendo a exclusão.
+
 ## Frontend — `apps/cromocard-frontend`, branch `feature/609-duplicar-carta`
 
 - [x] **T5** [P] · Criar api, queries e schemas de código, variantes e resumo — R7–R10 · AB#706
@@ -38,6 +43,10 @@
   - Pronto quando: `CatalogAdminPage.spec.tsx` cobre o filtro por ano com CA6, a exclusão em lote (CA7) e o aviso
     das cartas puladas (CA9).
 
+- [ ] **T10** · Separar a seleção e a exclusão em lote do CardsTab e tirar os comentários — R10 · AB#708
+  - `useBulkDeletion` em `hooks/`, coluna de seleção em `components/`, regra "todos selecionados" num lugar só.
+  - Pronto quando: `CatalogAdminPage.spec.tsx` continua cobrindo CA7 e CA9 e o lint passa.
+
 ## Fechamento — workspace
 
 - [ ] **T8** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#709
@@ -50,6 +59,7 @@
 | R1 | T4 |
 | R2, R3, R6 | T6 |
 | R4, R5 | T2, T6 |
-| R7, R9, R10 | T3, T5, T7 |
+| R7, R9 | T3, T5, T7 |
+| R10 | T3, T5, T7, T9, T10 |
 | R8 | T1, T2, T5, T7 |
 | R11 | T2, T4 |
