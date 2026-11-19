@@ -302,13 +302,16 @@ Table categories [headercolor: #2E7D5B] {
   type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
-  slug               varchar(100) [unique]
+  slug               varchar(100)
   display_order      integer [not null, default: 0]
   is_pinned          boolean [not null, default: false]
   badge              varchar(20)
   created_at         timestamptz   [not null]
   updated_at         timestamptz   [not null]
   deleted_at         timestamptz
+  indexes {
+    slug [unique, note: 'So entre as nao excluidas (ADR-062)']
+  }
 }
 
 Table rarities [headercolor: #2E7D5B] {
