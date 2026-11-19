@@ -7,21 +7,36 @@
 
 - [ ] **T1** · Criar migration de código e variantes em cards — R8 · AB#702
   - Pronto quando: as colunas existem e o `schema.prisma` bate com o DBML.
-- [ ] **T2** · Acrescentar código e variantes no validator e no service de cartas — R4, R5, R8 · CA3, CA5 · AB#703
-  - Pronto quando: `catalog.service.spec.ts` cobre CA3 e CA5.
-- [ ] **T3** · Criar resumo do catálogo, filtro por ano e exclusão em lote com auditoria — R7, R9, R10 · CA4, CA6, CA7 · AB#704
-  - Pronto quando: `catalog.service.spec.ts` cobre CA4 e CA7.
+- [ ] **T2** · Acrescentar código e variantes no validator e no service de cartas — R4, R5, R8, R11 · CA3, CA5, CA10 · AB#703
+  - Arquivos: `catalog.validator.ts`, `catalog.errors.ts`, `catalog-cards.repository.ts`, `catalog.service.ts`.
+  - O `409 CARD_CODE_TAKEN` traz "Este código já está em uso por <nome>." no campo `code` (L10); o `q` busca também
+    no `code` (R11).
+  - Excluir a carta grava `code = null` e guarda o código antigo no `details` do log (L7).
+  - Pronto quando: `catalog.service.spec.ts` cobre CA3, CA5 e o reuso do código de uma carta excluída (L7).
+- [ ] **T3** · Criar resumo do catálogo, filtro por ano e exclusão em lote com auditoria — R7, R9, R10 · CA4, CA7, CA9 · AB#704
+  - O filtro `year` usa o ano do álbum; a exclusão em lote devolve `{ deleted, skipped }`, sem `422`, e também libera
+    o `code` das cartas excluídas (L7).
+  - Pronto quando: `catalog.service.spec.ts` cobre CA4, CA7 e CA9.
 - [ ] **T4** · Criar rotas de resumo e exclusão em lote do catálogo — R1 · CA8 · AB#705
-  - Pronto quando: as rotas aparecem no `/docs` e respondem `403` para quem não é ADMIN.
+  - Pronto quando: as rotas aparecem no `/docs` e o teste de integração cobre o `403` para quem não é ADMIN (CA8) e
+    a busca por código (CA10).
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/609-duplicar-carta`
 
 - [ ] **T5** [P] · Criar api, queries e schemas de código, variantes e resumo — R7–R10 · AB#706
+  - Arquivos: `src/features/catalog/catalog.api.ts`, `catalog.queries.ts`, `catalog.schemas.ts`, `catalog.types.ts`.
   - Pronto quando: o typecheck passa.
 - [ ] **T6** · Criar ação Duplicar com o formulário preenchido — R2–R6 · CA1, CA2 · AB#707
-  - Pronto quando: `CardForm.spec.tsx` cobre CA1 e CA2.
-- [ ] **T7** · Acrescentar indicadores, código, variantes, filtro por ano, chips e seleção em lote na lista — R7–R10 · CA4, CA6, CA7 · AB#708
-  - Pronto quando: `CatalogPage.spec.tsx` cobre CA6 e a exclusão em lote.
+  - Arquivos: `CardForm`, `CardFormModal`, `useCardForm.ts`, `CatalogRowActions`.
+  - Copia nome, franquia, álbum, raridade, idioma, variantes e descrição (L11); "Ano de lançamento" e "Salvar como
+    Rascunho" aparecem desabilitados (L12); código repetido mostra o nome da carta (L10).
+  - Pronto quando: `CardFormModal.spec.tsx` cobre CA1 e CA2.
+- [ ] **T7** · Acrescentar indicadores, código, variantes, filtro por ano e seleção em lote na lista — R7–R10 · CA4, CA6, CA7, CA9 · AB#708
+  - Chips e "Limpar todos os filtros" já vêm da CCD061; aqui entram os dois indicadores do Figma no lugar dos atuais
+    (L8), o filtro por ano, o filtro de status desabilitado (L12), a seleção e o modal de exclusão em lote com o aviso
+    das cartas puladas (L13).
+  - Pronto quando: `CatalogAdminPage.spec.tsx` cobre o filtro por ano com CA6, a exclusão em lote (CA7) e o aviso
+    das cartas puladas (CA9).
 
 ## Fechamento — workspace
 
@@ -37,3 +52,4 @@
 | R4, R5 | T2, T6 |
 | R7, R9, R10 | T3, T5, T7 |
 | R8 | T1, T2, T5, T7 |
+| R11 | T2, T4 |
