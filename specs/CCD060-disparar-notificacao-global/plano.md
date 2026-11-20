@@ -70,7 +70,7 @@ sentAt, createdAt, admin: { id, name } }`.
 | `database/schema.prisma` + 2 migrations | colunas e enum |
 | `src/domains/notifications/global-notifications.validator.ts` | corpo, paginação |
 | `global-notifications.audience.ts` | o filtro de cada público (Strategy) |
-| `global-notifications.repository.ts` | contagem, histórico, entrega em transação, agendados vencidos com `FOR UPDATE SKIP LOCKED`, cancelar condicional |
+| `global-notifications.repository.ts` | contagem, histórico, entrega em transação, agendados vencidos, entrega e cancelamento condicionais (`updateMany` com `status = SCHEDULED`) |
 | `global-notifications.service.ts` + `.spec.ts` | disparar, agendar, entregar, cancelar, auditoria, e-mail |
 | `global-notifications.controller.ts` · `.routes.ts` · `.swagger.ts` · `notifications.module.ts` | rotas |
 | `src/jobs/send-scheduled-notifications.job.ts` + `.spec.ts` | job de minuto em minuto |
@@ -101,7 +101,9 @@ sentAt, createdAt, admin: { id, name } }`.
 
 - Entrega síncrona com `createMany` em lotes de 1.000; com a base do MVP não precisa de fila (ADR-010 cita BullMQ só como
   evolução).
-- O job usa `node-cron` (já usado pelo `cleanup-expired-tokens`) e `SELECT … FOR UPDATE SKIP LOCKED` para não entregar duas
-  vezes com mais de uma instância.
+- O job usa `node-cron` (já usado pelo `cleanup-expired-tokens`) e busca os agendados vencidos com `findMany`. Cada entrega
+  roda numa transação que começa com um `updateMany` condicional (`status = SCHEDULED` → `SENT`): se nenhuma linha mudar,
+  outra instância já entregou ou um admin cancelou, e a entrega para ali. Assim não entrega duas vezes, nem com mais de uma
+  instância, nem com o cancelamento no meio.
 - Os e-mails saem em lotes de 50 depois da resposta, pelo `MailProvider`; falha num e-mail é registrada no log e não
   desfaz a entrega na plataforma.
