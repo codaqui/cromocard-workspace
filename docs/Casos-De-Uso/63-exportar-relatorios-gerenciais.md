@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa a opção "Exportar Relatórios". |  |
-|  | 2. O sistema apresenta os relatórios disponíveis ("Novos cadastros" e "Catálogo" e, no escopo adicional, "Auditoria de Lojistas" e "Volume Transacionado & Custódia"), o filtro de período e o histórico das exportações. |
+|  | 2. O sistema apresenta os relatórios disponíveis ("Novos cadastros", com nome, e-mail, papel e data de cadastro; "Catálogo", com tipo, nome, número, álbum, franquia e data de cadastro de cartas e álbuns; e, no escopo adicional, "Auditoria de Lojistas" e "Volume Transacionado & Custódia"), o filtro de período e o histórico das exportações. |
 | 3. O administrador seleciona o tipo de relatório e o período: Hoje, 7 dias, 30 dias, 1 ano ou um intervalo de datas. |  |
 |  | 4. O sistema processa os filtros selecionados. |
 |  | 5. O sistema apresenta a prévia do relatório, com as primeiras linhas e o total de registros. |
