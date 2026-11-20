@@ -65,8 +65,10 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog-
 - **Aprovar** cria o item com o `catalogService` da CCD061 (carta publicada, álbum sem cartas, categoria com
   `data.createdCategoryId`), muda o status só se ainda estiver `PENDING`, grava `CATALOG_REQUEST_APPROVED` e cria a
   notificação. O log de criação do próprio catálogo (`CARD_CREATED` etc.) continua, porque registra o item novo.
-- **`409 REQUEST_ALREADY_REVIEWED`** devolve em `details` o `status` (`APPROVED`/`REJECTED`), `reviewedBy` (`id`,
-  `name`, `username`) e `reviewedAt`, para o diálogo `847-1878`.
+- **`409 REQUEST_ALREADY_REVIEWED`** devolve em `details` a lista padrão de erro (`{ field, message }`, ADR-006) com três
+  itens: `status` (`APPROVED`/`REJECTED`), `reviewedBy` (o `username` de quem analisou, ou o nome quando não há
+  `username`) e `reviewedAt` (ISO 8601), para o diálogo `847-1878`. Ajustado ao implementado na revisão do backend #29
+  (Lucca, 17/11/2026): o frontend já lê esse formato.
 - **`GET /`**: `meta.pendingByType` = `{ CARD, ALBUM, CATEGORY, ALL }`; cada item traz o solicitante (`id`, `name`,
   `username`) e é ordenado do mais antigo para o mais novo. Os ids da carta (franquia, raridade, idioma, álbum) vêm
   resolvidos em nomes para exibir no card.
