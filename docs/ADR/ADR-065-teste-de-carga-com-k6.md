@@ -1,4 +1,4 @@
-# ADR-064 — Teste de carga e de estresse da API com k6
+# ADR-065 — Teste de carga e de estresse da API com k6
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-11-18
@@ -19,7 +19,7 @@ O ambiente limita como o teste pode ser feito (ADR-055 e `docs/Infraestrutura/to
 - Produção nunca foi publicada. Homologação é usada pelo time todo dia, e a restauração do backup nunca foi
   testada.
 - A senha usa argon2id (`src/lib/password.ts`), caro em CPU e memória, e o login tem rate limit em memória de 5
-  tentativas por minuto por IP (ADR-049).
+  tentativas por minuto por IP e login (ADR-049).
 
 O plano de execução está em `docs/Infraestrutura/teste-de-carga.md`.
 
@@ -31,26 +31,21 @@ O plano de execução está em `docs/Infraestrutura/teste-de-carga.md`.
    `README.md` dos scripts.
 2. **Os scripts ficam no backend**, em `apps/cromocard-backend/tests/load/`, junto da API e do `infra/`. Eles
    ficam fora do `npm test` e do CI; rodam sob demanda.
-3. **Teste em duas fases:**
-   - **Réplica de produção** (`docker-compose.yml` + `compose.prod.yml`, mesmas imagens de hml, banco
+3. **Rode o teste em fases:**
+   - **Fase 1, réplica de produção** (`docker-compose.yml` + `compose.prod.yml`, mesmas imagens de hml, banco
      descartável com dados gerados), onde rodam todos os tipos de teste, inclusive os que escrevem dados.
-   - **Homologação**, numa janela combinada com o time e com merges congelados, com o k6 num container na rede
-     `edge` de hml, batendo direto na `api`, sem passar pelo Cloudflare, limitado a 1 CPU e só com leituras.
-   - **Projeto descartável no servidor** (`cromocard-carga`, rede, banco e volume próprios, limites de produção),
+   - **Fase 2, homologação**, numa janela combinada com o time e com merges congelados, com o k6 num container na rede
+     `edge` de hml, batendo direto na `api`, sem passar pelo Cloudflare, limitado a 1 CPU e só com leituras do catálogo (o login e
+     o refresh gravam, numa conta de teste dedicada).
+   - **Fase 2b, projeto descartável no servidor** (`cromocard-carga`, rede, banco e volume próprios, limites de produção),
      na mesma janela, para medir as escritas no hardware real sem tocar nos dados de hml. É apagado no fim.
    - Nunca pelo domínio público e nunca em produção sem um novo ADR.
-4. **Adote as metas da seção 5 do plano:**
-   - vazão: a meta diária vira 11,6 escritas/s e 23,1 leituras/s em média e, com pico de 3× a média, **105 req/s
-     (70 leituras + 35 escritas)**, sustentados sem fila; os testes usam vazão constante (`arrival-rate`), não
-     número de usuários;
-   - erros abaixo de 1% na carga normal;
-   - p95 das leituras abaixo de 500 ms e p99 abaixo de 1 s;
-   - p95 do login abaixo de 1,5 s;
-   - p95 das escritas abaixo de 800 ms;
-   - nenhum container derrubado por falta de memória;
-   - parada automática com mais de 10% de erros ou p95 acima de 3 s.
+4. **Use as metas da seção 5 do plano como metas iniciais.** A meta diária (1 milhão de escritas e 2 milhões de
+   leituras) vira 105 req/s no pico de 3× a média, sustentados sem fila e medidos com vazão constante
+   (`arrival-rate`). Os limites de latência, de erros e de parada ficam no plano e podem ser ajustados nele
+   depois da primeira medição, sem ADR novo.
 5. **Credenciais de teste só por variável de ambiente**, vindas do cofre da equipe. O repositório é público.
-6. **Cada execução gera** o painel HTML, o resumo em JSON e Markdown, os pontos brutos em CSV e a coleta do
+6. **Gere, a cada execução,** o painel HTML, o resumo em JSON e Markdown, os pontos brutos em CSV e a coleta do
    servidor e do banco. O relatório final, com a capacidade medida e as recomendações, fica no plano.
 
 ## Alternativas consideradas
@@ -75,9 +70,10 @@ O plano de execução está em `docs/Infraestrutura/teste-de-carga.md`.
 - Até existirem as rotas do cliente (coleção, chat, ofertas), as escritas do catálogo fazem o papel do volume de
   escrita. O teste é repetido quando elas entrarem.
 - O dia comprimido (3 milhões de requisições em cerca de 8 h) só roda na réplica e cresce o banco em cerca de
-  500 mil cartas.
+  500 mil linhas (400 mil cartas ativas).
 - O gerador de volume precisa acompanhar o DER quando as tabelas do catálogo mudarem.
-- As metas propostas aqui podem mudar depois da primeira medição; a mudança é um ADR novo.
+- As metas de latência, erros e parada mudam no plano depois da primeira medição; só mudar a meta diária ou o
+  método pede um ADR novo.
 
 ## Referências
 

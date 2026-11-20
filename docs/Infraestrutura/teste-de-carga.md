@@ -1,7 +1,7 @@
 # Teste de carga e de estresse da API (k6)
 
 - **Situação:** plano proposto em 18/11/2026, aguardando a validação do PO junto com o
-  [ADR-064](../ADR/ADR-064-teste-de-carga-com-k6.md) (ferramenta, alvos e metas).
+  [ADR-065](../ADR/ADR-065-teste-de-carga-com-k6.md) (ferramenta, alvos e metas).
 - **Responsável:** Lucas (infraestrutura).
 - **Onde ficam os scripts:** `apps/cromocard-backend/tests/load/` (a criar, depois da validação).
 
@@ -18,7 +18,7 @@ A meta é **1 milhão de escritas e 2 milhões de leituras por dia**:
 | Leituras | 2.000.000 | 23,1 req/s | 70 req/s |
 | Total | 3.000.000 | 34,7 req/s | **105 req/s** |
 
-O fator de pico de 3× é uma proposta para o PO validar (ADR-064): o tráfego não se espalha igual pelas 24 horas.
+O fator de pico de 3× é uma proposta para o PO validar (ADR-065): o tráfego não se espalha igual pelas 24 horas.
 Por isso os testes são definidos em **vazão** (requisições por segundo, executor `constant-arrival-rate` e
 `ramping-arrival-rate` do k6), não em número de usuários.
 
@@ -47,21 +47,21 @@ clientes (marcar cartas na coleção, mensagens, ofertas), que ainda não existe
 auditoria (`audit_logs`, ADR-034) e transação. Quando as rotas do cliente existirem, elas entram na mistura e o
 teste é repetido.
 
-## 4. Ambientes, em duas fases
+## 4. Ambientes, em três fases
 
 | | Fase 1: réplica de produção | Fase 2: homologação |
 |---|---|---|
 | Onde | Máquina da equipe, com `infra/docker-compose.yml` + `infra/compose.prod.yml` (`api` 1,5 CPU e 768 MB; `postgres` 2 CPU e 1,5 GB) | `cromocard-srv`, projeto `cromocard-hml` (`api` 1 CPU e 512 MB; `postgres` 1 CPU e 768 MB) |
 | Imagens | As mesmas tags que estão em hml (`BACKEND_TAG` de `.deployed-tag`) | As que estão no ar |
 | Como o k6 chega na API | Porta publicada só nesta réplica, por um override `tests/load/compose.carga.yml` | Container do k6 na rede `cromocard-hml_edge`, batendo direto em `http://api:3000`, **sem passar pelo Cloudflare** |
-| Dados | Seed + gerador de volume (seção 6); pode escrever | Os dados de hml; **só leitura** |
+| Dados | Seed + gerador de volume (seção 6); pode escrever | Os dados de hml; o teste só lê o catálogo, mas o login e o refresh gravam (seção 6) |
 | Testes | Todos (seção 7) | Só as leituras: fumaça, carga média, carga de pico, estresse até a primeira meta violada e pico repentino |
 | Para quê | Achar o limite sem risco e repetir quantas vezes precisar | Confirmar no hardware real (FX-6100 sem AVX2, HDD rotacional) |
 
 **Limitação da fase 1:** a réplica roda em outra CPU e outro disco. Ela compara versões e acha gargalos de
 código; o número de capacidade que vale é o da fase 2.
 
-**Limitação da fase 2:** como hml é só leitura, a meta de escrita (35 escritas/s no pico) não é confirmada no
+**Limitação da fase 2:** como hml não recebe escritas do catálogo, a meta de escrita (35 escritas/s no pico) não é confirmada no
 hardware real, e escrita no HDD rotacional é justamente o ponto mais fraco do servidor. **Proposta, a validar
 com o PO:** uma **fase 2b** no próprio servidor, com um projeto Compose descartável `cromocard-carga` (rede,
 banco e volume próprios, os limites de produção e os mesmos dados gerados da réplica), apagado no fim da
@@ -69,12 +69,12 @@ janela. Ela mede leitura e escrita no hardware real sem tocar nos dados de hml. 
 15 GiB, e hml e o projeto de carga juntos reservam menos de 5 GiB.
 
 **No servidor, o k6 divide a máquina com a API.** Ele roda com `--cpus 1 --memory 512m` (6 threads no total,
-3,25 CPUs reservadas por hml), e o relatório registra o uso dele. Se ele passar de 80% da CPU dele, o resultado
+2,25 CPUs reservadas por hml, sem o `migrate`, que roda e termina), e o relatório registra o uso dele. Se ele passar de 80% da CPU dele, o resultado
 mede o k6, não a API.
 
 ## 5. Metas (thresholds)
 
-Não há requisito de desempenho nos casos de uso. Estas metas são a proposta do ADR-064 e valem quando o PO
+Não há requisito de desempenho nos casos de uso. Estas metas são a proposta do ADR-065 e valem quando o PO
 validar:
 
 | Métrica | Carga normal | Estresse |
@@ -83,12 +83,14 @@ validar:
 | Erros (`http_req_failed`), sem contar os `429` esperados do login | < 1% | < 5% |
 | Leituras (listas, dashboard, configurações): p95 / p99 | < 500 ms / < 1 s | < 1,5 s / < 3 s |
 | Login (argon2id): p95 | < 1,5 s | < 3 s |
-| Escritas (só na réplica): p95 | < 800 ms | < 2 s |
+| Escritas (réplica e fase 2b): p95 | < 800 ms | < 2 s |
 | `checks` (status e corpo esperados) | > 99% | > 95% |
 | Containers | Nenhum `OOMKilled` nem reinício; memória da `api` < 85% do limite | Nenhum reinício |
 
 **Parada automática** (`abortOnFail`), para proteger hml: erros acima de 10% ou p95 acima de 3 s por 30 s
-seguidos encerram o teste.
+seguidos encerram o teste. No servidor (fases 2 e 2b), quem acompanha a janela também encerra o k6 se a espera
+do disco (`await` do `iostat -x`) passar de 100 ms por 30 s seguidos ou se o `/health` de hml deixar de responder
+200, porque as fases dividem o mesmo HDD com hml, o ops e o backup.
 
 ## 6. Dados de teste
 
@@ -97,13 +99,22 @@ seguidos encerram o teste.
   protótipo: cerca de 180 mil cartas, 150 álbuns, 30 categorias e 1.000 usuários, respeitando os índices e o
   soft delete. A réplica nasce sempre do mesmo dump, para os resultados serem comparáveis.
 - **Contas:** contas de administrador de teste, com a senha no cofre da equipe (nunca no repositório). Em hml,
-  usar contas que já existem; nenhum cadastro novo.
+  uma conta de administrador **dedicada ao teste**, nunca a conta de uma pessoa do time, avisada no grupo antes da
+  janela; nenhum cadastro novo.
 - **Escritas:** cada carta criada pelo teste leva um prefixo no nome (ex.: `carga-`) e um número único por
   VU e iteração, para não bater no índice único (`album_id`, `number`). O `PATCH` e o `DELETE` só mexem nas cartas
-  do próprio teste. No dia comprimido (teste 7), o banco cresce cerca de 500 mil cartas ativas (50% de criação,
-  menos 10% de exclusão): o tamanho do banco e o `autovacuum` entram na coleta.
-- **Token:** o access token dura 900 s (`JWT_ACCESS_TTL`). Teste mais longo renova com `POST /api/v1/auth/refresh`.
-- **Rate limit do login:** 5 por minuto por IP (`src/domains/auth/auth.routes.ts`, ADR-049), em memória.
+  do próprio teste. No dia comprimido (teste 7), o banco cresce cerca de 500 mil linhas, 400 mil delas ativas (50% de
+  criação, menos 10% de exclusão, que é soft delete): o tamanho do banco e o `autovacuum` entram na coleta.
+- **Escritas do login em hml:** hml não recebe escritas do catálogo, mas o login grava um `refresh_tokens` e
+  atualiza `last_login_at` e `last_login_ip` da conta, e cada `POST /api/v1/auth/refresh` revoga o token usado e
+  cria outro. São as únicas escritas do teste em hml.
+- **Token:** o access token dura 900 s (`JWT_ACCESS_TTL`). Teste mais longo renova com `POST /api/v1/auth/refresh`,
+  com **uma cadeia de refresh por VU**: cada VU guarda o próprio refresh token e usa sempre o último recebido.
+  Reusar um refresh token já trocado revoga todas as sessões da conta (`rejectReusedToken`, em
+  `src/domains/auth/auth.service.ts`) e derruba o teste. Em hml, os testes ficam abaixo de 15 min, e o token do
+  `setup()` não precisa ser renovado.
+- **Rate limit do login:** 5 por minuto pela chave IP + valor do campo `login`
+  (`src/shared/middlewares/rate-limit.ts`, ADR-049), em memória.
   - Em hml todos os VUs saem do mesmo IP: o login acontece **só no `setup()`**, poucas vezes, e o token é
     reaproveitado.
   - Na réplica, o cenário de login simula clientes diferentes com um `X-Forwarded-For` por VU
@@ -123,7 +134,7 @@ relatório separar a latência por rota.
 | L2 | Leitura | `GET /api/v1/admin/catalog/albums` e `categories` | 20% | Todos |
 | L3 | Leitura | `GET /api/v1/admin/catalog/rarities` e `languages` | 5% | Todos |
 | L4 | Leitura | `GET /api/v1/admin/dashboard` e `/recent-sellers` | 15% | Todos |
-| L5 | Leitura | `GET /api/v1/settings/public`, sem login | 15% | Todos |
+| L5 | Leitura | `GET /api/v1/settings/public/home.banner`, sem login (a única configuração pública, `PUBLIC_SETTING_KEYS`) | 15% | Todos |
 | E1 | Escrita | `POST /api/v1/admin/catalog/cards` (carta nova, com álbum e número únicos) | 50% | Réplica e fase 2b |
 | E2 | Escrita | `PATCH /api/v1/admin/catalog/cards/:id` (cartas criadas pelo próprio teste) | 40% | Réplica e fase 2b |
 | E3 | Escrita | `DELETE /api/v1/admin/catalog/cards/:id` (cartas criadas pelo próprio teste) | 10% | Réplica e fase 2b |
@@ -154,11 +165,11 @@ VU, ele conta `dropped_iterations`, e isso reprova a meta de vazão.
 |---|---|---|
 | H1 | O argon2id usa os padrões da biblioteca (`src/lib/password.ts`): cerca de 64 MiB de memória por hash. Com 512 MB (hml) ou 768 MB (prod), poucos logins simultâneos podem derrubar a `api` por falta de memória **antes** de a CPU saturar | Teste 8 + `docker inspect` (`OOMKilled`, `RestartCount`) |
 | H2 | Com o disco rotacional, as consultas que não acham a página no cache dominam o p99 | `pg_stat_database` (taxa de acerto do cache) + `iostat -x` (`await`, `%util`) |
-| H3 | O pool do Prisma é dimensionado pelas CPUs do host, não pelo limite do container, e abre mais conexões do que 1 CPU aproveita | `pg_stat_activity` por estado durante o teste 4 |
+| H3 | O pool do `pg` usado pelo adaptador `PrismaPg` (`src/lib/prisma.ts`) tem no máximo 10 conexões (padrão), o que pode ser pouco para o pico ou demais para 1 CPU | `pg_stat_activity` por estado durante o teste 4 |
 | H4 | Com 1 CPU, o Node da `api` satura antes dos 105 req/s do pico, e a latência sobe em fila | `docker stats` × RPS nos testes 3 e 4 |
-| H6 | Escrever 35 cartas/s no HDD rotacional, cada uma com o registro de auditoria, é o primeiro gargalo do pico, antes da CPU | `iostat -x` (`await`) e p95 das escritas × leituras nos testes 3 e 4 da fase 2b |
-| H7 | Com o banco crescendo 500 mil cartas, as listas paginadas e a busca por nome ficam mais lentas ao longo do dia | p95 de L1 por hora no teste 7 |
 | H5 | O `429` do login aparece em hml se o login sair do `setup` | Contagem de `429` por rota no resumo do k6 |
+| H6 | Escrever 35 cartas/s no HDD rotacional, cada uma com o registro de auditoria, é o primeiro gargalo do pico, antes da CPU | `iostat -x` (`await`) e p95 das escritas × leituras nos testes 3 e 4 da fase 2b |
+| H7 | Com o banco crescendo 500 mil linhas (400 mil ativas), as listas paginadas e a busca por nome ficam mais lentas ao longo do dia | p95 de L1 por hora no teste 7 |
 
 ## 9. Métricas coletadas
 
@@ -189,19 +200,19 @@ O **relatório final** entra na seção 13 deste documento, com:
 - os gráficos de latência × vazão, erros × vazão, CPU, memória e disco × tempo, e latência por hora no dia comprimido;
 - a resposta à meta: o servidor sustenta ou não 1 milhão de escritas e 2 milhões de leituras por dia (105 req/s no pico), com a margem medida ou o quanto falta;
 - as hipóteses confirmadas ou descartadas;
-- as recomendações (ex.: parâmetros do argon2, `connection_limit` do Prisma, índices, limites do compose, o SSD).
+- as recomendações (ex.: parâmetros do argon2, `max` do pool do `PrismaPg`, índices, limites do compose, o SSD).
   Cada uma vira uma Task ou um ADR.
 
 ## 11. Execução
 
 ### Antes (checklist)
 
-- [ ] ADR-064 e este plano validados pelo PO.
+- [ ] ADR-065 e este plano validados pelo PO.
 - [ ] Versão do k6 fixada (binário e imagem `grafana/k6:<versão>`) e registrada no `contexto.md`.
 - [ ] Tags das imagens anotadas; a réplica usa as mesmas de hml.
 - [ ] Fase 2: janela combinada no grupo e **congelamento de merges na `develop` do backend e do frontend**
       durante a janela. Um deploy reinicia a `api` e invalida o teste.
-- [ ] Fase 2: backup do dia concluído e `/health` de hml respondendo 200.
+- [ ] Fases 2 e 2b: backup do dia concluído, `/health` de hml respondendo 200 e a janela longe do backup das 03:00.
 - [ ] Coleta (`docker stats`, `vmstat`, `iostat`, PostgreSQL) iniciada antes do k6.
 - [ ] Teste de fumaça aprovado antes de qualquer outro.
 
@@ -231,11 +242,12 @@ exatos da réplica e da coleta ficam no `README.md` dos scripts e, depois da pri
 
 | Risco | Salvaguarda |
 |---|---|
-| hml fica lenta ou cai para o time | Janela combinada, parada automática (`abortOnFail`), só leitura e degraus curtos |
+| hml fica lenta ou cai para o time | Janela combinada, parada automática (`abortOnFail`, espera do disco e `/health` de hml), só leitura do catálogo e degraus curtos |
 | O teste derruba a `api` (falta de memória) | `restart: unless-stopped` já sobe de novo; o teste 8, que procura esse limite, só roda na réplica |
 | Deploy no meio do teste | Congelamento de merges durante a janela |
 | O k6 rouba CPU da API no servidor | `--cpus 1` e uso do k6 no relatório |
-| Dados de hml alterados | Nenhuma escrita em hml; a escrita no servidor vai para o projeto descartável da fase 2b |
+| Dados de hml alterados | Nenhuma escrita do catálogo em hml (só as do login e do refresh, na conta de teste dedicada); a escrita no servidor vai para o projeto descartável da fase 2b |
+| A sessão de uma pessoa do time cai em hml | Conta de teste dedicada e uma cadeia de refresh por VU (seção 6) |
 | O banco da réplica cresce e enche o disco | Coleta do tamanho do banco a cada 10 min no teste 7; a réplica é apagada no fim |
 | Resultado da réplica tomado como capacidade real | A capacidade que vale é a do servidor, nas fases 2 e 2b (seção 4) |
 | Senha de teste no repositório público | Credenciais só por variável de ambiente, vindas do cofre |
@@ -248,7 +260,7 @@ Ainda não executado.
 
 | # | Task | Entrega |
 |---|---|---|
-| 1 | Validar o ADR-064 e este plano com o PO | ADR `Aceito` |
+| 1 | Validar o ADR-065 e este plano com o PO | ADR `Aceito` |
 | 2 | Criar os scripts k6, o gerador de dados, o override da réplica e os coletores em `tests/load/` | PR no backend |
 | 3 | Executar a fase 1 (testes 1 a 8, com o dia comprimido) e registrar os resultados | Relatórios da réplica |
 | 4 | Executar a fase 2 (hml, só leituras) e a fase 2b (projeto descartável no servidor, leituras e escritas) na janela combinada | Relatórios do servidor |
