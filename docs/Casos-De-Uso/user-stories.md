@@ -60,6 +60,7 @@
 | Visualizar Histórico de Preços | Como Cliente preciso visualizar o histórico de preços para acompanhar a variação do valor da carta. |
 | Visualizar Anúncios Ativos | Como Cliente preciso visualizar meus anúncios ativos para acompanhar os itens que estão atualmente disponíveis para venda.*** |
 | Visualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma.*** |
+| Confirmar Entrega e Liberar Pagamento | Como Cliente quero que o pagamento só seja liberado ao vendedor depois que a carta for entregue para comprar com segurança. |
 | Escanear Carta por Imagem | Como Cliente preciso escanear uma carta por imagem para identificar o item de forma automática.** |
 | Escanear Código | Como Cliente preciso escanear o código de uma carta para localizar suas informações de forma rápida.** |
 | Mostrar Todas as Cartas | Como Cliente preciso visualizar todas as cartas disponíveis no marketplace para encontrar itens de meu interesse. |
@@ -175,6 +176,8 @@
 | Editar Perfil | Como Vendedor preciso editar meu perfil para manter minhas informações atualizadas. |
 | Visualizar Total de Vendas | Como Vendedor preciso visualizar o total de vendas para acompanhar a quantidade de negociações realizadas. |
 | Visualizar Cartas Mais Vendidas | Como Vendedor preciso visualizar as cartas mais vendidas para identificar quais produtos possuem maior procura. |
+| Conectar Conta de Recebimento | Como Vendedor preciso conectar minha conta de recebimento na Stripe para receber o valor das minhas vendas. |
+| Gerar Etiqueta de Envio | Como Vendedor preciso gerar a etiqueta de envio de um pedido pago para despachar a carta com rastreio. |
 
 ## Observações
 

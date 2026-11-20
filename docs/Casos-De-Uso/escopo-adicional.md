@@ -183,3 +183,11 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   para continuar `1112-5461`, Detalhe do anúncio `1112-5772` e indisponível `1112-6152`, Como funciona `1112-6532` e
   Central de ajuda `1112-6843`. Login e autenticação ficaram como estavam. No Figma, as áreas viraram um bloco só,
   "Site: público, cliente e vendedor", com as subseções numeradas na ordem de uso (1. Login e cadastro … 8. Vendedor).
+- Área do Cliente, marketplace (20/11/2026): Compras, com Checkout `1112-7309` e sem frete `1112-7631`, Pagamento
+  confirmado `1112-7935`, Pagamento não concluído `1112-8190`, Meus pedidos `1112-8445`, Detalhe do pedido `1112-8820` e
+  Confirmar recebimento `1112-9136` (CCD072, CCD077, CCD110). Vendedor: Gerar etiqueta `675-7788` (era "Informar
+  rastreio") e Etiqueta gerada `1112-9466` (CCD109), Conectar conta de recebimento `1112-9866` e em verificação
+  `1112-10347` (CCD108), Criar anúncio bloqueado `1112-10828` (CCD084); Pedidos e envios `675-7139`, Financeiro e
+  extrato `675-8493`, Criar anúncio `282-4482` e Editar anúncio `675-4218` ajustados. Não entram: saque via Pix (a tela
+  `675-9076` foi para o Arquivo; o repasse cai na conta Stripe do vendedor), chave Pix, "Aceitar propostas",
+  graduação PSA/BGS como condição e "Obrigatório p/ Escrow".
