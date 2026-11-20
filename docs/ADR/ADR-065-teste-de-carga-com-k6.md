@@ -1,6 +1,6 @@
 # ADR-065 — Teste de carga e de estresse da API com k6
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 20/11/2026)
 - **Data:** 2026-11-18
 - **Decisores:** Lucas (infraestrutura); validação: Felipe Consulim (PO)
 
