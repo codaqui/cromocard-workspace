@@ -1,6 +1,6 @@
 # ADR-063 — Código de carta único só entre as cartas não excluídas
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO em 20/11/2026)
 - **Data:** 2026-11-19
 - **Decisores:** Lucas Oliveira Lima (proposta, na CCD105); validação: Felipe Consulim (PO)
 - **Exceção a:** ADR-015, item 7 (só para `cards.code`)

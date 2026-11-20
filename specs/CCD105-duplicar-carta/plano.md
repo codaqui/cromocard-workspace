@@ -83,7 +83,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 ## Decisões técnicas
 
 - A duplicação é só no frontend (L1).
-- Código único só entre as cartas não excluídas, com índice parcial: ADR-063 (Proposto), exceção ao item 7 do ADR-015.
+- Código único só entre as cartas não excluídas, com índice parcial: ADR-063 (Aceito em 20/11/2026), exceção ao item 7 do ADR-015.
 - Carta em coleções (L14): `CardUsage` é dependência obrigatória do `CatalogService` e do `CardsBulkDeleteService`, com
   `cardIdsInCollections(ids)` (uma consulta para o lote). Até a CCD014, o `catalog.module.ts` injeta
   `noCollectionsYet`, que devolve lista vazia; a CCD014 troca pela consulta em `collection_cards`.
