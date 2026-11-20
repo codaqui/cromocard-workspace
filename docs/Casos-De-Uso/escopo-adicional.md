@@ -193,7 +193,8 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   graduação PSA/BGS como condição e "Obrigatório p/ Escrow".
 - Menu lateral único (20/11/2026): todas as telas da Área do Cliente e do Vendedor usam o mesmo menu, com Início,
   Pesquisar, Marketplace, Álbuns, Comunidades, Mensagens, Meus pedidos e Sugestões; Perfil, Configurações e Central de
-  ajuda; e "Painel do vendedor" nas telas do vendedor. Saem "Categorias", "Em alta", "Notícias" e "Recursos" (sem caso
+  ajuda; e, nas telas do vendedor, uma divisória com o grupo "Vendedor" (Visão geral, Meus anúncios, Pedidos e envios,
+  Propostas, Financeiro e Avaliações); no Figma, a coluna 3.9 segue a mesma ordem. Saem "Categorias", "Em alta", "Notícias" e "Recursos" (sem caso
   de uso ou sem tela), o seletor "Colecionador / Vendedor" e o menu interno do Perfil ("Visão Geral / Hub").
   A tela inicial do cliente (resumo da coleção, CCD007) foi refeita no padrão novo: `1122-17812`. As duas versões
   antigas, `108-1423` e `284-5290` ("Painel Publico - Perfil"), foram para o Arquivo.
