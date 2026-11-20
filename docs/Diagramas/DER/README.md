@@ -57,7 +57,8 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `conversations`, `conversation_participants`, `messages`, `user_blocks` | 45 Responder Mensagem, 46 Visualizar Mensagens, 47 Moderar Contatos, 73 Entrar em Contato |
 | `listings`, `listing_photos` | 84 Criar / 85 Editar / 86 Excluir / 87 Pausar / 88 Reativar Anuncio, 76 Anuncios Ativos |
 | `offers` | 89 Visualizar Propostas |
-| `orders`, `payments` | 72 Comprar, 77 Visualizar Pedidos, 92 Total de Vendas, 93 Cartas Mais Vendidas |
+| `orders`, `payments` | 72 Comprar, 77 Visualizar Pedidos, 92 Total de Vendas, 93 Cartas Mais Vendidas, 97 Indicadores Financeiros, 109 Gerar Etiqueta de Envio, 110 Confirmar Entrega e Liberar Pagamento, 111 Gerenciar Pedidos e Pagamentos (ADR-063, ADR-064) |
+| `users.stripe_account_id`, `users.stripe_account_status` | 108 Conectar Conta de Recebimento, 84 Criar Anúncio (ADR-063) |
 | `reviews` | 70 Ordenar por Avaliacoes, 81 Visualizar Avaliacoes |
 | `favorites` | 55 Favoritar Album, 56 Favoritar Carta, 57 Favoritar Grupo |
 | `price_alerts` | Configurar Alertas de Preco (futuro) |
