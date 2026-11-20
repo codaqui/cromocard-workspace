@@ -44,7 +44,7 @@ aprovadas.
 |---|---|---|---|---|
 | EA-004-01 | Entrar com "e-mail ou ID colecionador" | `152-2587` | CCD098 | O "ID colecionador" é o nome de usuário (@) da CCD098. |
 | EA-058-01 | Intervalo de datas personalizado | `208-1240` | **MVP** (CCD058, L4) | |
-| EA-058-02 | Variação de cada indicador em relação ao período anterior | `208-1240` | CCD096 | |
+| EA-058-02 | Variação do Total de usuários em relação ao período anterior | `208-1240` | CCD096 | Só o Total de usuários tem o selo de variação no protótipo (CCD096, L4). |
 | EA-058-03 | Total de usuários separado em colecionadores e lojistas | `208-1240` | CCD096 | |
 | EA-058-04 | Novas cartas cadastradas na semana | `208-1240` | CCD096 | |
 | EA-058-05 | Colunas extras na lista de vendedores (CNPJ/CPF, reputação, volume, status da análise), filtro de status e "Atualizar Fila" | `208-1240` | CCD094 | Reputação e volume vêm da CCD097. |

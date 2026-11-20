@@ -6,7 +6,7 @@
 - **Caso de uso:** [96-acompanhar-evolucao-de-cadastros.md](../../docs/Casos-De-Uso/96-acompanhar-evolucao-de-cadastros.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; decisões L4–L6 em 2026-11-17 por Lucca Rocha
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; decisões L4–L6 propostas em 2026-11-17 por Lucca Rocha e validadas em 2026-11-20 por Felipe Consulim (PO)
 
 ## Objetivo
 
@@ -24,7 +24,7 @@
 | R6 | Período sem cadastros mostra a mensagem em vez do gráfico vazio | Estado | `96`, FA 1–2 |
 | R7 | Sem meta configurada, mostra o total sem o percentual | Estado | `96`, FA 3–4 |
 | R8 | A meta mensal é lida de `global_settings` (`dashboard.monthly_signup_goal`) | Regra | `96`, FP 3; ADR-051, item 1 |
-| R9 | O indicador de usuários mostra a variação dos cadastros em relação ao período anterior (L4) | Campo | EA-058-02 |
+| R9 | O indicador de usuários mostra a variação dos cadastros em relação ao período anterior (L4) | Campo | `96`, FP 3; EA-058-02 |
 | R10 | Total de usuários separado em colecionadores e lojistas | Campo | EA-058-03 |
 | R11 | Novas cartas cadastradas na semana, no card do acervo | Campo | EA-058-04 |
 
@@ -92,6 +92,6 @@ Conferidas de novo em 17/11/2026 (Playwright, 1440 px), antes da implementação
 | L1 | Onde a meta é definida? (proposta: um campo a mais na tela de Configurações da CCD066) | Um campo a mais na tela de Configurações da CCD066; desenhado no módulo 4 "Metas" de `228-3048` em 12/11/2026 | `96`, FA 5–6 |
 | L2 | Variação quando o período anterior é zero (proposta: mostrar "novo" em vez do percentual) | Mostrar "novo" em vez do percentual | `96`, FP 3 |
 | L3 | "Novos cadastros (mês)" ou "no período"? | O número segue o período; o percentual da meta mensal aparece só no filtro de 30 dias. Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `96`, FP 3 |
-| L4 | O R9 diz "cada indicador", mas o Figma só tem o selo de variação no Total de usuários | Só o Total de usuários mostra a variação, com a regra do CA6 (cadastros do período contra os do período anterior, de mesmo tamanho); "0%" quando os dois são zero | spec (Lucca Rocha, 17/11/2026) |
-| L5 | Os cards da CCD058 mudam de texto e de rodapé no Figma | Total de usuários, Cartas no catálogo e Novos cadastros seguem o Figma (textos e rodapés acima); o 4º card só muda com a CCD094 | spec (Lucca Rocha, 17/11/2026) |
-| L6 | O seed não tem cadastro de vendedor aprovado, e a linha de lojistas fica zerada no ambiente local | Usa o seed de `seller_verifications` da CCD094 (PR do Duarte), que traz um cadastro aprovado; esta story não cria seed próprio, para não duplicar o cadastro do mesmo vendedor | plano (Lucca Rocha, 17/11/2026) |
+| L4 | O R9 diz "cada indicador", mas o Figma só tem o selo de variação no Total de usuários | Só o Total de usuários mostra a variação, com a regra do CA6 (cadastros do período contra os do período anterior, de mesmo tamanho); "0%" quando os dois são zero. Validada pelo PO (Felipe Consulim, 20/11/2026) | `96`, FP 3; `escopo-adicional.md`, EA-058-02 |
+| L5 | Os cards da CCD058 mudam de texto e de rodapé no Figma | Total de usuários, Cartas no catálogo e Novos cadastros seguem o Figma (textos e rodapés acima); o 4º card só muda com a CCD094. Validada pelo PO (Felipe Consulim, 20/11/2026) | `96`, FP 3; Telas desta spec |
+| L6 | O seed não tem cadastro de vendedor aprovado, e a linha de lojistas fica zerada no ambiente local | Usa o seed de `seller_verifications` da [CCD094](../CCD094-validar-cadastro-de-vendedor/spec.md), já mesclado, que traz um cadastro aprovado; esta story não cria seed próprio, para não duplicar o cadastro do mesmo vendedor. Validada pelo PO (Felipe Consulim, 20/11/2026) | plano |
