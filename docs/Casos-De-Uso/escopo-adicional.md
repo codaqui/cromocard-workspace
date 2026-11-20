@@ -202,3 +202,11 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   esquerda para a direita (3.1 Início … 3.12 Central de ajuda, mais 3.13 Notificações, que abre pelo sino do topo).
   Pesquisar, Marketplace e Central de ajuda têm uma tela de referência (`1122-18396`, `1122-18861` e a da Central de
   ajuda), com o menu do cliente, a miniatura da tela pública e o link para ela, em vez de repetir a tela.
+- Notificações (20/11/2026): a Home logada com o popup (`478-2859`) e o popup avulso (`480-805`) foram para o Arquivo e
+  deram lugar a "Início com notificações abertas" `1124-22490`, no padrão do cliente, com o popup abaixo do sino. Nas
+  notificações (`490-796`, `675-12111` e `675-13070`), o aviso de proposta de troca virou "Seu pedido foi enviado"
+  (propostas e trocas estão fora do MVP).
+- BackOffice, pedidos e pagamentos (20/11/2026, CCD111): item "Pedidos e pagamentos" no menu do admin, logo abaixo de
+  Catálogo, em todas as telas; Pedidos e pagamentos `1157-29979`, nenhum pedido encontrado `1157-35305`, detalhe do
+  pedido `1157-30793`, cancelar e reembolsar `1157-31707` e motivo obrigatório `1157-32634`, liberar agora `1157-33562`
+  e operação concluída `1157-34488`.
