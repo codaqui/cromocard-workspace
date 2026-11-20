@@ -1,6 +1,6 @@
-# ADR-027 — Escopo do Marketplace no MVP (decisão em aberto)
+# ADR-027 — Escopo do Marketplace no MVP
 
-- **Status:** Proposto (decisão ainda não tomada pela equipe; bloqueio explícito para a banca)
+- **Status:** Proposto (proposta definida em 18/11/2026; aguarda a validação do PO)
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 
@@ -23,20 +23,27 @@ parte da primeira entrega.
 
 ## Decisão
 
-**Ainda não definida.** Proposta a validar com o PO, como ponto de partida da discussão:
+Proposta definida em 18/11/2026 (alternativa 4, abaixo): entra no MVP uma **fatia mínima** do marketplace, de
+ponta a ponta, só em homologação e em modo de teste:
 
-- Tratar o Marketplace (fluxo de **compra**: anúncio → proposta → pedido → pagamento → entrega)
-  como pós-MVP (tag `futuro-marketplace`), consistente com a maioria das user stories já
-  marcadas `***`.
-- Decidir explicitamente o destino do **Painel do Vendedor** (hoje sem marcador): ou recebe a
-  mesma tag `futuro-marketplace`, ou é tratado como exceção dentro do MVP (ex.: cadastro de
-  anúncio sem o fluxo de pagamento completo).
+- **Comprar:** explorar o marketplace, ver o anúncio e pagar com cartão pelo Stripe Checkout (ADR-063). O valor fica
+  retido na plataforma.
+- **Vender:** criar o anúncio a partir do catálogo, conectar a conta de recebimento na Stripe e gerar a etiqueta pelo
+  Melhor Envio (ADR-064).
+- **Liberar:** com a entrega confirmada pelo rastreio, o valor menos a taxa de 5% vai para o vendedor quando o
+  comprador confirma o recebimento ou 7 dias depois da entrega.
+- **Administrar:** o BackOffice acompanha os pedidos e pode cancelar com reembolso ou liberar na hora (CCD111).
+
+As user stories da fatia perderam a marca `***` (CCD068, 069, 071, 072, 074, 075, 078, 079 e 080) e ganharam as
+novas CCD108–111. Continuam fora do MVP: propostas e trocas, avaliações, saque via Pix, denúncias do marketplace e o
+restante marcado `***`.
 
 ## Alternativas consideradas
 
 1. **Marketplace completo (compra + venda) no MVP.**
 2. **Marketplace inteiramente fora do MVP**, incluindo o Painel do Vendedor.
-3. **Painel do Vendedor no MVP, fluxo de compra/pagamento pós-MVP** (proposta acima).
+3. **Painel do Vendedor no MVP, fluxo de compra/pagamento pós-MVP** (proposta inicial deste ADR, de 29/09/2026).
+4. **Fatia mínima de compra, envio e liberação no MVP** (escolhida): entrega o fluxo de custódia de ponta a ponta com o menor esforço, sem propostas, trocas nem avaliações.
 
 ## Consequências
 

@@ -47,7 +47,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [024](ADR-024-integracao-gateway-pagamento.md) | Integrações | Integração com gateway de pagamento externo via HTTPS/Webhook | Proposto |
 | [025](ADR-025-integracao-transportadora.md) | Integrações | Integração com transportadora terceirizada para entrega física | Proposto |
 | [026](ADR-026-estrutura-multi-repositorio.md) | Processo | Estrutura multi-repositório (workspace para SDD e documentação; um repositório por aplicação) | Aceito |
-| [027](ADR-027-escopo-marketplace-no-mvp.md) | Produto | Escopo do Marketplace no MVP (decisão em aberto) | Proposto |
+| [027](ADR-027-escopo-marketplace-no-mvp.md) | Produto | Escopo do Marketplace no MVP | Proposto |
 | [028](ADR-028-stack-backend-node-express-prisma.md) | Backend | Stack de backend: Node.js + Express + Prisma | Substituído por ADR-002 |
 | [029](ADR-029-banco-de-dados-postgresql.md) | Dados | Banco de dados relacional: PostgreSQL via Prisma ORM | Substituído por ADR-003 e ADR-014 |
 | [030](ADR-030-autenticacao-jwt-compartilhada.md) | Backend | Autenticação via JWT compartilhado entre API REST e serviço de tempo real | Substituído por ADR-005 |
