@@ -88,8 +88,8 @@ aprovadas.
 | EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
 | EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. O selo é opcional ("Nenhum" = sem selo), e a quantidade soma as cartas da categoria e das subcategorias, direto ou pelos álbuns (decisões de 17/11/2026, L13 e L15 da CCD104). |
-| EA-001-01 | Menu lateral do visitante: Início, Marketplace, Pesquisar, Categorias, Comunidades, Como funciona e Central de ajuda; logado, também Álbuns, Perfil e Configurações | `178-1214` e as demais telas públicas | CCD001 | Revisão da Área Pública (18/11/2026). O item "Recursos" sai. |
-| EA-001-02 | Página "Como funciona": os 4 passos da compra, as garantias (pagamento retido, vendedor verificado, suporte, preços) e a taxa de 5% por venda | `675-23513` | CCD005 | Página estática, sem dados (18/11/2026). |
+| EA-001-01 | Menu lateral do visitante: Início, Marketplace, Pesquisar, Como funciona e Central de ajuda; logado, o menu é o da Área do Cliente | `1112-2169` e as demais telas públicas | CCD001 | Revisão da Área Pública (18 e 20/11/2026). Saem "Recursos", "Categorias" (as categorias viram filtro no Explorar e abas na Home) e "Comunidades" (entrar em grupo exige login; os grupos aparecem na busca). |
+| EA-001-02 | Página "Como funciona": os 4 passos da compra, as garantias (pagamento retido, vendedor verificado, suporte, preços) e a taxa de 5% por venda | `1112-6532` | CCD005 | Página estática, sem dados (18/11/2026). |
 
 ## 3. O que não vira requisito
 
@@ -176,3 +176,10 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   Entre para continuar `675-30471`, Como funciona `675-23513` e FAQ `675-23950` ajustados; telas novas: Detalhe do
   anúncio `1067-1272`, anúncio indisponível `1067-1761`, marketplace sem resultados `1067-2277`, busca sem resultados
   `1067-2699`. A Home logada com notificações (`478-2859`) foi para a seção de Notificações.
+- Refatoração visual da Área Pública (20/11/2026): as telas públicas foram refeitas em 1280 px no padrão da Área do
+  Cliente (menu lateral, busca no topo, painéis e tipografia) e substituem as de 18/11, que foram para o Arquivo:
+  Home `1112-2169`, Explorar marketplace `1112-3281` e sem resultados `1112-3674`, Busca `1112-3970` e sem resultados
+  `1112-4356`, Perfil da carta `1112-4615` e com o período de 1 ano `1112-5038` (as outras 4 variações saíram), Entre
+  para continuar `1112-5461`, Detalhe do anúncio `1112-5772` e indisponível `1112-6152`, Como funciona `1112-6532` e
+  Central de ajuda `1112-6843`. Login e autenticação ficaram como estavam. No Figma, as áreas viraram um bloco só,
+  "Site: público, cliente e vendedor", com as subseções numeradas na ordem de uso (1. Login e cadastro … 8. Vendedor).
