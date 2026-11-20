@@ -16,7 +16,7 @@
   - Pronto quando: `catalog.service.spec.ts` cobre CA3 e CA5.
 - [x] **T3** · Criar resumo do catálogo, filtro por ano e exclusão em lote com auditoria — R7, R9, R10 · CA4, CA7, CA9 · AB#704
   - O filtro `year` usa o ano do álbum; a exclusão em lote devolve `{ deleted, skipped }`, sem `422`.
-  - Pronto quando: `catalog.service.spec.ts` cobre CA4, CA7 e CA9.
+  - Pronto quando: `catalog.service.spec.ts` cobre CA4, e CA7 e CA9 estão cobertos (hoje em `catalog-bulk-delete.service.spec.ts`, T11).
 - [x] **T4** · Criar rotas de resumo e exclusão em lote do catálogo — R1 · CA8 · AB#705
   - Pronto quando: as rotas aparecem no `/docs` e o teste de integração cobre o `403` para quem não é ADMIN (CA8),
     a busca por código (CA10) e o reuso do código de uma carta excluída (L7).
@@ -24,7 +24,7 @@
 - [x] **T9** · Ligar a checagem de coleções e auditar o lote na mesma transação — R10 · CA7, CA9 · AB#704
   - `CardUsage` obrigatório com `cardIdsInCollections(ids)`; o módulo injeta `noCollectionsYet` até a CCD014 (L14).
   - `softDeleteMany` e o `audit_logs` de cada carta numa transação; contratos em `catalog.ports.ts`.
-  - Pronto quando: `catalog.service.spec.ts` cobre CA7, CA9 e a falha da auditoria desfazendo a exclusão.
+  - Pronto quando: CA7 e CA9 estão cobertos (hoje em `catalog-bulk-delete.service.spec.ts`, T11) e a integração cobre a falha da auditoria desfazendo a exclusão.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/609-duplicar-carta`
 

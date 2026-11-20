@@ -54,7 +54,11 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | `src/domains/catalog/catalog.validator.ts` (+ `.spec.ts`) | `code` e `variants` no criar e editar, `year` na lista de cartas, corpo da exclusão em lote | R3, R8–R10 |
 | `src/domains/catalog/catalog.errors.ts` | `CardCodeTakenError` (`409 CARD_CODE_TAKEN`, com o nome da carta dona no `details`, L10) | R8 |
 | `src/domains/catalog/catalog-cards.repository.ts` | gravar e devolver `code` e `variants`, busca também por `code`, filtro por ano do álbum, exclusão em lote, dono ativo de um código | R8–R11 |
-| `src/domains/catalog/catalog.service.ts` (+ `.spec.ts`) | código único entre as ativas (L7), resumo, exclusão em lote com auditoria e cartas puladas | R4, R5, R7–R10 |
+| `src/domains/catalog/catalog.service.ts` (+ `.spec.ts`) | código único entre as ativas (L7) e resumo; a exclusão de uma carta passa a usar o `CardUsage` obrigatório (L14) | R4, R5, R7, R8 |
+| `src/domains/catalog/catalog-bulk-delete.service.ts` (+ `.spec.ts`) | exclusão em lote: uma consulta de uso para o lote, cartas puladas, `deleted` na ordem pedida e `softDeleteMany` + auditoria na mesma transação | R10 |
+| `src/domains/catalog/catalog-summary.repository.ts` | contagens do resumo e `albumYears` (L8, L16) | R7, R9 |
+| `src/domains/catalog/catalog.ports.ts` | contratos `CardUsage` e `CatalogAuditLog` e o `noCollectionsYet` (L14) | R10 |
+| `src/domains/catalog/catalog.module.ts` | injeta o resumo, o `noCollectionsYet` e o `runInTransaction` | R7, R10 |
 | `catalog.controller.ts` · `catalog.routes.ts` · `catalog.swagger.ts` | rotas de resumo e de exclusão em lote | R1, R7, R10 |
 
 ## Frontend
@@ -63,15 +67,17 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|---|
 | `src/features/catalog/` (`catalog.api.ts`, `catalog.queries.ts`, `catalog.schemas.ts`, `catalog.types.ts`) | campos e rotas novas | R7–R10 |
 | `components/CardForm` · `components/CardFormModal` · `hooks/useCardForm.ts` | código, variantes, mensagem de código repetido com o nome (L10) e o modo "Duplicar carta" (formulário de criar preenchido com nome, franquia, álbum, raridade, idioma, variantes e descrição, sem numeração, código e imagens, L11); "Ano de lançamento" e "Salvar como Rascunho" desabilitados (L12) | R2–R6, R8 |
-| `components/CardsTab` · `components/CatalogRowActions` | ação "Duplicar", colunas de código e variantes, filtro por ano, filtro de status desabilitado (L12), seleção e "Excluir selecionadas" | R2, R8–R11 |
+| `components/CardsTab` · `components/CatalogRowActions` · `components/CardSelectionColumn` · `hooks/useCardSelection.ts` · `hooks/useBulkDeletion.ts` | ação "Duplicar", colunas de código e variantes, filtro por ano a partir do `albumYears` (L16), filtro de status desabilitado (L12), seleção com o `Checkbox` compartilhado e "Excluir selecionadas" | R2, R8–R11 |
 | `components/CatalogStats` · `hooks/useCatalogTotals.ts` | os dois cards do Figma no lugar dos da CCD061 (L8) | R7 |
-| modal de exclusão em lote (novo, no padrão do `DeleteCatalogItemDialog`) | motivo obrigatório e aviso das cartas puladas no estilo da tela (L13) | R10 |
+| `components/BulkDeleteCardsDialog` · `components/BulkSelectionBar` | modal com motivo obrigatório no `ConfirmDialog` com `variant="compact"` (L15) e aviso das cartas puladas no estilo da tela (L13) | R10 |
+| `src/components/` (`ConfirmDialog`, `FormField`, `Textarea`, `Checkbox`, `DataTable`) | props opcionais `variant`, `plainLabel` e `hideLabel` (L15) e cabeçalho de coluna `ReactNode`; sem elas, as outras telas não mudam | R10 |
 
 ## Testes
 
 | Critério | Onde |
 |---|---|
-| CA3, CA5, CA7, CA9 | `catalog.service.spec.ts` |
+| CA3, CA5 | `catalog.service.spec.ts` |
+| CA7, CA9 | `catalog-bulk-delete.service.spec.ts`; a falha da auditoria desfazendo a exclusão, na integração de `POST /cards/bulk-delete` |
 | CA5 com carta excluída (L7) | integração de `POST /cards` — o índice parcial aceita o código de uma carta excluída e recusa o de uma ativa |
 | CA4 | integração de `GET /summary` (as contagens são do banco); o `catalog.service.spec.ts` só confere que o service devolve o resumo |
 | CA8 | integração das rotas de resumo e de exclusão em lote (`403` vem do middleware da rota, não do service) |
