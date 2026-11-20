@@ -85,7 +85,7 @@ sentAt, createdAt, admin: { id, name } }`.
 | `components/NotificationForm/` · `AudienceSelector/` · `ChannelSelector/` · `ScheduleSelector/` | formulário |
 | `components/NotificationPreview/` | item da central de notificações, com o ícone do CromoCard |
 | `components/DispatchHistory/` · `CancelScheduleDialog/` · `DispatchResultDialog/` | histórico, cancelar, modal de enviada/agendada |
-| `pages/GlobalNotificationPage/` | a tela em `/backoffice/notificacoes` |
+| `pages/GlobalNotificationPage/` | a tela em `/backoffice/notifications` |
 | `src/features/admin/audit-logs/audit-logs.labels.ts` · `.types.ts` | rótulos das ações novas |
 
 ## Testes

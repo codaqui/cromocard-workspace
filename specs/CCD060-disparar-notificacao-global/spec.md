@@ -18,7 +18,7 @@
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Só `ADMIN` dispara; `401`/`403` | Permissão | `60`, Pré-condições; ADR-005, item 4; ADR-011 |
-| R2 | Tela em `/backoffice/notificacoes`, item "Notificação" do menu | Tela | `60`, FP 1–2; ADR-038 |
+| R2 | Tela em `/backoffice/notifications`, item "Notificação" do menu | Tela | `60`, FP 1–2; ADR-038 |
 | R3 | Campo título, obrigatório, até 120 caracteres | Campo | `60`, FP 3 e FA 1; DBML `global_notifications.title` |
 | R4 | Campo conteúdo, obrigatório, até 500 caracteres | Campo | `60`, FP 3 e FA 1; DBML `global_notifications.content` |
 | R5 | Validação antes do envio, com a mensagem ao lado de cada campo ("Informe o título.", "Informe a mensagem.", "Use até 120 caracteres.", "Use até 500 caracteres.") e "Corrija os campos destacados para continuar." no aviso (`400` com `details`) | Regra | `60`, FP 4 e FA 1–4; ADR-006 (L14) |
