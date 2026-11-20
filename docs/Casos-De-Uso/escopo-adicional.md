@@ -79,7 +79,7 @@ aprovadas.
 | EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | Cadastros criados no período, com loja, CNPJ, e-mail do vendedor, status e data do cadastro (decisões de 17/11/2026, L9 e L10 da CCD094). |
 | EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
-| EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). |
+| EA-064-02 | Campos da sugestão de carta (ilustrador, população, justificativa, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). Frente, verso, raridade, franquia e idioma passaram para o MVP (CCD064, L8), porque a carta aprovada entra publicada (decisão do PO em 16/11/2026). |
 | EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | Colunas Nº, código, nome, raridade e variantes; resumo por raridade do seed. |
 | EA-064-04 | Subcategorias a criar junto com a categoria sugerida | `228-1804` | CCD103 | |
 | EA-065-01 | Justificativa obrigatória em toda ação administrativa | `228-2395` | CCD102 | O MVP já exige motivo em suspender, excluir e moderar. Obrigatória nas ações que mudam status ou excluem; opcional nas demais. |
