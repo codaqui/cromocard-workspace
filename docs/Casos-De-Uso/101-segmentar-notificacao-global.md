@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador preenche a notificação na Central de Notificações (Disparar Notificação Global). |  |
-| 2. O administrador escolhe o público: toda a base, colecionadores ativos (clientes que entraram nos últimos 30 dias) ou vendedores. |  |
+| 2. O administrador escolhe o público: toda a base (todos os usuários ativos, menos o próprio administrador), colecionadores ativos (clientes que entraram nos últimos 30 dias) ou vendedores. |  |
 |  | 3. O sistema calcula e mostra quantos usuários fazem parte do público escolhido, também no botão de envio. |
 | 4. O administrador escolhe os canais: notificação na plataforma (central de notificações) ou e-mail. |  |
 | 5. O administrador confirma o envio. |  |
