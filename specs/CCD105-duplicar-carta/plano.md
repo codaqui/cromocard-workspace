@@ -1,6 +1,6 @@
 # Plano — CCD105 Duplicar Carta
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22 e reaprovada em 2026-11-12, 2026-11-19 e 2026-11-20
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 - **Revisão:** 2026-11-19, Lucas Oliveira Lima — caminhos conferidos com o código da CCD061 já implementada
 
@@ -28,11 +28,15 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Método e caminho | Entrada | Sucesso | Erros | Requisitos |
 |---|---|---|---|---|
-| `GET /api/v1/admin/catalog/summary` | — | `200` `{ albums, licensedAlbums, pendingAlbumRequests }` | `401`, `403` | R1, R7 |
+| `GET /api/v1/admin/catalog/summary` | — | `200` `{ albums, licensedAlbums, pendingAlbumRequests, albumYears }` | `401`, `403` | R1, R7, R9 |
 | `GET /api/v1/admin/catalog/cards` (CCD061) | acrescenta `year` (ano do álbum, `albums.year`); o `q` passa a buscar também em `code` | acrescenta `code`, `variants` em cada carta | `401`, `403` | R8, R9, R11 |
 | `POST` · `PATCH /api/v1/admin/catalog/cards` (CCD061) | acrescenta `code?`, `variants?` | `201` / `200` | `409 CARD_NUMBER_TAKEN` (CCD061), `409 CARD_CODE_TAKEN` com `details: [{ field: 'code', message: 'Este código já está em uso por <nome>.' }]` | R3–R5, R8 |
 | `POST /api/v1/admin/catalog/cards/bulk-delete` | `{ ids, reason }` | `200` `{ deleted: [ids], skipped: [{ id, name, number }] }` | `400` (lista vazia ou sem motivo), `401`, `403` | R1, R10 |
 
+- `albumYears` (L16): anos distintos dos álbuns não excluídos, sem nulos, do mais novo ao mais antigo; alimenta o
+  filtro Ano das cartas.
+- `POST /cards/bulk-delete`: até 100 ids (`BULK_DELETE_MAX_CARDS`, `400` acima disso), ids repetidos removidos, ids
+  inexistentes ou já excluídos ignorados, e `deleted` na ordem dos ids pedidos.
 - Resumo (L8): `albums` = álbuns não excluídos (`ACTIVE` e `INACTIVE`); `licensedAlbums` = álbuns `ACTIVE`;
   `pendingAlbumRequests` = `catalog_requests` com `type = ALBUM` e `status = PENDING`, não excluídas.
 - A carta não tem ano próprio (o `release_year` é da CCD106): o filtro `year` filtra pelo ano do álbum.
@@ -106,6 +110,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
   `code = null` ao excluir, foi trocada ao achar o ADR-062.
 - Revisão do código (L14): checagem de coleções explícita, lote e auditoria na mesma transação, uma consulta de
   uso para o lote, contratos em `catalog.ports.ts`, sem comentários no código e `CardsTab` dividido.
+- 2ª revisão (L15, L16): modal de exclusão em lote igual ao frame `832-4908` com props opcionais do `ConfirmDialog`;
+  `albumYears` no resumo; seleção com o `Checkbox` compartilhado; testes do lote em
+  `catalog-bulk-delete.service.spec.ts`; teste de integração da restauração pela numeração com o `code` novo.
 - Conferência com o Figma (L8–L13): indicadores do Figma no lugar dos da CCD061, busca por código (R11, CA10),
   mensagem de código repetido com o nome da carta, campos copiados ao duplicar, elementos da CCD106 desabilitados e
   aviso das cartas puladas no estilo da tela.

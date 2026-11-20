@@ -6,7 +6,7 @@
 - **Caso de uso:** [105-duplicar-carta.md](../../docs/Casos-De-Uso/105-duplicar-carta.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-19 por Lucas Oliveira Lima, com a revisão do plano e as decisões L7–L13, e de novo com a L14
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-19 por Lucas Oliveira Lima, com a revisão do plano e as decisões L7–L13, e de novo com a L14; reaprovada em 2026-11-20 por Lucas Oliveira Lima, com a L15 e a L16
 
 ## Objetivo
 
@@ -58,7 +58,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação, e de novo
 | Catálogo (indicadores, filtros, código e variantes) | `208-2895` | R7–R9, R11 | ✅ Bate, com o filtro de status da CCD106 desabilitado (L12) |
 | Duplicar carta | `832-6457` | R2, R3, R6 | ✅ Bate, com os elementos da CCD106 desabilitados (L12) |
 | Erros de validação (numeração e código repetidos) | `832-7170` | R5, R8 | ✅ Bate, com os elementos da CCD106 desabilitados (L12) |
-| Excluir em lote | `832-4908` | R10 | ✅ Bate; o aviso depois da exclusão não tem frame e segue o estilo da tela (L13) |
+| Excluir em lote | `832-4908` | R10 | ✅ Bate (L15); o aviso depois da exclusão não tem frame e segue o estilo da tela (L13) |
 
 - "População" e "Preço médio" são da CCD097.
 - Da CCD106 (rascunho), os frames mostram "Ano de lançamento", "Salvar como Rascunho", o verso padrão da franquia, o
@@ -93,3 +93,5 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação, e de novo
 | L12 | Elementos da CCD106 nos frames (ano de lançamento, rascunho, verso padrão, carta parecida, filtro de status, etiqueta "Rascunho") | Ano de lançamento, "Salvar como Rascunho" e filtro de status desabilitados até a CCD106; verso padrão e aviso de carta parecida ocultos, porque mostrariam dados que não existem. Decisão de Lucas Oliveira Lima em 19/11/2026 | spec.md, Telas e Fora do escopo |
 | L13 | O aviso das cartas que ficaram na exclusão em lote não tem frame | Fazer no estilo da tela: quantas saíram e o nome e o número das que ficaram. Decisão de Lucas Oliveira Lima em 19/11/2026 | `escopo-adicional.md`, EA-061-04 |
 | L14 | A checagem "carta em coleções" (R10, CA9; CCD061 L2) depende de `collection_cards`, que só nasce com a CCD014. O que vale até lá? | Pendência explícita: a checagem é uma dependência obrigatória do catálogo; até a CCD014 o módulo injeta uma implementação "ainda sem coleções", que não bloqueia nenhuma carta (uma ou em lote). A CCD014 troca essa implementação pela consulta real. O CA9 só vale de ponta a ponta depois da CCD014. Decisão de Lucas Oliveira Lima em 19/11/2026, na revisão da CCD105 | `escopo-adicional.md`, EA-061-04; plano.md, Decisões técnicas |
+| L15 | O modal de exclusão em lote (`832-4908`) usa o `ConfirmDialog` compartilhado, que tem rótulo em caixa alta, botão × e 512 px; o Figma tem "Motivo (obrigatório)", sem ×, e cerca de 560 px | Igualar os três ao Figma só neste modal, com props opcionais do `ConfirmDialog` (tamanho, sem ×, rótulo sem caixa alta); as outras telas não mudam. Decisão de Lucas Oliveira Lima em 20/11/2026, na 2ª revisão | spec.md, Telas; plano.md, Frontend |
+| L16 | As opções do filtro Ano vinham só dos primeiros 100 álbuns carregados no frontend | O `GET /summary` devolve `albumYears`: os anos distintos dos álbuns não excluídos, do mais novo ao mais antigo. Decisão de Lucas Oliveira Lima em 20/11/2026, na 2ª revisão | plano.md, Contrato da API |

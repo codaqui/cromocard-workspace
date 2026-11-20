@@ -1,6 +1,6 @@
 | Nome do Caso de Uso | Duplicar Carta |
 |---|---|
-| Finalidade/Objetivo | Permitir que o administrador crie uma carta nova no catálogo a partir de uma carta existente, aproveitando os dados em comum (franquia, álbum, raridade e idioma). |
+| Finalidade/Objetivo | Permitir que o administrador crie uma carta nova no catálogo a partir de uma carta existente, aproveitando os dados em comum (nome, franquia, álbum, raridade, idioma, variantes e descrição). |
 | Atores | Administrador |
 | Pré Condições | O administrador deve estar autenticado com permissão para gerenciar o catálogo. |
 
