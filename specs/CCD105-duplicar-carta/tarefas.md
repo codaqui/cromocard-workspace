@@ -47,11 +47,11 @@
   - `useBulkDeletion` em `hooks/`, coluna de seleção em `components/`, regra "todos selecionados" num lugar só.
   - Pronto quando: `CatalogAdminPage.spec.tsx` continua cobrindo CA7 e CA9 e o lint passa.
 
-- [ ] **T11** · Devolver os anos dos álbuns no resumo e separar os testes do lote — R9, R10 · CA7, CA9 · AB#704
+- [x] **T11** · Devolver os anos dos álbuns no resumo e separar os testes do lote — R9, R10 · CA7, CA9 · AB#704
   - `albumYears` no `GET /summary` (L16); `catalog-bulk-delete.service.spec.ts` próprio; integração da restauração
     pela numeração gravando o `code` do formulário.
   - Pronto quando: integração cobre `albumYears` e a restauração, e o spec do lote roda sozinho.
-- [ ] **T12** · Igualar o modal de exclusão em lote ao Figma e usar o Checkbox compartilhado — R9, R10 · AB#708
+- [x] **T12** · Igualar o modal de exclusão em lote ao Figma e usar o Checkbox compartilhado — R9, R10 · AB#708
   - Props opcionais no `ConfirmDialog` (L15); filtro Ano a partir do `albumYears`; seleção com `Checkbox`.
   - Pronto quando: `CatalogAdminPage.spec.tsx` cobre o filtro Ano pelo resumo e o modal sem ×, e as outras telas do
     `ConfirmDialog` continuam com o mesmo visual.
