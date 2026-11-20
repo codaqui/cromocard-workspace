@@ -155,6 +155,7 @@
 | Duplicar Carta | Como Administrador eu quero criar uma carta a partir de outra já cadastrada para não digitar de novo os dados em comum.++ |
 | Salvar Rascunho de Carta | Como Administrador eu quero salvar uma carta incompleta como rascunho, fora do catálogo, para terminar o cadastro depois.++ |
 | Consultar Histórico de Relatórios | Como Administrador eu quero ver os relatórios exportados recentemente e baixar de novo um arquivo já gerado para não precisar exportar outra vez.++ |
+| Gerenciar Pedidos e Pagamentos | Como Administrador eu quero acompanhar os pedidos e pagamentos do marketplace e cancelar com reembolso ou liberar o pagamento de um pedido para resolver problemas entre comprador e vendedor. |
 
 ## 9. Painel Vendedor
 
