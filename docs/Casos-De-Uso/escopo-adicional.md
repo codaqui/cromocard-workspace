@@ -197,3 +197,7 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   de uso ou sem tela), o seletor "Colecionador / Vendedor" e o menu interno do Perfil ("Visão Geral / Hub").
   A tela inicial do cliente (resumo da coleção, CCD007) foi refeita no padrão novo: `1122-17812`. As duas versões
   antigas, `108-1423` e `284-5290` ("Painel Publico - Perfil"), foram para o Arquivo.
+- Organização do Figma (20/11/2026): a Área do Cliente virou "3. Área do Cliente", com uma coluna por item do menu, da
+  esquerda para a direita (3.1 Início … 3.12 Central de ajuda, mais 3.13 Notificações, que abre pelo sino do topo).
+  Pesquisar, Marketplace e Central de ajuda têm uma tela de referência (`1122-18396`, `1122-18861` e a da Central de
+  ajuda), com o menu do cliente, a miniatura da tela pública e o link para ela, em vez de repetir a tela.
