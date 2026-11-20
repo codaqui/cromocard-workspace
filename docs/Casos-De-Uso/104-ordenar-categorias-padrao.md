@@ -8,7 +8,7 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O administrador acessa Configurações Globais, no módulo "Ordenação e Gestão de Categorias Padrão". |  |
+| 1. O administrador acessa Configurações Globais, no "Módulo 2: Categorias padrão". |  |
 |  | 2. O sistema apresenta as categorias padrão na ordem atual, cada uma com a posição, o nome, o slug, a quantidade de cartas e o selo de exibição. A quantidade soma as cartas não excluídas ligadas à categoria ou às subcategorias dela, direto ou pelos álbuns delas. |
 | 3. O administrador move uma categoria para cima ou para baixo, pelas setas ou arrastando. |  |
 |  | 4. O sistema atualiza as posições na tela. |
@@ -28,3 +28,5 @@
 |  | 4. O sistema mantém a posição, com a seta desabilitada. |
 | 5. O administrador seleciona o alfinete da categoria fixada. |  |
 |  | 6. O sistema retira o "Fixado no topo" da categoria, que continua na posição em que está até o administrador movê-la. |
+| 7. O administrador tenta mover para baixo a categoria fixada ou passar outra categoria por cima dela. |  |
+|  | 8. O sistema mantém a posição, com a seta desabilitada: a categoria fixada fica sempre no topo até ser desafixada. |
