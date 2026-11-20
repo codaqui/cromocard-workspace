@@ -49,7 +49,7 @@ aprovadas.
 | EA-058-04 | Novas cartas cadastradas na semana | `208-1240` | CCD096 | |
 | EA-058-05 | Colunas extras na lista de vendedores (CNPJ/CPF, reputação, volume, status da análise), filtro de status e "Atualizar Fila" | `208-1240` | CCD094 | Reputação e volume vêm da CCD097. |
 | EA-058-06 | Card "Lojistas & Credenciamento" (homologados, pendentes, "Analisar Fila") | `208-1240`, `247-2499` | CCD094 | |
-| EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados. A taxa de autenticação não entra: não tem origem de dado. |
+| EA-058-07 | Taxa de autenticação e conversão KYC | `208-1240` | CCD094 | Conversão = cadastros aprovados ÷ cadastros analisados, contando os decididos no período pela data da decisão. A taxa de autenticação não entra: não tem origem de dado. |
 | EA-059-01 | Confirmação reforçada ao excluir (digitar o texto e marcar "Estou ciente") | `276-1735` | CCD098 | O texto "irreversível" contraria o soft delete (ADR-015). Texto de confirmação: `EXCLUIR-` + o primeiro nome em maiúsculas. O texto "irreversível" muda: a conta pode ser restaurada (ADR-015). |
 | EA-059-02 | Total de usuários no cabeçalho | `208-1793` | CCD098 | |
 | EA-059-03 | "Clique na linha para inspecionar": detalhe do usuário | `208-1793`, `649-1164`, `649-796` | CCD098 | Página do usuário, um layout só para qualquer papel (decisão do PO em 11/11/2026, no lugar da gaveta lateral): dados pessoais, contato, endereços, ações (editar, aplicar sanção, reativar, excluir), advertências e as ações administrativas sobre o usuário lidas do `audit_logs`. O frame `649-796` mostra a própria conta do admin, com as ações bloqueadas (CCD059 FA 7–8). |
@@ -68,6 +68,7 @@ aprovadas.
 | EA-061-07 | Verso padrão da franquia aplicado automaticamente | `278-3246` | CCD106 | Verso padrão por categoria na chave `catalog.default_backs` de `global_settings`. Com ele, o verso é opcional no formulário. |
 | EA-061-08 | Checagem de duplicidade antes de cadastrar | `278-3246`, `832-7887` | CCD106 | Duplicata = mesmo nome e numeração no mesmo álbum, ou mesmo nome sem álbum; só aviso, sem bloquear, com o link para a carta existente. |
 | EA-061-09 | Imagem com mínimo de 1200×1600 px | `278-3246` | CCD106 | |
+| EA-061-10 | Slug, selo e quantidade de cartas na aba de categorias, com busca por nome ou slug | `833-10832` (fundo) | CCD104 | `61`, FP 2. Decisão de 17/11/2026 (L15 da CCD104). |
 | EA-062-01 | Indicadores da comunidade | `220-3524` | **MVP** (CCD062, L5) | |
 | EA-062-02 | Status "Advertido" para grupo | `220-3524`, `841-2435` | CCD099 | Só o selo "Advertido"; reativar volta a `ACTIVE`. Ação "Advertir", com motivo, na linha do grupo ativo e nos detalhes (decisão do PO em 12/11/2026). |
 | EA-062-03 | Volume custodiado e negociações ativas por grupo | `220-3524` | CCD097 | Volume = soma dos anúncios ativos compartilhados no grupo (mensagens `LISTING`). |
@@ -75,10 +76,10 @@ aprovadas.
 | EA-062-05 | Denúncia criada por detecção automática de conteúdo | `220-3524` | CCD099 | Exige detecção automática; lacuna na spec. Não entra: não há caso de uso de detecção automática (decisão do PO em 22/10/2026). Retirada do Figma em 12/11/2026. |
 | EA-062-06 | Idade da conta do autor, advertências anteriores e quantos denunciaram | `220-3524` | CCD099 | Em todas as denúncias da fila. |
 | EA-063-01 | Pré-visualização antes de exportar | `228-1236` | **MVP** (CCD063, R7) | Primeiras linhas e total de registros, sem gráficos (decisão do PO em 12/11/2026). |
-| EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | |
+| EA-063-02 | Relatório "Auditoria de Lojistas" | `228-1236` | CCD094 | Cadastros criados no período, com loja, CNPJ, e-mail do vendedor, status e data do cadastro (decisões de 17/11/2026, L9 e L10 da CCD094). |
 | EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
-| EA-064-02 | Campos da sugestão de carta (frente e verso, ilustrador, população, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). |
+| EA-064-02 | Campos da sugestão de carta (ilustrador, população, justificativa, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). Frente, verso, raridade, franquia e idioma passaram para o MVP (CCD064, L8), porque a carta aprovada entra publicada (decisão do PO em 16/11/2026). |
 | EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | Colunas Nº, código, nome, raridade e variantes; resumo por raridade do seed. |
 | EA-064-04 | Subcategorias a criar junto com a categoria sugerida | `228-1804` | CCD103 | |
 | EA-065-01 | Justificativa obrigatória em toda ação administrativa | `228-2395` | CCD102 | O MVP já exige motivo em suspender, excluir e moderar. Obrigatória nas ações que mudam status ou excluem; opcional nas demais. |
@@ -86,7 +87,7 @@ aprovadas.
 | EA-065-03 | Filtros rápidos | `228-2395` | CCD102 | Banimentos, Remoção de grupos e Mudança de papel. |
 | EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
-| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. |
+| EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. O selo é opcional ("Nenhum" = sem selo), e a quantidade soma as cartas da categoria e das subcategorias, direto ou pelos álbuns (decisões de 17/11/2026, L13 e L15 da CCD104). |
 
 ## 3. O que não vira requisito
 

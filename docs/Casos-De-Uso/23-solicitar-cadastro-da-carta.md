@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O cliente seleciona a opção 'Solicitar Cadastro de Carta' na tela de busca. |  |
-|  | 2. O sistema apresenta um formulário para o cliente informar os dados da carta (nome, coleção, número, etc.). |
+|  | 2. O sistema apresenta um formulário para o cliente informar os dados da carta: nome, álbum, número, franquia, raridade e idioma, a imagem da frente (obrigatória) e a do verso (opcional), para que a carta possa entrar publicada no catálogo quando aprovada. |
 | 3. O cliente preenche os dados solicitados e confirma o envio. |  |
 |  | 4. O sistema registra a solicitação, encaminha para análise do administrador e exibe uma mensagem de confirmação ao cliente. |
 

@@ -25,7 +25,7 @@
 | R7 | Votar de novo troca o voto anterior | Regra | `103`, FA 1–2 |
 | R8 | Sugestão encerrada não aceita voto | Regra | `103`, FA 3–4 |
 | R9 | A meta de votos vem de `global_settings` (`catalog.voting_goal`) | Regra | ADR-053, item 7 |
-| R10 | Na sugestão de carta: frente e verso, álbum, raridade (nomes do seed), ilustrador, população estimada, justificativa e fontes | Tela | EA-064-02; DBML `catalog_requests.data` |
+| R10 | Na sugestão de carta: ilustrador, população estimada, justificativa e fontes (frente e verso, álbum, raridade, franquia e idioma passaram para a CCD064, L8, em 16/11/2026) | Tela | EA-064-02; DBML `catalog_requests.data` |
 | R11 | Na sugestão de álbum: editora, ano, resumo por raridade e checklist (Nº, código, nome, raridade, variantes) com "Baixar Planilha .CSV" | Ação | EA-064-03 |
 | R12 | Na sugestão de categoria: as subcategorias a criar; aprovar cria todas | Ação | EA-064-04; DBML `categories.parent_category_id` |
 
