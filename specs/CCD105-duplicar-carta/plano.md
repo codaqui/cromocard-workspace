@@ -69,8 +69,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | `components/CardForm` · `components/CardFormModal` · `hooks/useCardForm.ts` | código, variantes, mensagem de código repetido com o nome (L10) e o modo "Duplicar carta" (formulário de criar preenchido com nome, franquia, álbum, raridade, idioma, variantes e descrição, sem numeração, código e imagens, L11); "Ano de lançamento" e "Salvar como Rascunho" desabilitados (L12) | R2–R6, R8 |
 | `components/CardsTab` · `components/CatalogRowActions` · `components/CardSelectionColumn` · `hooks/useCardSelection.ts` · `hooks/useBulkDeletion.ts` | ação "Duplicar", colunas de código e variantes, filtro por ano a partir do `albumYears` (L16), filtro de status desabilitado (L12), seleção com o `Checkbox` compartilhado e "Excluir selecionadas" | R2, R8–R11 |
 | `components/CatalogStats` · `hooks/useCatalogTotals.ts` | os dois cards do Figma no lugar dos da CCD061 (L8) | R7 |
-| `components/BulkDeleteCardsDialog` · `components/BulkSelectionBar` | modal com motivo obrigatório no `ConfirmDialog` com `variant="compact"` (L15) e aviso das cartas puladas no estilo da tela (L13) | R10 |
-| `src/components/` (`ConfirmDialog`, `FormField`, `Textarea`, `Checkbox`, `DataTable`) | props opcionais `variant`, `plainLabel` e `hideLabel` (L15) e cabeçalho de coluna `ReactNode`; sem elas, as outras telas não mudam | R10 |
+| `components/BulkDeleteCardsDialog` · `components/BulkSelectionBar` | modal com motivo obrigatório no `ConfirmDialog` com `variant="compact"` e `plainReasonLabel` (L15) e aviso das cartas puladas no estilo da tela (L13) | R10 |
+| `src/components/` (`ConfirmDialog`, `FormField`, `Textarea`, `Checkbox`, `DataTable`) | props opcionais `plainReasonLabel` no `ConfirmDialog` (a variante `compact` veio da CCD064), `plainLabel` e `hideLabel` (L15) e cabeçalho de coluna `ReactNode`; sem elas, as outras telas não mudam | R10 |
 
 ## Testes
 
