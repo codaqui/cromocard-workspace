@@ -1,4 +1,4 @@
-# ADR-063 — Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect
+# ADR-066 — Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect
 
 - **Status:** Proposto
 - **Data:** 2026-11-20
@@ -23,7 +23,7 @@ Brasil.
 4. **Repasse:** cada vendedor tem uma conta conectada **Express**, criada pela API e completada na página de cadastro
    da Stripe (CCD108). A liberação cria uma `Transfer` para a conta conectada com o valor da carta menos 5%
    (arredondado para baixo, a favor do vendedor), `source_transaction` = id da cobrança (obrigatório no Brasil) e
-   `transfer_group` = id do pedido. O frete não é repassado: paga a etiqueta (ADR-064).
+   `transfer_group` = id do pedido. O frete não é repassado: paga a etiqueta (ADR-067).
 5. **Conta pronta:** a conta conectada fica "pronta" quando a Stripe informa que ela pode receber transferências
    (evento `account.updated`). Sem conta pronta, o vendedor não publica anúncio.
 6. **Webhooks:** `checkout.session.completed` (pedido Pago), `checkout.session.expired` (pedido Cancelado e carta de

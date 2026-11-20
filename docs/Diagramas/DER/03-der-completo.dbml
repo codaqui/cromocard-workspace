@@ -107,7 +107,7 @@ Enum order_status {
   PAID
   SHIPPED
   DELIVERED
-  COMPLETED [note: 'Pagamento liberado ao vendedor (CCD110, ADR-063)']
+  COMPLETED [note: 'Pagamento liberado ao vendedor (CCD110, ADR-066)']
   CANCELED
 }
 
@@ -198,7 +198,7 @@ Table users [headercolor: #3E5F8A] {
   phone          varchar(20) [note: 'Telefone com DDD (CCD098)']
   cpf            varchar(14) [unique, note: 'CPF, visivel so no BackOffice (CCD098)']
   last_login_at  timestamptz [note: 'Ultimo login bem-sucedido (CCD098)']
-  stripe_account_id     varchar(60) [unique, note: 'Conta conectada Express do vendedor (CCD108, ADR-063)']
+  stripe_account_id     varchar(60) [unique, note: 'Conta conectada Express do vendedor (CCD108, ADR-066)']
   stripe_account_status varchar(20) [note: 'PENDING, VERIFYING ou READY (CCD108)']
   last_login_ip  varchar(45) [note: 'IP do ultimo login (CCD098)']
   suspended_until timestamptz [note: 'Fim da suspensao temporaria; nulo = sem prazo (CCD099)']
@@ -641,11 +641,11 @@ Table orders [headercolor: #A63D5F] {
   total_amount        decimal(10,2) [not null]
   shipping_method     varchar(60)   [not null]
   status              order_status  [not null, default: 'AWAITING_PAYMENT']
-  shipping_service    varchar(60)   [note: 'Servico do Melhor Envio escolhido no checkout (ADR-064)']
+  shipping_service    varchar(60)   [note: 'Servico do Melhor Envio escolhido no checkout (ADR-067)']
   shipping_label_id   varchar(60)   [note: 'Id da etiqueta no Melhor Envio (CCD109)']
   tracking_code       varchar(40)
   tracking_url        varchar(255)
-  platform_fee        decimal(10,2) [note: 'Taxa de 5% da plataforma (ADR-063)']
+  platform_fee        decimal(10,2) [note: 'Taxa de 5% da plataforma (ADR-066)']
   stripe_transfer_id  varchar(60)   [note: 'Transferencia ao vendedor (CCD110)']
   cancel_reason       varchar(255)
   paid_at             timestamptz
@@ -664,7 +664,7 @@ Table payments [headercolor: #A63D5F] {
   value             decimal(10,2)  [not null]
   status            payment_status [not null, default: 'PENDING']
   gateway_reference varchar(120)
-  charge_id         varchar(60) [note: 'Id da cobranca na Stripe, usado no repasse (ADR-063)']
+  charge_id         varchar(60) [note: 'Id da cobranca na Stripe, usado no repasse (ADR-066)']
   paid_at           timestamptz
   refunded_at       timestamptz
   created_at        timestamptz    [not null, default: `now()`]

@@ -26,10 +26,10 @@ parte da primeira entrega.
 Proposta definida em 18/11/2026 (alternativa 4, abaixo): entra no MVP uma **fatia mínima** do marketplace, de
 ponta a ponta, só em homologação e em modo de teste:
 
-- **Comprar:** explorar o marketplace, ver o anúncio e pagar com cartão pelo Stripe Checkout (ADR-063). O valor fica
+- **Comprar:** explorar o marketplace, ver o anúncio e pagar com cartão pelo Stripe Checkout (ADR-066). O valor fica
   retido na plataforma.
 - **Vender:** criar o anúncio a partir do catálogo, conectar a conta de recebimento na Stripe e gerar a etiqueta pelo
-  Melhor Envio (ADR-064).
+  Melhor Envio (ADR-067).
 - **Liberar:** com a entrega confirmada pelo rastreio, o valor menos a taxa de 5% vai para o vendedor quando o
   comprador confirma o recebimento ou 7 dias depois da entrega.
 - **Administrar:** o BackOffice acompanha os pedidos e pode cancelar com reembolso ou liberar na hora (CCD111).

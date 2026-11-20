@@ -1,4 +1,4 @@
-# ADR-064 — Frete, etiqueta e rastreio pelo Melhor Envio
+# ADR-067 — Frete, etiqueta e rastreio pelo Melhor Envio
 
 - **Status:** Proposto
 - **Data:** 2026-11-20
@@ -49,6 +49,6 @@ muda de status sozinha até "entregue".
 
 ## Referências
 
-- ADR-009, ADR-025, ADR-027, ADR-063
+- ADR-009, ADR-025, ADR-027, ADR-066
 - Casos de uso 72, 109 e 110
 - https://docs.melhorenvio.com.br/docs/webhooks
