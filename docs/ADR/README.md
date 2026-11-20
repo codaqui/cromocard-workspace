@@ -83,6 +83,8 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [060](ADR-060-fluxo-de-desenvolvimento-e-revisao-com-figma-e-cobertura.md) | Processo | Fluxo de desenvolvimento e revisão: decisão sobre o Figma, cobertura de 90% e skills únicas (substitui parcialmente 008, 046 e 047) | Proposto |
 | [061](ADR-061-chaves-de-configuracao-das-metas-e-dos-versos.md) | Dados | Chaves de configuração das metas e dos versos padrão em `global_settings` (substitui parcialmente o item 1 do 051) | Aceito |
 | [062](ADR-062-slug-de-categoria-unico-entre-as-ativas.md) | Dados | Slug de categoria único só entre as não excluídas, com índice parcial e sem restaurar (exceção ao item 7 do 015) | Aceito |
+| [063](ADR-063-pagamento-com-stripe-checkout-e-repasse-pelo-connect.md) | Backend | Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect (decide o 024) | Proposto |
+| [064](ADR-064-frete-e-rastreio-pelo-melhor-envio.md) | Backend | Frete, etiqueta e rastreio pelo Melhor Envio (decide o 025) | Proposto |
 
 ## Modelo
 
