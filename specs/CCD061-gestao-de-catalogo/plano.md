@@ -36,7 +36,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 | `src/domains/catalog/catalog.validator.ts` · `catalog.errors.ts` | schemas e erros acima (as listagens entram na T2) | R3, R5–R8, R11 |
 | `albums.repository.ts` · `cards.repository.ts` · `categories.repository.ts` | CRUD, filtros, restauração por (`album_id`, `number`), checagem dos vínculos dentro do catálogo (álbum com cartas; categoria com álbuns, cartas ou subcategorias); a carta e o `total_cards` do álbum são gravados na mesma transação, reaproveitada pela importação | R3, R7, R10, R11 |
 | `references.repository.ts` | lista e confere a existência de raridades e idiomas (seed) | R6, R15 |
-| `catalog.service.ts` + `.spec.ts` | regras, `total_cards` calculado, auditoria; confere se álbum, categoria, raridade e idioma informados existem (`404`); recebe a interface `CardUsage` (carta usada em coleções) opcional pelo construtor; exportado para a CCD064 | R4–R11, R14, R15 |
+| `catalog.service.ts` + `.spec.ts` | regras, `total_cards` calculado, auditoria; confere se álbum, categoria, raridade e idioma informados existem (`404`); recebe a interface `CardUsage` (carta usada em coleções) pelo construtor, obrigatória desde a CCD105 (L14); exportado para a CCD064 | R4–R11, R14, R15 |
 | `catalog-import.service.ts` + `.spec.ts` | leitura do CSV (`csv-parse`), validação de todas as linhas e gravação em transação | R13 |
 | `catalog-import.parser.ts` · `catalog-import.rows.ts` · `catalog-import.repository.ts` | leitura e cabeçalho do CSV e modelo para baixar; resolução das referências e dos números por linha; consultas e gravação em transação (criar, restaurar e recalcular `total_cards`) | R7, R13 |
 | `catalog.controller.ts` · `catalog.routes.ts` · `catalog.swagger.ts` · `catalog.module.ts` | rotas de admin | R1 |
@@ -67,7 +67,9 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   domínio (ADR-001). O `catalogService` declara a interface `CardUsage` (`isCardInCollections(cardId)`) e a recebe
   opcional pelo construtor, no padrão do `CatalogStats` do dashboard (CCD058). Sem implementação, a carta é tratada
   como não usada; **pendência:** a CCD014 (Marcar carta como possuo), a primeira user story que usa `collection_cards`, liga a implementação no
-  `catalog.module.ts`. Decidido em 2026-10-29 com Lucas Oliveira Lima.
+  `catalog.module.ts`. Decidido em 2026-10-29 com Lucas Oliveira Lima. **Atualizado pela CCD105 (L14):** a interface
+  passou a `cardIdsInCollections(ids)`, obrigatória, em `catalog.ports.ts`; até a CCD014 o módulo injeta
+  `noCollectionsYet`, e a CCD014 troca pela consulta em `collection_cards`.
 - Raridades e idiomas (R6, R15): vêm do seed e não são editados, mas o formulário de carta precisa das opções. Entram
   `GET /rarities` e `GET /languages` só de leitura, e a service confere cada referência informada (álbum, categoria,
   raridade, idioma), respondendo `404` em vez do `500` do erro de chave estrangeira. Decidido em 2026-10-30 com Lucas
