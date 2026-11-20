@@ -5,9 +5,16 @@
 
 ## Solução
 
-Subdomínio `catalog/requests`: lista e detalhe das solicitações, aprovar (usa o `catalogService` da CCD061 para criar
-o item, numa transação com a mudança de status) e recusar com motivo. Cada decisão grava `audit_logs` e avisa o
-solicitante com uma notificação.
+Subdomínio `catalog/requests`: lista e detalhe das solicitações, aprovar e recusar com motivo. Cada decisão grava
+`audit_logs` e avisa o solicitante pelo `notificationsService`.
+
+- **Aprovar:** reserva a solicitação (passa para `APPROVED` só se ainda estiver `PENDING`, para dois admins não criarem
+  o item duas vezes), cria o item com o `catalogService` da CCD061 e, numa única transação, grava o vínculo, o log
+  `CATALOG_REQUEST_APPROVED` e a notificação. A criação fica fora da transação, porque o `catalogService` não aceita
+  uma; se o catálogo recusar o item, a solicitação volta a `PENDING` (R16).
+- **Recusar:** a mudança de status, o log e a notificação entram numa única transação.
+
+Ajustado ao implementado na revisão do backend #29 (Lucca, 17/11/2026).
 
 ## Dependências
 
