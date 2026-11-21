@@ -47,7 +47,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [024](ADR-024-integracao-gateway-pagamento.md) | Integrações | Integração com gateway de pagamento externo via HTTPS/Webhook | Proposto |
 | [025](ADR-025-integracao-transportadora.md) | Integrações | Integração com transportadora terceirizada para entrega física | Proposto |
 | [026](ADR-026-estrutura-multi-repositorio.md) | Processo | Estrutura multi-repositório (workspace para SDD e documentação; um repositório por aplicação) | Aceito |
-| [027](ADR-027-escopo-marketplace-no-mvp.md) | Produto | Escopo do Marketplace no MVP (decisão em aberto) | Proposto |
+| [027](ADR-027-escopo-marketplace-no-mvp.md) | Produto | Escopo do Marketplace no MVP | Proposto |
 | [028](ADR-028-stack-backend-node-express-prisma.md) | Backend | Stack de backend: Node.js + Express + Prisma | Substituído por ADR-002 |
 | [029](ADR-029-banco-de-dados-postgresql.md) | Dados | Banco de dados relacional: PostgreSQL via Prisma ORM | Substituído por ADR-003 e ADR-014 |
 | [030](ADR-030-autenticacao-jwt-compartilhada.md) | Backend | Autenticação via JWT compartilhado entre API REST e serviço de tempo real | Substituído por ADR-005 |
@@ -83,6 +83,8 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [060](ADR-060-fluxo-de-desenvolvimento-e-revisao-com-figma-e-cobertura.md) | Processo | Fluxo de desenvolvimento e revisão: decisão sobre o Figma, cobertura de 90% e skills únicas (substitui parcialmente 008, 046 e 047) | Proposto |
 | [061](ADR-061-chaves-de-configuracao-das-metas-e-dos-versos.md) | Dados | Chaves de configuração das metas e dos versos padrão em `global_settings` (substitui parcialmente o item 1 do 051) | Aceito |
 | [062](ADR-062-slug-de-categoria-unico-entre-as-ativas.md) | Dados | Slug de categoria único só entre as não excluídas, com índice parcial e sem restaurar (exceção ao item 7 do 015) | Aceito |
+| [066](ADR-066-pagamento-com-stripe-checkout-e-repasse-pelo-connect.md) | Backend | Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect (decide o 024) | Proposto |
+| [067](ADR-067-frete-e-rastreio-pelo-melhor-envio.md) | Backend | Frete, etiqueta e rastreio pelo Melhor Envio (decide o 025) | Proposto |
 
 ## Modelo
 

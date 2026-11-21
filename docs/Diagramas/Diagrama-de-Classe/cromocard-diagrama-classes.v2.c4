@@ -65,6 +65,8 @@ model {
         - telefone: String
         - cpf: String
         - ultimoAcesso: DateTime
+        - contaStripeId: String
+        - statusContaStripe: String
         - ipUltimoAcesso: String
         - suspensoAte: DateTime
         - dataCadastro: DateTime
@@ -773,12 +775,24 @@ model {
         - formaEnvio: String
         - status: StatusPedido
         - dataPedido: DateTime
+        - servicoFrete: String
+        - etiquetaId: String
+        - codigoRastreio: String
+        - urlRastreio: String
+        - taxaPlataforma: Decimal
+        - transferenciaStripeId: String
+        - motivoCancelamento: String
+        - pagoEm: DateTime
+        - enviadoEm: DateTime
+        - entregueEm: DateTime
+        - liberadoEm: DateTime
       """
       metodos """
         + calcularTotal()
         + confirmarPagamento()
         + marcarComoEnviado()
         + marcarComoEntregue()
+        + liberarPagamento()
         + cancelar()
       """
     }
@@ -792,6 +806,9 @@ model {
         - valor: Decimal
         - status: StatusPagamento
         - gatewayReferencia: String
+        - cobrancaId: String
+        - pagoEm: DateTime
+        - reembolsadoEm: DateTime
         - dataAtualizacao: DateTime
       """
       metodos """
@@ -833,7 +850,7 @@ model {
 
   statusPedido = enumeracao "StatusPedido" {
     metadata {
-      valores """AGUARDANDO_PAGAMENTO, PAGO, ENVIADO, ENTREGUE, CANCELADO"""
+      valores """AGUARDANDO_PAGAMENTO, PAGO, ENVIADO, ENTREGUE, CONCLUIDO, CANCELADO"""
     }
   }
 

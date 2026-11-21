@@ -1,22 +1,20 @@
 | Nome do Caso de Uso | Visualizar Fotos |
 |---|---|
 | Finalidade/Objetivo | Como Cliente preciso visualizar as fotos da carta para analisar suas características e condições antes de realizar uma compra. |
-| Atores | Cliente |
-| Pré Condições | O cliente deve estar visualizando os detalhes de um anúncio. |
+| Atores | Visitante, Cliente |
+| Pré Condições | O ator deve estar visualizando o detalhe de um anúncio. |
 
 ### Fluxo Principal
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O cliente acessa os detalhes do anúncio. |  |
-| 2. O cliente seleciona uma foto da carta. |  |
-| 3. O cliente navega entre as fotos disponíveis. |  |
-|  | 4. O sistema busca as imagens cadastradas no anúncio. |
-|  | 5. O sistema exibe as fotos da carta. |
-|  | 6. O sistema permite a visualização das demais imagens disponíveis. |
+| 1. O ator acessa o detalhe do anúncio. |  |
+|  | 2. O sistema exibe a primeira foto do anúncio e as miniaturas das demais (até 4 fotos). |
+| 3. O ator seleciona uma miniatura ou usa as setas para navegar entre as fotos. |  |
+|  | 4. O sistema exibe a foto escolhida, com a opção de ampliar. |
 
 ### Fluxo Alternativo
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-|  | 1. Caso o anúncio não possua fotos adicionais, o sistema exibe apenas as imagens disponíveis. |
+|  | 1. Caso o anúncio não tenha fotos, o sistema exibe a imagem da carta no catálogo. |

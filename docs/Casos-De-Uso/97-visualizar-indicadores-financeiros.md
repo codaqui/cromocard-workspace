@@ -9,8 +9,8 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa o Dashboard Gerencial. |  |
-|  | 2. O sistema apresenta o valor total em custódia (pagamentos recebidos e ainda não liberados ao vendedor). |
-|  | 3. O sistema apresenta, sempre juntos, o valor liquidado no período (no filtro Hoje, "liquidado hoje"), a quantidade de pedidos liberados e o valor retido em garantia (pagamentos de pedidos entregues há menos de 7 dias, o prazo de reclamação). |
+|  | 2. O sistema apresenta o valor total em custódia (pagamentos recebidos e ainda não liberados ao vendedor: pedidos Pagos, Enviados e Entregues). |
+|  | 3. O sistema apresenta, sempre juntos, o valor liquidado no período (pedidos Concluídos, com o pagamento já transferido ao vendedor; no filtro Hoje, "liquidado hoje"), a quantidade de pedidos liberados e o valor retido em garantia (pedidos Entregues ainda sem repasse, no prazo de 7 dias antes da liberação automática). |
 |  | 4. O sistema apresenta, na lista de vendedores, o volume anunciado e a nota de reputação de cada vendedor (média das notas recebidas, de 0 a 5). |
 | 5. O administrador seleciona o período: Hoje, 7 dias, 30 dias ou 1 ano. |  |
 |  | 6. O sistema atualiza os indicadores financeiros conforme o período. |

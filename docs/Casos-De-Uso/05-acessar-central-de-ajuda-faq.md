@@ -8,7 +8,7 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O visitante clica no link 'Central de Ajuda / FAQ' no rodapé da página. |  |
+| 1. O visitante clica em "Central de ajuda" no menu lateral. |  |
 |  | 2. O sistema carrega a lista de tópicos e perguntas frequentes. |
 | 3. O visitante clica em uma pergunta de seu interesse. |  |
 |  | 4. O sistema expande o card revelando a resposta completa e os links úteis. |
@@ -17,4 +17,5 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-|  | 1. Nenhum comportamento alternativo crítico mapeado para esta funcionalidade. |
+| 1. O visitante não encontra a resposta e seleciona "Enviar e-mail". |  |
+|  | 2. O sistema abre o e-mail do visitante com o endereço do suporte preenchido. |

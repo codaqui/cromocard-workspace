@@ -24,3 +24,5 @@
 |  | 2. O sistema impede o salvamento e informa quais campos precisam ser corrigidos. |
 | 3. O usuário cancela a edição. |  |
 |  | 4. O sistema descarta as alterações e mantém os dados anteriores. |
+| 5. O usuário tenta remover o endereço principal. |  |
+|  | 6. O sistema não remove e pede que outro endereço seja escolhido como principal antes. |
