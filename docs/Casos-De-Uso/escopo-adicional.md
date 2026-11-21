@@ -89,7 +89,13 @@ aprovadas.
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
 | EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. O selo é opcional ("Nenhum" = sem selo), e a quantidade soma as cartas da categoria e das subcategorias, direto ou pelos álbuns (decisões de 17/11/2026, L13 e L15 da CCD104). |
 | EA-001-01 | Menu lateral do visitante: Início, Marketplace, Pesquisar, Como funciona e Central de ajuda; logado, o menu é o da Área do Cliente | `1112-2169` e as demais telas públicas | CCD001 | Revisão da Área Pública (18 e 20/11/2026). Saem "Recursos", "Categorias" (as categorias viram filtro no Explorar e abas na Home) e "Comunidades" (entrar em grupo exige login; os grupos aparecem na busca). |
-| EA-001-02 | Página "Como funciona": os 4 passos da compra, as garantias (pagamento retido, vendedor verificado, suporte, preços) e a taxa de 5% por venda | `1112-6532` | CCD005 | Página estática, sem dados (18/11/2026). |
+| EA-001-02 | Página "Como funciona": abas "Quero comprar" (4 passos da compra e garantias) e "Quero vender" (conta de vendedor, conta Stripe, anúncio e envio, recebimento), com a taxa de 5% por venda | `1112-6532`, `1160-2268` | CCD005 | Página estática, sem dados (18/11/2026; aba do vendedor em 20/11/2026). |
+| EA-001-03 | Rodapé do site com Como funciona, Central de ajuda e Termos de Uso e Privacidade | Todas as telas públicas | CCD001 | Revisão da Área Pública (20/11/2026). |
+| EA-001-04 | Página "Termos de Uso e Política de Privacidade", com abas para cada documento | `1160-1033` | CCD003 | Aberta pelo cadastro, pelo aviso do Google no login, pelo "Entre para continuar" e pelo rodapé. Página estática; o texto final é do PO (20/11/2026). |
+| EA-002-01 | Página pública do álbum do catálogo: capa, descrição, total de cartas e lista das cartas, com "Adicionar à minha coleção" e "Favoritar", que pedem login | `1160-1845` | CCD002 | Aberta por "Ver álbum" na busca; cada carta leva ao perfil da carta (20/11/2026). |
+| EA-003-01 | Medidor de força da senha no cadastro | `238-1204` | CCD003 | Só visual; a regra continua a do caso de uso (20/11/2026). |
+| EA-005-01 | Busca dentro da Central de ajuda e os tópicos Primeiros passos, Pagamentos, Envio e entrega, Álbuns digitais, Vender na CromoCard e Segurança e denúncias | `1112-6843` | CCD005 | O tópico "Trocas" saiu (fora do MVP) (20/11/2026). |
+| EA-080-01 | Perfil público do usuário: nome de usuário, cidade, avaliação, vendas concluídas e anúncios ativos | `1160-1396` | CCD080 | Aberto por "Ver perfil" na busca e pelo nome do vendedor no anúncio e no perfil da carta. Não mostra nome completo, e-mail, CPF nem endereço. É o "perfil público do vendedor" citado na CCD083 (20/11/2026). |
 
 ## 3. O que não vira requisito
 
@@ -210,3 +216,11 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   Catálogo, em todas as telas; Pedidos e pagamentos `1157-29979`, nenhum pedido encontrado `1157-35305`, detalhe do
   pedido `1157-30793`, cancelar e reembolsar `1157-31707` e motivo obrigatório `1157-32634`, liberar agora `1157-33562`
   e operação concluída `1157-34488`.
+- Revisão profunda da Área Pública (20/11/2026): cadastro com nome de usuário `238-1204`; aviso dos termos junto do Google
+  no login `152-2587`; estados novos de login e cadastro: e-mail não confirmado `1160-411`, conta suspensa `1160-486`,
+  conta excluída `1160-561`, e-mail confirmado `1160-636`, senha alterada `1160-711`, erros do cadastro `1160-786`, link
+  de confirmação expirado `1160-888` e link de redefinição expirado `1160-960`. Telas públicas novas: Termos de Uso e
+  Política de Privacidade `1160-1033`, perfil público do usuário `1160-1396`, álbum do catálogo `1160-1845`, Como
+  funciona para quem vende `1160-2268` e "Entre para continuar" na busca `1160-2457`. Ajustes: as cartas da Home ("Mais
+  procuradas") e da busca abrem o perfil da carta; grupos, Favoritar e Adicionar à coleção pedem login; "Anunciar esta
+  carta" não aparece para o visitante; rodapé em todas as telas públicas.

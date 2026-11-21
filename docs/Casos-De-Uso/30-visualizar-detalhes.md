@@ -20,4 +20,4 @@
 |---|---|
 | 1. O visitante seleciona "Comprar", "Favoritar" ou "Adicionar à coleção". |  |
 |  | 2. O sistema mostra "Entre para continuar", com "Continuar com Google", "Entrar com e-mail e senha" e "Criar conta grátis"; depois do login, o usuário volta para a carta. |
-|  | 3. Caso a carta não tenha anúncios ativos, a lista informa que não há anúncios, e o vendedor vê a opção "Anunciar esta carta". |
+|  | 3. Caso a carta não tenha anúncios ativos, a lista informa que não há anúncios, e o vendedor logado vê a opção "Anunciar esta carta" (o visitante não vê o botão). |

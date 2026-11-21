@@ -4,9 +4,9 @@
 
 | User Story | Narrativa |
 |---|---|
-| Visualizar Destaques | Como visitante eu quero ver destaques, cartas mais procuradas, categorias e notícias na tela Home. |
+| Visualizar Destaques | Como visitante eu quero ver destaques, cartas mais procuradas, anúncios recentes e categorias na tela Home. |
 | Buscar Global | Como visitante eu quero buscar cartas, usuários e grupos diretamente no painel público. |
-| Criar Conta | Como visitante eu quero me cadastrar via e-mail informando tipo de usuário, aceitando termos e confirmando o e-mail. |
+| Criar Conta | Como visitante eu quero me cadastrar via e-mail informando nome de usuário e tipo de usuário, aceitando termos e confirmando o e-mail. |
 | Realizar Login | Como visitante eu quero fazer login com e-mail/senha ou Google, com a opção de lembrar usuário. |
 | Central de Ajuda /FAQ | Como visitante eu quero acessar uma página de dúvidas frequentes (FAQ) para entender como a plataforma gerencia trocas e álbuns antes de criar minha conta. |
 | Recuperar Senha | Como visitante eu quero solicitar a recuperação da minha senha caso eu a esqueça. |
