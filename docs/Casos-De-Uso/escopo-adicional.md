@@ -233,18 +233,19 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   funciona para quem vende `1160-2268` e "Entre para continuar" na busca `1160-2457`. Ajustes: as cartas da Home ("Mais
   procuradas") e da busca abrem o perfil da carta; grupos, Favoritar e Adicionar à coleção pedem login; "Anunciar esta
   carta" não aparece para o visitante; rodapé em todas as telas públicas.
-- Revisão profunda da Área do Cliente (20/11/2026): Álbuns, Mensagens, Perfil e Configurações refeitos no padrão de
-  1280 px (as telas antigas foram para o Arquivo). Álbuns: Meus álbuns `1160-4549`, sem álbuns `1160-5036`, detalhe do
-  álbum `1160-5395`, menu do álbum `1160-5932`, compartilhar progresso `1160-6346` (era `477-2419`, fora do padrão),
-  compartilhar álbum vazio `1160-6792`, resetar progresso `1160-7210`, remover álbum `1160-7628`, adicionar carta
-  `1160-7996`, solicitar álbum `1160-8442`, solicitar carta `1160-8851`, solicitação enviada `1160-9265`; compartilhar
-  coleção na Início `1160-9616`. Mensagens: conversas `1160-10022`, sem conversas `1160-10470`, ações da mensagem
-  `1160-10837`, respondendo `1160-11160`, bloquear ou denunciar `1160-11614`, contato bloqueado `1160-11966`, nova
-  conversa `1160-12287`. Perfil: meu perfil com conquistas `1160-12644`, erros `1160-13099`, salvo `1160-13422`, alterar
-  foto `1160-13750`, novo endereço `1160-14095`, editar endereço `1160-14478`, remover endereço `1160-14863` e endereço
-  principal `1160-15199`. Configurações (senha, privacidade, notificações, acessibilidade e excluir conta) `1160-15533`,
-  alterar senha `1160-16011`, senha atual incorreta `1160-16385`, senha alterada `1160-16759`, excluir conta
-  `1160-17110`. Perfil público com conquistas e "Denunciar perfil" `1160-1396` e denunciar perfil `1160-17495`. Vendedor:
+- Revisão profunda da Área do Cliente (20/11/2026): Álbuns, Mensagens, Perfil e Configurações voltaram ao design
+  original do protótipo, adaptados aos 1280 px com o menu e o topo novos e com os textos fora do escopo tirados (custódia,
+  propostas de troca, graduação, 2FA, WhatsApp). As versões redesenhadas e as telas de origem estão no Arquivo. Álbuns:
+  Meus álbuns `1160-23080`, sem álbuns `1160-29088`, detalhe do álbum `1160-23696`, menu do álbum `1160-26090`,
+  compartilhar progresso `1160-25301` (modal original de `477-2419` com fundo escuro), compartilhar álbum vazio
+  `1160-26693`, resetar progresso `1160-27304`, remover álbum `1160-27915`, adicionar carta `1160-28449`, solicitar álbum
+  `1160-29609`, solicitar carta `1160-24389`, solicitação enviada `1160-24932`; compartilhar coleção na Início
+  `1160-9616`. Mensagens: conversas, com a resposta em andamento, `1160-32980`, sem conversas `1160-36236`, ações da
+  mensagem `1160-33616`, bloquear ou denunciar `1160-34298`, contato bloqueado `1160-37184`, nova conversa `1160-34999`.
+  Perfil: meu perfil com conquistas e acessibilidade `1160-37708`, erros `1160-38269`, salvo `1160-38711`, alterar foto
+  `1160-39158`, novo endereço `1160-39672`, editar endereço `1160-40220`, remover endereço `1160-40789`. Configurações
+  (conta e segurança, privacidade, canais e eventos de aviso, excluir conta) `1160-41305`, alterar senha `1160-41859`,
+  senha atual incorreta `1160-42338`, senha alterada `1160-42817`, excluir conta `1160-43273`. Perfil público com conquistas e "Denunciar perfil" `1160-1396` e denunciar perfil `1160-17495`. Vendedor:
   o conteúdo deixou de ficar atrás do menu; criar, editar e bloqueado e editar perfil ganharam o fundo novo; Propostas e
   Avaliações saíram do menu. Comunidades: topo no padrão e textos limpos. Uma pessoa só no cliente (Gabriel, @gabriel12)
   e no vendedor (Rodrigo). Menu lateral e fluxos principais ligados no protótipo.
