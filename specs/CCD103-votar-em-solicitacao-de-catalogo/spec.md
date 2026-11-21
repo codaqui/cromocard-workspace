@@ -6,7 +6,7 @@
 - **Caso de uso:** [103-votar-em-solicitacao-de-catalogo.md](../../docs/Casos-De-Uso/103-votar-em-solicitacao-de-catalogo.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Cliente, Administrador · **Pré-condições:** `CUSTOMER` ou `SELLER` autenticado para votar; `ADMIN` para ver o quórum
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista e reaprovada em 2026-11-17 (L7–L10)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista e reaprovada em 2026-11-17 (L7–L10); decisões L7–L10 validadas em 2026-11-20 por Felipe Consulim (PO)
 
 ## Objetivo
 
@@ -82,7 +82,7 @@
 | L3 | Meta padrão (proposta: 200, do Figma) | 200, do Figma | `103`, FP 7 |
 | L4 | Campos extras das sugestões dependem de quem cria a solicitação (proposta: lidos de `data` quando existirem) | Lidos de `data` quando existirem | `escopo-adicional.md`, EA-064-02 |
 | L5 | Raridades da sugestão e do checklist (o Figma usava "Secret Promo", "L", "SR", "SEC") | Os nomes do seed (Comum, Incomum, Rara, Épica, Lendária). Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `escopo-adicional.md`, EA-064-02 |
-| L6 | A tela de votação do cliente (L1) continua sem desenho | Fica para a revisão do painel do cliente. Decisão do PO (Daniel, 12/11/2026) | `escopo-adicional.md`, seção 4 |
+| ~~L6~~ | A tela de votação do cliente (L1) continua sem desenho | ~~Fica para a revisão do painel do cliente. Decisão do PO (Daniel, 12/11/2026)~~ Substituída pela L7 (17/11/2026): a página do cliente passou a ser feita nesta story | `escopo-adicional.md`, seção 4 |
 | L7 | Fazer agora a página do cliente, que não tinha desenho (L6)? | Sim, no estilo do painel do cliente, com o item "Sugestões" no menu; o PO autorizou desenhar no Figma (`1038-1750`, `1038-2242`, `1038-2740`). Substitui a L6. Decisão do PO (Daniel, 17/11/2026) | `103`, FP 1–2; `escopo-adicional.md`, linha da CCD103 e seção 4 |
 | L8 | Quem vota? | `CUSTOMER` e `SELLER`, inclusive quem sugeriu; `ADMIN` não vota, porque é quem decide. Decisão do PO (Daniel, 17/11/2026) | `103`, Pré-condições |
 | L9 | Capa sugerida e logo enviado (só no Figma, `228-1804`) | Implementar, lidos de `data` quando existirem. Decisão do PO (Daniel, 17/11/2026) | `escopo-adicional.md`, EA-064-03 e EA-064-04 |
