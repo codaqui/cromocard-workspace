@@ -278,7 +278,7 @@ views {
 
     visitante -> appWeb '1. acessa a tela Home da aplicacao'
     appWeb -> modAcessoPublico '2. solicita o destaque, as mais procuradas e os anuncios recentes'
-    modAcessoPublico -> bancoDados '2. busca as 5 cartas com mais vendas concluidas em 30 dias, os anuncios ativos mais recentes e as categorias padrao na ordem da CCD104'
+    modAcessoPublico -> bancoDados '2. busca as 4 cartas com mais vendas concluidas em 30 dias, os anuncios ativos mais recentes e as categorias padrao na ordem da CCD104'
     modAcessoPublico -> appWeb '2. retorna as secoes da Home'
     appWeb -> visitante '2. apresenta o destaque, Mais procuradas e Cartas recem-anunciadas com o filtro por categoria'
     visitante -> appWeb '3. navega pelas categorias e itens em destaque'
@@ -308,6 +308,7 @@ views {
       **Ator:** Visitante
       **Pre-condicao:** estar na Home ou na tela de Login.
       **Fluxo alternativo:** campo invalido ou termos nao aceitos indicam o campo e nao registram;
+      nome de usuario em uso informa e nao registra;
       e-mail ja cadastrado informa "E-mail ja cadastrado" e oferece o reenvio da confirmacao se a
       conta nao confirmou o e-mail; e-mail de conta excluida oferece a reativacao (CCD052); falha
       no envio do e-mail mantem o cadastro e permite o reenvio, respeitando o limite de pedidos;
@@ -315,10 +316,10 @@ views {
     '''
 
     visitante -> appWeb '1. seleciona a opcao Cadastrar'
-    appWeb -> visitante '2. solicita nome, e-mail, senha, confirmacao da senha e o tipo de usuario (Cliente ou Vendedor)'
+    appWeb -> visitante '2. solicita nome, e-mail, nome de usuario, senha, confirmacao da senha e o tipo de usuario (Cliente ou Vendedor), com os links dos Termos'
     visitante -> appWeb '3. informa os campos solicitados e aceita os termos de uso'
     appWeb -> modAutenticacao '3. envia os dados de cadastro'
-    modAutenticacao -> bancoDados '4. valida os campos (senha forte) e a disponibilidade do e-mail, sem diferenciar maiusculas'
+    modAutenticacao -> bancoDados '4. valida os campos (senha forte; nome de usuario de 3 a 30 caracteres) e a disponibilidade do e-mail e do nome de usuario, sem diferenciar maiusculas'
     modAutenticacao -> bancoDados '5. registra o usuario com o e-mail ainda nao confirmado'
     modAutenticacao -> appWeb '5. envia o link de confirmacao (valido por 24 horas)'
     appWeb -> visitante '5. mostra a tela Confirme seu e-mail, com a opcao de reenviar'
@@ -336,15 +337,15 @@ views {
       **Fluxo alternativo:** credenciais que nao coincidem (inclusive em conta so Google) emitem
       "E-mail ou senha incorretos"; e-mail nao confirmado informa e oferece o reenvio; conta
       suspensa informa a suspensao; conta excluida oferece a reativacao (CCD052); login com
-      Google vincula a conta existente ou cria uma conta de Cliente; "Sair" no cabecalho encerra
+      Google vincula a conta existente ou cria uma conta de Cliente, com nome de usuario gerado do e-mail; "Sair" no cabecalho encerra
       a sessao e volta para a area publica.
     '''
 
     visitante -> appWeb '1. acessa a tela de Login'
-    appWeb -> visitante '2. apresenta e-mail, senha, a opcao Lembrar de mim (desmarcada) e o login com Google'
-    visitante -> appWeb '3. informa e-mail e senha, marca ou nao Lembrar de mim e clica em entrar'
+    appWeb -> visitante '2. apresenta e-mail ou nome de usuario, senha, a opcao Lembrar de mim (desmarcada) e o login com Google, com o aviso dos Termos'
+    visitante -> appWeb '3. informa e-mail (ou nome de usuario) e senha, marca ou nao Lembrar de mim e clica em entrar'
     appWeb -> modAutenticacao '3. envia as credenciais'
-    modAutenticacao -> bancoDados '4. confere o e-mail, sem diferenciar maiusculas, e a senha'
+    modAutenticacao -> bancoDados '4. confere o e-mail ou o nome de usuario, sem diferenciar maiusculas, e a senha'
     modAutenticacao -> bancoDados '5. grava a sessao (30 dias com Lembrar de mim; sem ela, ate fechar o navegador)'
     modAutenticacao -> appWeb '5. emite o token JWT e o refresh token'
     appWeb -> visitante '5. redireciona para a area do papel: Painel Cliente ou BackOffice (ou para a pagina protegida pedida antes)'
