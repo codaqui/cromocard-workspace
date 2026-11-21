@@ -328,7 +328,7 @@ package "2. Painel Cliente - Marketplace" {
   usecase "Visualizar\nFotos\n(CCD074)" as UC074
   usecase "Visualizar Histórico\nde Preços\n(CCD075)" as UC075
   usecase "Visualizar Anúncios\nAtivos ***\n(CCD076)" as UC076
-  usecase "Visualizar\nPedidos ***\n(CCD077)" as UC077
+  usecase "Visualizar\nPedidos\n(CCD077)" as UC077
   usecase "Mostrar Todas\nas Cartas\n(CCD078)" as UC078
   usecase "Visualizar Quantidade\nDisponível\n(CCD079)" as UC079
   usecase "Visualizar Dados\ndo Vendedor\n(CCD080)" as UC080

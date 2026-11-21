@@ -1081,7 +1081,8 @@ views {
       **Pre-condicao:** estar autenticado e possuir um perfil cadastrado.
       **Fluxo alternativo:** com dados invalidos ou incompletos, o sistema impede o salvamento
       e informa quais campos precisam ser corrigidos; ao cancelar a edicao, descarta as
-      alteracoes e mantem os dados anteriores.
+      alteracoes e mantem os dados anteriores; ao tentar remover o endereco principal, pede que
+      outro endereco seja escolhido como principal antes.
     '''
 
     cliente -> appWeb '1. acessa seu perfil e seleciona a opcao Editar perfil'
