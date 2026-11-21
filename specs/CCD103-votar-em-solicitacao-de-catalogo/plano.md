@@ -79,7 +79,7 @@ Baixar o checklist não grava `audit_logs`: não é relatório da plataforma (AD
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/routes/paths.ts` · `app/layouts/SiteShell/siteMenu.ts` | `/sugestoes` e o item "Sugestões" no menu | R2 |
+| `src/routes/paths.ts` · `app/layouts/SiteShell/siteMenu.ts` | `/sugestoes` e o item "Sugestões" no menu, escondido para o `ADMIN` (L11) | R1, R2 |
 | `src/features/catalog/requests/catalog-request-votes.{types,api,queries,labels,format}.ts` | votação do cliente | R2–R4, R7, R8 |
 | `pages/CommunitySuggestionsPage/` · `components/SuggestionVoteCard/` | a página `1038-1750` e os estados `1038-2242`, `1038-2740` | R2–R4, R7, R8 |
 | `catalog-requests.types.ts` · `.api.ts` · `components/CatalogRequestCard/` (CCD064) | quórum, campos da carta, capa, checklist com CSV, logo e subcategorias | R5, R10–R13 |

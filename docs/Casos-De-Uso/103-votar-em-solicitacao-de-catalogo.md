@@ -2,7 +2,7 @@
 |---|---|
 | Finalidade/Objetivo | Permitir que os colecionadores votem a favor, neutro ou contra uma sugestão de nova categoria (franquia) e que o administrador use o resultado da votação para decidir. |
 | Atores | Cliente, Administrador |
-| Pré Condições | O cliente (colecionador ou vendedor) deve estar autenticado e existir uma solicitação de categoria pendente, que fica aberta para votação enquanto não for aprovada ou recusada. O administrador não vota. |
+| Pré Condições | O cliente (colecionador ou vendedor) deve estar autenticado e existir uma solicitação de categoria pendente, que fica aberta para votação enquanto não for aprovada ou recusada. O administrador não vota e o item "Sugestões" não aparece no menu dele. |
 
 ### Fluxo Principal
 

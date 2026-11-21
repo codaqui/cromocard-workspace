@@ -6,7 +6,7 @@
 - **Caso de uso:** [103-votar-em-solicitacao-de-catalogo.md](../../docs/Casos-De-Uso/103-votar-em-solicitacao-de-catalogo.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Cliente, Administrador · **Pré-condições:** `CUSTOMER` ou `SELLER` autenticado para votar; `ADMIN` para ver o quórum
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista e reaprovada em 2026-11-17 (L7–L10); decisões L7–L10 validadas em 2026-11-20 por Felipe Consulim (PO)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; revista e reaprovada em 2026-11-17 (L7–L10); decisões L7–L10 validadas e L11 decidida em 2026-11-20 por Felipe Consulim (PO)
 
 ## Objetivo
 
@@ -16,7 +16,7 @@
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
-| R1 | Votar exige login como `CUSTOMER` ou `SELLER`, inclusive quem sugeriu; `ADMIN` não vota (`403`). Ver o quórum exige `ADMIN` | Permissão | `103`, Atores e Pré-condições (L8); ADR-005, item 4 |
+| R1 | Votar exige login como `CUSTOMER` ou `SELLER`, inclusive quem sugeriu; `ADMIN` não vota (`403`) e não vê o item "Sugestões" no menu. Ver o quórum exige `ADMIN` | Permissão | `103`, Atores e Pré-condições (L8, L11); ADR-005, item 4 |
 | R2 | Página "Sugestões da comunidade" (`/sugestoes`, item "Sugestões" no menu do site) com as sugestões de categoria pendentes: protocolo, quem sugeriu, descrição, contagem a favor, neutros e contra, e o voto do cliente; sem nenhuma, "Nenhuma sugestão em votação" | Tela | `103`, FP 1–2 (L7) |
 | R3 | Voto a favor, neutro ou contra, um por cliente em cada sugestão | Ação | `103`, FP 3–4; DBML `catalog_request_votes` |
 | R4 | A contagem é atualizada depois do voto | Regra | `103`, FP 5 |
@@ -43,6 +43,7 @@
 - **CA9** (R2) — **Dado** nenhuma sugestão de categoria pendente, **quando** o cliente abre `/sugestoes`, **então** vê "Nenhuma sugestão em votação".
 - **CA10** (R8) — **Dado** a sugestão aprovada depois que o cliente abriu a página, **quando** ele vota, **então** vê o aviso "Votação encerrada" e a sugestão sai da lista.
 - **CA11** (R13) — **Dado** uma sugestão de álbum com capa e uma de categoria com logo, **quando** o admin abre a fila, **então** vê a capa com o total do checklist e o logo; sem imagem, o bloco não aparece.
+- **CA12** (R1) — **Dado** um `ADMIN`, **quando** abre o site, **então** o menu lateral não mostra o item "Sugestões"; para `CUSTOMER` e `SELLER` ele aparece.
 
 ## Dados
 
@@ -87,3 +88,4 @@
 | L8 | Quem vota? | `CUSTOMER` e `SELLER`, inclusive quem sugeriu; `ADMIN` não vota, porque é quem decide. Decisão do PO (Daniel, 17/11/2026) | `103`, Pré-condições |
 | L9 | Capa sugerida e logo enviado (só no Figma, `228-1804`) | Implementar, lidos de `data` quando existirem. Decisão do PO (Daniel, 17/11/2026) | `escopo-adicional.md`, EA-064-03 e EA-064-04 |
 | L10 | Quais raridades no resumo do álbum (o Figma mostra Total, Lendárias, Épicas, Raras)? | O total e as três raridades mais altas do seed presentes no checklist. Decisão do PO (Daniel, 17/11/2026) | `escopo-adicional.md`, EA-064-03 |
+| L11 | O que o `ADMIN` vê em `/sugestoes`, se ele não vota (R1)? Sem tratamento, a página dele mostrava "Você não tem permissão para esta ação" com um "Tentar de novo" que nunca funciona | O item "Sugestões" não aparece no menu do `ADMIN`; `CUSTOMER` e `SELLER` continuam vendo. Decisão do PO (Felipe Consulim, 20/11/2026), na revisão do PR #26 | `103`, Pré-condições (menu do site); CA12 |
