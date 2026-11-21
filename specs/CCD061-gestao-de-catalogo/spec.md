@@ -1,12 +1,12 @@
 # CCD061 — Gestão de Catálogo
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #336 `CCD061-Gestão de Catálogo` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [61-gestao-de-catalogo.md](../../docs/Casos-De-Uso/61-gestao-de-catalogo.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; L9 decidida pelo PO (Felipe Consulim) em 2026-11-18, na revisão do PR 44
 
 ## Objetivo
 
@@ -99,7 +99,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L6 | Quais campos são obrigatórios para publicar uma carta? O Figma marcava quase todos; o DER exige só o nome, e a CCD106 CA4 barra o rascunho sem raridade | Nome, franquia, raridade, idioma e imagem da frente; álbum, numeração e ano são opcionais (o DER permite carta avulsa). Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `61`, FP 5 |
 | L7 | O filtro "Edição / Ano" do Figma | Dois filtros, Álbum e Ano, como no contrato (`albumId`, `year`), mais o filtro de status. Decisão do PO (Daniel, 12/11/2026) | `61`, FP 2; `escopo-adicional.md`, EA-061-03 |
 | L8 | Excluir pede confirmação? | Sim, com modal; a exclusão em lote também pede o motivo (CCD105). Decisão do PO (Daniel, 12/11/2026) | `61`, FA 7–8 |
-| L9 | Como escolher entre muitos álbuns e categorias nos selects? | Em aberto. A implementação carrega a primeira página (até 100, o máximo da API) e sempre inclui o item já escolhido na edição; as categorias vêm filtradas pelo tipo (`type`), então o limite vale para cada tipo; um select com busca fica para quando o catálogo passar de 100 | Só aqui, aguardando o PO |
+| L9 | Como escolher entre muitos álbuns e categorias nos selects? | Aceito como está: a implementação carrega a primeira página (até 100, o máximo da API) e sempre inclui o item já escolhido na edição; um select com busca fica para quando o catálogo passar de 100. Decisão do PO (Felipe Consulim, 18/11/2026), na revisão do PR 44 | Só aqui |
 | L10 | A categoria pai precisa ser do mesmo tipo (`ALBUM`/`CARD`)? | Sim: a categoria pai é do mesmo tipo da filha (L11); pai de outro tipo, a própria categoria ou uma descendente responde `422` | L11; aguardando a validação do PO |
 | L11 | O tipo da categoria (`ALBUM`/`CARD`) é regra ou só rótulo? | Regra: álbum só aceita categoria `ALBUM`, carta só aceita categoria `CARD` (no formulário e na importação), e a categoria pai é do mesmo tipo da filha. Outro tipo responde `422 CATEGORY_TYPE_MISMATCH` | DBML `category_type`; aguardando a validação do PO |
 | L12 | A carta importada por CSV precisa da imagem da frente? O CSV não tem coluna de imagem (L3), e a L6 exige a frente para publicar | A carta importada entra como rascunho (`status = DRAFT`, o mesmo da CCD106), sem imagem, e não aparece no catálogo público; o admin envia a frente pela edição e só então a publica, com a validação da L6. O CSV continua sem coluna de imagem (L3). Decisão do PO (Daniel, 14/11/2026) | `61`, FP 11 |

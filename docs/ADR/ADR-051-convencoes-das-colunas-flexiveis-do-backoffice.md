@@ -1,6 +1,6 @@
 # ADR-051 — Convenções das colunas flexíveis do BackOffice
 
-- **Status:** Aceito (validado pelo PO em 22/10/2026)
+- **Status:** Aceito (validado pelo PO em 22/10/2026); item 1 substituído parcialmente pelo ADR-061
 - **Data:** 2026-10-22
 - **Decisores:** Daniel Andrade (PO), equipe CromoCard
 
