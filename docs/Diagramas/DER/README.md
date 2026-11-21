@@ -84,7 +84,7 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
   todas `timestamptz` (datas sem hora continuam `date`).
 - **Soft delete** (ADR-015): `deleted_at` (nulo = ativo). `DELETED` nao
   existe nos enums de status - excluido e sempre `deleted_at IS NOT NULL`.
-- Entidades associativas (N:N) com PK composta: `user_achievements`, `poll_votes`, `conversation_participants`.
+- Entidades associativas (N:N) com PK composta: `user_achievements`, `poll_votes`, `conversation_participants`, `catalog_request_votes`.
 - Enums centralizados no topo dos arquivos `.dbml`.
 - `favorites` e `reports` usam alvo polimorfico: FKs opcionais + coluna discriminadora (`type` / `target_type`).
 - Notacao de cardinalidade no DBML: `>` (muitos para um) e `-` (um para um).
