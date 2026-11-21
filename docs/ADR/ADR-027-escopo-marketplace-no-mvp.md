@@ -34,7 +34,7 @@ ponta a ponta, só em homologação e em modo de teste:
   comprador confirma o recebimento ou 7 dias depois da entrega.
 - **Administrar:** o BackOffice acompanha os pedidos e pode cancelar com reembolso ou liberar na hora (CCD111).
 
-As user stories da fatia perderam a marca `***` (CCD068, 069, 071, 072, 074, 075, 078, 079 e 080) e ganharam as
+As user stories da fatia perderam a marca `***` (CCD068, 069, 071, 072, 074, 075, 077, 078, 079 e 080) e ganharam as
 novas CCD108–111. Continuam fora do MVP: propostas e trocas, avaliações, saque via Pix, denúncias do marketplace e o
 restante marcado `***`.
 
