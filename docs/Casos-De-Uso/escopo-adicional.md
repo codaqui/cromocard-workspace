@@ -25,7 +25,7 @@ partindo do que o PR #4 (cancelado) tinha documentado, conferido tela por tela n
 | CCD100 | [Agendar Notificação Global](100-agendar-notificacao-global.md) | Administrador | Notificação `208-2380`, agendamento `277-2689`, confirmação `277-2982` | CCD060; job agendado (ADR-010) | `global_notifications.status`, `scheduled_at`, `sent_at`, `reference_link` (ADR-053) |
 | CCD101 | [Segmentar Notificação Global](101-segmentar-notificacao-global.md) | Administrador | `208-2380` (histórico: público e canal), `277-2982` (público-alvo) | CCD060, CCD100 | `global_notifications.audience`, `channels` (ADR-053) |
 | CCD102 | [Exportar Log de Auditoria](102-exportar-log-de-auditoria.md) | Administrador | Logs `228-2395` ("Extrair Logs") | CCD065 | `audit_logs.ip_address` (ADR-053) |
-| CCD103 | [Votar em Solicitação de Catálogo](103-votar-em-solicitacao-de-catalogo.md) | Cliente, Administrador | Fila de solicitações `228-1804` (só o lado do admin); o Figma **não tem** a tela de votação do cliente | CCD064 | `catalog_request_votes`; meta em `global_settings` (ADR-053) |
+| CCD103 | [Votar em Solicitação de Catálogo](103-votar-em-solicitacao-de-catalogo.md) | Cliente, Administrador | Fila de solicitações `228-1804` (admin); votação do cliente `1038-1750`, votação encerrada `1038-2242` e sem sugestões `1038-2740` | CCD064 | `catalog_request_votes`; meta em `global_settings` (ADR-053) |
 | CCD104 | [Ordenar Categorias Padrão](104-ordenar-categorias-padrao.md) | Administrador | Configurações `228-3048` (Módulo 2) | CCD066, CCD061 | `categories.slug`, `display_order`, `is_pinned`, `badge` (ADR-053) |
 | CCD105 | [Duplicar Carta](105-duplicar-carta.md) | Administrador | Catálogo `208-2895` | CCD061 | `cards.code`, `variants` (ADR-053) |
 | CCD106 | [Salvar Rascunho de Carta](106-salvar-rascunho-de-carta.md) | Administrador | Cadastrar carta `278-3246` | CCD061 | `cards.status`, `release_year` (ADR-053) |
@@ -95,6 +95,9 @@ aprovadas.
 | EA-002-01 | Página pública do álbum do catálogo: capa, descrição, total de cartas e lista das cartas, com "Adicionar à minha coleção" e "Favoritar", que pedem login | `1160-1845` | CCD002 | Aberta por "Ver álbum" na busca; cada carta leva ao perfil da carta (20/11/2026). |
 | EA-003-01 | Medidor de força da senha no cadastro | `238-1204` | CCD003 | Só visual; a regra continua a do caso de uso (20/11/2026). |
 | EA-005-01 | Busca dentro da Central de ajuda e os tópicos Primeiros passos, Pagamentos, Envio e entrega, Álbuns digitais, Vender na CromoCard e Segurança e denúncias | `1112-6843` | CCD005 | O tópico "Trocas" saiu (fora do MVP) (20/11/2026). |
+| EA-007-01 | Valor estimado da coleção e do álbum, com a variação em 30 dias | `1122-17812`, `1160-5395` | CCD007 | Soma do preço médio (`price_history`) das cartas marcadas como possuo (20/11/2026). |
+| EA-020-01 | Opção "Mostrar as cartas faltantes na página do link" ao compartilhar o progresso | `1160-6346` | CCD020 | Ligada, quem abre o link vê a lista das faltantes (20/11/2026). |
+| EA-053-01 | Escolher, por tipo de aviso, receber no site e por e-mail | `1160-15533` | CCD053 | Tipos: pedidos e pagamentos, mensagens, grupos, solicitações ao catálogo e avisos da plataforma. Sem WhatsApp nem push (ADR-058) (20/11/2026). |
 | EA-080-01 | Perfil público do usuário: nome de usuário, cidade, avaliação, vendas concluídas e anúncios ativos | `1160-1396` | CCD080 | Aberto por "Ver perfil" na busca e pelo nome do vendedor no anúncio e no perfil da carta. Não mostra nome completo, e-mail, CPF nem endereço. É o "perfil público do vendedor" citado na CCD083 (20/11/2026). |
 
 ## 3. O que não vira requisito
@@ -139,7 +142,13 @@ nominal", "liquidação instantânea", "cofre de cartas" (o vendedor envia diret
 "Validação com seguro" e "saldo"; os selos "Aceita troca", "Envio imediato", "Frete grátis", "1º dono", "Vendedor
 Gold", "Vendedor PRO" e "Lojista verificado"; graduação PSA/BGS/CGC; produtos lacrados e lotes; filtro de
 localização e "somente verificados"; "estado de referência" da carta do catálogo; as colunas Idioma e Negociação
-nos anúncios; "Alerta de preço" (futuro) e "Compartilhar" no perfil da carta; "Quero trocar" e o chat do suporte.
+nos anúncios; "Alerta de preço" (futuro) e "Compartilhar" no perfil da carta; "Quero trocar" e o chat do suporte. Na Área do Cliente (20/11/2026): propostas recebidas, responder proposta, denunciar usuário pela proposta e avaliações
+recebidas do vendedor (fora do MVP pelo ADR-027; telas no Arquivo e itens fora do menu); agendar encontro de troca
+presencial e o card "Próximo encontro" (sem caso de uso nem tabela); enviar carta, localização e anexo no chat e no grupo
+(`**`); alerta de preço (futuro); WhatsApp e push nas notificações; reativação automática do anúncio pausado; "Advertir
+usuário" na fila do grupo (a advertência é da plataforma, CCD099); seguidores e "amigos que participam"; categoria do
+grupo; graduação PSA/BGS como condição; "guilda", "sindicato", "escrow", "vault", "saldo", "XP", "chat ao vivo", "KYC",
+"2FA" e "custódia" nos textos.
 
 ## 4. Telas conferidas
 
@@ -224,3 +233,18 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   funciona para quem vende `1160-2268` e "Entre para continuar" na busca `1160-2457`. Ajustes: as cartas da Home ("Mais
   procuradas") e da busca abrem o perfil da carta; grupos, Favoritar e Adicionar à coleção pedem login; "Anunciar esta
   carta" não aparece para o visitante; rodapé em todas as telas públicas.
+- Revisão profunda da Área do Cliente (20/11/2026): Álbuns, Mensagens, Perfil e Configurações refeitos no padrão de
+  1280 px (as telas antigas foram para o Arquivo). Álbuns: Meus álbuns `1160-4549`, sem álbuns `1160-5036`, detalhe do
+  álbum `1160-5395`, menu do álbum `1160-5932`, compartilhar progresso `1160-6346` (era `477-2419`, fora do padrão),
+  compartilhar álbum vazio `1160-6792`, resetar progresso `1160-7210`, remover álbum `1160-7628`, adicionar carta
+  `1160-7996`, solicitar álbum `1160-8442`, solicitar carta `1160-8851`, solicitação enviada `1160-9265`; compartilhar
+  coleção na Início `1160-9616`. Mensagens: conversas `1160-10022`, sem conversas `1160-10470`, ações da mensagem
+  `1160-10837`, respondendo `1160-11160`, bloquear ou denunciar `1160-11614`, contato bloqueado `1160-11966`, nova
+  conversa `1160-12287`. Perfil: meu perfil com conquistas `1160-12644`, erros `1160-13099`, salvo `1160-13422`, alterar
+  foto `1160-13750`, novo endereço `1160-14095`, editar endereço `1160-14478`, remover endereço `1160-14863` e endereço
+  principal `1160-15199`. Configurações (senha, privacidade, notificações, acessibilidade e excluir conta) `1160-15533`,
+  alterar senha `1160-16011`, senha atual incorreta `1160-16385`, senha alterada `1160-16759`, excluir conta
+  `1160-17110`. Perfil público com conquistas e "Denunciar perfil" `1160-1396` e denunciar perfil `1160-17495`. Vendedor:
+  o conteúdo deixou de ficar atrás do menu; criar, editar e bloqueado e editar perfil ganharam o fundo novo; Propostas e
+  Avaliações saíram do menu. Comunidades: topo no padrão e textos limpos. Uma pessoa só no cliente (Gabriel, @gabriel12)
+  e no vendedor (Rodrigo). Menu lateral e fluxos principais ligados no protótipo.

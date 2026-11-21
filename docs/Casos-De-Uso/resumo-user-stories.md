@@ -53,7 +53,7 @@
 | Ampliar Carta | Como Cliente preciso ampliar as imagens da carta para analisar seus detalhes e estado de conservação.** |
 | Visualizar Histórico de Preços | Como Cliente preciso visualizar o histórico de preços para acompanhar a variação do valor da carta. |
 | Visualizar Anúncios Ativos | Como Cliente preciso visualizar meus anúncios ativos para acompanhar os itens que estão atualmente disponíveis para venda.*** |
-| Visualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma.*** |
+| Visualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma. |
 | Confirmar Entrega e Liberar Pagamento | Como Cliente quero que o pagamento só seja liberado ao vendedor depois que a carta for entregue para comprar com segurança. |
 | Escanear Carta por Imagem | Como Cliente preciso escanear uma carta por imagem para identificar o item de forma automática.** |
 | Escanear Código | Como Cliente preciso escanear o código de uma carta para localizar suas informações de forma rápida.** |
@@ -103,7 +103,7 @@
 | Visualizar Mensagens | Como Cliente preciso visualizar minhas mensagens para acompanhar as conversas realizadas com outros usuários dentro do grupo. |
 | Moderar Contatos Privados | Como Cliente preciso ter a opção de bloquear ou denunciar usuários com comportamento inadequado no chat. |
 | Visualizar Status de Leitura | Como Cliente preciso ver um indicador (ex: check azul) para saber se o colecionador já leu minha mensagem.** |
-| Conversar com Colecionador | Como Cliente preciso conversar com outros colecionadores de forma privada via chat para alinhar trocas.** |
+| Conversar com Colecionador | Como Cliente preciso conversar com outros colecionadores de forma privada via chat para alinhar trocas. |
 | Enviar Anexos e Localização | Como Cliente preciso enviar imagens, compartilhar minhas cartas e mandar minha localização no chat.** |
 
 ## 6. Perfil e Configurações
