@@ -5,8 +5,8 @@
 //  usuario e comportamento (metodos) de cada classe. Ver ADR-035, ADR-036 e
 //  ADR-037 em docs/ADR/ para o racional de cada decisao de modelagem.
 //
-//  49 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
-//  Usuario + 27 enumeracoes, organizados nos mesmos 8 modulos do DER.
+//  47 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
+//  Usuario + 26 enumeracoes, organizados nos mesmos 8 modulos do DER.
 //  Identificadores sao UUID v7 (ADR-014). As colunas de tempo created_at,
 //  updated_at e deleted_at existem em toda tabela (ADR-015/ADR-016) e so
 //  aparecem nas classes quando tem significado de negocio (ex.: dataCriacao).
@@ -91,7 +91,6 @@ model {
         + participarDeGrupo()
         + comprarCarta()
         + favoritarItem()
-        + avaliarVendedor()
       """
     }
   }
@@ -99,19 +98,15 @@ model {
   vendedor = class "Vendedor" {
     metadata {
       observacoes """
-        Especializa Usuário (tipo = VENDEDOR). Sem colunas próprias no DER;
-        reputação NÃO é atributo armazenado — é calculada a partir de Avaliacao
-        (correção em relação à versão anterior do diagrama, que tinha
-        `reputacao: Decimal` sem lastro no DER).
+        Especializa Usuário (tipo = VENDEDOR). Sem colunas próprias no DER.
+        Sem reputação: avaliações e propostas saíram do projeto em 22/11/2026 (ADR-068).
       """
       metodos """
         + criarAnuncio()
         + editarAnuncio()
         + pausarAnuncio()
         + reativarAnuncio()
-        + responderProposta()
         + visualizarVendas()
-        + calcularReputacaoMedia(): Decimal
       """
     }
   }
@@ -700,7 +695,7 @@ model {
   }
 
   // =====================================================================
-  // MODULO 6 - MARKETPLACE (ANUNCIOS, PEDIDOS, AVALIACOES)
+  // MODULO 6 - MARKETPLACE (ANUNCIOS E PEDIDOS)
   // =====================================================================
 
   anuncio = class "Anúncio" {
@@ -741,23 +736,6 @@ model {
     }
   }
 
-  proposta = class "Proposta" {
-    metadata {
-      atributos """
-        - id: UUID
-        - valorOfertado: Decimal
-        - mensagem: String
-        - status: StatusProposta
-        - dataCriacao: DateTime
-      """
-      metodos """
-        + enviar()
-        + aceitar()
-        + recusar()
-        + expirar()
-      """
-    }
-  }
 
   pedido = class "Pedido" {
     metadata {
@@ -820,21 +798,6 @@ model {
     }
   }
 
-  avaliacao = class "Avaliação" {
-    metadata {
-      atributos """
-        - id: UUID
-        - nota: Integer
-        - comentario: String
-        - dataCriacao: DateTime
-      """
-      metodos """
-        + criar()
-        + editar()
-        + excluir()
-      """
-    }
-  }
 
   statusAnuncio = enumeracao "StatusAnuncio" {
     metadata {
@@ -842,11 +805,6 @@ model {
     }
   }
 
-  statusProposta = enumeracao "StatusProposta" {
-    metadata {
-      valores """PENDENTE, ACEITA, RECUSADA, EXPIRADA"""
-    }
-  }
 
   statusPedido = enumeracao "StatusPedido" {
     metadata {
@@ -1248,16 +1206,11 @@ model {
   anuncio -> carta "N -- 1"
   anuncio -> estadoConservacao "N -- 0..1"
   fotoAnuncio -> anuncio "N -- 1 : compõe"
-  proposta -> anuncio "N -- 1"
-  proposta -> usuario "N -- 1 : comprador"
   pedido -> anuncio "N -- 1"
   pedido -> usuario "N -- 1 : comprador"
   pedido -> vendedor "N -- 1"
   pedido -> endereco "N -- 1 : entrega"
   pagamento -> pedido "1 -- 1"
-  avaliacao -> pedido "1 -- 1"
-  avaliacao -> usuario "N -- 1 : autor"
-  avaliacao -> vendedor "N -- 1 : avaliado"
 
   // =====================================================================
   // RELACOES - MODULO 7
@@ -1350,9 +1303,9 @@ views {
 
   view modulo6_marketplace {
     title "Módulo 6 - Marketplace"
-    include anuncio, fotoAnuncio, proposta, pedido, pagamento, avaliacao,
+    include anuncio, fotoAnuncio, pedido, pagamento,
       vendedor, usuario, carta, estadoConservacao, endereco,
-      statusAnuncio, statusProposta, statusPedido, statusPagamento,
+      statusAnuncio, statusPedido, statusPagamento,
       metodoPagamento
     autoLayout LeftRight
   }
@@ -1376,7 +1329,7 @@ views {
   }
 
   view visao_geral_completa {
-    title "Visão Geral - Diagrama de Classes CromoCard (49 classes)"
+    title "Visão Geral - Diagrama de Classes CromoCard (47 classes)"
     description "Uso apenas para conferência - denso demais para apresentação/projeção. Use as views por módulo para a banca."
     include *
     autoLayout LeftRight
