@@ -2,13 +2,11 @@
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#147
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
-- Tasks no Azure: a criar (só com o pedido do Daniel). Sai depois da CCD039.
+- Tasks no Azure: a criar (só com o pedido do Daniel). Sai depois da CCD039 e da base do Socket.IO da CCD046 (T12 e T13).
 
 ## Backend — `apps/cromocard-backend`, branch `feature/147-interagir-no-chat-do-grupo`
 
-- [ ] **T1** · Criar servidor Socket.IO autenticado por JWT no processo ws — R1, R5 · CA9 · AB# a criar
-  - Pronto quando: `npm run dev:ws` aceita conexão com token válido (entra em `user:<id>`), recusa sem token e o teste de
-    socket cobre os dois casos.
+- ~~**T1**~~ · ~~Criar servidor Socket.IO autenticado por JWT no processo ws~~ — movida para a CCD046 (T12) (divisão por módulo de 22/11/2026: a base do tempo real fica com o Daniel, dono de Mensagens e Notificações). Esta story usa o servidor de lá.
 - [ ] **T2** · Criar endpoints GET /groups/:id e GET /groups/:id/messages — R1–R3, R8, R10, R11 · CA1, CA5, CA7–CA9 · AB# a criar
   - Pronto quando: as rotas aparecem no `/docs` e a integração cobre cursor, fixada, suspenso, excluída, `401` e `403`.
 - [ ] **T3** · Criar envio de mensagem do grupo pelo Socket.IO com persistência primeiro — R1, R4–R6, R9, R10 · CA2–CA4, CA6, CA7, CA9 · AB# a criar
@@ -20,8 +18,7 @@
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/147-interagir-no-chat-do-grupo`
 
-- [ ] **T6** [P] · Criar cliente Socket.IO e a variável VITE_WS_URL — R1, R5 · AB# a criar
-  - Pronto quando: `socket.spec.ts` cobre o token no handshake e a renovação no `connect_error`.
+- ~~**T6**~~ · ~~Criar cliente Socket.IO e a variável VITE_WS_URL~~ — movida para a CCD046 (T13) (divisão por módulo de 22/11/2026: a base do tempo real fica com o Daniel, dono de Mensagens e Notificações).
 - [ ] **T7** · Criar api, queries e o hook useGroupChat — R2–R5, R9, R10 · CA1–CA3 · AB# a criar
   - Pronto quando: `useGroupChat.spec.tsx` cobre receber, enviar com ack, erro e recarga ao reconectar.
 - [ ] **T8** · Criar tela do chat do grupo — R2, R4, R6–R12 · CA1–CA3, CA5–CA8, CA10 · AB# a criar

@@ -7,6 +7,9 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/<id>-visualizar-mensagens`
 
+- [ ] **T12** · Criar servidor Socket.IO autenticado por JWT no processo ws (base do tempo real, que a CCD044, a CCD045, a CCD047 e a CCD053 usam; vinda da T1 da CCD044) — R1 · AB# a criar
+  - Pronto quando: `npm run dev:ws` aceita conexão com token válido (entra em `user:<id>`), recusa sem token e o teste de
+    socket cobre os dois casos.
 - [ ] **T1** · Criar migrations de conversations, conversation_participants e messages com o seed do chat — R1, R3, R5, R9 · AB# a criar
   - Pronto quando: `prisma migrate dev` cria as 3 tabelas como no DBML e o seed grava as 4 conversas de Gabriel, a não lida de Renata e uma mensagem excluída.
 - [ ] **T2** · Criar validator e erros do chat — R1, R4, R8 · AB# a criar
@@ -20,6 +23,8 @@
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/<id>-visualizar-mensagens`
 
+- [ ] **T13** · Criar cliente Socket.IO e a variável VITE_WS_URL (vinda da T6 da CCD044) — R1 · AB# a criar
+  - Pronto quando: `socket.spec.ts` cobre o token no handshake e a renovação no `connect_error`.
 - [ ] **T6** [P] · Criar types, labels, format, api e queries do chat — R3–R5, R7 · AB# a criar
   - Pronto quando: o typecheck passa e `chat.format.spec.ts` cobre a hora da prévia e o separador "Hoje, 31 de Outubro".
 - [ ] **T7** · Criar lista de conversas — R2, R3, R5 · CA1–CA3 · AB# a criar

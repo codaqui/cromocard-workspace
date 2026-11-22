@@ -8,6 +8,8 @@ Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar dep
 - **Código lido:** branch `feature/336-remove-tipo-categoria` dos dois apps (o domínio `chat` e a feature `chat` estão
   vazios; `conversations`, `conversation_participants` e `messages` não estão no `schema.prisma`)
 
+> **Divisão por módulo (22/11/2026):** o servidor Socket.IO e o cliente do frontend passam a ser criados na CCD046 (Daniel, dono de Mensagens e Notificações), e não mais na CCD044. Onde este plano diz "criado na CCD044", leia "criado na CCD046".
+
 ## Solução
 
 O cliente abre "Mensagens" (`/mensagens`) e a página busca as conversas dele pela API REST, da última mensagem mais

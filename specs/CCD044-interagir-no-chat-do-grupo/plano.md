@@ -6,6 +6,8 @@
 - **Repositórios:** backend · frontend
 - **Data:** 2026-11-22 · **Autor:** Daniel Andrade
 
+> **Divisão por módulo (22/11/2026):** o servidor Socket.IO e o cliente do frontend passam a ser criados na CCD046 (Daniel, dono de Mensagens e Notificações), e não mais na CCD044. Onde este plano diz "criado na CCD044", leia "criado na CCD046".
+
 ## Solução
 
 Esta story cria o servidor Socket.IO autenticado por JWT (ADR-012), que ainda não existe: o `src/ws-server.ts` (imagem
