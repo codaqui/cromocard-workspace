@@ -1,7 +1,7 @@
 # CCD032 — Buscar por Estado da Carta
 
 - **Status:** Rascunho
-- **Fase:** Futuro
+- **Fase:** MVP (era Futuro; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
 - **User story:** #165 `CCD032 - Interagir com o Álbum` ⚠️ o título do board não é o deste caso de uso (L1)
 - **Caso de uso:** [32-buscar-por-estado-da-carta.md](../../docs/Casos-De-Uso/32-buscar-por-estado-da-carta.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado e na tela de pesquisa de cartas
@@ -31,8 +31,7 @@
 
 ## Requisitos
 
-> **Fase Futuro** (`**` no caso de uso e na user story). A spec existe para registrar o escopo; não entra no MVP sem decisão
-> do PO (ver L2: o MVP já tem o filtro "Condição" no Explorar marketplace, pela CCD078).
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|

@@ -1,7 +1,7 @@
 # CCD037 — Buscar Categoria do Card
 
 - **Status:** Rascunho
-- **Fase:** Futuro
+- **Fase:** MVP (era Futuro; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
 - **User story:** #140 `CCD037 - Buscar Categoria do Card`
 - **Caso de uso:** [37-buscar-categoria-do-card.md](../../docs/Casos-De-Uso/37-buscar-categoria-do-card.md)
 - **Atores:** Cliente · **Pré-condições:** cliente autenticado, na área de busca ou no inventário de cards
@@ -12,7 +12,7 @@
 
 > Como Cliente preciso pesquisar e visualizar os cards através dos seus elementos específicos para encontrar Card exatos dentro da minha coleção.
 
-A narrativa não está nas tabelas de `user-stories.md`: vem da Finalidade do caso de uso. A fase vem da linha "** - Futuro"
+A narrativa não está nas tabelas de `user-stories.md`: vem da Finalidade do caso de uso. A fase vinha da linha "** - Futuro" (até 22/11/2026, quando virou MVP)
 das Observações de `user-stories.md` ("Categoria card, elementos").
 
 ## Fidelidade ao Figma (obrigatória)
@@ -34,8 +34,7 @@ das Observações de `user-stories.md` ("Categoria card, elementos").
 
 ## Requisitos
 
-> **Fase Futuro** (`**` nas Observações de `user-stories.md`): esta spec existe para deixar a story pronta, mas não entra no
-> MVP sem o PO puxá-la para uma sprint.
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|

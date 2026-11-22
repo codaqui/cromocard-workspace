@@ -2,7 +2,7 @@
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 
-> Fase Futuro: implementar depois do MVP.
+> **Fase MVP** desde 22/11/2026 (ADR-068).
 
 - **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L5 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)

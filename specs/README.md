@@ -197,12 +197,12 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD024](CCD024-buscar-por-nome/spec.md) | Buscar por Nome (agrupa CCD025, CCD026, CCD027, CCD028, CCD029) | MVP | Rascunho | #157 #158 #159 #160 #161 #162 |
 | [CCD030](CCD030-visualizar-detalhes/spec.md) | Visualizar Detalhes | MVP | Rascunho | #163 |
 | [CCD031](CCD031-visualizar-informacoes-da-carta/spec.md) | Visualizar Informações da Carta | MVP | Rascunho | #164 |
-| [CCD032](CCD032-buscar-por-estado-da-carta/spec.md) | Buscar por Estado da Carta | Futuro | Rascunho | #165 |
+| [CCD032](CCD032-buscar-por-estado-da-carta/spec.md) | Buscar por Estado da Carta | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #165 |
 | [CCD034](CCD034-buscar-categoria-do-album/spec.md) | Buscar Categoria do Álbum | MVP (era Futuro; o Figma ganhou o filtro em 22/11/2026) | Rascunho | #137 |
 | [CCD035](CCD035-resetar-progresso-do-album/spec.md) | Resetar Progresso do Álbum | MVP | Rascunho | #138 |
 | [CCD036](CCD036-adicionar-carta-ao-portfolio/spec.md) | Adicionar Carta ao Portfólio | MVP | Rascunho | #139 |
-| [CCD037](CCD037-buscar-categoria-do-card/spec.md) | Buscar Categoria do Card | Futuro | Rascunho | #140 |
-| [CCD038](CCD038-acessibilidade/spec.md) | Acessibilidade | Futuro | Rascunho | #141 |
+| [CCD037](CCD037-buscar-categoria-do-card/spec.md) | Buscar Categoria do Card | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #140 |
+| [CCD038](CCD038-acessibilidade/spec.md) | Acessibilidade | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #141 |
 | [CCD039](CCD039-explorar-e-entrar-em-grupos/spec.md) | Explorar e Entrar em Grupos | MVP | Rascunho | #142 |
 | [CCD040](CCD040-denunciar-mensagem-no-grupo/spec.md) | Denunciar Mensagem no Grupo | MVP | Rascunho | #143 |
 | [CCD041](CCD041-silenciar-notificacoes-de-grupo/spec.md) | Silenciar Notificações de Grupo | MVP | Rascunho | #144 |
@@ -234,16 +234,16 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD067](CCD067-buscar-por-vendedor/spec.md) | Buscar por Vendedor | MVP (era Futuro Marketplace; o Figma ganhou o filtro em 22/11/2026) | Rascunho | — |
 | [CCD068](CCD068-ordenar-por-menor-preco/spec.md) | Ordenar por Menor Preço (agrupa CCD069 e CCD071) | MVP | Rascunho | — |
 | [CCD072](CCD072-comprar/spec.md) | Comprar | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
-| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | Futuro Marketplace | Rascunho | — |
+| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | — |
 | [CCD074](CCD074-visualizar-fotos/spec.md) | Visualizar Fotos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
 | [CCD075](CCD075-visualizar-historico-de-precos/spec.md) | Visualizar Histórico de Preços | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
-| [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | Futuro Marketplace | Rascunho | — |
+| [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | — |
 | [CCD077](CCD077-visualizar-pedidos/spec.md) | Visualizar Pedidos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
 | [CCD078](CCD078-mostrar-todas-as-cartas/spec.md) | Mostrar Todas as Cartas | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
 | [CCD079](CCD079-visualizar-quantidade-disponivel/spec.md) | Visualizar Quantidade Disponível | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | — |
 | [CCD080](CCD080-visualizar-dados-do-vendedor/spec.md) | Visualizar Dados do Vendedor | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | — |
 | [CCD082](CCD082-denunciar-anuncio/spec.md) | Denunciar Anúncio | MVP (era Futuro Marketplace; o Figma ganhou a denúncia em 22/11/2026) | Rascunho | — |
-| [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | Futuro Marketplace (marca `***` na user story; o ADR-027 mantém as denúncias do marketplace fora do MVP) | Rascunho | — |
+| [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | — |
 | [CCD084](CCD084-criar-anuncio/spec.md) | Criar Anúncio | MVP (sem marca na user story; fatia mínima do marketplace, "Vender", no ADR-027) | Rascunho | #343 |
 | [CCD085](CCD085-editar-anuncio/spec.md) | Editar Anúncio (agrupa CCD086, CCD087, CCD088) | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #344 #345 #346 #347 |
 | [CCD090](CCD090-denunciar-usuario/spec.md) | Denunciar Usuário | MVP pela legenda (a user story, no Painel Vendedor, não tem marca); o ADR-027 tira do MVP as denúncias do marketplace: ver L1 | Rascunho | #349 |

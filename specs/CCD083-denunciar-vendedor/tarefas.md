@@ -1,7 +1,7 @@
 # Tarefas — CCD083 Denunciar Vendedor
 
 - **Plano:** [plano.md](plano.md) · **User story:** não encontrada no board (AB# a criar)
-- **Fase Futuro Marketplace: implementar depois do MVP.**
+- **Fase MVP** desde 22/11/2026 (ADR-068).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende da CCD090 (ou CCD050: `POST /reports` e `ReportDialog`) e da CCD080 (perfil público).
 

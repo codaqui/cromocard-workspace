@@ -3,7 +3,7 @@
 - **Plano:** [plano.md](plano.md) · **User story:** AB#165
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - AB# de cada Task: a criar (as Tasks no Azure só serão criadas com o pedido do Daniel).
-- Fase Futuro: implementar depois do MVP e depois da CCD078.
+- **Fase MVP** desde 22/11/2026 (ADR-068).
 
 ## Backend — `apps/cromocard-backend`, branch `feature/165-buscar-por-estado-da-carta`
 

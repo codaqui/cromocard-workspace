@@ -1,7 +1,7 @@
 # Tarefas — CCD037 Buscar Categoria do Card
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#140
-- **Fase Futuro:** implementar depois do MVP.
+- **Fase MVP** desde 22/11/2026 (ADR-068).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende de `GET /collections/me/cards` (CCD007 ou CCD013) e de `cards.variants` (CCD105).
 

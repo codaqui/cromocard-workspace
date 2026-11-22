@@ -1,7 +1,7 @@
 # CCD038 — Acessibilidade
 
 - **Status:** Rascunho
-- **Fase:** Futuro
+- **Fase:** MVP (era Futuro; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
 - **User story:** #141 `CCD038 - Acessibilidade`
 - **Caso de uso:** [38-acessibilidade.md](../../docs/Casos-De-Uso/38-acessibilidade.md)
 - **Atores:** Cliente · **Pré-condições:** o cliente navega na plataforma e acessa as configurações de acessibilidade
@@ -12,7 +12,7 @@
 
 > Como Cliente preciso ativar recursos como narrador de tela, modo daltonismo e alto contraste para conseguir navegar, ouvir e visualizar as informações da plataforma com clareza.
 
-A narrativa não está nas tabelas de `user-stories.md`: vem da Finalidade do caso de uso. A fase vem da linha "** - Futuro"
+A narrativa não está nas tabelas de `user-stories.md`: vem da Finalidade do caso de uso. A fase vinha da linha "** - Futuro" (até 22/11/2026, quando virou MVP)
 das Observações de `user-stories.md` ("Acessibilidade narrador, daltonismo, alto contraste"); o `CLAUDE.md` também cita
 "acessibilidade avançada" como Futuro.
 
@@ -35,8 +35,7 @@ das Observações de `user-stories.md` ("Acessibilidade narrador, daltonismo, al
 
 ## Requisitos
 
-> **Fase Futuro** (`**` nas Observações de `user-stories.md`): esta spec existe para deixar a story pronta, mas não entra no
-> MVP sem o PO puxá-la para uma sprint.
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|

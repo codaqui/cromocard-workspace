@@ -1,7 +1,7 @@
 # Tarefas — CCD073 Entrar em Contato
 
 - **Plano:** [plano.md](plano.md) · **User story:** não encontrada no board (AB# a criar)
-- Fase Futuro Marketplace: implementar depois do MVP (depende da L3).
+- **Fase MVP** desde 22/11/2026 (ADR-068).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende do chat pessoal (CCD045/CCD046), do Socket.IO (CCD044), do `notify` (CCD053), do bloqueio (CCD047) e do
   detalhe do anúncio (CCD079).

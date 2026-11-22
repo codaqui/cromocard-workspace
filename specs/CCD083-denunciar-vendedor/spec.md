@@ -1,7 +1,7 @@
 # CCD083 — Denunciar Vendedor
 
 - **Status:** Rascunho
-- **Fase:** Futuro Marketplace (marca `***` na user story; o ADR-027 mantém as denúncias do marketplace fora do MVP)
+- **Fase:** MVP (era Futuro Marketplace; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
 - **User story:** não encontrada no board
 - **Caso de uso:** [83-denunciar-vendedor.md](../../docs/Casos-De-Uso/83-denunciar-vendedor.md) · complemento: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md), EA-080-01 (o perfil público do vendedor)
 - **Atores:** Cliente · **Pré-condições:** o cliente está autenticado e no perfil público do vendedor
@@ -31,9 +31,7 @@
 
 ## Requisitos
 
-> **Fase Futuro Marketplace.** A user story tem a marca `***`, e o ADR-027 (18/11/2026) lista as denúncias do
-> marketplace entre o que continua fora do MVP. O Figma, porém, já desenha a denúncia no perfil público, que também
-> serve à CCD050 (Denunciar Perfil, sem marca): veja a L1. A spec fica pronta para quando a fase entrar.
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|

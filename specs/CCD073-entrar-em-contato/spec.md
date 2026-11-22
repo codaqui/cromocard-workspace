@@ -1,7 +1,7 @@
 # CCD073 — Entrar em Contato
 
 - **Status:** Rascunho
-- **Fase:** Futuro Marketplace
+- **Fase:** MVP (era Futuro Marketplace; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
 - **User story:** não encontrada no board
 - **Caso de uso:** [73-entrar-em-contato.md](../../docs/Casos-De-Uso/73-entrar-em-contato.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado, visualizando um anúncio ativo
@@ -31,8 +31,7 @@
 
 ## Requisitos
 
-> **Fase Futuro Marketplace** (`***` em `user-stories.md`): fica fora da fatia mínima do marketplace que entrou no MVP
-> (ADR-027). A spec existe para quando o PO puxar a story (L3).
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
@@ -92,7 +91,7 @@
 |---|---|---|---|
 | L1 | Falta o desenho de "Entrar em contato" no detalhe do anúncio (`1112-5772`). O botão abre Mensagens com a conversa ou uma caixa de mensagem no próprio anúncio? | pendente | — |
 | L2 | A user story "Conversar com Vendedor" (`***`, seção 2 de `user-stories.md`) tem o mesmo objetivo. É a mesma story? | pendente | — |
-| L3 | Fase: a story é Futuro Marketplace, mas o Figma de Mensagens já mostra conversas sobre anúncios ("Te mandei o link do anúncio"). Continua fora do MVP? | pendente | — |
+| L3 | Fase: a story é Futuro Marketplace, mas o Figma de Mensagens já mostra conversas sobre anúncios ("Te mandei o link do anúncio"). Continua fora do MVP? | Entra no MVP (decisão do Daniel em 22/11/2026) | ADR-068 |
 | L4 | O que é "vendedor não disponível para contato" (conta suspensa, bloqueada ou excluída)? A regra de `1160-34999`, "🔒 Só é possível conversar com quem aceita mensagens de desconhecidos ou participa de um grupo com você.", vale para o contato pelo anúncio? Qual o texto do aviso? | pendente | — |
 | L5 | Já existe uma conversa entre os dois sem anúncio ou sobre outro anúncio: reaproveita ou cria uma conversa por anúncio? | pendente | — |
 | L6 | Texto para quem foi bloqueado pelo vendedor: só o caso "Você bloqueou" está desenhado | pendente | — |
