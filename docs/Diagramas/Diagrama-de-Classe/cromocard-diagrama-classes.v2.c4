@@ -6,7 +6,7 @@
 //  ADR-037 em docs/ADR/ para o racional de cada decisao de modelagem.
 //
 //  49 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
-//  Usuario + 27 enumeracoes, organizados nos mesmos 8 modulos do DER.
+//  Usuario + 26 enumeracoes, organizados nos mesmos 8 modulos do DER.
 //  Identificadores sao UUID v7 (ADR-014). As colunas de tempo created_at,
 //  updated_at e deleted_at existem em toda tabela (ADR-015/ADR-016) e so
 //  aparecem nas classes quando tem significado de negocio (ex.: dataCriacao).
@@ -273,7 +273,6 @@ model {
       atributos """
         - id: UUID
         - nome: String
-        - tipo: TipoCategoria
         - descricao: String
         - padrao: Boolean
         - slug: String
@@ -409,12 +408,6 @@ model {
         + registrarPreco()
         + consultarHistorico()
       """
-    }
-  }
-
-  tipoCategoria = enumeracao "TipoCategoria" {
-    metadata {
-      valores """ALBUM, CARTA"""
     }
   }
 
@@ -1304,7 +1297,7 @@ views {
   view modulo2_catalogo_global {
     title "Módulo 2 - Catálogo Global"
     include categoria, raridade, idioma, estadoConservacao, album, carta,
-      fotoCarta, historicoPreco, tipoCategoria, statusAlbum, origemPreco, statusCarta
+      fotoCarta, historicoPreco, statusAlbum, origemPreco, statusCarta
     autoLayout LeftRight
   }
 
