@@ -1,4 +1,4 @@
-# ADR-063 — Categoria sem tipo; a carta com álbum tem a franquia do álbum
+# ADR-064 — Categoria sem tipo; a carta com álbum tem a franquia do álbum
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-11-18

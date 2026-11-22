@@ -361,7 +361,7 @@ Table albums [headercolor: #2E7D5B] {
 Table cards [headercolor: #2E7D5B] {
   id              uuid         [pk, default: `uuidv7()`]
   album_id        uuid         [note: 'Nulo = carta avulsa / portfolio']
-  category_id     uuid         [note: 'Franquia; com album, e a franquia do album (ADR-063)']
+  category_id     uuid         [note: 'Franquia; com album, e a franquia do album (ADR-064)']
   rarity_id       uuid
   language_id     uuid
   name            varchar(160) [not null]

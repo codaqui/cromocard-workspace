@@ -83,7 +83,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [060](ADR-060-fluxo-de-desenvolvimento-e-revisao-com-figma-e-cobertura.md) | Processo | Fluxo de desenvolvimento e revisão: decisão sobre o Figma, cobertura de 90% e skills únicas (substitui parcialmente 008, 046 e 047) | Proposto |
 | [061](ADR-061-chaves-de-configuracao-das-metas-e-dos-versos.md) | Dados | Chaves de configuração das metas e dos versos padrão em `global_settings` (substitui parcialmente o item 1 do 051) | Aceito |
 | [062](ADR-062-slug-de-categoria-unico-entre-as-ativas.md) | Dados | Slug de categoria único só entre as não excluídas, com índice parcial e sem restaurar (exceção ao item 7 do 015) | Aceito |
-| [063](ADR-063-categoria-sem-tipo-e-franquia-da-carta-pelo-album.md) | Dados | Categoria sem tipo (`ALBUM`/`CARD`): a mesma franquia serve a álbuns e cartas, e a carta com álbum tem a franquia do álbum | Proposto |
+| [064](ADR-064-categoria-sem-tipo-e-franquia-da-carta-pelo-album.md) | Dados | Categoria sem tipo (`ALBUM`/`CARD`): a mesma franquia serve a álbuns e cartas, e a carta com álbum tem a franquia do álbum | Proposto |
 
 ## Modelo
 

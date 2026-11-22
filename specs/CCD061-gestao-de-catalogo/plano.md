@@ -92,7 +92,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   como mensagem no modal ou no diálogo. O modelo do CSV vem pelo `api.getBlob`, novo em `src/lib/http.ts`, que também
   converte um erro devolvido como `Blob` em `ApiError`. Os selects de álbum e categoria carregam a primeira página
   (até 100) e sempre incluem o item já escolhido (L9). Decidido em 2026-11-05 e 2026-11-06 com Lucas Oliveira Lima.
-- Tipo da categoria (L10, L11): **substituído em 2026-11-18** (ADR-063, Proposto). O tipo sai do modelo
+- Tipo da categoria (L10, L11): **substituído em 2026-11-18** (ADR-064, Proposto). O tipo sai do modelo
   (migration `remove_type_from_categories_table`) e a `catalogService` só confere se a categoria existe. A regra nova é
   `ensureSameCategoryAsAlbum`: a carta com álbum que tem franquia precisa ter a franquia do álbum, no cadastro e na
   edição (contra o álbum que a carta vai ter), senão `422 CARD_CATEGORY_MISMATCH`. Trocar a franquia do álbum leva junto
@@ -102,7 +102,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   franquia. Antes (2026-11-08, com Lucas Oliveira Lima), álbum aceitava só categoria `ALBUM` e carta só `CARD`.
 - Leitura do CSV pelo `csv-parse` com `columns` (ADR-050, item 2): o cabeçalho é conferido contra as colunas esperadas
   e uma coluna faltando ou a mais vira o erro `<linha>.columns`. Decidido em 2026-11-08 com Lucas Oliveira Lima.
-- Filtro por tipo nas categorias (L9, L11): removido em 2026-11-18 com o tipo (ADR-063). Os selects de franquia listam
+- Filtro por tipo nas categorias (L9, L11): removido em 2026-11-18 com o tipo (ADR-064). Os selects de franquia listam
   todas as categorias (até 100, L9). Antes (2026-11-10, com Lucas Oliveira Lima), `GET /categories` aceitava `type`.
 - Editar a carta para o número de uma carta excluída (R7): o índice único (`album_id`, `number`) vale também para as linhas
   excluídas, e restaurar na edição juntaria duas cartas. A edição responde `409 CARD_NUMBER_TAKEN` com a mensagem "O
