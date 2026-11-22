@@ -9,16 +9,19 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O administrador acessa Exportar Relatórios. |  |
-|  | 2. O sistema apresenta o histórico de relatórios exportados por toda a equipe, com o código, o tipo e o período do relatório, quem solicitou, a data e hora, o formato e o tamanho do arquivo. |
+|  | 2. O sistema apresenta o histórico de relatórios exportados por toda a equipe, com o código, o tipo e o período do relatório, quem solicitou, a data e hora, o formato e o tamanho do arquivo e até quando ele fica disponível (ou "Expirado"). |
 | 3. O administrador seleciona "Baixar" num relatório do histórico. |  |
 |  | 4. O sistema disponibiliza o mesmo arquivo gerado na exportação. |
-|  | 5. O sistema mantém cada arquivo disponível por 90 dias. |
+|  | 5. O sistema mantém cada arquivo disponível por 90 dias. Depois disso, apaga o arquivo e mantém o relatório no histórico, marcado como "Expirado". |
+|  | 6. Ao exportar um relatório (Exportar Relatórios Gerenciais), o sistema avisa na confirmação que o arquivo fica no histórico por 90 dias e, depois da exportação, que ele está no topo do histórico. |
+| 7. O administrador seleciona "Atualizar histórico". |  |
+|  | 8. O sistema busca o histórico de novo e mostra as exportações mais recentes. |
 
 ### Fluxo Alternativo
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O administrador tenta baixar um relatório com mais de 90 dias. |  |
+| 1. O administrador tenta baixar um relatório "Expirado" ou com mais de 90 dias. |  |
 |  | 2. O sistema informa que o arquivo expirou e oferece gerar o relatório de novo com os mesmos filtros. |
 |  | 3. Ainda não há relatórios exportados. |
 |  | 4. O sistema informa que o histórico está vazio. |

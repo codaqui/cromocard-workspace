@@ -21,7 +21,7 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 │   │   ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
 │   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml + .svg (CCD001–CCD107)
 │   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD107)
-│   └── Infraestrutura/            README.md (visão geral), topologia.md (estado atual), runbooks.md, historico.md — decisões no ADR-055; o código fica em apps/cromocard-backend/infra/ e .github/workflows/
+│   └── Infraestrutura/            README.md (visão geral), topologia.md (estado atual), runbooks.md, historico.md, teste-de-carga.md (plano do teste de carga, ADR-065) — decisões no ADR-055; o código fica em apps/cromocard-backend/infra/ e .github/workflows/
 ├── specs/                         SDD (ADR-047): README.md (fluxo e índice), template/ e uma pasta CCDnnn-nome/ por user story
 ├── apps/                          submódulos git (`.gitmodules`) — cada app é um repo git próprio
 │   ├── cromocard-backend/         github.com/codaqui/cromocard-backend   (esqueleto + domínio de exemplo `users` em `develop`)

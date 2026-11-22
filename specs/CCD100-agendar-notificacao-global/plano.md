@@ -55,7 +55,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 ## Decisões técnicas
 
-- O job usa `SELECT … FOR UPDATE SKIP LOCKED` para não entregar duas vezes com mais de uma instância.
+- O job busca os vencidos com `findMany` e entrega cada um numa transação que começa com um `updateMany` condicional
+  (`status = SCHEDULED` → `SENT`); se nenhuma linha mudar, outra instância já entregou ou um admin cancelou, e nada sai.
+  Assim não entrega duas vezes, nem com mais de uma instância, nem com o cancelamento no meio.
 
 ## Revisão de 12/11/2026 (L5)
 
