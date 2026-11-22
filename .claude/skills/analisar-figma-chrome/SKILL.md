@@ -91,6 +91,9 @@ não estiver aqui, o arquivo mudou: peça o link do frame ou regenere o índice 
 **Perfil e configurações**
 - Perfil e configurações: `229-3585`
 
+**Painel do cliente**
+- Painel Cliente - sugestões da comunidade (CCD103): `1038-1750`; votação encerrada `1038-2242`; sem sugestões `1038-2740`
+
 **Comunidade e chat**
 - Comunidade - chat: `230-4748`
 - Comunidades - Grupos: `231-5395`
