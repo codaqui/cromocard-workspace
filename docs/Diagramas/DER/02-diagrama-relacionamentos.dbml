@@ -212,11 +212,6 @@ Table listing_photos [headercolor: #A63D5F] {
   listing_id uuid [not null]
 }
 
-Table offers [headercolor: #A63D5F] {
-  id         uuid [pk]
-  listing_id uuid [not null]
-  buyer_id   uuid [not null]
-}
 
 Table orders [headercolor: #A63D5F] {
   id                  uuid [pk]
@@ -231,12 +226,6 @@ Table payments [headercolor: #A63D5F] {
   order_id uuid [not null, unique]
 }
 
-Table reviews [headercolor: #A63D5F] {
-  id        uuid [pk]
-  order_id  uuid [not null, unique]
-  author_id uuid [not null]
-  seller_id uuid [not null]
-}
 
 // =====================================================================
 // MODULO 7 - NOTIFICACOES E FAVORITOS
@@ -397,16 +386,11 @@ Ref: listings.seller_id           > users.id            // anuncia
 Ref: listings.card_id              > cards.id              // ofertada em
 Ref: listings.condition_id > card_conditions.id // descreve
 Ref: listing_photos.listing_id       > listings.id            // exibe
-Ref: offers.listing_id           > listings.id            // recebe
-Ref: offers.buyer_id         > users.id            // propoe
 Ref: orders.listing_id             > listings.id            // gera
 Ref: orders.buyer_id           > users.id            // compra
 Ref: orders.seller_id            > users.id            // vende
 Ref: orders.shipping_address_id    > addresses.id           // entregue em
 Ref: payments.order_id           - orders.id             // quitado por (1:1)
-Ref: reviews.order_id           - orders.id             // avaliado por (1:1)
-Ref: reviews.author_id            > users.id            // escreve
-Ref: reviews.seller_id         > users.id            // recebe
 
 // --- 7. Notificacoes e Favoritos --------------------------------------
 Ref: favorites.user_id                > users.id            // favorita
@@ -496,10 +480,8 @@ TableGroup "5 - Chat Pessoal" {
 TableGroup "6 - Marketplace" {
   listings
   listing_photos
-  offers
   orders
   payments
-  reviews
 }
 
 TableGroup "7 - Notificacoes e Favoritos" {

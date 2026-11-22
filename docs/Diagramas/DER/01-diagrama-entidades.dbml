@@ -94,12 +94,6 @@ Enum listing_status {
   CLOSED
 }
 
-Enum offer_status {
-  PENDING
-  ACCEPTED
-  REJECTED
-  EXPIRED
-}
 
 Enum order_status {
   AWAITING_PAYMENT
@@ -583,7 +577,7 @@ Table user_blocks [headercolor: #2A7B8C] {
 }
 
 // =====================================================================
-// MODULO 6 - MARKETPLACE (ANUNCIOS, PEDIDOS, AVALIACOES)
+// MODULO 6 - MARKETPLACE (ANUNCIOS E PEDIDOS)
 // =====================================================================
 Table listings [headercolor: #A63D5F] {
   id                 uuid           [pk, default: `uuidv7()`]
@@ -609,17 +603,6 @@ Table listing_photos [headercolor: #A63D5F] {
   deleted_at timestamptz
 }
 
-Table offers [headercolor: #A63D5F] {
-  id             uuid          [pk, default: `uuidv7()`]
-  listing_id     uuid          [not null, note: 'FK -> listings.id']
-  buyer_id       uuid          [not null, note: 'FK -> users.id']
-  offered_amount decimal(10,2) [not null]
-  message        varchar(255)
-  status         offer_status  [not null, default: 'PENDING']
-  created_at     timestamptz   [not null]
-  updated_at     timestamptz   [not null]
-  deleted_at     timestamptz
-}
 
 Table orders [headercolor: #A63D5F] {
   id                  uuid          [pk, default: `uuidv7()`]
@@ -664,17 +647,6 @@ Table payments [headercolor: #A63D5F] {
   deleted_at        timestamptz
 }
 
-Table reviews [headercolor: #A63D5F] {
-  id         uuid         [pk, default: `uuidv7()`]
-  order_id   uuid         [not null, unique, note: 'FK -> orders.id']
-  author_id  uuid         [not null, note: 'FK -> users.id (comprador)']
-  seller_id  uuid         [not null, note: 'FK -> users.id (avaliado)']
-  rating     smallint     [not null, note: '1 a 5']
-  comment    varchar(500)
-  created_at timestamptz  [not null]
-  updated_at timestamptz  [not null]
-  deleted_at timestamptz
-}
 
 // =====================================================================
 // MODULO 7 - NOTIFICACOES E FAVORITOS
@@ -933,10 +905,8 @@ TableGroup "5 - Chat Pessoal" {
 TableGroup "6 - Marketplace" {
   listings
   listing_photos
-  offers
   orders
   payments
-  reviews
 }
 
 TableGroup "7 - Notificacoes e Favoritos" {
