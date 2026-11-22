@@ -1,12 +1,12 @@
 # CCD107 — Consultar Histórico de Relatórios
 
-- **Status:** Em implementação
+- **Status:** Rascunho
 - **Fase:** Escopo Adicional
 - **User story:** #611 `CCD107-Consultar Histórico de Relatórios` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [107-consultar-historico-de-relatorios.md](../../docs/Casos-De-Uso/107-consultar-historico-de-relatorios.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta para `Rascunho` em 2026-11-22 até o PO validar as decisões L5–L9 (o caso de uso 107 mudou: FP 2, FP 5 e FP 6)
 
 ## Objetivo
 
@@ -22,8 +22,8 @@
 | R4 | Cada arquivo fica disponível por 90 dias | Regra | `107`, FP 5; ADR-053, item 9 |
 | R5 | Arquivo vencido: informa e oferece gerar de novo com os mesmos filtros | Regra | `107`, FA 1–2 |
 | R6 | Histórico vazio mostra a mensagem | Estado | `107`, FA 3–4 |
-| R7 | Um job apaga do storage os arquivos vencidos; a linha continua no histórico como "Expirado" (L5) | Regra | ADR-053, item 9; ADR-010; Figma `228-1236` e `843-844` |
-| R8 | A confirmação da exportação avisa que "o arquivo fica no histórico por 90 dias" e o aviso de exportado diz que ele "está no topo do histórico" (L7) | Tela | Figma `843-442` e `843-1246`; CCD063, tela de exportação |
+| R7 | Um job apaga do storage os arquivos vencidos; a linha continua no histórico como "Expirado" (L5) | Regra | `107`, FP 5 (L5); ADR-053, item 9; ADR-010; ADR-068 |
+| R8 | A confirmação da exportação avisa que "o arquivo fica no histórico por 90 dias" e o aviso de exportado diz que ele "está no topo do histórico" (L7) | Tela | `107`, FP 6 (L7); Figma `843-442` e `843-1246` |
 
 ## Critérios de aceite
 
@@ -71,3 +71,4 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L6 | Como montar o código `#REP-9482` do Figma, se `report_exports` não tem coluna sequencial? | `#REP-` + os 4 últimos caracteres do `id`, em maiúsculas, como o `#SOL-` da CCD064; o DER não muda. Decisão de Lucca Rocha (18/11/2026) | esta spec (R2) |
 | L7 | As frases do histórico na confirmação (`843-442`) e no aviso de exportado (`843-1246`) ficaram de fora na CCD063 até existir o histórico | Voltam nesta story; o aviso provisório "O histórico de exportações chega em breve" dá lugar ao histórico e ao vazio de `843-2068`. Decisão de Lucca Rocha (18/11/2026) | esta spec (R8, CA7) |
 | L8 | Quantas linhas por página no histórico? (o Figma mostra 4, sem paginação visível) | 10 por página, paginação offset `page`/`pageSize` (ADR-011), com o paginador do BackOffice | plano.md |
+| L9 | Se guardar o arquivo no histórico falhar (storage ou banco), a exportação também falha? (revisão do Lucas no backend#36) | Não: o admin recebe o arquivo como antes (CCD063), o erro vai para o log e o arquivo que ficou sem linha é apagado do storage. A exportação não aparece no histórico nesse caso. Proposta de Lucca Rocha (22/11/2026), aguardando o PO | esta spec; plano.md |
