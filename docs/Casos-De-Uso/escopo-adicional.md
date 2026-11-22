@@ -25,7 +25,7 @@ partindo do que o PR #4 (cancelado) tinha documentado, conferido tela por tela n
 | CCD100 | [Agendar Notificação Global](100-agendar-notificacao-global.md) | Administrador | Notificação `208-2380`, agendamento `277-2689`, confirmação `277-2982` | CCD060; job agendado (ADR-010) | `global_notifications.status`, `scheduled_at`, `sent_at`, `reference_link` (ADR-053) |
 | CCD101 | [Segmentar Notificação Global](101-segmentar-notificacao-global.md) | Administrador | `208-2380` (histórico: público e canal), `277-2982` (público-alvo) | CCD060, CCD100 | `global_notifications.audience`, `channels` (ADR-053) |
 | CCD102 | [Exportar Log de Auditoria](102-exportar-log-de-auditoria.md) | Administrador | Logs `228-2395` ("Extrair Logs") | CCD065 | `audit_logs.ip_address` (ADR-053) |
-| CCD103 | [Votar em Solicitação de Catálogo](103-votar-em-solicitacao-de-catalogo.md) | Cliente, Administrador | Fila de solicitações `228-1804` (só o lado do admin); o Figma **não tem** a tela de votação do cliente | CCD064 | `catalog_request_votes`; meta em `global_settings` (ADR-053) |
+| CCD103 | [Votar em Solicitação de Catálogo](103-votar-em-solicitacao-de-catalogo.md) | Cliente, Administrador | Fila de solicitações `228-1804` (lado do admin); "Sugestões da comunidade" `1038-1750`, votação encerrada `1038-2242` e sem sugestões `1038-2740` (lado do cliente, desenhados em 17/11/2026) | CCD064 | `catalog_request_votes`; meta em `global_settings` (ADR-053) |
 | CCD104 | [Ordenar Categorias Padrão](104-ordenar-categorias-padrao.md) | Administrador | Configurações `228-3048` (Módulo 2) | CCD066, CCD061 | `categories.slug`, `display_order`, `is_pinned`, `badge` (ADR-053) |
 | CCD105 | [Duplicar Carta](105-duplicar-carta.md) | Administrador | Catálogo `208-2895` | CCD061 | `cards.code`, `variants` (ADR-053) |
 | CCD106 | [Salvar Rascunho de Carta](106-salvar-rascunho-de-carta.md) | Administrador | Cadastrar carta `278-3246` | CCD061 | `cards.status`, `release_year` (ADR-053) |
@@ -44,7 +44,7 @@ aprovadas.
 |---|---|---|---|---|
 | EA-004-01 | Entrar com "e-mail ou ID colecionador" | `152-2587` | CCD098 | O "ID colecionador" é o nome de usuário (@) da CCD098. |
 | EA-058-01 | Intervalo de datas personalizado | `208-1240` | **MVP** (CCD058, L4) | |
-| EA-058-02 | Variação de cada indicador em relação ao período anterior | `208-1240` | CCD096 | |
+| EA-058-02 | Variação do Total de usuários em relação ao período anterior | `208-1240` | CCD096 | Só o Total de usuários tem o selo de variação no protótipo (CCD096, L4). |
 | EA-058-03 | Total de usuários separado em colecionadores e lojistas | `208-1240` | CCD096 | |
 | EA-058-04 | Novas cartas cadastradas na semana | `208-1240` | CCD096 | |
 | EA-058-05 | Colunas extras na lista de vendedores (CNPJ/CPF, reputação, volume, status da análise), filtro de status e "Atualizar Fila" | `208-1240` | CCD094 | Reputação e volume vêm da CCD097. |
@@ -80,8 +80,8 @@ aprovadas.
 | EA-063-03 | Relatório "Volume Transacionado & Custódia" | `228-1236` | CCD097 | No seletor de tipo desde 12/11/2026. |
 | EA-064-01 | Abas por tipo com contagem | `228-1804` | **MVP** (CCD064, CA1) | |
 | EA-064-02 | Campos da sugestão de carta (ilustrador, população, justificativa, fontes) | `228-1804` | CCD103 | Ficam em `catalog_requests.data`. Lidos de `catalog_requests.data` quando existirem. A raridade usa os nomes do seed (decisão do PO em 12/11/2026). Frente, verso, raridade, franquia e idioma passaram para o MVP (CCD064, L8), porque a carta aprovada entra publicada (decisão do PO em 16/11/2026). |
-| EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV" | `228-1804` | CCD103 | Colunas Nº, código, nome, raridade e variantes; resumo por raridade do seed. |
-| EA-064-04 | Subcategorias a criar junto com a categoria sugerida | `228-1804` | CCD103 | |
+| EA-064-03 | Checklist das cartas do álbum sugerido, com "Baixar Planilha .CSV", e a capa sugerida | `228-1804` | CCD103 | Colunas Nº, código, nome, raridade e variantes. Resumo com o total e as três raridades mais altas do seed presentes no checklist (decisão do PO em 17/11/2026). Capa sugerida com "Volume Total: <n> Cartas no Checklist", lida de `catalog_requests.data` quando existir (decisão do PO em 17/11/2026). |
+| EA-064-04 | Subcategorias a criar junto com a categoria sugerida e o logo enviado | `228-1804` | CCD103 | Aprovar cria a categoria e as subcategorias, do mesmo tipo. Logo lido de `catalog_requests.data` quando existir (decisão do PO em 17/11/2026). |
 | EA-065-01 | Justificativa obrigatória em toda ação administrativa | `228-2395` | CCD102 | O MVP já exige motivo em suspender, excluir e moderar. Obrigatória nas ações que mudam status ou excluem; opcional nas demais. |
 | EA-065-02 | Total de ações em 30 dias, com variação e média diária | `228-2395` | CCD102 | Variação em relação aos 30 dias anteriores, acrescentada ao Figma em 12/11/2026. |
 | EA-065-03 | Filtros rápidos | `228-2395` | CCD102 | Banimentos, Remoção de grupos e Mudança de papel. |
@@ -155,7 +155,7 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   arquivo expirado `843-844`, histórico vazio `843-2068`.
   Solicitações (12/11/2026): aprovar `847-390`, recusar `847-883` e com o motivo obrigatório `847-1380`, solicitação
   aprovada `847-2864`, já processada `847-1878`, erro ao aprovar `847-2371`. A tela de votação do cliente (CCD103)
-  fica para a revisão do painel do cliente.
+  foi desenhada em 17/11/2026: `1038-1750`, `1038-2242` e `1038-2740`.
   Logs (12/11/2026): nenhum registro encontrado `849-383`, logs extraídos `849-852`, nada para exportar `849-2265`,
   limite de exportação `849-1794`; o painel de detalhes `749-624` ganhou o IP.
   Configurações (12/11/2026): `228-3048` com os módulos de templates e metas e o verso padrão por franquia; link
