@@ -1,6 +1,6 @@
 # ADR-064 — Categoria sem tipo; a carta com álbum tem a franquia do álbum
 
-- **Status:** Proposto (aguardando validação do PO)
+- **Status:** Aceito (validado pelo PO, Felipe Consulim, em 2026-11-22)
 - **Data:** 2026-11-18
 - **Decisores:** Daniel Andrade (proposta, na revisão do catálogo da CCD061); validação: Felipe Consulim (PO)
 

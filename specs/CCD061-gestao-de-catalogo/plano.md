@@ -92,7 +92,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   como mensagem no modal ou no diálogo. O modelo do CSV vem pelo `api.getBlob`, novo em `src/lib/http.ts`, que também
   converte um erro devolvido como `Blob` em `ApiError`. Os selects de álbum e categoria carregam a primeira página
   (até 100) e sempre incluem o item já escolhido (L9). Decidido em 2026-11-05 e 2026-11-06 com Lucas Oliveira Lima.
-- Tipo da categoria (L10, L11): **substituído em 2026-11-18** (ADR-064, Proposto). O tipo sai do modelo
+- Tipo da categoria (L10, L11): **substituído em 2026-11-18** (ADR-064, Aceito). O tipo sai do modelo
   (migration `remove_type_from_categories_table`) e a `catalogService` só confere se a categoria existe. A regra nova é
   `ensureSameCategoryAsAlbum`: a carta com álbum que tem franquia precisa ter a franquia do álbum, no cadastro e na
   edição (contra o álbum que a carta vai ter), senão `422 CARD_CATEGORY_MISMATCH`. Trocar a franquia do álbum leva junto
