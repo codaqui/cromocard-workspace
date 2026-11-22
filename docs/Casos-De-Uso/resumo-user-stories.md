@@ -40,18 +40,18 @@
 | Buscar por Idioma | Como Cliente preciso filtrar cartas por idioma para encontrar cartas na língua desejada. |
 | Visualizar Detalhes | Como Cliente preciso visualizar os detalhes de uma carta para conhecer suas características antes de realizar uma compra. |
 | Visualizar Informações da Carta | Como Cliente preciso visualizar as informações da carta para conhecer suas características e identificação. |
-| Buscar por Estado da Carta | Como Cliente preciso filtrar cartas por estado de conservação para encontrar itens de acordo com a condição desejada.** |
+| Buscar por Estado da Carta | Como Cliente preciso filtrar cartas por estado de conservação para encontrar itens de acordo com a condição desejada. |
 | Buscar por Vendedor | Como Cliente preciso buscar cartas por vendedor para visualizar os anúncios disponibilizados por um usuário específico. |
 | Ordenar por Menor Preço | Como Cliente preciso ordenar as cartas pelo menor preço para encontrar as opções mais econômicas. |
 | Ordenar por Maior Preço | Como Cliente preciso ordenar as cartas pelo maior preço para comparar os itens de maior valor. |
 | Ordenar por Mais Recentes | Como Cliente preciso ordenar as cartas pelas mais recentes para visualizar os novos anúncios publicados. |
 | Comparar Preços | Como Cliente preciso comparar preços de uma carta para identificar a melhor opção de compra.** |
 | Comprar | Como Cliente preciso comprar uma carta ou figurinha para adquirir o item disponibilizado no marketplace. |
-| Entrar em Contato | Como Cliente preciso entrar em contato com o vendedor pelo chat para negociar e tirar dúvidas.*** |
+| Entrar em Contato | Como Cliente preciso entrar em contato com o vendedor pelo chat para negociar e tirar dúvidas. |
 | Visualizar Fotos | Como Cliente preciso visualizar fotos da carta para verificar visualmente o item antes da compra. |
 | Ampliar Carta | Como Cliente preciso ampliar as imagens da carta para analisar seus detalhes e estado de conservação.** |
 | Visualizar Histórico de Preços | Como Cliente preciso visualizar o histórico de preços para acompanhar a variação do valor da carta. |
-| Visualizar Anúncios Ativos | Como Cliente preciso visualizar meus anúncios ativos para acompanhar os itens que estão atualmente disponíveis para venda.*** |
+| Visualizar Anúncios Ativos | Como Cliente preciso visualizar meus anúncios ativos para acompanhar os itens que estão atualmente disponíveis para venda. |
 | Visualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma. |
 | Confirmar Entrega e Liberar Pagamento | Como Cliente quero que o pagamento só seja liberado ao vendedor depois que a carta for entregue para comprar com segurança. |
 | Escanear Carta por Imagem | Como Cliente preciso escanear uma carta por imagem para identificar o item de forma automática.** |
@@ -64,7 +64,7 @@
 | Comprar Carta | Como Cliente preciso comprar a carta diretamente pelo anúncio para realizar a aquisição do item. |
 | Compartilhar Anúncio | Como Cliente preciso compartilhar um anúncio para permitir que outras pessoas visualizem a carta disponível.** |
 | Denunciar Anúncio | Como Cliente preciso denunciar um anúncio para informar à plataforma possíveis irregularidades. |
-| Denunciar Vendedor | Como Cliente preciso denunciar um vendedor que tenha uma irregularidade dentro da plataforma.*** |
+| Denunciar Vendedor | Como Cliente preciso denunciar um vendedor que tenha uma irregularidade dentro da plataforma. |
 
 ## 3. Minha Coleção (Álbuns e Cartas)
 
@@ -175,7 +175,7 @@
 
 | User Story | Narrativa |
 |---|---|
-| ** - Futuro | Obs: Categoria do album, seleção, times.<br>Categoria card, elementos.<br>Acessibilidade narrador, daltonismo, alto contraste |
+| ** - Futuro | Obs: Categoria do album, seleção, times.<br>Categoria card, elementos.<br>Acessibilidade narrador, daltonismo, alto contraste. Desde 22/11/2026 essas três (CCD034, CCD037 e CCD038) são MVP (ADR-068). |
 | *** - Futuro Marketplace |  |
 | ++ - Escopo Adicional | Veio do protótipo no Figma e não estava na documentação; entra só quando o PO puxar para uma sprint. Índice e telas em [escopo-adicional.md](escopo-adicional.md). |
 | Comparar Preços | o cliente já consegue pesquisar e ordenar por menor/maior preço. |

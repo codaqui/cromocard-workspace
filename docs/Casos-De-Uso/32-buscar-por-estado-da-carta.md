@@ -1,4 +1,4 @@
-| Nome do Caso de Uso | Buscar por Estado da Carta ** |
+| Nome do Caso de Uso | Buscar por Estado da Carta |
 |---|---|
 | Finalidade/Objetivo | Permitir que o cliente filtre cartas por estado de conservação para encontrar itens de acordo com a condição desejada. (Funcionalidade futura) |
 | Atores | Cliente |
