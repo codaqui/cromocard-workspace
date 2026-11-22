@@ -41,6 +41,8 @@ Sem uma tela que grave nota, a reputação da CCD097 ficaria sempre vazia.
    O resto de cada um continua valendo.
 4. A CCD034, a CCD067 e a CCD082 tinham parte da tela no Figma. As telas foram completadas no Figma em 22/11/2026, e as
    três passam a ser MVP.
+5. Puxe para o MVP as seis stories futuras que já tinham tela completa no Figma: CCD032, CCD037, CCD038, CCD073, CCD076 e
+   CCD083. Com isso, nenhuma story com spec fica fora do MVP.
 
 ## Alternativas consideradas
 
@@ -51,6 +53,7 @@ Sem uma tela que grave nota, a reputação da CCD097 ficaria sempre vazia.
 ## Consequências
 
 - O marketplace fica só com anúncio, compra, envio e liberação do pagamento, sem nota nem negociação.
+- Todas as specs do plano final passam a ser MVP. Isso aumenta o trabalho da equipe até a entrega.
 - **CCD097 (Aprovada):** sai a coluna de reputação. A spec registra a mudança, e o PO valida este ADR.
 - **CCD080:** o perfil público do vendedor fica sem nota (a L2 dela já propunha isso).
 - **Volta no futuro:** avaliações ou propostas pedem casos de uso novos, telas no Figma e um ADR que reintroduza as
