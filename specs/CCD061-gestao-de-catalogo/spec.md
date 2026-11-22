@@ -80,7 +80,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | Importação concluída | `832-1683` | R13 | ✅ Bate |
 | Álbuns | `832-8603` | R3, R5 | ✅ Bate |
 | Novo álbum | `833-9661` | R4, R5 | ✅ Bate |
-| Categorias & Franquias | `833-9132` | R15 | ✅ Bate (coluna e filtro "Tipo" removidos do Figma em 18/11/2026, L11) |
+| Categorias & Franquias | `833-9132` | R15 | ⚠️ Coluna e filtro "Tipo" removidos do Figma em 18/11/2026 (L11); o frame mostra o filtro "Todas as categorias pai", ainda sem decisão (L13) |
 | Nova categoria | `833-10832` | R15 | ✅ Bate (campo "Tipo" removido do Figma em 18/11/2026, L11) |
 
 ## Fora do escopo
@@ -106,3 +106,4 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L10 | A categoria pai precisa ser do mesmo tipo (`ALBUM`/`CARD`)? | Não há mais tipo (L11): a categoria pai pode ser qualquer categoria, menos a própria ou uma descendente dela (`422 CATEGORY_PARENT_INVALID`). Decisão do Daniel em 18/11/2026, na revisão do catálogo em homologação | ADR-064 (Proposto, aguardando o PO) |
 | L11 | O tipo da categoria (`ALBUM`/`CARD`) é regra ou só rótulo? | Nenhum dos dois: o tipo sai do modelo. A mesma franquia serve a álbuns e cartas. A carta com álbum que tem franquia precisa ter a franquia do álbum (`422 CARD_CATEGORY_MISMATCH`, também na importação, no campo `<linha>.category`); escolher o álbum no formulário preenche a franquia; trocar a franquia do álbum troca a das cartas dele. Decisão do Daniel em 18/11/2026: com o tipo como regra, a carta do Brasileirão não aceitava a franquia "Brasileirão" (criada como álbum), e o seed tinha "Pokémon" e "Pokémon TCG" duplicadas | `61`, FP 5, 6 e 11; ADR-064 (Proposto, aguardando o PO) |
 | L12 | A carta importada por CSV precisa da imagem da frente? O CSV não tem coluna de imagem (L3), e a L6 exige a frente para publicar | A carta importada entra como rascunho (`status = DRAFT`, o mesmo da CCD106), sem imagem, e não aparece no catálogo público; o admin envia a frente pela edição e só então a publica, com a validação da L6. O CSV continua sem coluna de imagem (L3). Decisão do PO (Daniel, 14/11/2026) | `61`, FP 11 |
+| L13 | O frame `833-9132` mostra, ao lado da busca, o filtro "Todas as categorias pai", que nenhum requisito cobre e que o app não implementa. Implementar? | Pendente, aguardando o PO. O Figma foi editado em 18/11/2026 por Daniel Andrade; quem mantém o arquivo é o Gabriel Nascimento, e a edição ainda precisa da ciência dele | Só aqui, aguardando o PO |

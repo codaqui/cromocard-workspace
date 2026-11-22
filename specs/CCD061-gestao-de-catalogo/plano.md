@@ -25,7 +25,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
 | `POST /cards` · `PATCH /cards/:id` | campos de R6 | `201` / `200` | `400`, `404` (`CARD_NOT_FOUND`, `ALBUM_NOT_FOUND`, `CATEGORY_NOT_FOUND`, `RARITY_NOT_FOUND`, `LANGUAGE_NOT_FOUND`), `409 CARD_NUMBER_TAKEN`, `422 CARD_CATEGORY_MISMATCH` (franquia diferente da do álbum, L11) | R4, R6–R8 |
 | `GET /rarities` · `GET /languages` | — | `200` `{ data }` com `id` e `name` (raridades na ordem de `sort_order`, idiomas por nome), só leitura | — | R6, R15 |
 | `DELETE /cards/:id` | — | `204` | `404`, `422 CARD_IN_USE` | R10, R11 |
-| `POST /categories` · `PATCH /categories/:id` · `DELETE /categories/:id` | `name`, `parentCategoryId?` | `201` / `200` / `204` | `400`, `404` (a categoria ou a pai), `422 CATEGORY_PARENT_INVALID` (pai é ela mesma ou uma subcategoria dela), `422 CATEGORY_IN_USE` | R15 |
+| `POST /categories` · `PATCH /categories/:id` · `DELETE /categories/:id` | `name`, `parentCategoryId?`, `description?`, `badge?` | `201` / `200` / `204` | `400`, `404` (a categoria ou a pai), `422 CATEGORY_PARENT_INVALID` (pai é ela mesma ou uma subcategoria dela), `422 CATEGORY_IN_USE` | R15 |
 | `POST /cards/import` | `multipart` com `file` (CSV) | `201` `{ data: { created } }` | `400` sem arquivo, `413` acima de 4 MB, `422 CSV_INVALID` com `details` por linha (`<linha>.<coluna>`; `<linha>.columns` quando a quantidade de colunas está errada; `file` para o arquivo todo) | R13 |
 | `GET /cards/import/template` | — | `200` CSV modelo | — | R13 |
 
