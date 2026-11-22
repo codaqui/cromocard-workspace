@@ -85,6 +85,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [062](ADR-062-slug-de-categoria-unico-entre-as-ativas.md) | Dados | Slug de categoria único só entre as não excluídas, com índice parcial e sem restaurar (exceção ao item 7 do 015) | Aceito |
 | [066](ADR-066-pagamento-com-stripe-checkout-e-repasse-pelo-connect.md) | Backend | Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect (decide o 024) | Proposto |
 | [067](ADR-067-frete-e-rastreio-pelo-melhor-envio.md) | Backend | Frete, etiqueta e rastreio pelo Melhor Envio (decide o 025) | Proposto |
+| [068](ADR-068-remover-avaliacoes-e-propostas.md) | Escopo | Remover avaliações e propostas (CCD033, 070, 081, 089, `offers` e `reviews`); substitui trechos dos 010, 015 e 054 | Proposto |
 
 ## Modelo
 
