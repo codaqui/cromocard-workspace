@@ -1,9 +1,9 @@
 # Tarefas — CCD082 Denunciar Anúncio
 
 - **Plano:** [plano.md](plano.md) · **User story:** não encontrada no board (AB# a criar)
-- **Fase Futuro Marketplace: implementar depois do MVP.**
+- **Fase MVP** desde 22/11/2026 (telas completadas no Figma, ADR-068).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
-- Depende da CCD090 (ou CCD050: `POST /reports` e `ReportDialog`), da CCD079 e de `listings` (CCD084/CCD097); o frontend depende do frame da L1.
+- Depende da CCD090 (ou CCD050: `POST /reports` e `ReportDialog`), da CCD079 e de `listings` (CCD084/CCD097). Frames do Figma: `1112-5772`, `1226-390`, `1226-683` e `1226-977`.
 
 ## Backend — `apps/cromocard-backend`, branch `feature/<id>-denunciar-anuncio`
 
@@ -17,9 +17,9 @@
 ## Frontend — `apps/cromocard-frontend`, branch `feature/<id>-denunciar-anuncio`
 
 - [ ] **T4** · Criar botão "Denunciar Anúncio" no detalhe do anúncio — R1, R2, R9 · CA1, CA6 · AB# a criar
-  - Pronto quando: `ReportListingButton.spec.tsx` cobre cliente, dono e visitante (depende da L5 e L6); print em 1280 px igual ao frame `1112-5772` ajustado pela L1 e sem quebra em 375/768/1024 px.
+  - Pronto quando: `ReportListingButton.spec.tsx` cobre cliente, dono e visitante (depende da L5 e L6); print em 1280 px igual ao frame `1112-5772` (e `1112-6152`) e sem quebra em 375/768/1024 px.
 - [ ] **T5** · Abrir o modal de denúncia com os motivos do anúncio — R3–R5, R7–R9 · CA1, CA2, CA5 · AB# a criar
-  - Pronto quando: `ReportDialog.spec.tsx` cobre envio, sem motivo e confirmação para `LISTING`; print em 1280 px igual aos frames do modal, do erro e da confirmação (L1) e sem quebra em 375/768/1024 px.
+  - Pronto quando: `ReportDialog.spec.tsx` cobre envio, sem motivo e confirmação para `LISTING`; print em 1280 px igual aos frames `1226-390` (modal), `1226-683` (sem motivo) e `1226-977` (confirmação) e sem quebra em 375/768/1024 px.
 
 ## Fechamento — workspace
 

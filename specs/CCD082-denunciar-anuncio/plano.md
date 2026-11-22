@@ -2,15 +2,15 @@
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 >
-> **Fase Futuro Marketplace: implementar depois do MVP.**
+> **Fase MVP** desde 22/11/2026 (telas completadas no Figma, ADR-068).
 
-- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L8 pendentes)
+- **Spec:** [spec.md](spec.md), em Rascunho (L1, L2, L3 e L8 decididas em 22/11/2026; L4–L7 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
 - **Data:** 2026-11-22 · **Autor:** Daniel Andrade
 
 ## Solução
 
-O detalhe do anúncio ganha "Denunciar Anúncio", que abre o `ReportDialog` com os motivos do anúncio e a observação
+O detalhe do anúncio ganha "⚑ Denunciar anúncio", que abre o `ReportDialog` com os motivos do anúncio e a observação
 opcional. O envio usa o endpoint único `POST /api/v1/reports` (criado pela CCD090 ou pela CCD050) com
 `targetType = LISTING` e o `targetId` do anúncio; a API grava em `reports` com `listing_id` e `status = PENDING`, o modal
 fecha e a tela mostra a confirmação.
@@ -31,8 +31,8 @@ fecha e a tela mostra a confirmação.
 
 ## Regras
 
-- **Motivo** (R4, R8): obrigatório, até 90 caracteres, de uma lista fixa no frontend (depende da L2).
-- **Observação** (R5): opcional, até 500 caracteres (depende da L3).
+- **Motivo** (R4, R8): obrigatório, até 90 caracteres, de uma lista fixa no frontend: Fraude ou tentativa de golpe, Item falso ou falsificado, Anúncio enganoso (fotos ou descrição) e Outro motivo (L2 decidida).
+- **Observação** (R5): opcional, até 500 caracteres (L3 decidida).
 - **Alvo**: anúncio inexistente ou excluído responde `404` (CA4); o dono não vê a opção e a API responde `422
   CANNOT_REPORT_OWN_LISTING` (depende da L6); denúncia repetida aberta responde `409` (depende da L7).
 - **Visitante** (R1): a opção abre "Entre para continuar", como "Comprar" (depende da L5); a API responde `401`.
@@ -44,7 +44,7 @@ Convenções do ADR-011. Mesmo endpoint da CCD090; esta story acrescenta o alvo 
 ### `POST /api/v1/reports` — R1, R4–R8
 
 - **Acesso:** autenticado, qualquer papel de cliente.
-- **Corpo:** `{ "targetType": "LISTING", "targetId": "uuid", "reason": "Fraude", "description": "Foto de outro anúncio" }`
+- **Corpo:** `{ "targetType": "LISTING", "targetId": "uuid", "reason": "Fraude ou tentativa de golpe", "description": "Foto de outro anúncio" }`
 - **Sucesso:** `201` `{ "data": { "id": "uuid", "targetType": "LISTING", "status": "PENDING", "createdAt": "…" } }`
 - **Erros:**
 
@@ -73,9 +73,9 @@ No domínio `src/domains/moderation/` (CCD090).
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/features/moderation/moderation.labels.ts` | motivos do anúncio (L2), confirmação e erro (L8) | R4, R7, R8 |
-| `src/features/moderation/components/ReportListingButton/` | "Denunciar Anúncio" no detalhe, escondido do dono (L6), "Entre para continuar" para o visitante (L5); no estilo de `1112-5772` até a L1 desenhar | R1, R2, R9 |
-| `src/features/moderation/components/ReportDialog/` (CCD090) | abre com os motivos do anúncio e a observação opcional; frame do modal a desenhar (L1), no estilo de `1160-17495` | R3–R5, R7–R9 |
+| `src/features/moderation/moderation.labels.ts` | motivos do anúncio (L2), confirmação "Denúncia enviada" e erro "Escolha um motivo para enviar a denúncia." (L8) | R4, R7, R8 |
+| `src/features/moderation/components/ReportListingButton/` | "⚑ Denunciar anúncio" ao lado do vendedor no detalhe (`1112-5772`, `1112-6152`), escondido do dono (L6), "Entre para continuar" para o visitante (L5) | R1, R2, R9 |
+| `src/features/moderation/components/ReportDialog/` (CCD090) | abre com os motivos do anúncio e a observação opcional; frames `1226-390`, `1226-683` e `1226-977` | R3–R5, R7–R9 |
 | `src/features/marketplace/listings/pages/ListingDetailPage/` (CCD079) | inclui o botão e o modal | R2 |
 
 ## Testes
@@ -86,7 +86,7 @@ No domínio `src/domains/moderation/` (CCD090).
 | CA2 | sem motivo: nada enviado, campo destacado, modal aberto; API `400` sem gravar | `ReportDialog.spec.tsx` · `tests/integration/reports.spec.ts` |
 | CA3 | sem token: `401` sem gravar | `tests/integration/reports.spec.ts` |
 | CA4 | anúncio excluído: `404` sem gravar | `moderation.service.spec.ts` · `tests/integration/reports.spec.ts` |
-| CA5, CA6 | print em 1280 px igual ao frame do modal (L1) e ao `1112-5772` ajustado; sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
+| CA5, CA6 | print em 1280 px igual aos frames `1226-390`, `1226-683`, `1226-977` e `1112-5772`; sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
 
 Cobertura mínima de 90% nos arquivos alterados (ADR-060).
 

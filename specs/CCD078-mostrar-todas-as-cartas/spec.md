@@ -108,7 +108,7 @@
 
 - Regras de cada ordenação — CCD068 (agrupa 069, 070 e 071).
 - Detalhe do anúncio — CCD079, CCD080, CCD074 e CCD072.
-- Busca por nome ou coleção — CCD024/CCD026 (L1); busca por vendedor — CCD033/CCD067.
+- Busca por nome ou coleção — CCD024/CCD026 (L1); busca por vendedor — CCD067.
 - Filtro "somente verificados", localização, selos "Frete grátis", "Aceita troca" etc. — saíram do Figma (`escopo-adicional.md`, seção 3).
 - Gravar a ordem das categorias padrão — CCD104.
 

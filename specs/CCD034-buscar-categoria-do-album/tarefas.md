@@ -1,7 +1,7 @@
 # Tarefas — CCD034 Buscar Categoria do Álbum
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#137
-- **Fase Futuro:** implementar depois do MVP.
+- **Fase MVP** desde 22/11/2026 (ADR-068).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende de `GET /collections/me/cards` (CCD007 ou CCD013).
 
@@ -18,8 +18,10 @@
 
 - [ ] **T4** [P] · Criar api, queries e textos do filtro por categoria — R2, R5 · AB# a criar
   - Pronto quando: o typecheck passa.
-- [ ] **T5** · Criar filtro de categoria, seleção e time na grade da coleção — R2, R4–R6 · CA1–CA3, CA5–CA7 · AB# a criar
-  - Pronto quando: `CategoryFilter.spec.tsx` cobre os dois níveis e o vazio; print em 1280 px igual ao frame `1122-17812` e sem quebra em 375/768/1024 px.
+- [ ] **T5** · Criar filtro de categoria raiz na grade do Início — R2, R4, R6 · CA2, CA6 · AB# a criar
+  - Pronto quando: `CategoryFilter.spec.tsx` cobre a categoria com subcategorias; print em 1280 px igual ao frame `1122-17812` e sem quebra em 375/768/1024 px.
+- [ ] **T7** · Criar filtro Seleção no detalhe do álbum — R2–R6 · CA1, CA3, CA5, CA7 · AB# a criar
+  - Pronto quando: `SelectionFilter.spec.tsx` cobre a lista com as quantidades, o filtro aplicado e o vazio; print em 1280 px igual aos frames `1160-23696`, `1226-2361`, `1226-3003` e `1226-3625` e sem quebra em 375/768/1024 px.
 
 ## Fechamento — workspace
 
@@ -31,8 +33,8 @@
 | Requisito | Tarefas |
 |---|---|
 | R1 | T3 |
-| R2 | T1, T3, T4, T5 |
-| R3 | T1, T2 |
-| R4 | T1, T2, T5 |
-| R5 | T4, T5 |
-| R6 | T5 |
+| R2 | T1, T3, T4, T5, T7 |
+| R3 | T1, T2, T7 |
+| R4 | T1, T2, T5, T7 |
+| R5 | T4, T7 |
+| R6 | T5, T7 |

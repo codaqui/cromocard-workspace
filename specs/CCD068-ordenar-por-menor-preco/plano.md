@@ -1,8 +1,8 @@
-# Plano — CCD068 Ordenar por Menor Preço (agrupa CCD069, CCD070 e CCD071)
+# Plano — CCD068 Ordenar por Menor Preço (agrupa CCD069 e CCD071)
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 
-> Fase Futuro Marketplace (R9–R11, CCD070): implementar depois do MVP. R1–R8, R12 e R13 são MVP.
+> Fase MVP. A CCD070 (R9–R11, ordenar por avaliações) foi removida do projeto em 22/11/2026 (ADR-068), e os trechos dela saíram deste plano.
 
 - **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L8 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
@@ -14,8 +14,7 @@ A ordenação é o parâmetro `sort` das duas listagens de anúncios: `GET /api/
 `GET /api/v1/cards/:cardId/listings` (lista "Anúncios disponíveis" do perfil da carta, CCD030/CCD079). Um módulo só,
 `listings.sort.ts`, traduz a lista de valores permitidos (`-createdAt`, `price`, `-price`) para o `orderBy` do Prisma, com
 desempate estável, e responde `400` para o resto. No frontend, o seletor "Ordenar:" (`SortSelect`) grava a ordem na URL e
-mantém os filtros; o padrão é "Mais recentes" no Explorar e "Menor preço" no perfil da carta. A ordenação por avaliações
-(CCD070) entra depois do MVP, com `sort=-sellerRating` só para o cliente logado.
+mantém os filtros; o padrão é "Mais recentes" no Explorar e "Menor preço" no perfil da carta.
 
 ## Dependências
 
@@ -23,15 +22,12 @@ mantém os filtros; o padrão é "Mais recentes" no Explorar e "Menor preço" no
   estende a lista de `sort` e as opções do seletor.
 - **CCD079 / CCD030:** criam `GET /cards/:cardId/listings` e a lista "Anúncios disponíveis". O plano da CCD079 usa
   `sort=price_asc`; o ADR-011 pede `sort=price` / `sort=-price`, e este plano segue o ADR-011 (ver riscos).
-- **CCD070 (Futuro Marketplace):** depende da tabela `reviews` (`create_reviews_table`, da CCD081), que ainda não está no
-  `schema.prisma`.
 
 ## Dados
 
 | Tabela | Já no `schema.prisma`? | Migration | Observação |
 |---|---|---|---|
 | `listings` | não | da CCD078/CCD097 | só leitura: `price`, `created_at` (R3–R5) |
-| `reviews` | não | `create_reviews_table` (da CCD081) | só CCD070, Futuro Marketplace: média de `rating` por `seller_id` (R9) |
 
 Nenhuma coluna nova.
 
@@ -42,8 +38,6 @@ Nenhuma coluna nova.
 - **Desempate** (depende da L2): mesmo preço, o mais recente primeiro; depois `id`, para a paginação não repetir nem pular
   anúncios entre "Carregar mais cartas" (R6).
 - **Padrão** (R7): `-createdAt` em `GET /listings`; `price` em `GET /cards/:cardId/listings`.
-- **Avaliações** (R9–R11, depende das L5–L7): `-sellerRating` ordena pela média de `reviews.rating` do vendedor,
-  decrescente, com os vendedores sem avaliação no fim; só com token de cliente.
 
 ## Contrato da API
 
@@ -61,9 +55,7 @@ Nenhuma rota nova: o parâmetro `sort` entra em duas rotas existentes.
   | Status | `error` | Quando | Requisito |
   |---|---|---|---|
   | 400 | `VALIDATION_ERROR` | `sort` fora de `-createdAt`, `price`, `-price` (detalhe no campo `sort`) | R12 |
-  | 401 | `UNAUTHENTICATED` | (Futuro Marketplace) `sort=-sellerRating` sem token (depende da L7) | R11 |
 
-  (Futuro Marketplace) Com `sort=-sellerRating`, o `meta` ganha `sellersWithoutReviews: true | false` (R10, depende da L6).
 
 ### `GET /api/v1/cards/:cardId/listings` — R1, R3–R7, R12
 
@@ -82,7 +74,6 @@ Domínio `src/domains/marketplace/listings/` (da CCD078/CCD079).
 | `listings.validator.ts` | `sort` como `z.enum` da lista nas duas queries, com padrões diferentes | R7, R12 |
 | `listings.repository.ts` | `findPublicPage` e `findActiveByCard` recebem o `orderBy` do `listings.sort.ts` | R3–R6 |
 | `listings.swagger.ts` | valores e padrão de `sort` nas duas rotas | R12 |
-| (Futuro Marketplace) `listings.seller-rating.ts` · `listings.repository.ts` · `listings.routes.ts` | média por vendedor (`groupBy` em `reviews`), `-sellerRating` com nulos no fim, exige token de cliente e devolve `sellersWithoutReviews` | R9–R11 |
 
 ## Frontend — `apps/cromocard-frontend`
 
@@ -94,7 +85,6 @@ Feature `src/features/marketplace/listings/`.
 | `components/SortSelect/` | "Ordenar: <opção>" com a lista aberta no estilo do `Select`, frames `1112-3281` e `1112-4615` (a lista aberta não tem frame) | R1, R13 |
 | `pages/ExploreMarketplacePage/` (CCD078) | usa o `SortSelect`, padrão "Mais recentes"; trocar a ordem reinicia a lista na página 1 e mantém os filtros na URL; o vazio continua "Nenhum anúncio encontrado", frame `1112-3674` | R1, R6–R8 |
 | `components/AvailableListings/` (do perfil da carta, CCD030) | usa o `SortSelect`, padrão "Menor preço", frame `1112-4615` | R1, R7 |
-| (Futuro Marketplace) `listings.sort.ts` · `SortSelect/` · `ExploreMarketplacePage/` | opção de avaliações só com cliente logado e o aviso de vendedores sem avaliação | R9–R11 |
 
 - **Rotas:** nenhuma nova. **Estados:** os da CCD078 e da CCD030.
 
@@ -108,14 +98,12 @@ Feature `src/features/marketplace/listings/`.
 | CA5 | padrão "Mais recentes" no Explorar e "Menor preço" no perfil da carta | `SortSelect.spec.tsx` · `AvailableListings.spec.tsx` · integração de `/cards/:cardId/listings` |
 | CA6 | sem resultados, trocar a ordem mantém o vazio | `ExploreMarketplacePage.spec.tsx` |
 | CA7 | sem token `sort=-price` responde `200`; `sort=nome` responde `400` | integração |
-| CA8 | (Futuro Marketplace) 4,8 antes de 3,2, sem avaliação no fim, aviso e `401` sem token | `listings.seller-rating.spec.ts` · integração · `ExploreMarketplacePage.spec.tsx` |
 | CA9–CA12 | print em 1280 px igual aos frames `1112-3281`, `1112-3674` e `1112-4615`; sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
 
 ## Dependências e riscos
 
 - O plano da CCD079 usa `sort=price_asc` em `GET /cards/:cardId/listings`; este plano usa `sort=price` (ADR-011). O plano da
   CCD079 precisa ser alinhado antes do código.
-- A CCD070 depende da `reviews` (CCD081) e das L5–L7; sem elas, só o MVP (R1–R8, R12, R13) é implementado.
 - A user story desta spec não existe no board (L4): as Tasks só podem ser criadas depois dela.
 
 ## Decisões técnicas

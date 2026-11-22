@@ -1,9 +1,9 @@
 # CCD067 — Buscar por Vendedor
 
 - **Status:** Rascunho
-- **Fase:** Futuro Marketplace (L3)
+- **Fase:** MVP (era Futuro Marketplace; o filtro foi desenhado no Figma em 22/11/2026, ADR-068)
 - **User story:** não encontrada no board
-- **Caso de uso:** [67-buscar-por-vendedor.md](../../docs/Casos-De-Uso/67-buscar-por-vendedor.md) · duplicado em [33-buscar-por-vendedor.md](../../docs/Casos-De-Uso/33-buscar-por-vendedor.md) (L1)
+- **Caso de uso:** [67-buscar-por-vendedor.md](../../docs/Casos-De-Uso/67-buscar-por-vendedor.md) · a CCD033, que duplicava este caso de uso, foi removida em 22/11/2026 (L1, ADR-068)
 - **Atores:** Cliente · **Pré-condições:** na listagem de cartas do marketplace
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade
 - **Aprovação:** —
@@ -46,7 +46,7 @@ anúncios de um vendedor específico na plataforma".)
 | R5 | Sem vendedor encontrado, a tela mostra “Nenhum vendedor encontrado.” | Mensagem | `67`, FA 1 |
 | R6 | Vendedor sem anúncios ativos: a tela mostra “Este vendedor não possui anúncios ativos.” | Mensagem | `67`, FA 2 |
 | R7 | Só usuários com papel `SELLER` contam como vendedores | Regra | `67`, FP 4; DBML `user_role` |
-| R8 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados. A busca por vendedor não tem frame (L4): o requisito vale quando o frame existir | Fidelidade | Figma (frames da seção Telas); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
+| R8 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados. | Fidelidade | Figma (frames da seção Telas); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 
 ## Critérios de aceite
 
@@ -59,17 +59,16 @@ anúncios de um vendedor específico na plataforma".)
 - **CA4** (R7) — **Dado** um `CUSTOMER` chamado "tiago", **quando** o cliente busca "tiago", **então** esse usuário não aparece
   entre os vendedores.
 - **CA5** (R8 de Fidelidade) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print
-  dela é comparado lado a lado com o print do frame da busca por vendedor (a desenhar, L4), **então** não há diferença de
-  layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem
-  quebra, corte nem rolagem horizontal.
-- **CA6** (R8 de Fidelidade) — Idem ao CA5, com a seção de busca do Explorar e o frame `1112-3281`, se a L4 decidir pôr a
-  opção nele.
-- **CA7** (R8 de Fidelidade) — Idem ao CA5, com o grupo "Usuários" da busca global e o frame `1112-3970`, se a L4 decidir
-  pelo caminho da busca global.
-- **CA8** (R8 de Fidelidade) — Idem ao CA5, com os anúncios ativos do vendedor e o frame `1160-1396`, se a L4 decidir pelo
-  caminho do perfil público.
+  da lista de vendedores aberta no filtro "Vendedor" é comparado lado a lado com o frame `1226-1280`, **então** não há
+  diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se
+  adapta sem quebra, corte nem rolagem horizontal.
+- **CA6** (R8 de Fidelidade) — Idem ao CA5, com o Explorar e o filtro "Vendedor: Todos" na linha de filtros e o frame
+  `1112-3281` (e `1112-3674`, sem resultados).
+- ~~**CA7**~~ removido em 22/11/2026: a L4 escolheu o filtro no Explorar, não o caminho da busca global.
+- ~~**CA8**~~ removido em 22/11/2026: a L4 escolheu o filtro no Explorar, não o caminho do perfil público.
+- **CA9** (R8) — Idem ao CA5, com os frames `1226-1576` ("Nenhum vendedor encontrado."), `1226-1862` (anúncios do vendedor,
+  com o chip "Vendedor: tiago_trocas ✕") e `1226-2142` ("Este vendedor não possui anúncios ativos.").
 
-- **CA9** (R8) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1112-3281`, `1112-3970`, `1160-1396`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 ## Dados
 
 | Tabela | Colunas e enums usados | Observação |
@@ -80,15 +79,18 @@ anúncios de um vendedor específico na plataforma".)
 
 ## Telas (Figma)
 
+O filtro "Vendedor" foi desenhado no Explorar marketplace em 22/11/2026 (L4).
+
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Público - Explorar marketplace (seção de busca: "Buscar por carta ou coleção") | [1112-3281](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-3281) | R1, R2 | ❌ Não bate: sem a opção de busca por vendedor (L4) |
-| Público - Busca (grupo "Usuários") | [1112-3970](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-3970) | R3 | ⚠️ Caminho alternativo, da CCD002 (L4) |
-| Público - Perfil público do usuário ("Anúncios ativos de <usuário> (<n>)") | [1160-1396](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-1396) | R4 | ⚠️ Caminho alternativo, da CCD080 (L4) |
+| Público - Explorar marketplace, com o filtro "Vendedor: Todos" | [1112-3281](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-3281) · sem resultados [1112-3674](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-3674) | R1, R2 | ✅ Bate |
+| Público - Explorar marketplace - buscar vendedor (lista com cidade e anúncios ativos) | [1226-1280](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1226-1280) | R3, R7 | ✅ Bate |
+| Público - Explorar marketplace - nenhum vendedor encontrado | [1226-1576](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1226-1576) | R5 | ✅ Bate |
+| Público - Explorar marketplace - anúncios do vendedor | [1226-1862](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1226-1862) | R4 | ✅ Bate |
+| Público - Explorar marketplace - vendedor sem anúncios | [1226-2142](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1226-2142) | R6 | ✅ Bate |
 
-- **Não há frame de busca por vendedor** (L4).
-- **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R2 a opção de busca por vendedor; R3 a lista de
-  vendedores encontrados; R5 e R6 as duas mensagens.
+- **Diferenças com o Figma:** nenhuma.
+- **Só no Figma:** o chip "Vendedor: <nome> ✕" nos filtros ativos, para desfazer o filtro (incluído no caso de uso, FP 6).
 
 ## Fora do escopo
 
@@ -100,9 +102,9 @@ anúncios de um vendedor específico na plataforma".)
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | **Duplicidade:** "Buscar por Vendedor" está no `67` e no `33` (CCD033, #166). Diferenças: o `33` exige login e traz os anúncios "cadastrados", com a mensagem "Nenhum resultado encontrado"; o `67` não exige login, traz os anúncios ativos, lista os vendedores antes e tem duas mensagens. Qual caso de uso fica? (proposta: manter o `67` e cancelar o `33`) | pendente | — |
+| L1 | **Duplicidade:** "Buscar por Vendedor" está no `67` e no `33` (CCD033, #166). Diferenças: o `33` exige login e traz os anúncios "cadastrados", com a mensagem "Nenhum resultado encontrado"; o `67` não exige login, traz os anúncios ativos, lista os vendedores antes e tem duas mensagens. Qual caso de uso fica? (proposta: manter o `67` e cancelar o `33`) | A CCD033 foi removida do projeto em 22/11/2026 e esta spec fica com a funcionalidade | ADR-068 |
 | L2 | O caso de uso não tem user story no board. Criar a user story ou usar a #166 da CCD033 (que no board se chama "Ordenar Coleção")? | pendente | — |
-| L3 | O arquivo `67` não tem marcador de fase, mas a linha "Buscar por Vendedor" de `user-stories.md` está marcada `***` e a CCD067 não está na fatia mínima do ADR-027. A fase é Futuro Marketplace? | pendente | — |
-| L4 | O Figma não tem a opção de busca por vendedor no Explorar. O caminho é a busca global → "Ver perfil" → anúncios ativos no perfil público (`1112-3970`, `1160-1396`), ou uma opção nova no Explorar (falta o desenho)? (proposta: o caminho que o Figma já tem) | pendente | — |
-| L5 | "Nome do vendedor" é o nome de usuário ou o nome completo (`users.name`)? O perfil público nunca mostra o nome completo (EA-080-01). (proposta: só `username`) | pendente | — |
+| L3 | O arquivo `67` não tem marcador de fase, mas a linha "Buscar por Vendedor" de `user-stories.md` está marcada `***` e a CCD067 não está na fatia mínima do ADR-027. A fase é Futuro Marketplace? | MVP desde 22/11/2026: o filtro foi desenhado no Figma | ADR-068; `user-stories.md` |
+| L4 | O Figma não tem a opção de busca por vendedor no Explorar. O caminho é a busca global → "Ver perfil" → anúncios ativos no perfil público (`1112-3970`, `1160-1396`), ou uma opção nova no Explorar (falta o desenho)? (proposta: o caminho que o Figma já tem) | Opção nova no Explorar: o filtro "Vendedor" na linha de filtros, desenhado em 22/11/2026 (`1112-3281`, `1226-1280`, `1226-1576`, `1226-1862`, `1226-2142`) | `67`, FP 2–6; Figma |
+| L5 | "Nome do vendedor" é o nome de usuário ou o nome completo (`users.name`)? O perfil público nunca mostra o nome completo (EA-080-01). (proposta: só `username`) | Só o nome de usuário (`username`), como mostra a lista do Figma | `67`, FP 4; Figma `1226-1280` |
 | L6 | Entre o FP 4 (vendedores encontrados) e o FP 5 (anúncios "do vendedor selecionado") falta o passo em que o cliente escolhe o vendedor. Com um vendedor só, a lista abre direto? Vendedor suspenso aparece? (proposta: o cliente escolhe na lista; só `status = ACTIVE`) | pendente | — |

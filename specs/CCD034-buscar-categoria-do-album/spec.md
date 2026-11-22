@@ -1,10 +1,10 @@
 # CCD034 — Buscar Categoria do Álbum
 
 - **Status:** Rascunho
-- **Fase:** Futuro
+- **Fase:** MVP (era Futuro; o filtro por seleção foi desenhado no Figma em 22/11/2026, ADR-068)
 - **User story:** #137 `CCD034 - Buscar Categoria do Álbum`
 - **Caso de uso:** [34-buscar-categoria-do-album.md](../../docs/Casos-De-Uso/34-buscar-categoria-do-album.md)
-- **Atores:** Cliente · **Pré-condições:** cliente autenticado, na tela da sua coleção de álbuns
+- **Atores:** Cliente · **Pré-condições:** cliente autenticado, no detalhe de um álbum da sua coleção (filtro "Seleção") ou no Início (categoria raiz)
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade
 - **Aprovação:** —
 
@@ -40,7 +40,7 @@ das Observações de `user-stories.md` ("Categoria do album, seleção, times").
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
 | R1 | Filtrar exige login: sem token, `401`; o filtro só vê a coleção do próprio cliente | Permissão | `34`, Pré-condições; ADR-005, item 4; ADR-011 |
-| R2 | Nos filtros da coleção, o cliente seleciona uma categoria, uma seleção ou um time | Ação | `34`, FP 1 (L1, L2) |
+| R2 | Nos filtros da coleção, o cliente seleciona uma categoria, uma seleção ou um time | Ação | `34`, FP 1 (L2) |
 | R3 | Categoria, seleção e time são níveis da hierarquia de `categories` (`parent_category_id`) | Regra | `34`, FP 1; DBML `categories.parent_category_id` ("Hierarquia: seleção / time") (L3) |
 | R4 | O filtro mostra só as figurinhas da coleção do cliente que pertencem ao item selecionado | Regra | `34`, FP 2–3 (L4) |
 | R5 | Sem figurinhas no item selecionado, a tela mostra "Nenhuma figurinha encontrada para esta categoria" | Mensagem | `34`, FA 1 |
@@ -55,16 +55,17 @@ das Observações de `user-stories.md` ("Categoria do album, seleção, times").
 - **CA3** (R5) — **Dado** nenhuma carta da coleção no time escolhido, **quando** o cliente o seleciona, **então** vê
   "Nenhuma figurinha encontrada para esta categoria".
 - **CA4** (R1) — **Dado** um visitante sem login, **quando** chama a rota da coleção com o filtro, **então** recebe `401`.
-- **CA5** (R6) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame do filtro (L1), **quando** o
-  print dela é comparado lado a lado com o print do frame, **então** não há diferença de layout, medida, espaçamento, cor,
-  fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem
-  horizontal.
+- **CA5** (R6) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print do detalhe
+  do álbum com a lista do filtro "Seleção" aberta é comparado lado a lado com o frame `1226-2361`, **então** não há diferença
+  de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem
+  quebra, corte nem rolagem horizontal.
 - **CA6** (R6) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é
   comparado lado a lado com o print do frame `1122-17812`, **então** não há diferença de layout, medida, espaçamento, cor,
   fonte, texto, ícone ou imagem nos botões de categoria; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte
   nem rolagem horizontal.
 
-- **CA7** (R6) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1160-23080`, `1160-23696`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
+- **CA7** (R6) — Idem ao CA5, com o detalhe do álbum com o filtro fechado (`1160-23696`), filtrado por "Brasil" (`1226-3003`)
+  e sem figurinhas para "Uruguai" (`1226-3625`).
 ## Dados
 
 | Tabela | Colunas e enums usados | Observação |
@@ -76,21 +77,22 @@ das Observações de `user-stories.md` ("Categoria do album, seleção, times").
 
 ## Telas (Figma)
 
+O filtro "Seleção" foi desenhado na linha de filtros do detalhe do álbum em 22/11/2026 (L1), nas seis telas de detalhe do
+álbum e em três estados novos.
+
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Cliente - Início (minha coleção) — botões de categoria | [1122-17812](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1122-17812) | R2, R4 | ⚠️ Filtra as cartas da coleção só pela categoria raiz ("Todas", "Pokémon", "Magic", "Futebol", "One Piece", "Yu-Gi-Oh!"), sem seleção nem time (L1) |
+| Cliente - Início (minha coleção) — botões de categoria raiz | [1122-17812](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1122-17812) | R2, R4 | ✅ Bate |
+| Álbuns - detalhe do álbum, com o filtro "Todas as seleções" | [1160-23696](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-23696) | R2 | ✅ Bate |
+| Álbuns - filtrar por seleção (lista aberta, com a quantidade de figurinhas de cada seleção) | [1226-2361](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1226-2361) | R2, R3 | ✅ Bate |
+| Álbuns - filtrado por seleção ("Brasil", "Exibindo 1 de 54 itens") | [1226-3003](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1226-3003) | R4 | ✅ Bate |
+| Álbuns - filtro sem figurinhas ("Uruguai") | [1226-3625](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1226-3625) | R5 | ✅ Bate |
 
-- O filtro por seleção e time não tem frame: o requisito de fidelidade (R6, CA5) vale quando o frame existir (L1).
-- Telas vistas que não implementam esta story: "Álbuns - Meus álbuns" ([1160-23080](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-23080)),
-  cujos botões de categoria filtram álbuns, não figurinhas (L2); e "Álbuns - detalhe do álbum"
-  ([1160-23696](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-23696)), cujos filtros não têm
-  categoria, seleção nem time (L1).
-- **Diferenças com o Figma** (decisão em Lacunas e decisões): nenhuma tela tem o filtro por seleção ou time que o FP 1
-  pede (L1).
+- Telas vistas que não implementam esta story: "Álbuns - Meus álbuns"
+  ([1160-23080](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-23080)), cujos botões de categoria filtram álbuns, não figurinhas (L2).
+- **Diferenças com o Figma:** nenhuma.
 - **Só no Figma** (faz sentido implementar? decisão em Lacunas e decisões): os botões com a contagem por categoria em "Meus
   álbuns" ("Todos (4)", "Futebol / Esportes (1)"…), que filtram álbuns (L2).
-- **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R2 a escolha de seleção e time; R5 a mensagem sem
-  resultado (L1).
 
 ## Fora do escopo
 
@@ -102,7 +104,7 @@ das Observações de `user-stories.md` ("Categoria do album, seleção, times").
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | Falta o desenho do filtro por seleção e time no Figma. Em que tela ele fica (Início, detalhe do álbum ou "Meus álbuns") e como (botões em níveis, select em cascata)? | pendente | — |
+| L1 | Falta o desenho do filtro por seleção e time no Figma. Em que tela ele fica (Início, detalhe do álbum ou "Meus álbuns") e como (botões em níveis, select em cascata)? | No detalhe do álbum, como seletor "Seleção" na linha de filtros, com a quantidade de figurinhas de cada opção; desenhado em 22/11/2026 (`1226-2361`, `1226-3003`, `1226-3625`) | `34`, FP 1–3; Figma |
 | L2 | A Pré-condição diz "tela da sua coleção de álbuns" ("Meus álbuns"), mas o resultado são figurinhas. Os botões de "Meus álbuns" (`1160-23080`) filtram álbuns: eles são desta story ou da CCD008/CCD009? | pendente | — |
 | L3 | A figurinha pertence à seleção pela própria categoria (`cards.category_id` = "Argentina") ou pela do álbum? O ADR-063 (Proposto, ainda fora da `development`) faz a carta com álbum ter a franquia do álbum e responde `422` para outra categoria: uma subcategoria (seleção, time) conta como "outra"? Sem resolver, a carta de álbum não pode ter seleção | pendente | — |
 | L4 | O filtro mostra só as cartas `OWNED`/`DUPLICATE` ou também as `MISSING`? | pendente | — |

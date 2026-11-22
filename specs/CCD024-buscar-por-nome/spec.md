@@ -116,7 +116,7 @@
 
 - Busca global de usuários, grupos e álbuns — CCD002.
 - Pesquisar carta para adicionar à coleção e filtros dentro do álbum do cliente — CCD021, CCD013 e CCD037 (L10).
-- Filtro por estado de conservação — CCD032; por vendedor — CCD033/CCD067.
+- Filtro por estado de conservação — CCD032; por vendedor — CCD067.
 - Perfil da carta — CCD030.
 - Gravar a ordem das categorias padrão — CCD104.
 

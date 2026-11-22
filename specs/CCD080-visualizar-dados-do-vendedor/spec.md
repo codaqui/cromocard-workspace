@@ -36,7 +36,7 @@
 | R1 | Os dados públicos do vendedor e o perfil público abrem sem login, para o visitante e para o cliente | Permissão | `80-visualizar-quantidade-disponivel.md`, Atores; EA-080-01 |
 | R2 | No detalhe do anúncio, o cartão do vendedor mostra o nome de usuário e "cidade - UF" do vendedor | Tela | `80`, FP 1–3; Figma `1112-5772`, `1112-6152` |
 | R3 | Na lista "Anúncios disponíveis" do perfil da carta e em "Outros anúncios desta carta" do detalhe do anúncio, cada linha mostra o nome de usuário e "cidade - UF" do vendedor | Tela | `80`, Pré-condições e FP 3; Figma `1112-4615`, `1112-5772` |
-| R4 | A nota média das avaliações recebidas pelo vendedor (de 0 a 5) aparece junto dos dados dele. **Suspenso até a L2**: o EA-080-01 e o ADR-027 tiram a avaliação do MVP | Campo | `80`, FP 3 (L2) |
+| ~~R4~~ | ~~Nota média das avaliações~~ removido em 22/11/2026: as avaliações saíram do projeto (ADR-068; decisão da L2) | — | — |
 | R5 | Dado público não cadastrado não aparece: a tela mostra só o que o vendedor cadastrou, sem campo vazio nem texto de preenchimento | Estado | `80`, FA 1 |
 | R6 | O nome do vendedor no anúncio e no perfil da carta, e "Ver perfil" na busca, abrem o perfil público do usuário | Ação | EA-080-01 |
 | R7 | O perfil público mostra o nome de usuário, a cidade, o total de "Vendas concluídas" e o total de "Anúncios ativos" | Tela | EA-080-01; Figma `1160-1396` |
@@ -90,7 +90,6 @@
 | `listings` | `seller_id`, `card_id`, `condition_id`, `price`, `status` (`ACTIVE`), `deleted_at` | Anúncios ativos do vendedor (R7, R8) |
 | `orders` | `seller_id`, `status` (`order_status`) | Base do total de vendas concluídas (L4) |
 | `cards`, `albums`, `categories`, `card_conditions` | `cards.name`, `albums.name`, `categories.name`, `card_conditions.name` | Cartões dos anúncios ativos no perfil público (R8) |
-| `reviews` | `seller_id`, `rating` (1 a 5) | Só se a L2 mantiver a nota (R4) |
 
 ## Telas (Figma)
 
@@ -114,9 +113,9 @@
 
 - Quantidade disponível, "Comprar" e o estado indisponível do anúncio — CCD079 e CCD072.
 - "⚑ Denunciar perfil" e o modal de denúncia (`1160-17495`) — CCD050 (Denunciar Perfil) e CCD083 (Denunciar Vendedor) (L9).
-- Lista de avaliações e comentários do vendedor — CCD081 (Futuro Marketplace, ADR-027).
+- Avaliações do vendedor — removidas do projeto em 22/11/2026 (CCD081 e `reviews`, ADR-068).
 - Vitrine de conquistas — CCD049 (Exibir Vitrine de Conquistas), se a L8 decidir mostrá-la no perfil público.
-- Buscar anúncios por vendedor — CCD033 e CCD067.
+- Buscar anúncios por vendedor — CCD067.
 - Resultados de usuários na busca ("Usuários", "Ver perfil", "312 vendas") — CCD002.
 
 ## Lacunas e decisões
@@ -124,7 +123,7 @@
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
 | L1 | O arquivo `80-visualizar-quantidade-disponivel.md` tem o título "Visualizar Quantidade Disponível", igual ao do 79, mas o conteúdo é Visualizar Dados do Vendedor (inconsistência conhecida do `CLAUDE.md`). Renomear o arquivo e corrigir o título? (proposta: `80-visualizar-dados-do-vendedor.md`, com o título certo) | pendente | — |
-| L2 | O caso de uso (FP 3) pede a nota média das avaliações (0 a 5); o Figma não mostra a nota, e o EA-080-01 (21/11/2026) e o ADR-027 tiram a avaliação do MVP. Qual vale? (proposta: tirar a nota do FP 3 e deixá-la para a CCD081, na fase Futuro Marketplace; R4 sai) | pendente | — |
+| L2 | O caso de uso (FP 3) pede a nota média das avaliações (0 a 5); o Figma não mostra a nota, e o EA-080-01 (21/11/2026) e o ADR-027 tiram a avaliação do MVP. Qual vale? (proposta: tirar a nota do FP 3 e deixá-la para a CCD081, na fase Futuro Marketplace; R4 sai) | Decidida em 22/11/2026: a nota sai do FP 3 e o R4 é removido, porque as avaliações (CCD081 e `reviews`) saíram do projeto | ADR-068; `80`, FP 3 |
 | L3 | O caso de uso e o Figma mostram "cidade - UF", mas `profiles` só tem `city`; o estado não existe no perfil e o endereço é privado (R9). De onde vem a UF? (proposta: coluna `state char(2)` em `profiles`, preenchida no Editar Perfil, com mudança no DER e ADR) | pendente | — |
 | L4 | O que conta como "venda concluída"? (proposta: pedidos do vendedor com `status = COMPLETED`, pagamento liberado, CCD110) | pendente | — |
 | L5 | Selos "Vendedor" e "Conta de recebimento verificada" no perfil público: só no Figma. Faz sentido implementar? (proposta: sim; "Vendedor" quando `role = SELLER` e "Conta de recebimento verificada" quando `stripe_account_status = READY`) | pendente | — |

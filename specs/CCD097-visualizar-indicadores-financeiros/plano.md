@@ -3,6 +3,8 @@
 - **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
+> **22/11/2026 (ADR-068):** `reviews` e a reputação saíram. A branch `feature/601-visualizar-indicadores-financeiros` (commit 7e6fbf5) já criou a migration de `reviews`: ela sai do `schema.prisma`, das migrations e do seed antes do merge.
+
 ## Solução
 
 Consultas de leitura sobre as tabelas do marketplace, criadas nesta story a partir do DBML e povoadas pelo seed, num serviço `admin/finance`. O Dashboard, o Catálogo, a Comunidade e os Relatórios mostram os números.
@@ -20,7 +22,6 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | `listings` | `create_listings_table` | tabela do DBML | R5, R10 |
 | `orders` | `create_orders_table` | tabela do DBML | R2, R3 |
 | `payments` | `create_payments_table` | tabela do DBML | R2–R4 |
-| `reviews` | `create_reviews_table` | tabela do DBML | R5 |
 | `price_history` | `create_price_history_table` | tabela do DBML | R9 |
 
 ## Contrato da API
@@ -29,15 +30,15 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|---|---|---|
 | `GET /api/v1/admin/finance/summary` | `period` | `200` `{ custody, settledToday, settledOrders, retained }` | `400` | R2–R4, R6, R8 |
 | `GET /api/v1/admin/finance/ledger` | `date` | `200` lista de pagamentos e liberações | — | R7 |
-| `GET /api/v1/admin/finance/sellers` | `ids` | `200` volume e reputação por vendedor | — | R5 |
+| `GET /api/v1/admin/finance/sellers` | `ids` | `200` volume anunciado por vendedor | — | R5 |
 | `GET /api/v1/admin/finance/cards` · `/groups` | `ids` | `200` população e preço médio; volume por grupo | — | R9, R10 |
 
 ## Backend
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/schema.prisma` + 5 migrations · `database/seeds/marketplace.seed.ts` | tabelas do DBML e movimentação de teste | R2–R5, R9, R10 |
-| `src/domains/admin/finance/` (repository, service + `.spec.ts`) | custódia, liquidado, retido, livro razão, volume, reputação, população e preço médio | R2–R10 |
+| `database/schema.prisma` + 4 migrations · `database/seeds/marketplace.seed.ts` | tabelas do DBML e movimentação de teste | R2–R5, R9, R10 |
+| `src/domains/admin/finance/` (repository, service + `.spec.ts`) | custódia, liquidado, retido, livro razão, volume, população e preço médio | R2–R10 |
 | controller · routes · swagger · `reports` (tipo `FINANCE`) | rotas e relatório | R1, R11 |
 
 ## Frontend
@@ -46,7 +47,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|---|
 | `src/features/admin/finance/` (api, queries, types) | chamadas | R2–R10 |
 | `components/FinanceCards/` · `LedgerModal/` | cards e livro razão no Dashboard | R2–R4, R6–R8 |
-| colunas em `SellerRegistrationsTable`, lista do catálogo e lista de grupos | volume, reputação, população, preço médio e volume por grupo | R5, R9, R10 |
+| colunas em `SellerRegistrationsTable`, lista do catálogo e lista de grupos | volume, população, preço médio e volume por grupo | R5, R9, R10 |
 
 ## Testes
 

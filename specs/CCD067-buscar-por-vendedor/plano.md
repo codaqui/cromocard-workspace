@@ -2,29 +2,26 @@
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 
-> Fase Futuro Marketplace (depende da L3): implementar depois do MVP.
+> **Fase MVP** desde 22/11/2026: o filtro "Vendedor" foi desenhado no Figma (ADR-068).
 
-- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L6 pendentes)
+- **Spec:** [spec.md](spec.md), em Rascunho (L1, L3, L4 e L5 decididas em 22/11/2026; L2 e L6 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
 - **Data:** 2026-11-22 · **Autor:** Daniel Andrade
 
 ## Solução
 
 Dois endpoints públicos: `GET /api/v1/sellers?q=` busca os vendedores (`SELLER`, `ACTIVE`, por trecho do nome de usuário)
-e `GET /api/v1/listings?sellerId=` (filtro novo na listagem da CCD078) traz os anúncios ativos do vendedor escolhido. A
-proposta da L4 é o caminho que o Figma já tem: busca global → "Ver perfil" → "Anúncios ativos de <usuário>" no perfil
-público (`1112-3970`, `1160-1396`), que passa a usar `GET /listings?sellerId=` e mostra "Este vendedor não possui anúncios
-ativos." quando vazio. Como a spec pede a opção de busca por vendedor, a lista de vendedores e as duas mensagens "no estilo
-da tela" (Telas, "O que falta no Figma"), a seção de busca do Explorar ganha a escolha "Cartas | Vendedores" com o mesmo
-estilo das abas de escopo do `SearchBar` (depende da L4); escolhido um vendedor, abre o perfil público dele.
+e `GET /api/v1/listings?sellerId=` (filtro novo na listagem da CCD078) traz os anúncios ativos do vendedor escolhido. No
+Explorar, a linha de filtros ganha o seletor "Vendedor" (L4, frame `1112-3281`). Ao abrir, ele mostra o campo do nome e a
+lista de vendedores com cidade e número de anúncios ativos (`1226-1280`), ou "Nenhum vendedor encontrado." (`1226-1576`).
+Escolhido um vendedor, a grade mostra só os anúncios ativos dele, com o chip "Vendedor: <nome> ✕" nos filtros ativos
+(`1226-1862`), ou "Este vendedor não possui anúncios ativos." (`1226-2142`).
 
 ## Dependências
 
 - **CCD078:** `GET /listings`, `ListingCard` e o Explorar (`/marketplace`).
-- **CCD080:** perfil público do vendedor (`/usuarios/:username`) e a seção "Anúncios ativos de <usuário> (<n>)". Esta story
-  liga a seção ao filtro `sellerId` e à mensagem do R6.
-- **CCD002:** grupo "Usuários" da busca global, caminho alternativo do Figma (sem mudança aqui).
-- **CCD033:** duplicada desta (L1): pela proposta, a CCD033 é cancelada e esta fica.
+- **CCD068:** chips de filtros ativos e o seletor "Ordenar" do Explorar (o chip do vendedor entra ao lado deles).
+- **CCD033:** removida em 22/11/2026 (L1, ADR-068).
 
 ## Dados
 
@@ -36,7 +33,7 @@ estilo das abas de escopo do `SearchBar` (depende da L4); escolhido um vendedor,
 ## Regras
 
 - **Vendedor** (R7, depende da L6): `role = SELLER`, `status = ACTIVE`, `deleted_at` nulo.
-- **Termo** (R3, depende da L5): trecho de `username`, sem diferenciar maiúsculas; o nome completo nunca é pesquisado nem
+- **Termo** (R3, L5 decidida): trecho de `username`, sem diferenciar maiúsculas; o nome completo nunca é pesquisado nem
   devolvido (EA-080-01).
 - **Anúncios** (R4): os da listagem pública da CCD078 (ativos, não excluídos) com `seller_id` igual.
 - **Escolha do vendedor** (depende da L6): o cliente escolhe na lista, mesmo com um resultado só.
@@ -83,28 +80,26 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 |---|---|---|
 | `src/features/users/sellers.{types,api,queries}.ts` + `index.ts` | busca de vendedores | R3, R7 |
 | `src/features/marketplace/listings/listings.api.ts` · `listings.queries.ts` | `sellerId` na listagem | R4 |
-| `src/features/marketplace/listings/components/ListingSearchScope/` | "Cartas \| Vendedores" na seção de busca do Explorar, no estilo das abas de escopo do `SearchBar`, frame `1112-3281` (depende da L4) | R1, R2, R8 |
-| `src/features/users/components/SellerResultList/` | vendedores encontrados (iniciais ou avatar, @usuário, "<n> anúncios") e “Nenhum vendedor encontrado.”, no estilo do grupo "Usuários" do `1112-3970` | R3, R5, R8 |
-| `src/features/users/components/SellerActiveListings/` (no perfil público da CCD080) | "Anúncios ativos de <usuário> (<n>)" com `ListingCard` e “Este vendedor não possui anúncios ativos.”, frame `1160-1396` | R4, R6, R8 |
-| `src/features/marketplace/listings/pages/ExploreMarketplacePage/` | troca a grade pela lista de vendedores quando o escopo é "Vendedores" | R1–R3 |
+| `src/features/marketplace/listings/components/SellerFilter/` | seletor "Vendedor: Todos" na linha de filtros do Explorar (`1112-3281`, `1112-3674`); ao abrir, o campo do nome e a lista de vendedores com avatar, @usuário, cidade e "<n> anúncios ativos" (`1226-1280`) ou "Nenhum vendedor encontrado." (`1226-1576`) | R1–R3, R5, R7, R8 |
+| `src/features/marketplace/listings/components/ActiveFilters/` | chip "Vendedor: <nome> ✕" que desfaz o filtro (`1226-1862`) | R4, R8 |
+| `src/features/marketplace/listings/pages/ExploreMarketplacePage/` | `sellerId` na URL e na consulta; vazio "Este vendedor não possui anúncios ativos." (`1226-2142`) | R4, R6, R8 |
 
-- **Rotas:** nenhuma nova; selecionar o vendedor abre `/usuarios/:username` (CCD080).
+- **Rotas:** nenhuma nova; o vendedor escolhido vai na query do Explorar (`/marketplace?vendedor=<username>`).
 - **Estados:** `LoadingState` e `ErrorState`, como no Explorar.
 
 ## Testes
 
 | Critério | O que o teste verifica | Onde |
 |---|---|---|
-| CA1 | "tiago" acha "tiago_trocas"; o perfil mostra só o anúncio ativo | `sellers.service.spec.ts` · integração · `ExploreMarketplacePage.spec.tsx` · `SellerActiveListings.spec.tsx` |
-| CA2 | "zzz" mostra “Nenhum vendedor encontrado.” | integração · `SellerResultList.spec.tsx` |
-| CA3 | vendedor só com pausados mostra “Este vendedor não possui anúncios ativos.” | integração · `SellerActiveListings.spec.tsx` |
+| CA1 | "tiago" acha "tiago_trocas"; o Explorar mostra só o anúncio ativo dele | `sellers.service.spec.ts` · integração · `SellerFilter.spec.tsx` · `ExploreMarketplacePage.spec.tsx` |
+| CA2 | "zzz" mostra “Nenhum vendedor encontrado.” | integração · `SellerFilter.spec.tsx` |
+| CA3 | vendedor só com pausados mostra “Este vendedor não possui anúncios ativos.” | integração · `ExploreMarketplacePage.spec.tsx` |
 | CA4 | `CUSTOMER` "tiago" não aparece | `sellers.service.spec.ts` · integração |
-| CA5–CA9 | print em 1280 px igual aos frames `1112-3281`, `1112-3970` e `1160-1396`, conforme a L4; sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
+| CA5, CA6, CA9 | print em 1280 px igual aos frames `1112-3281`, `1112-3674`, `1226-1280`, `1226-1576`, `1226-1862` e `1226-2142`; sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
 
 ## Dependências e riscos
 
-- A opção "Cartas | Vendedores" no Explorar não tem frame (L4): o R8 vale quando o Gabriel desenhar. Se a L4 ficar só com o
-  caminho da busca global, a T6 e a T7 saem e o resto continua igual.
+- Vendedor suspenso fora da lista segue a proposta da L6 (pendente).
 - A user story não existe no board (L2): as Tasks só podem ser criadas depois dela.
 
 ## Decisões técnicas

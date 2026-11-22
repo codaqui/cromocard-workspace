@@ -2,9 +2,9 @@
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 
-> **Fase Futuro:** implementar depois do MVP.
+> **Fase MVP** desde 22/11/2026: o filtro "Seleção" foi desenhado no Figma (ADR-068).
 
-- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L5 pendentes)
+- **Spec:** [spec.md](spec.md), em Rascunho (L1 decidida em 22/11/2026; L2–L5 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
 - **Data:** 2026-11-22 · **Autor:** Daniel Andrade
 
@@ -12,7 +12,8 @@
 
 A lista das cartas da coleção (`GET /collections/me/cards`, da grade do Início e do detalhe do álbum) ganha o filtro
 `categoryId`, que inclui as subcategorias (seleções e times) do item escolhido. O cliente escolhe a categoria raiz nos
-botões do Início e, abaixo dela, a seleção ou o time (sem frame, L1). Sem cartas no item, a grade mostra "Nenhuma figurinha
+botões do Início (`1122-17812`); no detalhe do álbum, escolhe a seleção ou o time no seletor "Seleção" da linha de filtros
+(`1160-23696`, lista aberta em `1226-2361`, filtrado em `1226-3003`). Sem cartas no item, a grade mostra "Nenhuma figurinha
 encontrada para esta categoria". As opções vêm de `GET /collections/me/categories`, só com as categorias que têm cartas na
 coleção do cliente, na ordem da CCD104.
 
@@ -84,7 +85,9 @@ Feature `src/features/collection/`.
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `collection.api.ts` · `collection.queries.ts` · `collection.labels.ts` | `categoryId` na query da grade, `useCollectionCategories`, "Nenhuma figurinha encontrada para esta categoria" | R2, R5 |
-| `components/CategoryFilter/` | botões das categorias raiz ("Todas", …) — frame `1122-17812`; segundo nível com seleções e times, no estilo dos botões (sem frame, L1) | R2, R6 |
+| `components/CategoryFilter/` | botões das categorias raiz ("Todas", …) do Início — frame `1122-17812` | R2, R6 |
+| `components/SelectionFilter/` | seletor "Seleção" na linha de filtros do detalhe do álbum, com "Todas as seleções" e a quantidade de figurinhas de cada opção — frames `1160-23696` e `1226-2361` | R2, R3, R6 |
+| grade do detalhe do álbum (CCD013) | aplica o filtro, atualiza "Exibindo N de M itens" e mostra o vazio (`1226-3003`, `1226-3625`) | R4–R6 |
 | grade do Início (CCD007) | aplica o filtro e mostra o vazio com `EmptyState` | R4, R5 |
 
 - **Estados:** carregando e erro da grade com `LoadingState` e `ErrorState`; vazio com `EmptyState`.
@@ -94,11 +97,11 @@ Feature `src/features/collection/`.
 
 | Critério | O que o teste verifica | Onde |
 |---|---|---|
-| CA1 | "Argentina": só as cartas da Argentina | `collection-cards.service.spec.ts` · `tests/integration/collection-cards-filter.spec.ts` · `CategoryFilter.spec.tsx` |
+| CA1 | "Argentina": só as cartas da Argentina | `collection-cards.service.spec.ts` · `tests/integration/collection-cards-filter.spec.ts` · `SelectionFilter.spec.tsx` |
 | CA2 | "Futebol": cartas de Futebol e das subcategorias | `collection-categories.repository` na integração |
-| CA3 | time sem cartas: "Nenhuma figurinha encontrada para esta categoria" | `CategoryFilter.spec.tsx` |
+| CA3 | time sem cartas: "Nenhuma figurinha encontrada para esta categoria" | `SelectionFilter.spec.tsx` |
 | CA4 | sem token `401` | integração |
-| CA5–CA7 | print em 1280 px igual ao frame `1122-17812` nos botões (CA6); CA5 e CA7 quando os frames do filtro existirem (L1); sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
+| CA5–CA7 | print em 1280 px igual aos frames `1226-2361` (CA5), `1122-17812` (CA6), `1160-23696`, `1226-3003` e `1226-3625` (CA7); sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
 
 ## Decisões técnicas
 

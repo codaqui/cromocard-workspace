@@ -1,10 +1,10 @@
-# Tarefas — CCD068 Ordenar por Menor Preço (agrupa CCD069, CCD070 e CCD071)
+# Tarefas — CCD068 Ordenar por Menor Preço (agrupa CCD069 e CCD071)
 
 - **Plano:** [plano.md](plano.md) · **User story:** a criar (L4)
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - AB# de cada Task: a criar (as Tasks no Azure só serão criadas com o pedido do Daniel).
 - As branches saem depois do merge da CCD078 (e da CCD079 para a lista do perfil da carta).
-- T7 e T10 são da CCD070 (Futuro Marketplace): implementar depois do MVP.
+- A T7 e a T10 eram da CCD070, que foi removida do projeto em 22/11/2026 (ADR-068).
 
 ## Backend — `apps/cromocard-backend`, branch `feature/<id>-ordenar-anuncios`
 
@@ -24,12 +24,9 @@
 - [ ] **T6** · Ligar o seletor ao Explorar e à lista Anúncios disponíveis — R1, R6–R8, R13 · CA1–CA6, CA9–CA12 · AB# a criar
   - Pronto quando: `ExploreMarketplacePage.spec.tsx` e `AvailableListings.spec.tsx` cobrem CA1–CA6; print em 1280 px igual aos frames `1112-3281`, `1112-3674` e `1112-4615` e sem quebra em 375/768/1024 px.
 
-## Futuro Marketplace (CCD070)
+## Removidas
 
-- [ ] **T7** · Criar ordenação por avaliação do vendedor — R9–R11 · CA8 · AB# a criar
-  - Pronto quando: `listings.seller-rating.spec.ts` e a integração cobrem a ordem, os sem avaliação no fim, `sellersWithoutReviews` e o `401` sem token.
-- [ ] **T10** · Mostrar a opção de avaliações e o aviso para o cliente logado — R9–R11, R13 · CA8 · AB# a criar
-  - Pronto quando: o visitante não vê a opção e o cliente vê o aviso, em `ExploreMarketplacePage.spec.tsx`; sem quebra em 375/768/1024 px.
+- ~~**T7**~~ e ~~**T10**~~ removidas: a CCD070 (ordenar por avaliações) foi removida do projeto em 22/11/2026 (ADR-068).
 
 ## Fechamento — workspace
 
@@ -48,6 +45,6 @@
 | R6 | T2, T6 |
 | R7 | T3, T6 |
 | R8 | T6 |
-| R9, R10, R11 | T7, T10 |
+| ~~R9, R10, R11~~ | removidos (ADR-068) |
 | R12 | T1, T2, T3, T8 |
-| R13 | T5, T6, T10 |
+| R13 | T5, T6 |
