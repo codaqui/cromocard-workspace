@@ -121,7 +121,7 @@ package "2. Painel Cliente - Pesquisa e Busca" {
   usecase "Buscar por Idioma\n(CCD029)" as UC029
   usecase "Visualizar Detalhes\n(CCD030)" as UC030
   usecase "Visualizar Info.\nda Carta\n(CCD031)" as UC031
-  usecase "Buscar por Estado\nda Carta **\n(CCD032)" as UC032
+  usecase "Buscar por Estado\nda Carta\n(CCD032)" as UC032
 }
 
 Cliente --> UC021
@@ -321,16 +321,16 @@ package "2. Painel Cliente - Marketplace" {
   usecase "Ordenar por\nMaior Preço\n(CCD069)" as UC069
   usecase "Ordenar por\nMais Recentes\n(CCD071)" as UC071
   usecase "Comprar\n(CCD072)" as UC072
-  usecase "Entrar em\nContato ***\n(CCD073)" as UC073
+  usecase "Entrar em\nContato\n(CCD073)" as UC073
   usecase "Visualizar\nFotos\n(CCD074)" as UC074
   usecase "Visualizar Histórico\nde Preços\n(CCD075)" as UC075
-  usecase "Visualizar Anúncios\nAtivos ***\n(CCD076)" as UC076
+  usecase "Visualizar Anúncios\nAtivos\n(CCD076)" as UC076
   usecase "Visualizar\nPedidos\n(CCD077)" as UC077
   usecase "Mostrar Todas\nas Cartas\n(CCD078)" as UC078
   usecase "Visualizar Quantidade\nDisponível\n(CCD079)" as UC079
   usecase "Visualizar Dados\ndo Vendedor\n(CCD080)" as UC080
   usecase "Denunciar\nAnúncio\n(CCD082)" as UC082
-  usecase "Denunciar\nVendedor ***\n(CCD083)" as UC083
+  usecase "Denunciar\nVendedor\n(CCD083)" as UC083
   usecase "Confirmar Entrega\ne Liberar Pagamento\n(CCD110)" as UC110
 }
 
@@ -399,10 +399,6 @@ UC111 ..> UC110 : <<extend>>\nLiberar agora
 ' ============================================================
 ' NOTAS
 ' ============================================================
-note bottom of UC032
-  ** Funcionalidade futura
-end note
-
 note as N1
   <b>Legenda:</b>
   **  = Funcionalidade futura
@@ -412,7 +408,8 @@ note as N1
   do marketplace (compra, envio e
   liberação) é MVP (ADR-027)
   Removidos em 22/11/2026 (ADR-068):
-  CCD033, CCD070, CCD081 e CCD089
+  CCD033, CCD070, CCD081 e CCD089;
+  032, 037, 038, 073, 076 e 083 viraram MVP
   
   <<include>> = O caso de uso base
   sempre invoca o incluído

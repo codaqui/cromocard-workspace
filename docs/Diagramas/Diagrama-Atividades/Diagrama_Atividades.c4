@@ -745,7 +745,7 @@ views {
   }
 
   dynamic view ccd032_buscar_estado_carta {
-    title 'CCD032 - Buscar por Estado da Carta (funcionalidade futura)'
+    title 'CCD032 - Buscar por Estado da Carta'
     description '''
       **Ator:** Cliente
       **Pre-condicao:** estar autenticado e na tela de pesquisa de cartas.
