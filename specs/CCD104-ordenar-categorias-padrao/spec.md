@@ -1,12 +1,12 @@
 # CCD104 — Ordenar Categorias Padrão
 
-- **Status:** Planejada
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #608 `CCD104-Ordenar Categorias Padrão` · responsável Lucas Oliveira Lima · Sprint 07
 - **Caso de uso:** [104-ordenar-categorias-padrao.md](../../docs/Casos-De-Uso/104-ordenar-categorias-padrao.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
-- **Data:** 2026-10-22 · **Autor:** Daniel Andrade · revisada em 2026-11-16 e 2026-11-17 por Lucas Oliveira Lima (L6–L18)
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16; reaprovada em 2026-11-17, quando o PO, Felipe Consulim, confirmou as decisões L6–L18 (tomadas por Lucas Oliveira Lima em 16 e 17/11/2026) e aceitou o ADR-062
+- **Data:** 2026-10-22 · **Autor:** Daniel Andrade · revisada em 2026-11-16, 2026-11-17 e 2026-11-18 por Lucas Oliveira Lima (L6–L22)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; volta a Rascunho em 2026-11-16; reaprovada em 2026-11-17, quando o PO, Felipe Consulim, confirmou as decisões L6–L18 (tomadas por Lucas Oliveira Lima em 16 e 17/11/2026) e aceitou o ADR-062; L21 e L22 confirmadas pelo PO em 2026-11-18, na revisão do PR #27; L19 e L20 (Lucas Oliveira Lima, 2026-11-17) confirmadas pelo PO ao mesclar o PR #43 do workspace, em 2026-11-18
 
 ## Objetivo
 
@@ -26,9 +26,10 @@
 | R8 | Setas desabilitadas na primeira e na última posição | Estado | `104`, FA 3–4 (L7) |
 | R9 | O slug é gerado do nome e refeito quando a categoria é renomeada; é único entre as categorias não excluídas: repetido responde `409 SLUG_TAKEN` no campo nome; uma categoria excluída com o mesmo slug não bloqueia e não é restaurada | Regra | `61`, FP 5–6; ADR-053, item 4; ADR-062 (L14) |
 | R10 | Selo de exibição opcional no formulário de categoria: "Nenhum" (nulo), "Padrão" (`STANDARD`) ou "Em alta" (`TRENDING`), começando em "Nenhum" | Campo | `61`, FP 5; EA-066-01; DBML `categories.badge` (L15) |
-| R11 | A aba Categorias do Catálogo mostra o slug abaixo do nome, o selo, a quantidade de cartas (mesma regra do R2) e busca por nome ou slug | Tela | `61`, FP 2; EA-061-10 (L15) |
+| R11 | A aba Categorias do Catálogo mostra o slug abaixo do nome, o selo, a quantidade de cartas (mesma regra do R2) e busca por nome ou slug; a lista não mostra a descrição, que fica no formulário de edição | Tela | `61`, FP 2; EA-061-10 (L15, L22) |
 | R12 | Ao salvar, o aviso "Categorias padrão atualizadas" da CCD066; sem nenhuma categoria padrão, o módulo mostra só "Adicionar categoria padrão" | Mensagem | `104`, FP 9 e Pré-condições (L17) |
 | R13 | A migration gera o slug das categorias existentes (repetidos ganham sufixo `-2`, `-3`…, pela ordem de criação) e numera `display_order` em ordem alfabética, sem nenhuma fixada | Regra | ADR-062, item 3 (L3, L14) |
+| R14 | A categoria fixada fica sempre no topo: ela não desce e nenhuma outra passa por cima dela (setas desabilitadas e arrastar sem efeito) até ser desafixada | Estado | `104`, FA 7–8 (L21) |
 
 ## Critérios de aceite
 
@@ -48,6 +49,7 @@
 - **CA14** (R10, R11) — **Dado** o formulário de categoria, **quando** o admin salva com "Em alta", **então** o selo aparece no módulo e na aba Categorias; **quando** salva com "Nenhum", **então** a categoria fica sem selo.
 - **CA15** (R11) — **Dado** a aba Categorias do Catálogo, **quando** o admin busca `magic-the`, **então** encontra Magic: The Gathering pelo slug, com o selo e a quantidade de cartas na linha.
 - **CA16** (R13) — **Dado** categorias já gravadas antes da migration, duas delas com nomes que geram o mesmo slug ("Pokémon TCG" e "Pokemon TCG"), **quando** ela roda, **então** cada uma tem slug, a criada depois ganha o sufixo `-2`, as categorias padrão ficam em ordem alfabética e nenhuma fica fixada.
+- **CA17** (R14) — **Dado** Pokémon fixada na primeira posição, **quando** o admin olha a seta para baixo de Pokémon e a seta para cima da segunda linha, ou arrasta outra categoria para cima de Pokémon, **então** as setas estão desabilitadas e a ordem não muda.
 
 ## Dados
 
@@ -64,9 +66,9 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Configurações Globais — Módulo 2 | [228-3048](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=228-3048) | R2–R8, R12 | ⚠️ Difere por decisão: botão de alfinete na linha, que o frame não tem (L6); seta para baixo da última linha desabilitada, que o frame mostra habilitada (L7); verso como no frame, com a ação da CCD066 (L8); "Adicionar categoria padrão" e remover na linha, da CCD066 (L9 da CCD066). O botão volta a "Salvar ordem", como no frame (L18) |
+| Configurações Globais — Módulo 2 | [228-3048](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=228-3048) | R2–R8, R12 | ⚠️ Difere por decisão: botão de alfinete na linha, que o frame não tem (L6); seta para baixo da última linha desabilitada, que o frame mostra habilitada (L7); a fixada não desce, com a seta para baixo dela desabilitada, que o frame mostra habilitada (L21); verso como no frame, com a ação da CCD066 (L8); "Adicionar categoria padrão" e remover na linha, da CCD066 (L9 da CCD066). O botão volta a "Salvar ordem", como no frame (L18) |
 | Nova categoria (selo no formulário) | [833-10832](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=833-10832) | R9, R10 | ✅ Bate; o select tem também "Nenhum", que o frame não abre (L15) |
-| Catálogo — aba Categorias (fundo do mesmo frame) | [833-10832](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=833-10832) | R11 | ✅ Segue o frame: slug abaixo do nome, selo, coluna Cartas e busca por nome ou slug (L15) |
+| Catálogo — aba Categorias (fundo do mesmo frame) | [833-10832](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=833-10832) | R11 | ✅ Segue o frame: slug abaixo do nome, selo, coluna Cartas e busca por nome ou slug (L15); sem a descrição na lista (L22) |
 
 - O verso padrão na linha de cada categoria é da CCD066 (R17), já implementado: a CCD104 só acrescenta posição,
   alça, setas, alfinete, slug, quantidade de cartas e selo à mesma linha.
@@ -101,3 +103,7 @@
 | L16 | Arrastar no celular: nativo do navegador ou biblioteca nova? | Nativo do navegador (HTML5), sem dependência nem ADR; no toque e no teclado, as setas. Decisão de Lucas Oliveira Lima, 17/11/2026 | R3; Fora do escopo |
 | L17 | Mensagem de sucesso, estado sem categoria padrão, ação de auditoria e dados dos CAs | Reaproveita o aviso "Categorias padrão atualizadas", o estado vazio e a ação `DEFAULT_CATEGORIES_UPDATED` da CCD066; os CAs usam as categorias do seed. Decisão de Lucas Oliveira Lima, 17/11/2026 | R5, R12; CAs |
 | L18 | O frame diz "Salvar ordem"; a CCD066 (L20) chamou o botão de "Salvar categorias", porque ele não salvava ordem | Segue o Figma: "Salvar ordem". Decisão de Lucas Oliveira Lima, 17/11/2026 | Telas |
+| L19 | O Figma (`228-3048`) chama o módulo de "Módulo 2: Categorias padrão", e o `104` (FP 1) dizia "Ordenação e Gestão de Categorias Padrão" | Segue o Figma e a CCD066, já mesclada: "Módulo 2: Categorias padrão"; o FP 1 do `104` foi ajustado. Decisão de Lucas Oliveira Lima, 17/11/2026, confirmada pelo PO (Felipe Consulim) ao mesclar o PR #43, em 18/11/2026 | `104`, FP 1; Telas |
+| L20 | No Figma (`228-3048`, `833-10832`) o selo "Padrão" aparece nas categorias padrão e o Pokémon só tem "Em alta": o `badge` depende de `is_default`? | Independente: o admin escolhe o selo (Nenhum, Padrão ou Em alta) e uma categoria padrão pode ficar sem selo ou com "Em alta". O selo "Fixado no topo" aparece junto do selo de exibição. Decisão de Lucas Oliveira Lima, 17/11/2026, confirmada pelo PO (Felipe Consulim) ao mesclar o PR #43, em 18/11/2026 | R2, R4, R10; L15 |
+| L21 | O que acontece quando o admin move a categoria fixada ou passa outra por cima dela? (achado da revisão do backend e do frontend) | Bloqueia: a fixada não desce e nenhuma outra a ultrapassa, com as setas desabilitadas e o arrastar sem efeito; ela só sai do topo ao ser desafixada. Decisão de Lucas Oliveira Lima, 17/11/2026, confirmada pelo PO (Felipe Consulim) na revisão do PR #27, em 18/11/2026 | `104`, FA 7–8; R14; CA17 |
+| L22 | A aba Categorias do Catálogo mostrava a descrição da categoria; o frame `833-10832` mostra só nome, slug e selo na coluna "Nome e slug" | Segue o Figma: a lista não mostra a descrição, que continua no formulário de edição. Decisão do PO (Felipe Consulim) na revisão do PR #27, 18/11/2026 | `61`, FP 2; R11; Telas |

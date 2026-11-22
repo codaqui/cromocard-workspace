@@ -35,7 +35,7 @@
 | R16 | Busca por nome ou e-mail e filtros de papel e de status | Campo | `59`, FP 2 |
 | R17 | O cadastro envia o convite com o link de definir senha; a conta nasce com o e-mail confirmado e o aceite dos termos fica para o primeiro acesso | Regra | `59`, FP 7; ADR-048, item 2 |
 | R18 | O admin não suspende, exclui nem rebaixa a própria conta nem o último ADMIN ativo (`422`) | Regra | `59`, FA 7–8 |
-| R19 | Suspender e excluir exigem motivo; suspender e excluir revogam os refresh tokens do usuário. **Revista em 2026-11-12** (L9): reativar não exige motivo, só confirmação | Regra | `59`, FP 9–10, 11–12 |
+| R19 | Suspender e excluir exigem motivo; suspender e excluir revogam os refresh tokens do usuário. **Revista em 2026-11-12** (L9): reativar não exige motivo, só confirmação. **Revista em 2026-11-17** (CCD099, L10): suspender exige também o prazo (3, 7, 15 ou 30 dias, 7 por padrão) | Regra | `59`, FP 9–10, 11–12; CCD099, L10 |
 | R20 | A página do usuário (R4) também mostra "Membro desde", o indicador de status (Ativo, Suspenso ou Bloqueado — Bloqueado é da CCD099, sem ação aqui), as advertências (contador, da CCD099) e o quadro "Autenticação" (método de login e desde quando) | Tela | `59`, FP 4 (L10) |
 
 ## Critérios de aceite

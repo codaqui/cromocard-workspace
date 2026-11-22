@@ -1341,7 +1341,7 @@ views {
     administrador -> backofficeApp '1. acessa a opcao Gestao de Catalogo'
     backofficeApp -> modAdministracao '2. solicita os itens do catalogo'
     modAdministracao -> bancoDados '2. consulta cartas, albuns e categorias'
-    backofficeApp -> administrador '2. apresenta os itens nas abas de cartas, albuns e categorias; na de categorias, com slug, selo e quantidade de cartas e busca por nome ou slug'
+    backofficeApp -> administrador '2. apresenta os itens nas abas de cartas, albuns e categorias; na de categorias, com slug, selo e quantidade de cartas e busca por nome ou slug, sem a descricao, que fica so no formulario de edicao'
     administrador -> backofficeApp '3. seleciona a opcao de cadastrar, editar ou remover um item'
     backofficeApp -> administrador '4. apresenta o formulario ou as opcoes correspondentes'
     administrador -> backofficeApp '5. informa ou altera os dados do item; na carta, envia a imagem da frente e, opcionalmente, a do verso'
@@ -2161,10 +2161,11 @@ views {
       **Pre-condicao:** estar autenticado como administrador e existir pelo menos uma categoria padrao.
       **Fluxo alternativo:** sair sem salvar descarta as mudancas; a primeira categoria nao sobe
       e a ultima nao desce (seta desabilitada); o alfinete da categoria fixada a desafixa, e ela
-      continua na posicao em que esta.
+      continua na posicao em que esta; a categoria fixada nao desce e nenhuma outra passa por
+      cima dela (setas desabilitadas e arrastar sem efeito) ate ser desafixada.
     '''
 
-    administrador -> backofficeApp '1. acessa Configuracoes Globais, em Ordenacao e Gestao de Categorias Padrao'
+    administrador -> backofficeApp '1. acessa Configuracoes Globais, no Modulo 2: Categorias padrao'
     backofficeApp -> modAdministracao '2. solicita as categorias padrao'
     modAdministracao -> bancoDados '2. consulta posicao, nome, slug, selo e quantidade de cartas (da categoria e das subcategorias, direto ou pelos albuns)'
     backofficeApp -> administrador '2. apresenta as categorias na ordem atual'

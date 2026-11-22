@@ -1,12 +1,12 @@
 # CCD101 — Segmentar Notificação Global
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** Escopo Adicional
 - **User story:** #605 `CCD101-Segmentar Notificação Global` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [101-segmentar-notificacao-global.md](../../docs/Casos-De-Uso/101-segmentar-notificacao-global.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO); reaprovada em 2026-11-12, depois da revisão do Figma do painel admin; reaprovada em 2026-11-16, com a entrega conjunta (CCD060 L9)
 
 ## Objetivo
 
@@ -69,3 +69,4 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L4 | E-mail em massa (proposta: enviado em lotes fora da requisição, por um job) | Enviado em lotes fora da requisição, por um job | plano.md (ADR-010) |
 | L5 | Seletor de público e de canais sem desenho (proposta: o Gabriel desenha no formulário da CCD060) | O Gabriel desenha no formulário da CCD060 | esta spec (Telas) |
 | L6 | A L5 (seletor sem desenho) continua aberta? | Não: o Figma ganhou o seletor de público (três opções com a contagem) e o de canais (Plataforma marcada por padrão, E-mail) no formulário, frame `208-2380`. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `101`, FP 2–4 |
+| L7 | Quando esta story é feita? | Agora, junto com a CCD060 e a CCD100, num PR por app (AB#335 AB#604 AB#605); contrato consolidado no plano da CCD060. Decisão do PO (Daniel, 16/11/2026) | spec CCD060 (L9) |
