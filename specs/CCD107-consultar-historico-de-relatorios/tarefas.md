@@ -20,8 +20,8 @@
 
 - [ ] **T6** [P] · Criar api e queries do histórico de relatórios — R2, R3 · AB#724
   - Pronto quando: o typecheck passa.
-- [ ] **T7** · Atualizar o histórico da tela de Relatórios com Baixar, vencido e vazio — R2, R3, R5, R6, R8 · CA5, CA7 · AB#725
-  - Pronto quando: `ReportsPage.spec.tsx` cobre o vencido, o vazio e as frases do histórico na confirmação e no aviso.
+- [ ] **T7** · Atualizar o histórico da tela de Relatórios com Baixar, vencido e vazio — R2, R3, R5, R6, R8, R9 · CA5, CA7, CA8 · AB#725
+  - Pronto quando: `ReportsPage.spec.tsx` cobre o vencido, o vazio, o botão de atualizar e as frases do histórico na confirmação e no aviso.
 
 ## Fechamento — workspace
 
@@ -39,3 +39,4 @@
 | R5, R6 | T3, T7 |
 | R7 | T4 |
 | R8 | T7 |
+| R9 | T7 |

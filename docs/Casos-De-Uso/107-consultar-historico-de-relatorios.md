@@ -14,6 +14,8 @@
 |  | 4. O sistema disponibiliza o mesmo arquivo gerado na exportação. |
 |  | 5. O sistema mantém cada arquivo disponível por 90 dias. Depois disso, apaga o arquivo e mantém o relatório no histórico, marcado como "Expirado". |
 |  | 6. Ao exportar um relatório (Exportar Relatórios Gerenciais), o sistema avisa na confirmação que o arquivo fica no histórico por 90 dias e, depois da exportação, que ele está no topo do histórico. |
+| 7. O administrador seleciona "Atualizar histórico". |  |
+|  | 8. O sistema busca o histórico de novo e mostra as exportações mais recentes. |
 
 ### Fluxo Alternativo
 

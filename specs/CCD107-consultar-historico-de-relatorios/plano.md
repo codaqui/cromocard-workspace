@@ -42,6 +42,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|---|
 | `src/features/admin/reports/` (api, queries) | histórico e download | R2, R3 |
 | `ReportsPage` (histórico) | colunas, "Baixar", vencido e vazio | R2, R3, R5, R6 |
+| `ReportsHistory` (cabeçalho) | botão "Atualizar histórico", que refaz a query da lista (L10) | R9 |
 
 ## Testes
 
@@ -79,3 +80,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
   autenticada. O `StorageProvider` ganhou `read(key)`.
 - A chave do arquivo é `reports/<uuid>/<nome do arquivo>` e vai na coluna `file_url`; o nome do download sai da chave.
 - `410 EXPORT_EXPIRED` vale para `expires_at` vencido e também para arquivo que já sumiu do storage.
+
+## Revisão de 22/11/2026 (L10–L11)
+
+- R9 (L10): o cabeçalho do histórico ganha o botão "Atualizar histórico", que chama o `refetch` da query de exportações e fica desabilitado enquanto busca.
+- L11: o "×" do `ConfirmDialog` continua no diálogo de expirado; é a única diferença da tela para o frame `843-844`.
+- O `DataTable` ganhou `flat` (cabeçalho escuro, sem borda nem listras) e `pinLastColumn` (a coluna "Ação" fica à vista na rolagem do celular) e a área de rolagem virou uma região focável com o nome "Tabela <legenda>".
