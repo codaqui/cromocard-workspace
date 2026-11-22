@@ -171,9 +171,56 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 
 | CCD | User story | Fase | Status | Work item |
 |---|---|---|---|---|
+| [CCD001](CCD001-visualizar-destaques/spec.md) | Visualizar Destaques | MVP | Rascunho | #88 |
+| [CCD002](CCD002-buscar-global/spec.md) | Buscar Global | MVP | Rascunho | #107 |
 | [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Implementada | #108 |
 | [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Implementada | #109 |
+| [CCD005](CCD005-acessar-central-de-ajuda-faq/spec.md) | Acessar Central de Ajuda (FAQ) | MVP | Rascunho | #110 |
 | [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Implementada | #111 |
+| [CCD007](CCD007-visualizar-resumo-da-colecao/spec.md) | Visualizar Resumo da Coleção | MVP | Rascunho | #113 |
+| [CCD008](CCD008-listar-album/spec.md) | Listar Álbum | MVP | Rascunho | #114 |
+| [CCD009](CCD009-buscar-album/spec.md) | Buscar Álbum | MVP | Rascunho | #115 |
+| [CCD010](CCD010-solicitar-album/spec.md) | Solicitar Álbum | MVP | Rascunho | #116 |
+| [CCD011](CCD011-remover-album/spec.md) | Remover Álbum | MVP | Rascunho | #117 |
+| [CCD012](CCD012-compartilhar-colecao/spec.md) | Compartilhar Coleção | MVP | Rascunho | #118 |
+| [CCD013](CCD013-visualizar-cartas/spec.md) | Visualizar Cartas | MVP | Rascunho | #119 |
+| [CCD014](CCD014-marcar-carta-como-possuo/spec.md) | Marcar Carta como Possuo (agrupa CCD015, CCD015, CCD016, CCD016) | MVP | Rascunho | #120 #121 #122 |
+| [CCD017](CCD017-adicionar-quantidade/spec.md) | Adicionar Quantidade | MVP | Rascunho | #123 |
+| [CCD018](CCD018-remover-carta/spec.md) | Remover Carta | MVP | Rascunho | #124 |
+| [CCD019](CCD019-visualizar-progresso/spec.md) | Visualizar Progresso | MVP | Rascunho | #125 |
+| [CCD020](CCD020-compartilhar-progresso/spec.md) | Compartilhar Progresso | MVP | Rascunho | #126 |
+| [CCD021](CCD021-pesquisar-carta/spec.md) | Pesquisar Carta | MVP | Rascunho | #127 |
+| [CCD022](CCD022-adicionar-carta/spec.md) | Adicionar Carta | MVP | Rascunho | #128 |
+| [CCD023](CCD023-solicitar-cadastro-da-carta/spec.md) | Solicitar Cadastro da Carta | MVP | Rascunho | #156 |
+| [CCD024](CCD024-buscar-por-nome/spec.md) | Buscar por Nome (agrupa CCD025, CCD026, CCD027, CCD028, CCD029) | MVP | Rascunho | #157 #158 #159 #160 #161 #162 |
+| [CCD030](CCD030-visualizar-detalhes/spec.md) | Visualizar Detalhes | MVP | Rascunho | #163 |
+| [CCD031](CCD031-visualizar-informacoes-da-carta/spec.md) | Visualizar Informações da Carta | MVP | Rascunho | #164 |
+| [CCD032](CCD032-buscar-por-estado-da-carta/spec.md) | Buscar por Estado da Carta | Futuro | Rascunho | #165 |
+| [CCD033](CCD033-buscar-por-vendedor/spec.md) | Buscar por Vendedor | Futuro Marketplace | Rascunho | #166 |
+| [CCD034](CCD034-buscar-categoria-do-album/spec.md) | Buscar Categoria do Álbum | Futuro | Rascunho | #137 |
+| [CCD035](CCD035-resetar-progresso-do-album/spec.md) | Resetar Progresso do Álbum | MVP | Rascunho | #138 |
+| [CCD036](CCD036-adicionar-carta-ao-portfolio/spec.md) | Adicionar Carta ao Portfólio | MVP | Rascunho | #139 |
+| [CCD037](CCD037-buscar-categoria-do-card/spec.md) | Buscar Categoria do Card | Futuro | Rascunho | #140 |
+| [CCD038](CCD038-acessibilidade/spec.md) | Acessibilidade | Futuro | Rascunho | #141 |
+| [CCD039](CCD039-explorar-e-entrar-em-grupos/spec.md) | Explorar e Entrar em Grupos | MVP | Rascunho | #142 |
+| [CCD040](CCD040-denunciar-mensagem-no-grupo/spec.md) | Denunciar Mensagem no Grupo | MVP | Rascunho | #143 |
+| [CCD041](CCD041-silenciar-notificacoes-de-grupo/spec.md) | Silenciar Notificações de Grupo | MVP | Rascunho | #144 |
+| [CCD042](CCD042-pesquisar-no-historico-do-grupo/spec.md) | Pesquisar no Histórico do Grupo | MVP | Rascunho | #145 |
+| [CCD043](CCD043-criar-e-administrar-grupo/spec.md) | Criar e Administrar Grupo | MVP | Rascunho | #146 |
+| [CCD044](CCD044-interagir-no-chat-do-grupo/spec.md) | Interagir no Chat do Grupo | MVP | Rascunho | #147 |
+| [CCD045](CCD045-responder-mensagem-especifica/spec.md) | Responder Mensagem Específica | MVP | Rascunho | — |
+| [CCD046](CCD046-visualizar-mensagens/spec.md) | Visualizar Mensagens | MVP | Rascunho | — |
+| [CCD047](CCD047-moderar-contatos-privados/spec.md) | Moderar Contatos Privados | MVP | Rascunho | — |
+| [CCD048](CCD048-editar-dados-do-perfil/spec.md) | Editar Dados do Perfil | MVP | Rascunho | — |
+| [CCD049](CCD049-exibir-vitrine-de-conquistas/spec.md) | Exibir Vitrine de Conquistas | MVP | Rascunho | — |
+| [CCD050](CCD050-denunciar-perfil/spec.md) | Denunciar Perfil | MVP | Rascunho | — |
+| [CCD051](CCD051-configurar-privacidade-e-senha/spec.md) | Configurar Privacidade e Senha | MVP | Rascunho | — |
+| [CCD052](CCD052-exclusao-da-conta/spec.md) | Exclusão da Conta | MVP | Rascunho | — |
+| [CCD053](CCD053-visualizar-notificacoes/spec.md) | Visualizar Notificações | MVP | Rascunho | — |
+| [CCD054](CCD054-limpar-central-de-notificacoes/spec.md) | Limpar Central de Notificações | MVP | Rascunho | — |
+| [CCD055](CCD055-favoritar-album/spec.md) | Favoritar Álbum | MVP | Rascunho | — |
+| [CCD056](CCD056-favoritar-carta/spec.md) | Favoritar Carta | MVP | Rascunho | — |
+| [CCD057](CCD057-favoritar-grupo/spec.md) | Favoritar Grupo | MVP | Rascunho | — |
 | [CCD058](CCD058-visualizar-dashboard-gerencial/spec.md) | Visualizar Dashboard Gerencial | MVP | Implementada | #333 |
 | [CCD059](CCD059-gestao-de-usuarios/spec.md) | Gestão de Usuários | MVP | Implementada | #334 |
 | [CCD060](CCD060-disparar-notificacao-global/spec.md) | Disparar Notificação Global | MVP | Em implementação | #335 |
@@ -183,7 +230,27 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD064](CCD064-aprovar-solicitacoes/spec.md) | Aprovar Solicitações | MVP | Em implementação | #339 |
 | [CCD065](CCD065-log-de-auditoria-admin/spec.md) | Log de Auditoria Admin | MVP | Planejada | #340 |
 | [CCD066](CCD066-configuracoes-globais/spec.md) | Configurações Globais | MVP | Em implementação | #341 |
-| [Fundação](fundacao-backoffice/plano.md) | Fundação técnica do Painel Administrador | MVP | Implementada (técnica, sem spec; T12 do Figma com o Gabriel) | #481 |
+| [CCD067](CCD067-buscar-por-vendedor/spec.md) | Buscar por Vendedor | Futuro Marketplace (L3) | Rascunho | — |
+| [CCD068](CCD068-ordenar-por-menor-preco/spec.md) | Ordenar por Menor Preço (agrupa CCD069, CCD070, CCD071) | MVP (CCD068, CCD069 e CCD071); CCD070 é Futuro Marketplace | Rascunho | — |
+| [CCD072](CCD072-comprar/spec.md) | Comprar | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
+| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | Futuro Marketplace | Rascunho | — |
+| [CCD074](CCD074-visualizar-fotos/spec.md) | Visualizar Fotos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
+| [CCD075](CCD075-visualizar-historico-de-precos/spec.md) | Visualizar Histórico de Preços | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
+| [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | Futuro Marketplace | Rascunho | — |
+| [CCD077](CCD077-visualizar-pedidos/spec.md) | Visualizar Pedidos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
+| [CCD078](CCD078-mostrar-todas-as-cartas/spec.md) | Mostrar Todas as Cartas | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
+| [CCD079](CCD079-visualizar-quantidade-disponivel/spec.md) | Visualizar Quantidade Disponível | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | — |
+| [CCD080](CCD080-visualizar-dados-do-vendedor/spec.md) | Visualizar Dados do Vendedor | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | — |
+| [CCD081](CCD081-visualizar-avaliacoes/spec.md) | Visualizar Avaliações | Futuro Marketplace (marca `***` na user story; o ADR-027 mantém as avaliações fora do MVP) | Rascunho | — |
+| [CCD082](CCD082-denunciar-anuncio/spec.md) | Denunciar Anúncio | Futuro Marketplace (marca `***` na user story; o ADR-027 mantém as denúncias do marketplace fora do MVP) | Rascunho | — |
+| [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | Futuro Marketplace (marca `***` na user story; o ADR-027 mantém as denúncias do marketplace fora do MVP) | Rascunho | — |
+| [CCD084](CCD084-criar-anuncio/spec.md) | Criar Anúncio | MVP (sem marca na user story; fatia mínima do marketplace, "Vender", no ADR-027) | Rascunho | #343 |
+| [CCD085](CCD085-editar-anuncio/spec.md) | Editar Anúncio (agrupa CCD086, CCD087, CCD088) | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #344 #345 #346 #347 |
+| [CCD089](CCD089-visualizar-propostas/spec.md) | Visualizar Propostas | Futuro Marketplace (o ADR-027 mantém propostas e trocas fora do MVP; a user story, no Painel Vendedor, não tem a marca `***`: ver L1) | Rascunho | #348 |
+| [CCD090](CCD090-denunciar-usuario/spec.md) | Denunciar Usuário | MVP pela legenda (a user story, no Painel Vendedor, não tem marca); o ADR-027 tira do MVP as denúncias do marketplace: ver L1 | Rascunho | #349 |
+| [CCD091](CCD091-editar-perfil/spec.md) | Editar Perfil | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #350 |
+| [CCD092](CCD092-visualizar-total-de-vendas/spec.md) | Visualizar Total de Vendas | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #351 |
+| [CCD093](CCD093-visualizar-cartas-mais-vendidas/spec.md) | Visualizar Cartas Mais Vendidas | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #352 |
 | [CCD094](CCD094-validar-cadastro-de-vendedor/spec.md) | Validar Cadastro de Vendedor | Escopo Adicional | Implementada | #598 |
 | [CCD095](CCD095-notificar-pendencia-cadastral/spec.md) | Notificar Pendência Cadastral | Escopo Adicional | Planejada | #599 |
 | [CCD096](CCD096-acompanhar-evolucao-de-cadastros/spec.md) | Acompanhar Evolução de Cadastros | Escopo Adicional | Em implementação | #600 |
@@ -198,3 +265,8 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD105](CCD105-duplicar-carta/spec.md) | Duplicar Carta | Escopo Adicional | Planejada | #609 |
 | [CCD106](CCD106-salvar-rascunho-de-carta/spec.md) | Salvar Rascunho de Carta | Escopo Adicional | Planejada | #610 |
 | [CCD107](CCD107-consultar-historico-de-relatorios/spec.md) | Consultar Histórico de Relatórios | Escopo Adicional | Planejada | #611 |
+| [CCD108](CCD108-conectar-conta-de-recebimento/spec.md) | Conectar Conta de Recebimento | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #920 |
+| [CCD109](CCD109-gerar-etiqueta-de-envio/spec.md) | Gerar Etiqueta de Envio | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #921 |
+| [CCD110](CCD110-confirmar-entrega-e-liberar-pagamento/spec.md) | Confirmar Entrega e Liberar Pagamento | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #922 |
+| [CCD111](CCD111-gerenciar-pedidos-e-pagamentos/spec.md) | Gerenciar Pedidos e Pagamentos | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #923 |
+| [Fundação](fundacao-backoffice/plano.md) | Fundação técnica do Painel Administrador | MVP | Implementada (técnica, sem spec; T12 do Figma com o Gabriel) | #481 |
