@@ -83,6 +83,7 @@
 - **CA12** (R14 de Fidelidade) — Idem ao CA11, com o estado sem resultados e o frame `1112-4356`.
 - **CA13** (R14 de Fidelidade) — Idem ao CA11, com o frame dos filtros que for desenhado (L1), em cada estado desenhado.
 
+- **CA14** (R14) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1112-4356`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 ## Dados
 
 | Tabela | Colunas e enums usados | Observação |

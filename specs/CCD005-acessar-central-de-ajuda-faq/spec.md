@@ -76,6 +76,7 @@
 - **CA11** (R14 de Fidelidade) — Idem ao CA10, com a aba "Quero comprar" do Como funciona e o frame `1112-6532`.
 - **CA12** (R14 de Fidelidade) — Idem ao CA10, com a aba "Quero vender" do Como funciona e o frame `1160-2268`.
 
+- **CA13** (R14) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1112-6532`, `1160-2268`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 ## Dados
 
 Nenhuma tabela: o DER não tem tabela de perguntas frequentes (L1), e o Como funciona é estático (R13). O endereço do suporte

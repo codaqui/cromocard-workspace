@@ -59,7 +59,7 @@
 | `orders` | `seller_id`, `listing_id`, `status` (`order_status`), `quantity`, `items_amount`, `paid_at` | só leitura; quais status contam, como na CCD092 (L1 de lá) |
 | `listings` | `card_id`, `condition_id` | carta e condição da venda |
 | `cards` | `name`, `number`, `album_id`, `front_image_url` | nome, número e miniatura |
-| `albums` | `name` | subtítulo da carta (coleção) |
+| `albums` | `title` | subtítulo da carta (coleção) |
 | `card_conditions` | `name` | coluna "Condição" (L4) |
 
 ## Telas (Figma)

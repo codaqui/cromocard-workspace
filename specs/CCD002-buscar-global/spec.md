@@ -84,6 +84,7 @@
   (depende da L6).
 - **CA15** (R17 de Fidelidade) — Idem ao CA12, com a página do álbum do catálogo e o frame `1160-1845`.
 
+- **CA16** (R17) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1112-4356`, `1160-2457`, `1160-1845`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 ## Dados
 
 | Tabela | Colunas e enums usados | Observação |

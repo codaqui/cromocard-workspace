@@ -77,6 +77,7 @@
   rolagem horizontal.
 - **CA12** (R15 de Fidelidade) — Idem ao CA11, com os filtros aplicados sem resultados e o frame `1112-3674`.
 
+- **CA13** (R15) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1112-3674`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 ## Dados
 
 | Tabela | Colunas e enums usados | Observação |

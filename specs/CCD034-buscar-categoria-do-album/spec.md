@@ -64,6 +64,7 @@ das Observações de `user-stories.md` ("Categoria do album, seleção, times").
   fonte, texto, ícone ou imagem nos botões de categoria; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte
   nem rolagem horizontal.
 
+- **CA7** (R6) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1160-23080`, `1160-23696`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 ## Dados
 
 | Tabela | Colunas e enums usados | Observação |

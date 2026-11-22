@@ -64,6 +64,7 @@
 - **CA8** (R7 de Fidelidade) — Idem ao CA5, com os anúncios ativos do vendedor no perfil público e o frame `1160-1396`, se a
   L3 decidir pelo caminho do perfil público.
 
+- **CA9** (R7) — **Dado** cada tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame correspondente (`1112-3281`, `1112-3970`, `1160-1396`), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 ## Dados
 
 | Tabela | Colunas e enums usados | Observação |
