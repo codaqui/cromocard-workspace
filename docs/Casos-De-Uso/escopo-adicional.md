@@ -98,7 +98,7 @@ aprovadas.
 | EA-007-01 | Valor estimado da coleção e do álbum, com a variação em 30 dias | `1122-17812`, `1160-5395` | CCD007 | Soma do preço médio (`price_history`) das cartas marcadas como possuo (20/11/2026). |
 | EA-020-01 | Opção "Mostrar as cartas faltantes na página do link" ao compartilhar o progresso | `1160-6346` | CCD020 | Ligada, quem abre o link vê a lista das faltantes (20/11/2026). |
 | EA-053-01 | Escolher, por tipo de aviso, receber no site e por e-mail | `1160-15533` | CCD053 | Tipos: pedidos e pagamentos, mensagens, grupos, solicitações ao catálogo e avisos da plataforma. Sem WhatsApp nem push (ADR-058) (20/11/2026). |
-| EA-080-01 | Perfil público do usuário: nome de usuário, cidade, avaliação, vendas concluídas e anúncios ativos | `1160-1396` | CCD080 | Aberto por "Ver perfil" na busca e pelo nome do vendedor no anúncio e no perfil da carta. Não mostra nome completo, e-mail, CPF nem endereço. É o "perfil público do vendedor" citado na CCD083 (20/11/2026). |
+| EA-080-01 | Perfil público do usuário: nome de usuário, cidade, vendas concluídas e anúncios ativos | `1160-1396` | CCD080 | Aberto por "Ver perfil" na busca e pelo nome do vendedor no anúncio e no perfil da carta. Não mostra nome completo, e-mail, CPF nem endereço. É o "perfil público do vendedor" citado na CCD083 (20/11/2026). Sem nota de avaliação: avaliações ficam fora do MVP (ADR-027) (21/11/2026). |
 
 ## 3. O que não vira requisito
 
