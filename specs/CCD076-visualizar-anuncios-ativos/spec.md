@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (era Futuro Marketplace; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
-- **User story:** não encontrada no board
+- **User story:** #1384 `CCD076 - Visualizar Anúncios Ativos` (criada em 22/11/2026)
 - **Caso de uso:** [76-visualizar-anuncios-ativos.md](../../docs/Casos-De-Uso/76-visualizar-anuncios-ativos.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado, com acesso ao painel da plataforma
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

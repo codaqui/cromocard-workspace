@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1265 `CCD050 - Denunciar Perfil` (criada em 22/11/2026)
 - **Caso de uso:** [50-denunciar-perfil.md](../../docs/Casos-De-Uso/50-denunciar-perfil.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado e com acesso ao perfil que deseja denunciar
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

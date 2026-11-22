@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1308 `CCD054 - Limpar Central de Notificações` (criada em 22/11/2026)
 - **Caso de uso:** [54-limpar-central-de-notificacoes.md](../../docs/Casos-De-Uso/54-limpar-central-de-notificacoes.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado, com notificações na central
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

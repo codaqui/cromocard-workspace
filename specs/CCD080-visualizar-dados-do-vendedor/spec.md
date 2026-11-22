@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026)
-- **User story:** não encontrada no board
+- **User story:** #1421 `CCD080 - Visualizar Dados do Vendedor` (criada em 22/11/2026)
 - **Caso de uso:** [80-visualizar-quantidade-disponivel.md](../../docs/Casos-De-Uso/80-visualizar-quantidade-disponivel.md) (o título do arquivo está errado: o conteúdo é Visualizar Dados do Vendedor, L1) · complemento: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md), EA-080-01
 - **Atores:** Visitante, Cliente · **Pré-condições:** o ator está no detalhe de um anúncio ou na lista de anúncios do perfil da carta
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

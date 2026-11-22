@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (fatia mínima do marketplace, ADR-027)
-- **User story:** não encontrada no board
+- **User story:** #1373 `CCD074 - Visualizar Fotos` (criada em 22/11/2026)
 - **Caso de uso:** [74-visualizar-fotos.md](../../docs/Casos-De-Uso/74-visualizar-fotos.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** visualizando o detalhe de um anúncio
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

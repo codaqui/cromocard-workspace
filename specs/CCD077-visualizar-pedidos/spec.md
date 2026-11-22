@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (fatia mínima do marketplace, ADR-027)
-- **User story:** não encontrada no board
+- **User story:** #1390 `CCD077 - Visualizar Pedidos` (criada em 22/11/2026)
 - **Caso de uso:** [77-visualizar-pedidos.md](../../docs/Casos-De-Uso/77-visualizar-pedidos.md) · relacionado: [110-confirmar-entrega-e-liberar-pagamento.md](../../docs/Casos-De-Uso/110-confirmar-entrega-e-liberar-pagamento.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

@@ -1,31 +1,31 @@
 # Tarefas — CCD083 Denunciar Vendedor
 
-- **Plano:** [plano.md](plano.md) · **User story:** não encontrada no board (AB# a criar)
+- **Plano:** [plano.md](plano.md) · **User story:** AB#1440
 - **Fase MVP** desde 22/11/2026 (ADR-068).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende da CCD090 (ou CCD050: `POST /reports` e `ReportDialog`) e da CCD080 (perfil público).
 
-## Backend — `apps/cromocard-backend`, branch `feature/<id>-denunciar-vendedor`
+## Backend — `apps/cromocard-backend`, branch `feature/1440-denunciar-vendedor`
 
-- [ ] **T1** · Criar estratégia de denúncia de vendedor — R4–R6 · CA1, CA3, CA5 · AB# a criar
+- [ ] **T1** · Criar estratégia de denúncia de vendedor — R4–R6 · CA1, CA3, CA5 · AB#1441
   - Pronto quando: `moderation.service.spec.ts` cobre gravação `SELLER`, motivo obrigatório, `404` e `422`/`409` (depende da L8), com 90% de cobertura.
-- [ ] **T2** · Cobrir a denúncia de vendedor no endpoint POST /reports — R1, R4, R6 · CA1, CA3–CA5 · AB# a criar
+- [ ] **T2** · Cobrir a denúncia de vendedor no endpoint POST /reports — R1, R4, R6 · CA1, CA3–CA5 · AB#1442
   - Pronto quando: `tests/integration/reports.spec.ts` responde `201`, `400`, `401` e `404` para `SELLER` sem gravar nos erros.
-- [ ] **T3** · Criar endpoint GET /admin/moderation/reports — R7 · CA6 · AB# a criar
+- [ ] **T3** · Criar endpoint GET /admin/moderation/reports — R7 · CA6 · AB#1443
   - Pronto quando: a rota aparece no `/docs` e `tests/integration/admin-moderation-reports.spec.ts` lista a denúncia do CA1 e responde `401`/`403` (depende da L6).
 
-## Frontend — `apps/cromocard-frontend`, branch `feature/<id>-denunciar-vendedor`
+## Frontend — `apps/cromocard-frontend`, branch `feature/1440-denunciar-vendedor`
 
-- [ ] **T4** · Mostrar "Denunciar perfil" no perfil de vendedor — R2, R10 · CA1, CA7 · AB# a criar
+- [ ] **T4** · Mostrar "Denunciar perfil" no perfil de vendedor — R2, R10 · CA1, CA7 · AB#1444
   - Pronto quando: `ReportProfileButton.spec.tsx` cobre cliente, próprio perfil e visitante (depende da L7 e L8); print em 1280 px igual ao frame `1160-1396` e sem quebra em 375/768/1024 px.
-- [ ] **T5** · Abrir o modal de denúncia de vendedor — R3–R5, R8–R10 · CA1–CA3, CA8 · AB# a criar
+- [ ] **T5** · Abrir o modal de denúncia de vendedor — R3–R5, R8–R10 · CA1–CA3, CA8 · AB#1445
   - Pronto quando: `ReportDialog.spec.tsx` cobre envio `SELLER`, sem motivo, "Cancelar", "✕" e sucesso; print em 1280 px igual ao frame `1160-17495` e sem quebra em 375/768/1024 px.
-- [ ] **T6** · Criar lista de denúncias de vendedor no BackOffice — R7 · CA6 · AB# a criar
+- [ ] **T6** · Criar lista de denúncias de vendedor no BackOffice — R7 · CA6 · AB#1446
   - Pronto quando: o teste da página mostra vendedor, motivo, descrição, quem e quando, com carregando e erro; print em 1280 px igual ao frame da L6, quando desenhado, e sem quebra em 375/768/1024 px.
 
 ## Fechamento — workspace
 
-- [ ] **T7** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB# a criar
+- [ ] **T7** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#1447
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
 
 ## Cobertura

@@ -209,19 +209,19 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD042](CCD042-pesquisar-no-historico-do-grupo/spec.md) | Pesquisar no Histórico do Grupo | MVP | Rascunho | #145 |
 | [CCD043](CCD043-criar-e-administrar-grupo/spec.md) | Criar e Administrar Grupo | MVP | Rascunho | #146 |
 | [CCD044](CCD044-interagir-no-chat-do-grupo/spec.md) | Interagir no Chat do Grupo | MVP | Rascunho | #147 |
-| [CCD045](CCD045-responder-mensagem-especifica/spec.md) | Responder Mensagem Específica | MVP | Rascunho | — |
-| [CCD046](CCD046-visualizar-mensagens/spec.md) | Visualizar Mensagens | MVP | Rascunho | — |
-| [CCD047](CCD047-moderar-contatos-privados/spec.md) | Moderar Contatos Privados | MVP | Rascunho | — |
-| [CCD048](CCD048-editar-dados-do-perfil/spec.md) | Editar Dados do Perfil | MVP | Rascunho | — |
-| [CCD049](CCD049-exibir-vitrine-de-conquistas/spec.md) | Exibir Vitrine de Conquistas | MVP | Rascunho | — |
-| [CCD050](CCD050-denunciar-perfil/spec.md) | Denunciar Perfil | MVP | Rascunho | — |
-| [CCD051](CCD051-configurar-privacidade-e-senha/spec.md) | Configurar Privacidade e Senha | MVP | Rascunho | — |
-| [CCD052](CCD052-exclusao-da-conta/spec.md) | Exclusão da Conta | MVP | Rascunho | — |
-| [CCD053](CCD053-visualizar-notificacoes/spec.md) | Visualizar Notificações | MVP | Rascunho | — |
-| [CCD054](CCD054-limpar-central-de-notificacoes/spec.md) | Limpar Central de Notificações | MVP | Rascunho | — |
-| [CCD055](CCD055-favoritar-album/spec.md) | Favoritar Álbum | MVP | Rascunho | — |
-| [CCD056](CCD056-favoritar-carta/spec.md) | Favoritar Carta | MVP | Rascunho | — |
-| [CCD057](CCD057-favoritar-grupo/spec.md) | Favoritar Grupo | MVP | Rascunho | — |
+| [CCD045](CCD045-responder-mensagem-especifica/spec.md) | Responder Mensagem Específica | MVP | Rascunho | #1208 |
+| [CCD046](CCD046-visualizar-mensagens/spec.md) | Visualizar Mensagens | MVP | Rascunho | #1217 |
+| [CCD047](CCD047-moderar-contatos-privados/spec.md) | Moderar Contatos Privados | MVP | Rascunho | #1231 |
+| [CCD048](CCD048-editar-dados-do-perfil/spec.md) | Editar Dados do Perfil | MVP | Rascunho | #1242 |
+| [CCD049](CCD049-exibir-vitrine-de-conquistas/spec.md) | Exibir Vitrine de Conquistas | MVP | Rascunho | #1254 |
+| [CCD050](CCD050-denunciar-perfil/spec.md) | Denunciar Perfil | MVP | Rascunho | #1265 |
+| [CCD051](CCD051-configurar-privacidade-e-senha/spec.md) | Configurar Privacidade e Senha | MVP | Rascunho | #1273 |
+| [CCD052](CCD052-exclusao-da-conta/spec.md) | Exclusão da Conta | MVP | Rascunho | #1284 |
+| [CCD053](CCD053-visualizar-notificacoes/spec.md) | Visualizar Notificações | MVP | Rascunho | #1294 |
+| [CCD054](CCD054-limpar-central-de-notificacoes/spec.md) | Limpar Central de Notificações | MVP | Rascunho | #1308 |
+| [CCD055](CCD055-favoritar-album/spec.md) | Favoritar Álbum | MVP | Rascunho | #1315 |
+| [CCD056](CCD056-favoritar-carta/spec.md) | Favoritar Carta | MVP | Rascunho | #1325 |
+| [CCD057](CCD057-favoritar-grupo/spec.md) | Favoritar Grupo | MVP | Rascunho | #1330 |
 | [CCD058](CCD058-visualizar-dashboard-gerencial/spec.md) | Visualizar Dashboard Gerencial | MVP | Implementada | #333 |
 | [CCD059](CCD059-gestao-de-usuarios/spec.md) | Gestão de Usuários | MVP | Implementada | #334 |
 | [CCD060](CCD060-disparar-notificacao-global/spec.md) | Disparar Notificação Global | MVP | Em implementação | #335 |
@@ -231,19 +231,19 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD064](CCD064-aprovar-solicitacoes/spec.md) | Aprovar Solicitações | MVP | Em implementação | #339 |
 | [CCD065](CCD065-log-de-auditoria-admin/spec.md) | Log de Auditoria Admin | MVP | Planejada | #340 |
 | [CCD066](CCD066-configuracoes-globais/spec.md) | Configurações Globais | MVP | Em implementação | #341 |
-| [CCD067](CCD067-buscar-por-vendedor/spec.md) | Buscar por Vendedor | MVP (era Futuro Marketplace; o Figma ganhou o filtro em 22/11/2026) | Rascunho | — |
-| [CCD068](CCD068-ordenar-por-menor-preco/spec.md) | Ordenar por Menor Preço (agrupa CCD069 e CCD071) | MVP | Rascunho | — |
-| [CCD072](CCD072-comprar/spec.md) | Comprar | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
-| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | — |
-| [CCD074](CCD074-visualizar-fotos/spec.md) | Visualizar Fotos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
-| [CCD075](CCD075-visualizar-historico-de-precos/spec.md) | Visualizar Histórico de Preços | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
-| [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | — |
-| [CCD077](CCD077-visualizar-pedidos/spec.md) | Visualizar Pedidos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
-| [CCD078](CCD078-mostrar-todas-as-cartas/spec.md) | Mostrar Todas as Cartas | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | — |
-| [CCD079](CCD079-visualizar-quantidade-disponivel/spec.md) | Visualizar Quantidade Disponível | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | — |
-| [CCD080](CCD080-visualizar-dados-do-vendedor/spec.md) | Visualizar Dados do Vendedor | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | — |
-| [CCD082](CCD082-denunciar-anuncio/spec.md) | Denunciar Anúncio | MVP (era Futuro Marketplace; o Figma ganhou a denúncia em 22/11/2026) | Rascunho | — |
-| [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | — |
+| [CCD067](CCD067-buscar-por-vendedor/spec.md) | Buscar por Vendedor | MVP (era Futuro Marketplace; o Figma ganhou o filtro em 22/11/2026) | Rascunho | #1335 |
+| [CCD068](CCD068-ordenar-por-menor-preco/spec.md) | Ordenar por Menor Preço (agrupa CCD069 e CCD071) | MVP | Rascunho | #1343 |
+| [CCD072](CCD072-comprar/spec.md) | Comprar | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1352 |
+| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #1366 |
+| [CCD074](CCD074-visualizar-fotos/spec.md) | Visualizar Fotos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1373 |
+| [CCD075](CCD075-visualizar-historico-de-precos/spec.md) | Visualizar Histórico de Preços | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1378 |
+| [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #1384 |
+| [CCD077](CCD077-visualizar-pedidos/spec.md) | Visualizar Pedidos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1390 |
+| [CCD078](CCD078-mostrar-todas-as-cartas/spec.md) | Mostrar Todas as Cartas | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1397 |
+| [CCD079](CCD079-visualizar-quantidade-disponivel/spec.md) | Visualizar Quantidade Disponível | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | #1411 |
+| [CCD080](CCD080-visualizar-dados-do-vendedor/spec.md) | Visualizar Dados do Vendedor | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | #1421 |
+| [CCD082](CCD082-denunciar-anuncio/spec.md) | Denunciar Anúncio | MVP (era Futuro Marketplace; o Figma ganhou a denúncia em 22/11/2026) | Rascunho | #1433 |
+| [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #1440 |
 | [CCD084](CCD084-criar-anuncio/spec.md) | Criar Anúncio | MVP (sem marca na user story; fatia mínima do marketplace, "Vender", no ADR-027) | Rascunho | #343 |
 | [CCD085](CCD085-editar-anuncio/spec.md) | Editar Anúncio (agrupa CCD086, CCD087, CCD088) | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #344 #345 #346 #347 |
 | [CCD090](CCD090-denunciar-usuario/spec.md) | Denunciar Usuário | MVP pela legenda (a user story, no Painel Vendedor, não tem marca); o ADR-027 tira do MVP as denúncias do marketplace: ver L1 | Rascunho | #349 |

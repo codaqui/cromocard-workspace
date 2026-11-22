@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1315 `CCD055 - Favoritar Álbum` (criada em 22/11/2026)
 - **Caso de uso:** [55-favoritar-album.md](../../docs/Casos-De-Uso/55-favoritar-album.md) · complemento: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md) (EA-002-01)
 - **Atores:** Cliente · **Pré-condições:** autenticado; álbum disponível para visualização
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

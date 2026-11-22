@@ -1,44 +1,44 @@
 # Tarefas — CCD046 Visualizar Mensagens
 
-- **Plano:** [plano.md](plano.md) · **User story:** AB# a criar (não encontrada no board)
+- **Plano:** [plano.md](plano.md) · **User story:** AB#1217
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende do servidor Socket.IO da CCD044: as branches dos apps saem de `develop` depois do merge dela (T5, T9).
 - Os `AB#` das Tasks ficam "a criar": só com o pedido do Daniel.
 
-## Backend — `apps/cromocard-backend`, branch `feature/<id>-visualizar-mensagens`
+## Backend — `apps/cromocard-backend`, branch `feature/1217-visualizar-mensagens`
 
-- [ ] **T12** · Criar servidor Socket.IO autenticado por JWT no processo ws (base do tempo real, que a CCD044, a CCD045, a CCD047 e a CCD053 usam; vinda da T1 da CCD044) — R1 · AB# a criar
+- [ ] **T12** · Criar servidor Socket.IO autenticado por JWT no processo ws (base do tempo real, que a CCD044, a CCD045, a CCD047 e a CCD053 usam; vinda da T1 da CCD044) — R1 · AB#1218
   - Pronto quando: `npm run dev:ws` aceita conexão com token válido (entra em `user:<id>`), recusa sem token e o teste de
     socket cobre os dois casos.
-- [ ] **T1** · Criar migrations de conversations, conversation_participants e messages com o seed do chat — R1, R3, R5, R9 · AB# a criar
+- [ ] **T1** · Criar migrations de conversations, conversation_participants e messages com o seed do chat — R1, R3, R5, R9 · AB#1219
   - Pronto quando: `prisma migrate dev` cria as 3 tabelas como no DBML e o seed grava as 4 conversas de Gabriel, a não lida de Renata e uma mensagem excluída.
-- [ ] **T2** · Criar validator e erros do chat — R1, R4, R8 · AB# a criar
+- [ ] **T2** · Criar validator e erros do chat — R1, R4, R8 · AB#1220
   - Pronto quando: os schemas recusam `id`/`cursor` que não é UUID, `limit` fora de 1–50 e `content` vazio.
-- [ ] **T3** · Criar repository e service de conversas e mensagens — R1, R3–R5, R9 · CA1–CA3, CA8 · AB# a criar
+- [ ] **T3** · Criar repository e service de conversas e mensagens — R1, R3–R5, R9 · CA1–CA3, CA8 · AB#1221
   - Pronto quando: `chat.service.spec.ts` cobre CA1–CA3 e CA8 com 90% de cobertura no domínio.
-- [ ] **T4** · Criar endpoints GET /me/conversations, GET /me/conversations/:id/messages e POST /me/conversations/:id/read — R1, R3–R5 · CA1, CA3, CA7 · AB# a criar
+- [ ] **T4** · Criar endpoints GET /me/conversations, GET /me/conversations/:id/messages e POST /me/conversations/:id/read — R1, R3–R5 · CA1, CA3, CA7 · AB#1222
   - Pronto quando: as rotas aparecem no `/docs` e `chat-conversations.spec.ts` cobre CA1, CA3, CA7 e CA8 (`401` e `404`).
-- [ ] **T5** · Criar handlers do Socket.IO conversation:join, conversation:leave e message:send — R1, R8 · CA6, CA7 · AB# a criar
+- [ ] **T5** · Criar handlers do Socket.IO conversation:join, conversation:leave e message:send — R1, R8 · CA6, CA7 · AB#1223
   - Pronto quando: `chat-socket.spec.ts` mostra a mensagem gravada antes do `message:new`, o `404` no join de quem não participa e nada emitido se a gravação falhar.
 
-## Frontend — `apps/cromocard-frontend`, branch `feature/<id>-visualizar-mensagens`
+## Frontend — `apps/cromocard-frontend`, branch `feature/1217-visualizar-mensagens`
 
-- [ ] **T13** · Criar cliente Socket.IO e a variável VITE_WS_URL (vinda da T6 da CCD044) — R1 · AB# a criar
+- [ ] **T13** · Criar cliente Socket.IO e a variável VITE_WS_URL (vinda da T6 da CCD044) — R1 · AB#1224
   - Pronto quando: `socket.spec.ts` cobre o token no handshake e a renovação no `connect_error`.
-- [ ] **T6** [P] · Criar types, labels, format, api e queries do chat — R3–R5, R7 · AB# a criar
+- [ ] **T6** [P] · Criar types, labels, format, api e queries do chat — R3–R5, R7 · AB#1225
   - Pronto quando: o typecheck passa e `chat.format.spec.ts` cobre a hora da prévia e o separador "Hoje, 31 de Outubro".
-- [ ] **T7** · Criar lista de conversas — R2, R3, R5 · CA1–CA3 · AB# a criar
+- [ ] **T7** · Criar lista de conversas — R2, R3, R5 · CA1–CA3 · AB#1226
   - Pronto quando: `ConversationListItem.spec.tsx` cobre "Você: " e o contador; print em 1280 px igual ao frame `1160-32980` (coluna "Conversas") e sem quebra em 375/768/1024 px.
-- [ ] **T8** · Criar conversa aberta com mensagens, separador de dia e campo de envio — R4, R5, R8 · CA1, CA3 · AB# a criar
+- [ ] **T8** · Criar conversa aberta com mensagens, separador de dia e campo de envio — R4, R5, R8 · CA1, CA3 · AB#1227
   - Pronto quando: `ConversationView.spec.tsx` cobre a ordem e o destaque da não lida; print em 1280 px igual ao frame `1160-32980` e sem quebra em 375/768/1024 px.
-- [ ] **T9** · Ligar a conversa ao Socket.IO para receber mensagens em tempo real — R8 · CA6 · AB# a criar
+- [ ] **T9** · Ligar a conversa ao Socket.IO para receber mensagens em tempo real — R8 · CA6 · AB#1228
   - Pronto quando: `useConversationSocket.spec.tsx` mostra o `message:new` entrando na conversa e atualizando a prévia e a hora da lista.
-- [ ] **T10** · Criar página Mensagens com rota, item no menu e os estados — R1, R2, R6, R7 · CA4, CA5, CA9, CA10 · AB# a criar
+- [ ] **T10** · Criar página Mensagens com rota, item no menu e os estados — R1, R2, R6, R7 · CA4, CA5, CA9, CA10 · AB#1229
   - Pronto quando: `MessagesPage.spec.tsx` cobre vazio e erro; print em 1280 px igual aos frames `1160-32980` e `1160-36236` e sem quebra em 375/768/1024 px.
 
 ## Fechamento — workspace
 
-- [ ] **T11** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB# a criar
+- [ ] **T11** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#1230
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
 
 ## Cobertura

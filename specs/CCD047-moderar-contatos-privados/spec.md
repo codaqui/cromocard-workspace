@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1231 `CCD047 - Moderar Contatos Privados` (criada em 22/11/2026)
 - **Caso de uso:** [47-moderar-contatos-privados.md](../../docs/Casos-De-Uso/47-moderar-contatos-privados.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado e com pelo menos um contato ou conversa privada
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

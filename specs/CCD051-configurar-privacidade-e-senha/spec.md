@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1273 `CCD051 - Configurar Privacidade e Senha` (criada em 22/11/2026)
 - **Caso de uso:** [51-configurar-privacidade-e-senha.md](../../docs/Casos-De-Uso/51-configurar-privacidade-e-senha.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado e com conta ativa
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

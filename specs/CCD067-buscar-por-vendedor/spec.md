@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (era Futuro Marketplace; o filtro foi desenhado no Figma em 22/11/2026, ADR-068)
-- **User story:** não encontrada no board
+- **User story:** #1335 `CCD067 - Buscar por Vendedor` (criada em 22/11/2026)
 - **Caso de uso:** [67-buscar-por-vendedor.md](../../docs/Casos-De-Uso/67-buscar-por-vendedor.md) · a CCD033, que duplicava este caso de uso, foi removida em 22/11/2026 (L1, ADR-068)
 - **Atores:** Cliente · **Pré-condições:** na listagem de cartas do marketplace
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (era Futuro Marketplace; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
-- **User story:** não encontrada no board
+- **User story:** #1366 `CCD073 - Entrar em Contato` (criada em 22/11/2026)
 - **Caso de uso:** [73-entrar-em-contato.md](../../docs/Casos-De-Uso/73-entrar-em-contato.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado, visualizando um anúncio ativo
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

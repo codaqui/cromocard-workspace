@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (fatia mínima do marketplace, ADR-027)
-- **User story:** não encontrada no board
+- **User story:** #1397 `CCD078 - Mostrar Todas as Cartas` (criada em 22/11/2026)
 - **Caso de uso:** [78-mostrar-todas-as-cartas.md](../../docs/Casos-De-Uso/78-mostrar-todas-as-cartas.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** nenhuma
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

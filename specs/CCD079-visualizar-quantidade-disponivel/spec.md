@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026)
-- **User story:** não encontrada no board
+- **User story:** #1411 `CCD079 - Visualizar Quantidade Disponível` (criada em 22/11/2026)
 - **Caso de uso:** [79-visualizar-quantidade-disponivel.md](../../docs/Casos-De-Uso/79-visualizar-quantidade-disponivel.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** o ator está no detalhe de um anúncio
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

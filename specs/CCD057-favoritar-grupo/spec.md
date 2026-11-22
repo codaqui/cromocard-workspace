@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1330 `CCD057 - Favoritar Grupo` (criada em 22/11/2026)
 - **Caso de uso:** [57-favoritar-grupo.md](../../docs/Casos-De-Uso/57-favoritar-grupo.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado; grupo disponível para visualização
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

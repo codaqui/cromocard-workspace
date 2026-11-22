@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1208 `CCD045 - Responder Mensagem Específica` (criada em 22/11/2026)
 - **Caso de uso:** [45-responder-mensagem-especifica.md](../../docs/Casos-De-Uso/45-responder-mensagem-especifica.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado e com uma conversa ativa com outro usuário
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

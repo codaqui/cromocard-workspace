@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1325 `CCD056 - Favoritar Carta` (criada em 22/11/2026)
 - **Caso de uso:** [56-favoritar-carta.md](../../docs/Casos-De-Uso/56-favoritar-carta.md) · relacionado: [30-visualizar-detalhes.md](../../docs/Casos-De-Uso/30-visualizar-detalhes.md) (FA 1–2)
 - **Atores:** Cliente · **Pré-condições:** autenticado; carta disponível para visualização
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

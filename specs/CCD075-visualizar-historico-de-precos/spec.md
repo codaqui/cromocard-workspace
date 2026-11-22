@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (fatia mínima do marketplace, ADR-027)
-- **User story:** não encontrada no board
+- **User story:** #1378 `CCD075 - Visualizar Histórico de Preços` (criada em 22/11/2026)
 - **Caso de uso:** [75-visualizar-historico-de-precos.md](../../docs/Casos-De-Uso/75-visualizar-historico-de-precos.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** no perfil da carta (Visualizar Detalhes, CCD030)
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (fatia mínima do marketplace, ADR-027)
-- **User story:** não encontrada no board
+- **User story:** #1352 `CCD072 - Comprar` (criada em 22/11/2026)
 - **Caso de uso:** [72-comprar.md](../../docs/Casos-De-Uso/72-comprar.md) · decisões: ADR-066 (Stripe), ADR-067 (Melhor Envio)
 - **Atores:** Cliente (vendedores também compram, como clientes) · **Pré-condições:** autenticado, com a conta ativa; anúncio ativo, com quantidade disponível e que não é do próprio cliente
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade

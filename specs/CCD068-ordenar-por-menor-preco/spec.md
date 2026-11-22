@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP (a CCD070, ordenar por avaliações, foi removida do projeto em 22/11/2026 (ADR-068))
-- **User story:** não encontrada no board
+- **User story:** #1343 `CCD068 - Ordenar por Menor Preço` (criada em 22/11/2026)
 - **Agrupa:** CCD069 Ordenar por Maior Preço (não encontrada no board), CCD071 Ordenar por Mais Recentes (não encontrada no board)
 - **Caso de uso:** [68-ordenar-por-menor-preco.md](../../docs/Casos-De-Uso/68-ordenar-por-menor-preco.md), [69-ordenar-por-maior-preco.md](../../docs/Casos-De-Uso/69-ordenar-por-maior-preco.md), [71-ordenar-por-mais-recentes.md](../../docs/Casos-De-Uso/71-ordenar-por-mais-recentes.md)
 - **Atores:** Visitante e Cliente · **Pré-condições:** no Explorar marketplace ou na lista de anúncios do perfil da carta

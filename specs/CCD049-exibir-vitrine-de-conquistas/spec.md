@@ -2,7 +2,7 @@
 
 - **Status:** Rascunho
 - **Fase:** MVP
-- **User story:** não encontrada no board
+- **User story:** #1254 `CCD049 - Exibir Vitrine de Conquistas` (criada em 22/11/2026)
 - **Caso de uso:** [49-exibir-vitrine-de-conquistas.md](../../docs/Casos-De-Uso/49-exibir-vitrine-de-conquistas.md)
 - **Atores:** Cliente (dono do perfil); Visitante e Cliente veem a vitrine no perfil público · **Pré-condições:** autenticado e com perfil cadastrado (para o próprio perfil)
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade
