@@ -122,7 +122,6 @@ package "2. Painel Cliente - Pesquisa e Busca" {
   usecase "Visualizar Detalhes\n(CCD030)" as UC030
   usecase "Visualizar Info.\nda Carta\n(CCD031)" as UC031
   usecase "Buscar por Estado\nda Carta **\n(CCD032)" as UC032
-  usecase "Buscar por\nVendedor ***\n(CCD033)" as UC033
 }
 
 Cliente --> UC021
@@ -138,7 +137,6 @@ UC027 ..> UC021 : <<extend>>
 UC028 ..> UC021 : <<extend>>
 UC029 ..> UC021 : <<extend>>
 UC032 ..> UC021 : <<extend>>
-UC033 ..> UC021 : <<extend>>
 
 ' Relacionamentos de include
 UC030 ..> UC031 : <<include>>\nExibe informações
@@ -318,10 +316,9 @@ Admin --> UC103
 ' 2. PAINEL CLIENTE - Marketplace (comprador) ***
 ' ============================================================
 package "2. Painel Cliente - Marketplace" {
-  usecase "Buscar por\nVendedor ***\n(CCD067)" as UC067
+  usecase "Buscar por\nVendedor\n(CCD067)" as UC067
   usecase "Ordenar por\nMenor Preço\n(CCD068)" as UC068
   usecase "Ordenar por\nMaior Preço\n(CCD069)" as UC069
-  usecase "Ordenar por\nAvaliações ***\n(CCD070)" as UC070
   usecase "Ordenar por\nMais Recentes\n(CCD071)" as UC071
   usecase "Comprar\n(CCD072)" as UC072
   usecase "Entrar em\nContato ***\n(CCD073)" as UC073
@@ -332,8 +329,7 @@ package "2. Painel Cliente - Marketplace" {
   usecase "Mostrar Todas\nas Cartas\n(CCD078)" as UC078
   usecase "Visualizar Quantidade\nDisponível\n(CCD079)" as UC079
   usecase "Visualizar Dados\ndo Vendedor\n(CCD080)" as UC080
-  usecase "Visualizar\nAvaliações ***\n(CCD081)" as UC081
-  usecase "Denunciar\nAnúncio ***\n(CCD082)" as UC082
+  usecase "Denunciar\nAnúncio\n(CCD082)" as UC082
   usecase "Denunciar\nVendedor ***\n(CCD083)" as UC083
   usecase "Confirmar Entrega\ne Liberar Pagamento\n(CCD110)" as UC110
 }
@@ -349,13 +345,11 @@ Cliente --> UC083
 UC067 ..> UC078 : <<extend>>
 UC068 ..> UC078 : <<extend>>
 UC069 ..> UC078 : <<extend>>
-UC070 ..> UC078 : <<extend>>
 UC071 ..> UC078 : <<extend>>
 UC074 ..> UC078 : <<extend>>\nAo abrir o anúncio
 UC075 ..> UC078 : <<extend>>\nAo abrir o anúncio
 UC079 ..> UC078 : <<extend>>\nAo abrir o anúncio
 UC080 ..> UC078 : <<extend>>\nAo abrir o anúncio
-UC081 ..> UC080 : <<extend>>
 UC073 ..> UC046 : <<include>>\nAbre a conversa
 Cliente --> UC110
 UC110 ..> UC077 : <<extend>>\nPedido entregue
@@ -369,7 +363,6 @@ package "9. Painel Vendedor" {
   usecase "Excluir Anúncio\n(CCD086)" as UC086
   usecase "Pausar Anúncio\n(CCD087)" as UC087
   usecase "Reativar Anúncio\n(CCD088)" as UC088
-  usecase "Visualizar\nPropostas\n(CCD089)" as UC089
   usecase "Denunciar Usuário\n(CCD090)" as UC090
   usecase "Editar Perfil\n(CCD091)" as UC091
   usecase "Visualizar Total\nde Vendas\n(CCD092)" as UC092
@@ -383,7 +376,6 @@ Vendedor --> UC085
 Vendedor --> UC086
 Vendedor --> UC087
 Vendedor --> UC088
-Vendedor --> UC089
 Vendedor --> UC090
 Vendedor --> UC091
 Vendedor --> UC092
@@ -411,11 +403,6 @@ note bottom of UC032
   ** Funcionalidade futura
 end note
 
-note bottom of UC033
-  *** Funcionalidade futura
-  (Marketplace)
-end note
-
 note as N1
   <b>Legenda:</b>
   **  = Funcionalidade futura
@@ -424,6 +411,8 @@ note as N1
   Desde 18/11/2026, a fatia mínima
   do marketplace (compra, envio e
   liberação) é MVP (ADR-027)
+  Removidos em 22/11/2026 (ADR-068):
+  CCD033, CCD070, CCD081 e CCD089
   
   <<include>> = O caso de uso base
   sempre invoca o incluído

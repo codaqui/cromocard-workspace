@@ -761,36 +761,17 @@ views {
     cliente -> appWeb '4. seleciona a carta desejada na lista de resultados'
   }
 
-  dynamic view ccd033_buscar_por_vendedor {
-    title 'CCD033 - Buscar por Vendedor'
-    description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar na tela de pesquisa do marketplace.
-      **Observacao:** os casos de uso CCD033 e CCD067 descrevem a mesma funcionalidade, mantive neste diagrama apenas o 033 pois ele vem primeiro na ordem.
-      **Fluxo alternativo:** caso nenhum vendedor seja encontrado, exibir
-      "Nenhum vendedor encontrado"; caso o vendedor nao possua anuncios ativos, exibir
-      "Este vendedor nao possui anuncios ativos".
-    '''
-
-    cliente -> appWeb '1. acessa a secao de busca do marketplace'
-    cliente -> appWeb '2. seleciona a opcao de busca por vendedor e informa o nome'
-    appWeb -> modPagamentos '3. envia o nome do vendedor informado'
-    modPagamentos -> bancoDados '4. busca os vendedores correspondentes ao nome informado'
-    modPagamentos -> bancoDados '5. localiza os anuncios ativos do vendedor selecionado'
-    modPagamentos -> appWeb '6. retorna os anuncios encontrados'
-    appWeb -> cliente '6. exibe os anuncios encontrados'
-  }
 
   dynamic view ccd034_buscar_categoria_album {
     title 'CCD034 - Buscar Categoria do Album'
     description '''
       **Ator:** Cliente
-      **Pre-condicao:** estar autenticado e na tela da sua colecao de albuns.
+      **Pre-condicao:** estar autenticado e no detalhe de um album da sua colecao.
       **Fluxo alternativo:** caso nao possua figurinhas na categoria selecionada, exibir
       "Nenhuma figurinha encontrada para esta categoria".
     '''
 
-    cliente -> appWeb '1. acessa a opcao de filtros e seleciona uma categoria, selecao ou time'
+    cliente -> appWeb '1. abre o filtro Selecao no detalhe do album e escolhe uma selecao ou time'
     appWeb -> modColecao '2. envia a selecao de filtro'
     modColecao -> bancoDados '2. processa a selecao e aplica o filtro na colecao do cliente'
     modColecao -> appWeb '3. retorna as figurinhas correspondentes'
@@ -1487,21 +1468,44 @@ views {
 
   // ---------------------------------------------------------------
   // 9. MARKETPLACE - COMPRADOR (CCD067 a CCD083)
-  //    O caso de uso CCD067 esta representado na view ccd033_buscar_por_vendedor
   // ---------------------------------------------------------------
 
+  dynamic view ccd067_buscar_por_vendedor {
+    title 'CCD067 - Buscar por Vendedor'
+    description '''
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** estar no Explorar marketplace.
+      **Observacao:** a CCD033 descrevia a mesma funcionalidade e foi removida em 22/11/2026 (ADR-068).
+      **Fluxo alternativo:** caso nenhum vendedor seja encontrado, exibir
+      "Nenhum vendedor encontrado."; caso o vendedor nao possua anuncios ativos, exibir
+      "Este vendedor nao possui anuncios ativos.".
+    '''
+
+    visitante -> appWeb '1. acessa o Explorar marketplace'
+    visitante -> appWeb '2. abre o filtro Vendedor e informa o nome'
+    appWeb -> modPagamentos '3. envia o nome do vendedor informado'
+    modPagamentos -> bancoDados '4. busca os vendedores com nome de usuario correspondente e anuncios ativos'
+    modPagamentos -> appWeb '4. retorna os vendedores com cidade e numero de anuncios ativos'
+    appWeb -> visitante '4. lista os vendedores encontrados'
+    visitante -> appWeb '5. escolhe um vendedor da lista'
+    appWeb -> modPagamentos '5. pede os anuncios ativos do vendedor'
+    modPagamentos -> bancoDados '5. localiza os anuncios ativos do vendedor'
+    modPagamentos -> appWeb '6. retorna os anuncios encontrados'
+    appWeb -> visitante '6. exibe os anuncios com o chip Vendedor nos filtros ativos'
+  }
+
   dynamic view ccd068_071_ordenar_anuncios {
-    title 'CCD068 a CCD071 - Ordenar Anuncios por Menor Preco, Maior Preco, Avaliacoes e Mais Recentes'
+    title 'CCD068, CCD069 e CCD071 - Ordenar Anuncios por Menor Preco, Maior Preco e Mais Recentes'
     description '''
       **Ator:** Visitante, Cliente
       **Pre-condicao:** estar no Explorar marketplace ou na lista de anuncios do perfil da carta.
       **Observacao:** CCD068 (menor preco), CCD069 (maior preco) e CCD071 (mais recentes, o padrao)
-      sao MVP; CCD070 (avaliacoes) continua futura. O fluxo e o mesmo, mudando so o criterio.
+      sao MVP; CCD070 (avaliacoes) foi removida em 22/11/2026 (ADR-068). O fluxo e o mesmo, mudando so o criterio.
       **Fluxo alternativo:** sem anuncios disponiveis, exibir "Nenhum anuncio encontrado".
     '''
 
     visitante -> appWeb '1. acessa o Explorar marketplace ou o perfil da carta'
-    visitante -> appWeb '2. seleciona a ordenacao (menor preco, maior preco, avaliacoes ou mais recentes)'
+    visitante -> appWeb '2. seleciona a ordenacao (menor preco, maior preco ou mais recentes)'
     appWeb -> modPagamentos '2. envia o criterio de ordenacao'
     modPagamentos -> bancoDados '3. organiza os anuncios ativos conforme o criterio'
     modPagamentos -> appWeb '4. retorna a listagem ordenada'
@@ -1664,26 +1668,11 @@ views {
 
     visitante -> appWeb '1. acessa o detalhe de um anuncio'
     appWeb -> modPerfil '2. solicita os dados publicos do vendedor'
-    modPerfil -> bancoDados '2. busca nome de usuario, cidade, estado e nota media das avaliacoes'
+    modPerfil -> bancoDados '2. busca nome de usuario, cidade e estado'
     modPerfil -> appWeb '3. retorna as informacoes disponiveis'
     appWeb -> visitante '3. exibe os dados do vendedor'
   }
 
-  dynamic view ccd081_visualizar_avaliacoes {
-    title 'CCD081 - Visualizar Avaliacoes'
-    description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar autenticado e visualizando a pagina de um anuncio ou o perfil do vendedor.
-      **Fluxo alternativo:** sem vendas avaliadas, exibir
-      "Este vendedor ainda nao possui avaliacoes".
-    '''
-
-    cliente -> appWeb '1. clica na secao de Avaliacoes do vendedor'
-    appWeb -> modPerfil '2. solicita o historico de avaliacoes'
-    modPerfil -> bancoDados '2. busca o historico de avaliacoes e a nota media'
-    modPerfil -> appWeb '3. retorna a nota consolidada e os comentarios'
-    appWeb -> cliente '3. exibe a nota consolidada e a lista de comentarios dos compradores'
-  }
 
   dynamic view ccd082_denunciar_anuncio {
     title 'CCD082 - Denunciar Anuncio'
@@ -1691,12 +1680,12 @@ views {
       **Ator:** Cliente
       **Pre-condicao:** estar autenticado e na pagina de detalhes do anuncio.
       **Fluxo alternativo:** ao enviar a denuncia sem selecionar um motivo, o sistema bloqueia
-      o envio e destaca o campo obrigatorio com uma mensagem de erro.
+      o envio, destaca os motivos e mostra "Escolha um motivo para enviar a denuncia.".
     '''
 
-    cliente -> appWeb '1. seleciona a opcao Denunciar Anuncio'
+    cliente -> appWeb '1. seleciona Denunciar anuncio, ao lado do vendedor no detalhe do anuncio'
     appWeb -> cliente '2. apresenta formulario solicitando o motivo da denuncia'
-    cliente -> appWeb '3. seleciona o motivo (ex: fraude, item falso), adiciona observacao e confirma'
+    cliente -> appWeb '3. seleciona o motivo (fraude, item falso, anuncio enganoso ou outro), adiciona observacao opcional e confirma'
     appWeb -> modPagamentos '3. envia a denuncia'
     modPagamentos -> bancoDados '4. registra a denuncia'
     modPagamentos -> appWeb '4. confirma o envio'
@@ -1811,22 +1800,6 @@ views {
     appWeb -> vendedor '3. recoloca o anuncio nas listas de busca do marketplace'
   }
 
-  dynamic view ccd089_visualizar_propostas {
-    title 'CCD089 - Visualizar Propostas'
-    description '''
-      **Ator:** Vendedor
-      **Pre-condicao:** ter recebido ao menos uma proposta/oferta em seus anuncios.
-      **Fluxo alternativo:** lista vazia exibe "Voce nao tem novas propostas no momento".
-    '''
-
-    vendedor -> appWeb '1. clica no menu de Propostas Recebidas ou notificacoes'
-    appWeb -> modPagamentos '2. solicita as propostas ativas'
-    modPagamentos -> bancoDados '2. compila as propostas ativas com valor, data e usuario'
-    modPagamentos -> appWeb '2. retorna a lista de propostas'
-    appWeb -> vendedor '2. exibe a lista de propostas ativas'
-    vendedor -> appWeb '3. clica sobre uma proposta especifica para ver detalhes'
-    appWeb -> vendedor '4. abre a interface de negociacao permitindo aceitar ou recusar'
-  }
 
   dynamic view ccd090_denunciar_usuario {
     title 'CCD090 - Denunciar Usuario'
@@ -1992,7 +1965,7 @@ views {
     backofficeApp -> modAdministracao '2. solicita os indicadores financeiros'
     modAdministracao -> bancoDados '2. soma os pedidos Pagos, Enviados e Entregues ainda nao liberados (custodia)'
     modAdministracao -> bancoDados '3. calcula o liquidado (pedidos Concluidos), os pedidos liberados e o retido (Entregues sem repasse)'
-    modAdministracao -> bancoDados '4. calcula o volume anunciado e a nota de reputacao de cada vendedor'
+    modAdministracao -> bancoDados '4. calcula o volume anunciado de cada vendedor'
     backofficeApp -> administrador '4. apresenta os indicadores e a lista de vendedores'
     administrador -> backofficeApp '5. seleciona o periodo: Hoje, 7 dias, 30 dias ou 1 ano'
     backofficeApp -> administrador '6. atualiza os indicadores financeiros conforme o periodo'
