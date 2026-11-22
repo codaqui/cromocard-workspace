@@ -69,6 +69,7 @@ O passo a passo está nos [runbooks](runbooks.md#deploy).
 | [topologia.md](topologia.md) | Estado atual: servidor, ambientes, rede, GitHub, observabilidade e backup |
 | [runbooks.md](runbooks.md) | Como operar: saúde, deploy, rollback, falhas, segredos, backup, runner |
 | [historico.md](historico.md) | O que foi feito, quando e por quem, com a evidência |
+| [teste-de-carga.md](teste-de-carga.md) | Plano do teste de carga e de estresse da API com k6 (ADR-065): fases, metas, métricas, relatórios e resultados |
 
 No repositório do backend (`apps/cromocard-backend`), onde fica o código da infraestrutura:
 
