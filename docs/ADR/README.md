@@ -84,7 +84,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [061](ADR-061-chaves-de-configuracao-das-metas-e-dos-versos.md) | Dados | Chaves de configuração das metas e dos versos padrão em `global_settings` (substitui parcialmente o item 1 do 051) | Aceito |
 | [062](ADR-062-slug-de-categoria-unico-entre-as-ativas.md) | Dados | Slug de categoria único só entre as não excluídas, com índice parcial e sem restaurar (exceção ao item 7 do 015) | Aceito |
 | [065](ADR-065-teste-de-carga-com-k6.md) | Infraestrutura | Teste de carga e de estresse da API com k6: meta de 1 mi de escritas e 2 mi de leituras por dia (105 req/s no pico), réplica, hml e projeto descartável no servidor | Aceito |
-| [068](ADR-068-storage-privado-para-arquivos-sem-url-publica.md) | Backend | Storage privado para arquivos sem URL pública (complementa o 009) | Proposto |
+| [068](ADR-068-storage-privado-para-arquivos-sem-url-publica.md) | Backend | Storage privado para arquivos sem URL pública (complementa o 009) | Aceito |
 
 ## Modelo
 

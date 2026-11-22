@@ -1,6 +1,6 @@
 # ADR-068 — Storage privado para arquivos sem URL pública
 
-- **Status:** Proposto
+- **Status:** Aceito (validado pelo PO em 22/11/2026)
 - **Data:** 2026-11-22
 - **Decisores:** Lucca Rocha (proposta, na CCD107); validação: PO
 - **Complementa:** ADR-009 (storage via provider)
