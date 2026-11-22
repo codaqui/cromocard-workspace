@@ -39,7 +39,7 @@
 | R4 | O modal pede a confirmação de segurança antes de liberar "Confirmar Exclusão da Conta" ("Para confirmar, digite EXCLUIR ou insira sua senha atual:" e "Entendi o que acontece com a minha conta."); o botão fica desabilitado até a confirmação | Ação | `52`, FP 5–7; Figma `1160-43273` (L2) |
 | R5 | Confirmar preenche `users.deleted_at`, revoga todos os refresh tokens do usuário e encerra a sessão no frontend | Regra | `52`, FP 8; ADR-015, item 8; ADR-005, itens 3 e 6 |
 | R6 | Depois da exclusão, o perfil público, os anúncios e a coleção pública do usuário somem das consultas públicas | Regra | ADR-015, item 8 |
-| R7 | Sem a confirmação de segurança válida, a conta não é excluída e a tela informa que a confirmação é necessária; a API responde `400` (ou `401` para senha errada) | Mensagem | `52`, FA 3–4 (L2) |
+| R7 | Sem a confirmação de segurança válida, a conta não é excluída e a tela informa que a confirmação é necessária; a API responde `400` (ou `422 CURRENT_PASSWORD_INCORRECT` (não `401`, que faz o frontend tentar renovar a sessão) para senha errada) | Mensagem | `52`, FA 3–4 (L2) |
 | R8 | "Cancelar" ou o "✕" fecha o modal e a conta continua ativa | Ação | `52`, FA 1–2 |
 | R9 | No login de uma conta excluída (`403 ACCOUNT_DELETED`, CCD004), a tela de login oferece "Reativar conta" ("Esta conta foi excluída. Quer voltar? Reativar conta.") | Tela | ADR-015, item 8; CCD004, R14 e L5; Figma `1160-561` |
 | R10 | "Reativar conta" chama `POST /api/v1/auth/restore` com as mesmas credenciais, que limpa `users.deleted_at` | Ação | ADR-015, item 8 (L7) |

@@ -47,7 +47,7 @@
 
 - **CA1** (R2, R3, R5, R6, R7) — **Dado** um cliente em "Meus álbuns", **quando** ele abre a solicitação, preenche o título "Panini Brasileirão 2026", a editora e o ano e confirma, **então** a API responde `201`, grava uma linha em `catalog_requests` com `type = ALBUM`, `status = PENDING` e os dados em `data`, a tela mostra o alerta de sucesso e a solicitação aparece na fila do BackOffice.
 - **CA2** (R3, R5) — **Dado** o formulário preenchido sem a descrição, **quando** o cliente confirma, **então** a solicitação é gravada normalmente.
-- **CA3** (R4) — **Dado** o formulário sem o título, **quando** o cliente tenta enviar, **então** nada é gravado e o campo de título mostra o aviso de obrigatório; a API, chamada sem o título, responde `422`.
+- **CA3** (R4) — **Dado** o formulário sem o título, **quando** o cliente tenta enviar, **então** nada é gravado e o campo de título mostra o aviso de obrigatório; a API, chamada sem o título, responde `400 VALIDATION_ERROR`.
 - **CA4** (R1) — **Dado** um visitante sem login, **quando** chama a API de solicitação, **então** recebe `401`.
 - **CA5** (R8) — **Dado** a API fora do ar, **quando** o cliente envia o formulário, **então** vê a mensagem de erro e nenhuma solicitação é gravada.
 - **CA6** (R9) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1160-29609`, **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.

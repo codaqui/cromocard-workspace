@@ -41,7 +41,7 @@ das Observações de `user-stories.md` ("Categoria card, elementos").
 |---|---|---|---|
 | R1 | Pesquisar exige login: sem token, `401`; a pesquisa só vê a coleção do próprio cliente | Permissão | `37`, Pré-condições; ADR-005, item 4; ADR-011 |
 | R2 | O cliente informa os elementos da carta (nome, raridade, atributos) nos campos de pesquisa da coleção | Campo | `37`, FP 1 (L1, L2) |
-| R3 | O sistema valida os parâmetros: valor fora da lista (raridade ou idioma inexistente) responde `422` | Regra | `37`, FP 2; ADR-011 |
+| R3 | O sistema valida os parâmetros: valor fora da lista (raridade ou idioma inexistente) responde `400 VALIDATION_ERROR` | Regra | `37`, FP 2; ADR-011 |
 | R4 | O resultado mostra só as cartas da coleção do cliente que atendem a todos os elementos informados | Regra | `37`, FP 3 (L3) |
 | R5 | Sem resultado, a tela mostra "Nenhum card encontrado com estes elementos" e sugere limpar os filtros | Mensagem | `37`, FA 1 (L4) |
 | R6 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames `1160-23696`, `1122-17812`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |

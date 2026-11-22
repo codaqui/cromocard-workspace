@@ -56,7 +56,7 @@
 
 | Tabela | Colunas e enums usados | Observação |
 |---|---|---|
-| `price_history` | `card_id`, `price`, `reference_date`, `source` (`price_source`: `SALE`, `LISTING`) | todas obrigatórias; tabela de histórico, nunca excluída (ADR-015, item 4); já existe no banco, com seed (ADR-054) |
+| `price_history` | `card_id`, `price`, `reference_date`, `source` (`price_source`: `SALE`, `LISTING`) | todas obrigatórias; tabela de histórico, nunca excluída (ADR-015, item 4); é criada pela CCD097, com seed (ADR-054); ainda não está no `schema.prisma` |
 | `orders` | `listing_id`, `status`, `items_amount` | só se o histórico for calculado direto das vendas (L1) |
 
 ## Telas (Figma)

@@ -37,14 +37,14 @@
 | R2 | Cada carta tem o botão de aumentar a quantidade ("+") | Ação | `17`, FP 1 |
 | R3 | O "+" atualiza no banco a quantidade registrada da carta (`collection_cards.quantity`) (efeito no status: L2) | Regra | `17`, FP 2 |
 | R4 | A carta mostra o novo valor numérico logo depois | Tela | `17`, FP 3 |
-| R5 | Valor manual inválido é bloqueado: nada é salvo e a tela mostra um alerta de valor incorreto (o que é inválido e o texto: L4); a API responde `422` a um valor inválido | Regra | `17`, FA 1–2; ADR-011 |
+| R5 | Valor manual inválido é bloqueado: nada é salvo e a tela mostra um alerta de valor incorreto (o que é inválido e o texto: L4); a API responde `400 VALIDATION_ERROR` a um valor inválido | Regra | `17`, FA 1–2; ADR-011 |
 | R6 | Se a API falha ao salvar, a tela mostra a mensagem de erro da API e a quantidade anterior continua | Estado | ADR-041, Erros |
 | R7 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames da seção Telas: `1160-23696`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 
 ## Critérios de aceite
 
 - **CA1** (R2, R3, R4) — **Dado** uma carta possuída com "Qtd: 1", **quando** o cliente seleciona "+", **então** a API grava `quantity = 2` e a carta mostra "Qtd: 2".
-- **CA2** (R5) — **Dado** uma carta com quantidade 3, **quando** o cliente informa manualmente um valor inválido (por exemplo, "-1" ou "abc"), **então** nada é salvo, a quantidade continua 3 e a tela mostra o alerta de valor incorreto; a API, chamada com o valor inválido, responde `422`.
+- **CA2** (R5) — **Dado** uma carta com quantidade 3, **quando** o cliente informa manualmente um valor inválido (por exemplo, "-1" ou "abc"), **então** nada é salvo, a quantidade continua 3 e a tela mostra o alerta de valor incorreto; a API, chamada com o valor inválido, responde `400 VALIDATION_ERROR`.
 - **CA3** (R1) — **Dado** um visitante sem login, **quando** chama a API de quantidade, **então** recebe `401`; **dado** uma carta da coleção de outro cliente, **quando** o cliente tenta alterá-la, **então** a coleção do outro não muda.
 - **CA4** (R6) — **Dado** a API fora do ar, **quando** o cliente seleciona "+", **então** vê a mensagem de erro e a quantidade anterior continua na carta.
 - **CA5** (R7) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1160-23696`, **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem no controle "Qtd:" com "−", o número e "+" (normal e desabilitado); e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.

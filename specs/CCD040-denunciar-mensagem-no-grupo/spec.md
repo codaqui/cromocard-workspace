@@ -54,7 +54,7 @@ Tipos: Tela · Campo · Ação · Regra · Permissão · Mensagem · Estado · F
   `ADMIN` do grupo recebe um aviso e a tela confirma o registro.
 - **CA2** (R4) — **Dado** o formulário aberto, **quando** o membro confirma sem escolher motivo, **então** a tela indica
   que o motivo é obrigatório e nada é gravado; **quando** a descrição passa de 500 caracteres, **então** a API responde
-  `422` e nada é gravado.
+  `400 VALIDATION_ERROR` e nada é gravado.
 - **CA3** (R4) — **Dado** o formulário aberto, **quando** o membro escolhe um motivo e confirma sem descrição, **então**
   a denúncia é gravada com `description` nula.
 - **CA4** (R7) — **Dado** uma denúncia registrada, **quando** o administrador da plataforma abre a fila de mensagens

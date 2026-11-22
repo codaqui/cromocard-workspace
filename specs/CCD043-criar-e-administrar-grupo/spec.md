@@ -58,7 +58,7 @@ Tipos: Tela · Campo · Ação · Regra · Permissão · Mensagem · Estado · F
   capa e tipo fechado e confirma, **então** a API grava `groups` com `creator_id` dele, `access_type = CLOSED` e
   `status = ACTIVE`, grava `group_members` com `role = ADMIN` e a tela do grupo criado abre.
 - **CA2** (R3, R6, R7) — **Dado** o formulário sem nome ou sem tipo de acesso, **quando** o cliente confirma, **então** a
-  tela mostra a mensagem de validação no campo e nada é gravado; a API responde `422` se for chamada assim.
+  tela mostra a mensagem de validação no campo e nada é gravado; a API responde `400 VALIDATION_ERROR` se for chamada assim.
 - **CA3** (R9) — **Dado** um grupo fechado com uma solicitação pendente, **quando** o administrador seleciona "Aprovar",
   **então** a solicitação fica `APPROVED` com `reviewed_by_id` e `reviewed_at`, o solicitante vira `MEMBER` e some da
   lista de solicitações.

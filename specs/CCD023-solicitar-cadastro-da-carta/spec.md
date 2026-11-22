@@ -44,7 +44,7 @@ A seção 3 de `user-stories.md` repete a story como "Solicitar Cadastro de Cart
 | R7 | "Enviar solicitação" grava em `catalog_requests` uma solicitação `type` = `CARD`, `status` = `PENDING`, com o cliente em `requester_id` e os dados e as URLs das imagens em `data`, para a análise do administrador (CCD064) | Ação | `23`, FP 3–4; DBML `catalog_requests`; CCD064, R5 e L8 |
 | R8 | Depois do envio, a tela mostra "Solicitação enviada", "A equipe da CromoCard vai analisar o pedido e avisar você pela notificação.", o resumo da carta, o status "Em análise", "1 Foto Anexada (Frente)", "Solicitar Outra Carta", "Acompanhar Solicitações (<n>)" e "Ficou com dúvida? Central de ajuda" | Tela | `23`, FP 4; Figma `1160-24932` (L6) |
 | R9 | "Solicitar Outra Carta" abre o formulário vazio | Ação | Figma `1160-24932` |
-| R10 | Sem um campo obrigatório, a tela indica os campos pendentes, mantém o formulário aberto com o que já foi preenchido, e a API responde `422` | Mensagem | `23`, FA 1–2; ADR-011 (L1, L10) |
+| R10 | Sem um campo obrigatório, a tela indica os campos pendentes, mantém o formulário aberto com o que já foi preenchido, e a API responde `400 VALIDATION_ERROR` | Mensagem | `23`, FA 1–2; ADR-011 (L1, L10) |
 | R11 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames `1160-28449`, `1160-24389`, `1160-24932`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 
 ## Critérios de aceite
@@ -55,7 +55,7 @@ A seção 3 de `user-stories.md` repete a story como "Solicitar Cadastro de Cart
 - **CA2** (R6, R10) — **Dado** o formulário completo sem a foto da frente, **quando** o cliente envia, **então** a tela
   indica a foto da frente como pendente, o formulário continua aberto com os dados e nada é gravado.
 - **CA3** (R10) — **Dado** o formulário sem um dos campos obrigatórios decididos na L1, **quando** o cliente envia,
-  **então** a tela indica o campo pendente e a API responde `422`.
+  **então** a tela indica o campo pendente e a API responde `400 VALIDATION_ERROR`.
 - **CA4** (R6) — **Dado** o formulário completo sem a foto do verso, **quando** o cliente envia, **então** a solicitação é
   gravada.
 - **CA5** (R6) — **Dado** um arquivo PDF ou maior que o limite da L4, **quando** o cliente tenta anexá-lo, **então** a tela
