@@ -41,10 +41,9 @@
 | Visualizar Detalhes | Como Cliente preciso visualizar os detalhes de uma carta para conhecer suas características antes de realizar uma compra. |
 | Visualizar Informações da Carta | Como Cliente preciso visualizar as informações da carta para conhecer suas características e identificação. |
 | Buscar por Estado da Carta | Como Cliente preciso filtrar cartas por estado de conservação para encontrar itens de acordo com a condição desejada.** |
-| Buscar por Vendedor | Como Cliente preciso buscar cartas por vendedor para visualizar os anúncios disponibilizados por um usuário específico.*** |
+| Buscar por Vendedor | Como Cliente preciso buscar cartas por vendedor para visualizar os anúncios disponibilizados por um usuário específico. |
 | Ordenar por Menor Preço | Como Cliente preciso ordenar as cartas pelo menor preço para encontrar as opções mais econômicas. |
 | Ordenar por Maior Preço | Como Cliente preciso ordenar as cartas pelo maior preço para comparar os itens de maior valor. |
-| Ordenar por Avaliações | Como Cliente preciso ordenar as cartas pelas avaliações para encontrar anúncios com melhor reputação.*** |
 | Ordenar por Mais Recentes | Como Cliente preciso ordenar as cartas pelas mais recentes para visualizar os novos anúncios publicados. |
 | Comparar Preços | Como Cliente preciso comparar preços de uma carta para identificar a melhor opção de compra.** |
 | Comprar | Como Cliente preciso comprar uma carta ou figurinha para adquirir o item disponibilizado no marketplace. |
@@ -61,11 +60,10 @@
 | Visualizar Estado da Carta | Como Cliente preciso visualizar o estado da carta para avaliar sua condição de conservação antes da compra.** |
 | Visualizar Quantidade Disponível | Como Cliente preciso visualizar a quantidade disponível para saber quantas unidades podem ser adquiridas. |
 | Visualizar Dados do Vendedor | Como Cliente preciso visualizar os dados do vendedor para conhecer o responsável pelo anúncio. |
-| Visualizar Avaliações | Como Cliente preciso visualizar as avaliações do vendedor para avaliar sua reputação na plataforma.*** |
 | Conversar com Vendedor | Como Cliente preciso conversar com o vendedor para esclarecer dúvidas sobre a carta antes da compra.*** |
 | Comprar Carta | Como Cliente preciso comprar a carta diretamente pelo anúncio para realizar a aquisição do item. |
 | Compartilhar Anúncio | Como Cliente preciso compartilhar um anúncio para permitir que outras pessoas visualizem a carta disponível.** |
-| Denunciar Anúncio | Como Cliente preciso denunciar um anúncio para informar à plataforma possíveis irregularidades.*** |
+| Denunciar Anúncio | Como Cliente preciso denunciar um anúncio para informar à plataforma possíveis irregularidades. |
 | Denunciar Vendedor | Como Cliente preciso denunciar um vendedor que tenha uma irregularidade dentro da plataforma.*** |
 
 ## 3. Minha Coleção (Álbuns e Cartas)
@@ -166,7 +164,6 @@
 | Excluir Anuncio | Como Vendedor preciso excluir um anúncio para retirar uma carta definitivamente do marketplace. |
 | Pausar Anúncio | Como Vendedor preciso pausar um anúncio para interromper temporariamente sua disponibilidade para venda. |
 | Reativar Anúncio | Como Vendedor preciso reativar um anúncio para disponibilizar novamente uma carta para venda. |
-| Visualizar Propostas | Como Vendedor preciso visualizar propostas recebidas para analisar as condições oferecidas pelos compradores. |
 | Denunciar Usuario | Como Vendedor preciso denunciar usuários para informar comportamentos inadequados à plataforma. |
 | Editar Perfil | Como Vendedor preciso editar meu perfil para manter minhas informações atualizadas. |
 | Visualizar Total de Vendas | Como Vendedor preciso visualizar o total de vendas para acompanhar a quantidade de negociações realizadas. |

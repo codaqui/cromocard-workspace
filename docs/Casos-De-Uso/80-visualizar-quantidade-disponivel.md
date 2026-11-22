@@ -10,7 +10,7 @@
 |---|---|
 | 1. O ator acessa o detalhe de um anúncio. |  |
 |  | 2. O sistema busca os dados públicos do vendedor. |
-|  | 3. O sistema exibe o nome de usuário do vendedor, a cidade e o estado e a nota média das avaliações recebidas (de 0 a 5). |
+|  | 3. O sistema exibe o nome de usuário do vendedor, a cidade e o estado (sem nota de avaliação: as avaliações saíram do projeto em 22/11/2026, ADR-068). |
 
 ### Fluxo Alternativo
 
