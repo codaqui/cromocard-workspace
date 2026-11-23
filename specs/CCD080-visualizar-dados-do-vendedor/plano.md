@@ -43,7 +43,7 @@ e-mail, CPF nem endereço (R9).
 - **Anúncios ativos** (R7, R8): `status = ACTIVE` e `deleted_at` nulo; pausados e encerrados não entram (CA5).
 - **Usuário indisponível**: inexistente, excluído, suspenso ou bloqueado responde `404 PROFILE_NOT_FOUND` (depende da L10).
 - **Selos, "desde", avatar e conquistas** (L5–L8): fora do plano até a decisão; a resposta não traz esses campos.
-- **Nota média** (~~R4~~): removida em 22/11/2026 (ADR-068); a resposta não traz `averageRating`.
+- **Nota média** (~~R4~~): removida em 22/11/2026 (ADR-069); a resposta não traz `averageRating`.
 - **Privacidade** (R9): o `select` do repository lista só os campos públicos; nenhum `include` de `users` inteiro.
 
 ## Contrato da API

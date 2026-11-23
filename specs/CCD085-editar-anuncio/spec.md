@@ -126,7 +126,7 @@
 ## Fora do escopo
 
 - Criar anúncio ("Criar Novo Anúncio" e "Criar Anúncio" do topo) — CCD084.
-- Propostas recebidas — removidas do projeto em 22/11/2026 (CCD089, ADR-068).
+- Propostas recebidas — removidas do projeto em 22/11/2026 (CCD089, ADR-069).
 - Visão geral, Pedidos e envios e Financeiro do menu do vendedor — CCD092, CCD093 e CCD109.
 - Loja pública do vendedor citada no diálogo de exclusão — CCD080 e CCD091.
 

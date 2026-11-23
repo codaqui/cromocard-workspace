@@ -175,7 +175,7 @@
 
 | User Story | Narrativa |
 |---|---|
-| ** - Futuro | Obs: Categoria do album, seleção, times.<br>Categoria card, elementos.<br>Acessibilidade narrador, daltonismo, alto contraste. Desde 22/11/2026 essas três (CCD034, CCD037 e CCD038) são MVP (ADR-068). |
+| ** - Futuro | Obs: Categoria do album, seleção, times.<br>Categoria card, elementos.<br>Acessibilidade narrador, daltonismo, alto contraste. Desde 22/11/2026 essas três (CCD034, CCD037 e CCD038) são MVP (ADR-069). |
 | *** - Futuro Marketplace |  |
 | ++ - Escopo Adicional | Veio do protótipo no Figma e não estava na documentação; entra só quando o PO puxar para uma sprint. Índice e telas em [escopo-adicional.md](escopo-adicional.md). |
 | Comparar Preços | o cliente já consegue pesquisar e ordenar por menor/maior preço. |

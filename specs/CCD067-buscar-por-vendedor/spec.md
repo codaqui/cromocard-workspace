@@ -1,9 +1,9 @@
 # CCD067 — Buscar por Vendedor
 
 - **Status:** Rascunho
-- **Fase:** MVP (era Futuro Marketplace; o filtro foi desenhado no Figma em 22/11/2026, ADR-068)
+- **Fase:** MVP (era Futuro Marketplace; o filtro foi desenhado no Figma em 22/11/2026, ADR-069)
 - **User story:** #1335 `CCD067 - Buscar por Vendedor` (criada em 22/11/2026)
-- **Caso de uso:** [67-buscar-por-vendedor.md](../../docs/Casos-De-Uso/67-buscar-por-vendedor.md) · a CCD033, que duplicava este caso de uso, foi removida em 22/11/2026 (L1, ADR-068)
+- **Caso de uso:** [67-buscar-por-vendedor.md](../../docs/Casos-De-Uso/67-buscar-por-vendedor.md) · a CCD033, que duplicava este caso de uso, foi removida em 22/11/2026 (L1, ADR-069)
 - **Atores:** Cliente · **Pré-condições:** na listagem de cartas do marketplace
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade
 - **Aprovação:** —
@@ -102,9 +102,9 @@ O filtro "Vendedor" foi desenhado no Explorar marketplace em 22/11/2026 (L4).
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | **Duplicidade:** "Buscar por Vendedor" está no `67` e no `33` (CCD033, #166). Diferenças: o `33` exige login e traz os anúncios "cadastrados", com a mensagem "Nenhum resultado encontrado"; o `67` não exige login, traz os anúncios ativos, lista os vendedores antes e tem duas mensagens. Qual caso de uso fica? (proposta: manter o `67` e cancelar o `33`) | A CCD033 foi removida do projeto em 22/11/2026 e esta spec fica com a funcionalidade | ADR-068 |
+| L1 | **Duplicidade:** "Buscar por Vendedor" está no `67` e no `33` (CCD033, #166). Diferenças: o `33` exige login e traz os anúncios "cadastrados", com a mensagem "Nenhum resultado encontrado"; o `67` não exige login, traz os anúncios ativos, lista os vendedores antes e tem duas mensagens. Qual caso de uso fica? (proposta: manter o `67` e cancelar o `33`) | A CCD033 foi removida do projeto em 22/11/2026 e esta spec fica com a funcionalidade | ADR-069 |
 | L2 | O caso de uso não tem user story no board. Criar a user story ou usar a #166 da CCD033 (que no board se chama "Ordenar Coleção")? | pendente | — |
-| L3 | O arquivo `67` não tem marcador de fase, mas a linha "Buscar por Vendedor" de `user-stories.md` está marcada `***` e a CCD067 não está na fatia mínima do ADR-027. A fase é Futuro Marketplace? | MVP desde 22/11/2026: o filtro foi desenhado no Figma | ADR-068; `user-stories.md` |
+| L3 | O arquivo `67` não tem marcador de fase, mas a linha "Buscar por Vendedor" de `user-stories.md` está marcada `***` e a CCD067 não está na fatia mínima do ADR-027. A fase é Futuro Marketplace? | MVP desde 22/11/2026: o filtro foi desenhado no Figma | ADR-069; `user-stories.md` |
 | L4 | O Figma não tem a opção de busca por vendedor no Explorar. O caminho é a busca global → "Ver perfil" → anúncios ativos no perfil público (`1112-3970`, `1160-1396`), ou uma opção nova no Explorar (falta o desenho)? (proposta: o caminho que o Figma já tem) | Opção nova no Explorar: o filtro "Vendedor" na linha de filtros, desenhado em 22/11/2026 (`1112-3281`, `1226-1280`, `1226-1576`, `1226-1862`, `1226-2142`) | `67`, FP 2–6; Figma |
 | L5 | "Nome do vendedor" é o nome de usuário ou o nome completo (`users.name`)? O perfil público nunca mostra o nome completo (EA-080-01). (proposta: só `username`) | Só o nome de usuário (`username`), como mostra a lista do Figma | `67`, FP 4; Figma `1226-1280` |
 | L6 | Entre o FP 4 (vendedores encontrados) e o FP 5 (anúncios "do vendedor selecionado") falta o passo em que o cliente escolhe o vendedor. Com um vendedor só, a lista abre direto? Vendedor suspenso aparece? (proposta: o cliente escolhe na lista; só `status = ACTIVE`) | pendente | — |

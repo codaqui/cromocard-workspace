@@ -4,7 +4,7 @@
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Tasks no Azure criadas em 22/11/2026 (Sprint 08), atribuídas a quem o plano final indica.
 - As branches saem depois do merge da CCD078 (e da CCD079 para a lista do perfil da carta).
-- A T7 e a T10 eram da CCD070, que foi removida do projeto em 22/11/2026 (ADR-068).
+- A T7 e a T10 eram da CCD070, que foi removida do projeto em 22/11/2026 (ADR-069).
 
 ## Backend — `apps/cromocard-backend`, branch `feature/1343-ordenar-anuncios`
 
@@ -26,7 +26,7 @@
 
 ## Removidas
 
-- ~~**T7**~~ e ~~**T10**~~ removidas: a CCD070 (ordenar por avaliações) foi removida do projeto em 22/11/2026 (ADR-068).
+- ~~**T7**~~ e ~~**T10**~~ removidas: a CCD070 (ordenar por avaliações) foi removida do projeto em 22/11/2026 (ADR-069).
 
 ## Fechamento — workspace
 
@@ -45,6 +45,6 @@
 | R6 | T2, T6 |
 | R7 | T3, T6 |
 | R8 | T6 |
-| ~~R9, R10, R11~~ | removidos (ADR-068) |
+| ~~R9, R10, R11~~ | removidos (ADR-069) |
 | R12 | T1, T2, T3, T8 |
 | R13 | T5, T6 |

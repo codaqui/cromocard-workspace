@@ -111,7 +111,7 @@
 
 - Bloquear o contato ("Somente bloquear", a parte de bloqueio de "Bloquear e denunciar") — CCD047 (Moderar Contatos Privados).
 - Tratar a denúncia no BackOffice — não há caso de uso para denúncias de usuário (L8); a CCD099 aplica sanções.
-- Denunciar pela proposta — escopo adicional fora do MVP (`escopo-adicional.md`, seção 3); as propostas (CCD089) saíram do projeto em 22/11/2026 (ADR-068).
+- Denunciar pela proposta — escopo adicional fora do MVP (`escopo-adicional.md`, seção 3); as propostas (CCD089) saíram do projeto em 22/11/2026 (ADR-069).
 - Os dados do perfil público — CCD080.
 
 ## Lacunas e decisões

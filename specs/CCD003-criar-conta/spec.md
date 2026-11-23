@@ -1,6 +1,6 @@
 # CCD003 — Criar Conta
 
-- **Status:** Implementada
+- **Status:** Rascunho (voltou de `Implementada` em 22/11/2026: o caso 03 passou a pedir o nome de usuário no cadastro)
 - **Fase:** MVP
 - **User story:** #108 `CCD003-Criar Conta`
 - **Caso de uso:** [03-criar-conta.md](../../docs/Casos-De-Uso/03-criar-conta.md)
@@ -126,3 +126,4 @@ Enums: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED
 | L9 | Falha no envio do e-mail derruba o cadastro? | Não derruba: mantém o cadastro e permite o reenvio | `03`, FA 4 |
 | L10 | Detalhes técnicos sem ADR (caminho do endpoint, códigos de erro, rate limit do cadastro e do reenvio): o plano define seguindo os ADRs? | Sim, o plano define seguindo os ADRs 005, 011 e 019 | plano.md |
 | L11 | E-mail que já pertence a uma conta criada pelo Google: `409` ou vincula a senha? | `409 EMAIL_ALREADY_REGISTERED`; vincular a conta Google acontece só no login com Google | `03`, FA 2; `04`, FA 6 |
+| L12 | O cadastro passou a pedir o nome de usuário (caso 03, FP 2, FP 4 e FA 2: 3 a 30 caracteres, minúsculas, números, ponto e sublinhado, único). Quais requisitos e critérios de aceite entram, e o plano e o código são revistos nesta story ou numa nova? | pendente | — |

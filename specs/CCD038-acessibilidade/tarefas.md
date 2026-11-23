@@ -1,7 +1,7 @@
 # Tarefas — CCD038 Acessibilidade
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#141
-- **Fase MVP** desde 22/11/2026 (ADR-068).
+- **Fase MVP** desde 22/11/2026 (ADR-069).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Só frontend (depende da L6). O lugar do bloco depende da L1 (CCD051 ou CCD048).
 

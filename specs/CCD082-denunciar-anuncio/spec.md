@@ -1,7 +1,7 @@
 # CCD082 — Denunciar Anúncio
 
 - **Status:** Rascunho
-- **Fase:** MVP (era Futuro Marketplace; as telas foram completadas no Figma em 22/11/2026 a pedido do Daniel, ADR-068)
+- **Fase:** MVP (era Futuro Marketplace; as telas foram completadas no Figma em 22/11/2026 a pedido do Daniel, ADR-069)
 - **User story:** #1433 `CCD082 - Denunciar Anúncio` (criada em 22/11/2026)
 - **Caso de uso:** [82-denunciar-anuncio.md](../../docs/Casos-De-Uso/82-denunciar-anuncio.md)
 - **Atores:** Cliente · **Pré-condições:** o cliente está autenticado e na página de detalhes do anúncio

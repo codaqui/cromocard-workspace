@@ -1,4 +1,4 @@
-# ADR-068 — Remover avaliações e propostas do projeto
+# ADR-069 — Remover avaliações e propostas do projeto
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Substitui parcialmente:** ADR-010 (job de expirar propostas), ADR-015 (item 4) e ADR-054 (item 1)

@@ -3,7 +3,7 @@
 - **Spec:** [spec.md](spec.md), aprovada em 2026-10-22; revisão de 11/11/2026, reaprovada em 12/11/2026
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
 
-> **22/11/2026 (ADR-068):** `reviews` e a reputação saíram. A branch `feature/601-visualizar-indicadores-financeiros` (commit 7e6fbf5) já criou a migration de `reviews`: ela sai do `schema.prisma`, das migrations e do seed antes do merge.
+> **22/11/2026 (ADR-069):** `reviews` e a reputação saíram. A branch `feature/601-visualizar-indicadores-financeiros` (commit 7e6fbf5) já criou a migration de `reviews`: ela sai do `schema.prisma`, das migrations e do seed antes do merge.
 
 ## Solução
 

@@ -3,7 +3,7 @@
 
 > Legenda:
 > - `**` = Futuro
-> - `***` = Futuro Marketplace. Desde 18/11/2026, a fatia mínima do marketplace (explorar, ver anúncio, comprar com Stripe, enviar com Melhor Envio e liberar o pagamento) é MVP e perdeu a marca: CCD068, 069, 071, 072, 074, 075, 078, 079 e 080, e as novas CCD108–111. Em 22/11/2026 a CCD034, a CCD067 e a CCD082 também viraram MVP (o Figma ganhou as telas), e a CCD033, a CCD070, a CCD081 e a CCD089 saíram do projeto (ADR-068); a CCD032, a CCD037, a CCD038, a CCD073, a CCD076 e a CCD083, que já tinham tela no Figma, também viraram MVP.
+> - `***` = Futuro Marketplace. Desde 18/11/2026, a fatia mínima do marketplace (explorar, ver anúncio, comprar com Stripe, enviar com Melhor Envio e liberar o pagamento) é MVP e perdeu a marca: CCD068, 069, 071, 072, 074, 075, 078, 079 e 080, e as novas CCD108–111. Em 22/11/2026 a CCD034, a CCD067 e a CCD082 também viraram MVP (o Figma ganhou as telas), e a CCD033, a CCD070, a CCD081 e a CCD089 saíram do projeto (ADR-069); a CCD032, a CCD037, a CCD038, a CCD073, a CCD076 e a CCD083, que já tinham tela no Figma, também viraram MVP.
 > - `++` = Escopo Adicional: veio do protótipo no Figma e não estava na documentação ([escopo-adicional.md](escopo-adicional.md))
 
 ## 1. Painel Público (Home, Login, Cadastro)
@@ -181,6 +181,6 @@
 
 | User Story | Narrativa |
 |---|---|
-| ** - Futuro | Obs: Categoria do album, seleção, times.<br>Categoria card, elementos.<br>Acessibilidade narrador, daltonismo, alto contraste. Desde 22/11/2026 essas três (CCD034, CCD037 e CCD038) são MVP (ADR-068). |
+| ** - Futuro | Obs: Categoria do album, seleção, times.<br>Categoria card, elementos.<br>Acessibilidade narrador, daltonismo, alto contraste. Desde 22/11/2026 essas três (CCD034, CCD037 e CCD038) são MVP (ADR-069). |
 | *** - Futuro Marketplace |  |
 | ++ - Escopo Adicional | Veio do protótipo no Figma e não estava na documentação; entra só quando o PO puxar para uma sprint. Índice e telas em [escopo-adicional.md](escopo-adicional.md). |

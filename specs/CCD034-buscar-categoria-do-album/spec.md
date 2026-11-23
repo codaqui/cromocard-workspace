@@ -1,7 +1,7 @@
 # CCD034 — Buscar Categoria do Álbum
 
 - **Status:** Rascunho
-- **Fase:** MVP (era Futuro; o filtro por seleção foi desenhado no Figma em 22/11/2026, ADR-068)
+- **Fase:** MVP (era Futuro; o filtro por seleção foi desenhado no Figma em 22/11/2026, ADR-069)
 - **User story:** #137 `CCD034 - Buscar Categoria do Álbum`
 - **Caso de uso:** [34-buscar-categoria-do-album.md](../../docs/Casos-De-Uso/34-buscar-categoria-do-album.md)
 - **Atores:** Cliente · **Pré-condições:** cliente autenticado, no detalhe de um álbum da sua coleção (filtro "Seleção") ou no Início (categoria raiz)

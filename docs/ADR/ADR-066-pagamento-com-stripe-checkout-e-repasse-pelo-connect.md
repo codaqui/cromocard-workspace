@@ -54,6 +54,8 @@ Brasil.
 **Negativas / riscos**
 - Produção exigiria ativar a conta Stripe e revisar a regulação de guardar dinheiro de terceiros.
 - Webhook só chega em endereço público: no PC de cada pessoa é preciso a Stripe CLI (`stripe listen`).
+- A tarifa da Stripe de cada cobrança sai dos 5% da plataforma: o vendedor recebe o valor da carta menos 5%, e o que
+  sobra para a plataforma é a taxa menos a tarifa.
 - O ADR-024 fica decidido por este ADR.
 
 ## Referências

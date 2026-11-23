@@ -8,7 +8,7 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O administrador seleciona a opção "Notificar Lojista" na lista de cadastros ou "Notificar Pendência" no dossiê do vendedor. |  |
+| 1. O administrador seleciona a opção "Notificar Pendência" no dossiê do vendedor (painel "Validar Cadastro"). |  |
 |  | 2. O sistema apresenta o formulário de pendência com o destinatário (nome e e-mail do vendedor) e os canais de envio: notificação no site e e-mail. |
 | 3. O administrador escolhe um modelo de mensagem pronto ("Chave Pix divergente do CNPJ" ou "Endereço não informado"), quando houver um adequado. |  |
 |  | 4. O sistema preenche o corpo da mensagem com o texto do modelo e os dados do vendedor: nome, CNPJ e prazo. |

@@ -407,7 +407,7 @@ note as N1
   Desde 18/11/2026, a fatia mínima
   do marketplace (compra, envio e
   liberação) é MVP (ADR-027)
-  Removidos em 22/11/2026 (ADR-068):
+  Removidos em 22/11/2026 (ADR-069):
   CCD033, CCD070, CCD081 e CCD089;
   032, 037, 038, 073, 076 e 083 viraram MVP
   

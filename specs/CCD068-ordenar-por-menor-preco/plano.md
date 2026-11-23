@@ -2,7 +2,7 @@
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 
-> Fase MVP. A CCD070 (R9–R11, ordenar por avaliações) foi removida do projeto em 22/11/2026 (ADR-068), e os trechos dela saíram deste plano.
+> Fase MVP. A CCD070 (R9–R11, ordenar por avaliações) foi removida do projeto em 22/11/2026 (ADR-069), e os trechos dela saíram deste plano.
 
 - **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L8 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)

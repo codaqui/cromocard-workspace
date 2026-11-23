@@ -3,7 +3,7 @@
 Modelo de dados derivado dos **Casos de Uso / User Stories** em `../../Casos-De-Uso/`
 e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + PostgreSQL).
 
-**48 entidades organizadas em 8 modulos, 85 chaves estrangeiras e 26 enums.** Em 22/11/2026 sairam `offers`, `reviews` e o enum `offer_status`, junto com as CCD070, CCD081 e CCD089 (ADR-068). Nomes de tabelas, colunas e
+**48 entidades organizadas em 8 modulos, 85 chaves estrangeiras e 26 enums.** Em 22/11/2026 sairam `offers`, `reviews` e o enum `offer_status`, junto com as CCD070, CCD081 e CCD089 (ADR-069). Nomes de tabelas, colunas e
 enums em **ingles** (glossario PT → EN no fim deste arquivo). O DER e escrito em DBML para o
 [dbdiagram.io](https://dbdiagram.io/d); cada diagrama tem o `.dbml` e o print tirado do site.
 
@@ -145,7 +145,6 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `tipo_usuario` | `user_role` |
 | `status_usuario` | `user_status` |
 | `privacidade` | `privacy` |
-| `tipo_categoria` | `category_type` |
 | `status_album` | `album_status` |
 | `origem_preco` | `price_source` |
 | `status_plano` | `subscription_status` |

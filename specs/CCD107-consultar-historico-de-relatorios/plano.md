@@ -42,6 +42,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 |---|---|---|
 | `src/features/admin/reports/` (api, queries) | histórico e download | R2, R3 |
 | `ReportsPage` (histórico) | colunas, "Baixar", vencido e vazio | R2, R3, R5, R6 |
+| `ReportsHistory` (cabeçalho) | botão "Atualizar histórico", que refaz a query da lista (L10) | R9 |
 
 ## Testes
 
@@ -54,10 +55,34 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 ## Decisões técnicas
 
-- O arquivo vai para a pasta `reports/` do storage, com o id da exportação no nome.
+- O arquivo vai para a pasta `reports/` do storage privado, com um uuid e o nome do arquivo na chave.
+- Storage privado, sem URL pública: ADR-068 (`Proposto`).
+- L9: falha ao arquivar não derruba a exportação; o arquivo órfão é apagado e o erro vai para o log.
+- `pageSize` do histórico vai até 100 (ADR-011); depois que o job apaga o arquivo, `file_url` e `file_size` continuam na
+  linha só como registro do que foi exportado.
 
 ## Revisão de 12/11/2026 (L4)
 
 - R2: a coluna "Disponível até" mostra a data de `expires_at` ou "Expirado"; no expirado, "Baixar" abre o diálogo
   "Este arquivo expirou" com "Gerar de novo" (`843-844`).
 - R6: o estado de histórico vazio segue o frame `843-2068`.
+
+## Revisão de 18/11/2026 (L5–L8)
+
+- R7/CA4 (L5): o job apaga do storage os arquivos com `expires_at` vencido e não preenche `deleted_at`; a linha
+  continua no histórico como "Expirado". Apagar um arquivo que já sumiu não é erro, então o job pode rodar de novo.
+- R2 (L6): o código `#REP-XXXX` é montado no frontend com os 4 últimos caracteres do `id`, em maiúsculas.
+- R8 (L7): `ExportConfirmDialog` e o aviso de exportado voltam a citar o histórico (`843-442`, `843-1246`); a exportação
+  invalida a query do histórico para a nova linha aparecer no topo.
+- L8: `GET /admin/reports/exports` usa `pageSize` 10 por padrão, ordenado por `created_at` desc.
+- L3 (implementação, ADR-068): o storage local publica tudo em `/uploads`; os relatórios vão para um storage privado
+  (`STORAGE_LOCAL_PRIVATE_DIR`, factory com a visibilidade `private`), nunca servido em `/uploads`, e saem só pela rota
+  autenticada. O `StorageProvider` ganhou `read(key)`.
+- A chave do arquivo é `reports/<uuid>/<nome do arquivo>` e vai na coluna `file_url`; o nome do download sai da chave.
+- `410 EXPORT_EXPIRED` vale para `expires_at` vencido e também para arquivo que já sumiu do storage.
+
+## Revisão de 22/11/2026 (L10–L11)
+
+- R9 (L10): o cabeçalho do histórico ganha o botão "Atualizar histórico", que chama o `refetch` da query de exportações e fica desabilitado enquanto busca.
+- L11: o "×" do `ConfirmDialog` continua no diálogo de expirado; é a única diferença da tela para o frame `843-844`.
+- O `DataTable` ganhou `flat` (cabeçalho escuro, sem borda nem listras) e `pinLastColumn` (a coluna "Ação" fica à vista na rolagem do celular) e a área de rolagem virou uma região focável com o nome "Tabela <legenda>".

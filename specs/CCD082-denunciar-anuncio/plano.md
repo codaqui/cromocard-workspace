@@ -2,7 +2,7 @@
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 >
-> **Fase MVP** desde 22/11/2026 (telas completadas no Figma, ADR-068).
+> **Fase MVP** desde 22/11/2026 (telas completadas no Figma, ADR-069).
 
 - **Spec:** [spec.md](spec.md), em Rascunho (L1, L2, L3 e L8 decididas em 22/11/2026; L4–L7 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)

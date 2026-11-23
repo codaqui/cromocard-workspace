@@ -31,8 +31,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/seeds/settings.seed.ts` | chave `seller.pending_templates` | R12 |
-| `seller-verifications/pending-notice.validator.ts` · `pending-notice.service.ts` + `.spec.ts` | modelo, variáveis, notificação, e-mail, prazo e auditoria | R4–R8, R11 |
+| `admin/settings/setting-schemas.ts` · `database/seeds/admin.seed.ts` · `data/global-settings.json` | chave `seller.pending_templates` e o schema dos modelos | R12 |
+| `seller-verifications/pending-notice.validator.ts` · `pending-notice.service.ts` + `.spec.ts` · `providers/mail/templates/seller-pending-notice.mail.ts` | modelo, variáveis, notificação, e-mail, prazo e auditoria (`SELLER_VERIFICATION_PENDING_NOTICE_SENT`) | R4–R8, R11 |
+| `seller-verifications.repository.ts` | `markPendingIfUndecided`, update condicional como o da decisão | R8 |
 | controller · routes · swagger | rotas acima | R1 |
 
 ## Frontend
@@ -40,7 +41,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `src/features/admin/seller-verifications/` (api, queries) | modelos e envio | R4–R8 |
-| `components/PendingNoticeModal/` · `PendingNoticeSent/` | formulário com modelos, prazo e confirmação | R2–R6, R9, R10 |
+| `components/PendingNoticeModal/` (+ `PendingNoticeForm`, `PendingNoticeSent`) · `hooks/usePendingNoticeModal.ts` · `SellerVerificationPanel` | formulário com modelos, prazo e confirmação, aberto pelo "Notificar Pendência" do dossiê (L5) | R2–R6, R9, R10 |
 
 ## Testes
 

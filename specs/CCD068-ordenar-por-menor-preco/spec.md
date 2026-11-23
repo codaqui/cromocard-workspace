@@ -1,7 +1,7 @@
 # CCD068 — Ordenar por Menor Preço
 
 - **Status:** Rascunho
-- **Fase:** MVP (a CCD070, ordenar por avaliações, foi removida do projeto em 22/11/2026 (ADR-068))
+- **Fase:** MVP (a CCD070, ordenar por avaliações, foi removida do projeto em 22/11/2026 (ADR-069))
 - **User story:** #1343 `CCD068 - Ordenar por Menor Preço` (criada em 22/11/2026)
 - **Agrupa:** CCD069 Ordenar por Maior Preço (não encontrada no board), CCD071 Ordenar por Mais Recentes (não encontrada no board)
 - **Caso de uso:** [68-ordenar-por-menor-preco.md](../../docs/Casos-De-Uso/68-ordenar-por-menor-preco.md), [69-ordenar-por-maior-preco.md](../../docs/Casos-De-Uso/69-ordenar-por-maior-preco.md), [71-ordenar-por-mais-recentes.md](../../docs/Casos-De-Uso/71-ordenar-por-mais-recentes.md)
@@ -34,7 +34,7 @@
 
 ## Requisitos
 
-> R9–R11 vinham da CCD070, removida do projeto em 22/11/2026 (ADR-068). A ordenação tem mais recentes, menor preço e maior preço (`78`, FP 3).
+> R9–R11 vinham da CCD070, removida do projeto em 22/11/2026 (ADR-069). A ordenação tem mais recentes, menor preço e maior preço (`78`, FP 3).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|
@@ -46,9 +46,9 @@
 | R6 | Ao trocar a ordenação, a listagem atualiza com os anúncios ordenados, mantendo os filtros aplicados; a ordem vale para toda a listagem, inclusive o que vem em "Carregar mais cartas" | Regra | `68`, `69`, `71`, FP 3–4; `78`, FP 2 e FP 5 |
 | R7 | Ordenação padrão: "Mais recentes" no Explorar e "Menor preço" no perfil da carta | Regra | `78`, FP 3; `30`, FP 2 |
 | R8 | Sem anúncios disponíveis, a listagem mostra "Nenhum anúncio encontrado" | Estado | `68`, `69`, `71`, FA 1 |
-| ~~R9~~ | ~~CCD070~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-068) | — | — |
-| ~~R10~~ | ~~CCD070~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-068) | — | — |
-| ~~R11~~ | ~~CCD070~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-068) | — | — |
+| ~~R9~~ | ~~CCD070~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-069) | — | — |
+| ~~R10~~ | ~~CCD070~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-069) | — | — |
+| ~~R11~~ | ~~CCD070~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-069) | — | — |
 | R12 | A API recebe a ordenação em `sort` (`price` crescente, `-price` decrescente, `-createdAt` mais recentes), com a lista de campos permitidos do endpoint | Regra | ADR-011, "Paginação, filtros e ordenação" |
 | R13 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames da seção Telas); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 
@@ -69,7 +69,7 @@
   listagem continua com "Nenhum anúncio encontrado".
 - **CA7** (R2, R12) — **Dado** uma requisição sem token com `sort=-price`, **quando** chama a listagem de anúncios, **então** a
   API responde `200` com os anúncios do maior para o menor preço; com um `sort` fora da lista, responde `400`.
-- ~~**CA8**~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-068).
+- ~~**CA8**~~ removido: a CCD070 foi removida do projeto em 22/11/2026 (ADR-069).
 - **CA9** (R13 de Fidelidade) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o
   print dela é comparado lado a lado com o print do frame `1112-3281`, **então** não há diferença de layout, medida,
   espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem
@@ -99,7 +99,7 @@
 
 - Explorar marketplace, filtros e "Carregar mais cartas" — CCD078.
 - Perfil da carta e o vazio da lista de anúncios dele ("a lista informa que não há anúncios") — CCD030, FA 3.
-- Ordenar por avaliações e mostrar a nota do vendedor — as avaliações saíram do projeto em 22/11/2026 (CCD070, CCD081, ADR-068).
+- Ordenar por avaliações e mostrar a nota do vendedor — as avaliações saíram do projeto em 22/11/2026 (CCD070, CCD081, ADR-069).
 
 ## Lacunas e decisões
 
@@ -109,7 +109,7 @@
 | L2 | Como desempatar anúncios com o mesmo preço? (proposta: o mais recente primeiro) | pendente | — |
 | L3 | "Data de publicação" é `listings.created_at`? Um anúncio pausado e reativado (CCD088) volta ao topo? (proposta: `created_at`; reativar não muda a ordem) | pendente | — |
 | L4 | As quatro user stories não têm user story no board (CCD067–CCD083). Criar no board antes do `/planejar`? | pendente | — |
-| L5 | (CCD070) Qual a "avaliação do vendedor": a média de `reviews.rating`? Onde ficam os vendedores sem avaliação? (proposta: média decrescente; sem avaliação no fim) | Não se aplica: a CCD070 foi removida do projeto em 22/11/2026 (ADR-068) | ADR-068 |
-| L6 | (CCD070) Qual o texto do aviso de vendedores sem avaliação e quantas avaliações são "suficientes"? Não há frame. | Não se aplica: a CCD070 foi removida do projeto em 22/11/2026 (ADR-068) | ADR-068 |
-| L7 | (CCD070) Os outros três casos de uso aceitam o visitante; o `70` só o cliente. O visitante não vê a opção de avaliações? | Não se aplica: a CCD070 foi removida do projeto em 22/11/2026 (ADR-068) | ADR-068 |
+| L5 | (CCD070) Qual a "avaliação do vendedor": a média de `reviews.rating`? Onde ficam os vendedores sem avaliação? (proposta: média decrescente; sem avaliação no fim) | Não se aplica: a CCD070 foi removida do projeto em 22/11/2026 (ADR-069) | ADR-069 |
+| L6 | (CCD070) Qual o texto do aviso de vendedores sem avaliação e quantas avaliações são "suficientes"? Não há frame. | Não se aplica: a CCD070 foi removida do projeto em 22/11/2026 (ADR-069) | ADR-069 |
+| L7 | (CCD070) Os outros três casos de uso aceitam o visitante; o `70` só o cliente. O visitante não vê a opção de avaliações? | Não se aplica: a CCD070 foi removida do projeto em 22/11/2026 (ADR-069) | ADR-069 |
 | L8 | O Figma não mostra ordenação na página Pesquisar nem no perfil público do vendedor. A ordenação fica só no Explorar e no perfil da carta, como dizem as pré-condições? (proposta: sim) | pendente | — |

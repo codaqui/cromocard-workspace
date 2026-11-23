@@ -66,7 +66,7 @@ model {
         - cpf: String
         - ultimoAcesso: DateTime
         - contaStripeId: String
-        - statusContaStripe: String
+        - statusContaStripe: StatusContaStripe
         - ipUltimoAcesso: String
         - suspensoAte: DateTime
         - dataCadastro: DateTime
@@ -99,7 +99,7 @@ model {
     metadata {
       observacoes """
         Especializa Usuário (tipo = VENDEDOR). Sem colunas próprias no DER.
-        Sem reputação: avaliações e propostas saíram do projeto em 22/11/2026 (ADR-068).
+        Sem reputação: avaliações e propostas saíram do projeto em 22/11/2026 (ADR-069).
       """
       metodos """
         + criarAnuncio()
@@ -242,6 +242,12 @@ model {
     }
   }
 
+  statusContaStripe = enumeracao "StatusContaStripe" {
+    metadata {
+      valores """PENDENTE, VERIFICANDO, PRONTA"""
+    }
+  }
+
   privacidade = enumeracao "Privacidade" {
     metadata {
       valores """PUBLICO, PRIVADO"""
@@ -270,7 +276,6 @@ model {
       atributos """
         - id: UUID
         - nome: String
-        - tipo: TipoCategoria
         - descricao: String
         - padrao: Boolean
         - slug: String
@@ -406,12 +411,6 @@ model {
         + registrarPreco()
         + consultarHistorico()
       """
-    }
-  }
-
-  tipoCategoria = enumeracao "TipoCategoria" {
-    metadata {
-      valores """ALBUM, CARTA"""
     }
   }
 
@@ -1267,14 +1266,14 @@ views {
     title "Módulo 1 - Usuários, Perfil e Acesso"
     include usuario, cliente, vendedor, administrador, perfil, endereco,
       tokenRecuperacaoSenha, conquista, usuarioConquista, assinatura,
-      tipoUsuario, statusUsuario, privacidade, statusPlano, metodoPagamento
+      tipoUsuario, statusUsuario, statusContaStripe, privacidade, statusPlano, metodoPagamento
     autoLayout LeftRight
   }
 
   view modulo2_catalogo_global {
     title "Módulo 2 - Catálogo Global"
     include categoria, raridade, idioma, estadoConservacao, album, carta,
-      fotoCarta, historicoPreco, tipoCategoria, statusAlbum, origemPreco, statusCarta
+      fotoCarta, historicoPreco, statusAlbum, origemPreco, statusCarta
     autoLayout LeftRight
   }
 

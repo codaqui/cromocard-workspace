@@ -1,7 +1,7 @@
 # CCD037 — Buscar Categoria do Card
 
 - **Status:** Rascunho
-- **Fase:** MVP (era Futuro; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
+- **Fase:** MVP (era Futuro; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-069)
 - **User story:** #140 `CCD037 - Buscar Categoria do Card`
 - **Caso de uso:** [37-buscar-categoria-do-card.md](../../docs/Casos-De-Uso/37-buscar-categoria-do-card.md)
 - **Atores:** Cliente · **Pré-condições:** cliente autenticado, na área de busca ou no inventário de cards
@@ -34,7 +34,7 @@ das Observações de `user-stories.md` ("Categoria card, elementos").
 
 ## Requisitos
 
-> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-069).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|

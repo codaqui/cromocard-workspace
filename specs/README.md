@@ -169,14 +169,14 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 
 ## Índice
 
-> **Removidas do projeto em 22/11/2026** (sem tela no Figma ou duplicadas; ADR-068): CCD033 Buscar por Vendedor (duplicata da CCD067), CCD070 Ordenar por Avaliações, CCD081 Visualizar Avaliações e CCD089 Visualizar Propostas. Os números não são reaproveitados.
+> **Removidas do projeto em 22/11/2026** (sem tela no Figma ou duplicadas; ADR-069): CCD033 Buscar por Vendedor (duplicata da CCD067), CCD070 Ordenar por Avaliações, CCD081 Visualizar Avaliações e CCD089 Visualizar Propostas. Os números não são reaproveitados.
 
 | CCD | User story | Fase | Status | Work item |
 |---|---|---|---|---|
 | [CCD001](CCD001-visualizar-destaques/spec.md) | Visualizar Destaques | MVP | Rascunho | #88 |
 | [CCD002](CCD002-buscar-global/spec.md) | Buscar Global | MVP | Rascunho | #107 |
-| [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Implementada | #108 |
-| [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Implementada | #109 |
+| [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Rascunho | #108 |
+| [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Rascunho | #109 |
 | [CCD005](CCD005-acessar-central-de-ajuda-faq/spec.md) | Acessar Central de Ajuda (FAQ) | MVP | Rascunho | #110 |
 | [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Implementada | #111 |
 | [CCD007](CCD007-visualizar-resumo-da-colecao/spec.md) | Visualizar Resumo da Coleção | MVP | Rascunho | #113 |
@@ -197,12 +197,12 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD024](CCD024-buscar-por-nome/spec.md) | Buscar por Nome (agrupa CCD025, CCD026, CCD027, CCD028, CCD029) | MVP | Rascunho | #157 #158 #159 #160 #161 #162 |
 | [CCD030](CCD030-visualizar-detalhes/spec.md) | Visualizar Detalhes | MVP | Rascunho | #163 |
 | [CCD031](CCD031-visualizar-informacoes-da-carta/spec.md) | Visualizar Informações da Carta | MVP | Rascunho | #164 |
-| [CCD032](CCD032-buscar-por-estado-da-carta/spec.md) | Buscar por Estado da Carta | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #165 |
+| [CCD032](CCD032-buscar-por-estado-da-carta/spec.md) | Buscar por Estado da Carta | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #165 |
 | [CCD034](CCD034-buscar-categoria-do-album/spec.md) | Buscar Categoria do Álbum | MVP (era Futuro; o Figma ganhou o filtro em 22/11/2026) | Rascunho | #137 |
 | [CCD035](CCD035-resetar-progresso-do-album/spec.md) | Resetar Progresso do Álbum | MVP | Rascunho | #138 |
 | [CCD036](CCD036-adicionar-carta-ao-portfolio/spec.md) | Adicionar Carta ao Portfólio | MVP | Rascunho | #139 |
-| [CCD037](CCD037-buscar-categoria-do-card/spec.md) | Buscar Categoria do Card | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #140 |
-| [CCD038](CCD038-acessibilidade/spec.md) | Acessibilidade | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #141 |
+| [CCD037](CCD037-buscar-categoria-do-card/spec.md) | Buscar Categoria do Card | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #140 |
+| [CCD038](CCD038-acessibilidade/spec.md) | Acessibilidade | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #141 |
 | [CCD039](CCD039-explorar-e-entrar-em-grupos/spec.md) | Explorar e Entrar em Grupos | MVP | Rascunho | #142 |
 | [CCD040](CCD040-denunciar-mensagem-no-grupo/spec.md) | Denunciar Mensagem no Grupo | MVP | Rascunho | #143 |
 | [CCD041](CCD041-silenciar-notificacoes-de-grupo/spec.md) | Silenciar Notificações de Grupo | MVP | Rascunho | #144 |
@@ -234,16 +234,16 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD067](CCD067-buscar-por-vendedor/spec.md) | Buscar por Vendedor | MVP (era Futuro Marketplace; o Figma ganhou o filtro em 22/11/2026) | Rascunho | #1335 |
 | [CCD068](CCD068-ordenar-por-menor-preco/spec.md) | Ordenar por Menor Preço (agrupa CCD069 e CCD071) | MVP | Rascunho | #1343 |
 | [CCD072](CCD072-comprar/spec.md) | Comprar | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1352 |
-| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #1366 |
+| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #1366 |
 | [CCD074](CCD074-visualizar-fotos/spec.md) | Visualizar Fotos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1373 |
 | [CCD075](CCD075-visualizar-historico-de-precos/spec.md) | Visualizar Histórico de Preços | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1378 |
-| [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #1384 |
+| [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #1384 |
 | [CCD077](CCD077-visualizar-pedidos/spec.md) | Visualizar Pedidos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1390 |
 | [CCD078](CCD078-mostrar-todas-as-cartas/spec.md) | Mostrar Todas as Cartas | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1397 |
 | [CCD079](CCD079-visualizar-quantidade-disponivel/spec.md) | Visualizar Quantidade Disponível | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | #1411 |
 | [CCD080](CCD080-visualizar-dados-do-vendedor/spec.md) | Visualizar Dados do Vendedor | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | #1421 |
 | [CCD082](CCD082-denunciar-anuncio/spec.md) | Denunciar Anúncio | MVP (era Futuro Marketplace; o Figma ganhou a denúncia em 22/11/2026) | Rascunho | #1433 |
-| [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | MVP (puxada em 22/11/2026, ADR-068) | Rascunho | #1440 |
+| [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #1440 |
 | [CCD084](CCD084-criar-anuncio/spec.md) | Criar Anúncio | MVP (sem marca na user story; fatia mínima do marketplace, "Vender", no ADR-027) | Rascunho | #343 |
 | [CCD085](CCD085-editar-anuncio/spec.md) | Editar Anúncio (agrupa CCD086, CCD087, CCD088) | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #344 #345 #346 #347 |
 | [CCD090](CCD090-denunciar-usuario/spec.md) | Denunciar Usuário | MVP pela legenda (a user story, no Painel Vendedor, não tem marca); o ADR-027 tira do MVP as denúncias do marketplace: ver L1 | Rascunho | #349 |
@@ -251,9 +251,9 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD092](CCD092-visualizar-total-de-vendas/spec.md) | Visualizar Total de Vendas | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #351 |
 | [CCD093](CCD093-visualizar-cartas-mais-vendidas/spec.md) | Visualizar Cartas Mais Vendidas | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #352 |
 | [CCD094](CCD094-validar-cadastro-de-vendedor/spec.md) | Validar Cadastro de Vendedor | Escopo Adicional | Implementada | #598 |
-| [CCD095](CCD095-notificar-pendencia-cadastral/spec.md) | Notificar Pendência Cadastral | Escopo Adicional | Planejada | #599 |
+| [CCD095](CCD095-notificar-pendencia-cadastral/spec.md) | Notificar Pendência Cadastral | Escopo Adicional | Em implementação | #599 |
 | [CCD096](CCD096-acompanhar-evolucao-de-cadastros/spec.md) | Acompanhar Evolução de Cadastros | Escopo Adicional | Em implementação | #600 |
-| [CCD097](CCD097-visualizar-indicadores-financeiros/spec.md) | Visualizar Indicadores Financeiros | Escopo Adicional | Rascunho (ADR-068 tirou a reputação) | #601 |
+| [CCD097](CCD097-visualizar-indicadores-financeiros/spec.md) | Visualizar Indicadores Financeiros | Escopo Adicional | Rascunho (ADR-069 tirou a reputação) | #601 |
 | [CCD098](CCD098-gerenciar-dados-complementares-do-usuario/spec.md) | Gerenciar Dados Complementares do Usuário | Escopo Adicional | Implementada | #602 |
 | [CCD099](CCD099-aplicar-sancao-a-usuario/spec.md) | Aplicar Sanção a Usuário | Escopo Adicional | Implementada | #603 |
 | [CCD100](CCD100-agendar-notificacao-global/spec.md) | Agendar Notificação Global | Escopo Adicional | Em implementação | #604 |
@@ -261,9 +261,9 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD102](CCD102-exportar-log-de-auditoria/spec.md) | Exportar Log de Auditoria | Escopo Adicional | Planejada | #606 |
 | [CCD103](CCD103-votar-em-solicitacao-de-catalogo/spec.md) | Votar em Solicitação de Catálogo | Escopo Adicional | Em implementação | #607 |
 | [CCD104](CCD104-ordenar-categorias-padrao/spec.md) | Ordenar Categorias Padrão | Escopo Adicional | Implementada | #608 |
-| [CCD105](CCD105-duplicar-carta/spec.md) | Duplicar Carta | Escopo Adicional | Planejada | #609 |
+| [CCD105](CCD105-duplicar-carta/spec.md) | Duplicar Carta | Escopo Adicional | Implementada | #609 |
 | [CCD106](CCD106-salvar-rascunho-de-carta/spec.md) | Salvar Rascunho de Carta | Escopo Adicional | Planejada | #610 |
-| [CCD107](CCD107-consultar-historico-de-relatorios/spec.md) | Consultar Histórico de Relatórios | Escopo Adicional | Planejada | #611 |
+| [CCD107](CCD107-consultar-historico-de-relatorios/spec.md) | Consultar Histórico de Relatórios | Escopo Adicional | Em implementação | #611 |
 | [CCD108](CCD108-conectar-conta-de-recebimento/spec.md) | Conectar Conta de Recebimento | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #920 |
 | [CCD109](CCD109-gerar-etiqueta-de-envio/spec.md) | Gerar Etiqueta de Envio | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #921 |
 | [CCD110](CCD110-confirmar-entrega-e-liberar-pagamento/spec.md) | Confirmar Entrega e Liberar Pagamento | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #922 |

@@ -1,7 +1,7 @@
 # Tarefas — CCD076 Visualizar Anúncios Ativos
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#1384
-- **Fase MVP** desde 22/11/2026 (ADR-068).
+- **Fase MVP** desde 22/11/2026 (ADR-069).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende de `listings` (CCD097) e `card_conditions` (CCD084); a tela depende da L2 e da L3.
 

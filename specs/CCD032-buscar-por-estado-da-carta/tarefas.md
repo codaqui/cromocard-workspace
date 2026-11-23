@@ -3,7 +3,7 @@
 - **Plano:** [plano.md](plano.md) · **User story:** AB#165
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Tasks no Azure criadas em 22/11/2026 (Sprint 08), atribuídas a quem o plano final indica.
-- **Fase MVP** desde 22/11/2026 (ADR-068).
+- **Fase MVP** desde 22/11/2026 (ADR-069).
 
 ## Backend — `apps/cromocard-backend`, branch `feature/165-buscar-por-estado-da-carta`
 

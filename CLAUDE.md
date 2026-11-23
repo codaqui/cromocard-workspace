@@ -21,7 +21,7 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 │   │   ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
 │   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml + .svg (CCD001–CCD111)
 │   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD111)
-│   └── Infraestrutura/            README.md (visão geral), topologia.md (estado atual), runbooks.md, historico.md — decisões no ADR-055; o código fica em apps/cromocard-backend/infra/ e .github/workflows/
+│   └── Infraestrutura/            README.md (visão geral), topologia.md (estado atual), runbooks.md, historico.md, teste-de-carga.md (plano do teste de carga, ADR-065) — decisões no ADR-055; o código fica em apps/cromocard-backend/infra/ e .github/workflows/
 ├── specs/                         SDD (ADR-047): README.md (fluxo e índice), template/ e uma pasta CCDnnn-nome/ por user story
 ├── apps/                          submódulos git (`.gitmodules`) — cada app é um repo git próprio
 │   ├── cromocard-backend/         github.com/codaqui/cromocard-backend   (esqueleto + domínio de exemplo `users` em `develop`)
@@ -121,7 +121,7 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 - CCD032 diverge entre o board do Azure e a planilha `CromoCard 1.xlsx` (a CCD033, que também divergia, foi removida).
 - Os arquivos `.md` vão até 93 (marketplace e painel do vendedor) de 94 a 107, o escopo adicional vindo do Figma
   e, de 108 a 111, o marketplace mínimo (Stripe e Melhor Envio); a planilha `CromoCard 1.xlsx` tem uma aba por caso de uso
-  (CCD001–CCD111). Removidos em 22/11/2026 (ADR-068), sem tela no Figma ou duplicados: CCD033, CCD070, CCD081 e CCD089; os números não são reaproveitados.
+  (CCD001–CCD111). Removidos em 22/11/2026 (ADR-069), sem tela no Figma ou duplicados: CCD033, CCD070, CCD081 e CCD089; os números não são reaproveitados.
 
 ## SDD — da user story ao código (ADR-047)
 

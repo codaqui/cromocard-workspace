@@ -1,7 +1,7 @@
 # Tarefas — CCD034 Buscar Categoria do Álbum
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#137
-- **Fase MVP** desde 22/11/2026 (ADR-068).
+- **Fase MVP** desde 22/11/2026 (ADR-069).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende de `GET /collections/me/cards` (CCD007 ou CCD013).
 

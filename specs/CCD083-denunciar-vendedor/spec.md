@@ -1,7 +1,7 @@
 # CCD083 — Denunciar Vendedor
 
 - **Status:** Rascunho
-- **Fase:** MVP (era Futuro Marketplace; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
+- **Fase:** MVP (era Futuro Marketplace; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-069)
 - **User story:** #1440 `CCD083 - Denunciar Vendedor` (criada em 22/11/2026)
 - **Caso de uso:** [83-denunciar-vendedor.md](../../docs/Casos-De-Uso/83-denunciar-vendedor.md) · complemento: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md), EA-080-01 (o perfil público do vendedor)
 - **Atores:** Cliente · **Pré-condições:** o cliente está autenticado e no perfil público do vendedor
@@ -31,7 +31,7 @@
 
 ## Requisitos
 
-> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-069).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|

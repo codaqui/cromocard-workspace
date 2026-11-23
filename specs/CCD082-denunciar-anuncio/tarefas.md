@@ -1,7 +1,7 @@
 # Tarefas — CCD082 Denunciar Anúncio
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#1433
-- **Fase MVP** desde 22/11/2026 (telas completadas no Figma, ADR-068).
+- **Fase MVP** desde 22/11/2026 (telas completadas no Figma, ADR-069).
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Depende da CCD090 (ou CCD050: `POST /reports` e `ReportDialog`), da CCD079 e de `listings` (CCD084/CCD097). Frames do Figma: `1112-5772`, `1226-390`, `1226-683` e `1226-977`.
 

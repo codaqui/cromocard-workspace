@@ -1,7 +1,7 @@
 # CCD038 — Acessibilidade
 
 - **Status:** Rascunho
-- **Fase:** MVP (era Futuro; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-068)
+- **Fase:** MVP (era Futuro; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-069)
 - **User story:** #141 `CCD038 - Acessibilidade`
 - **Caso de uso:** [38-acessibilidade.md](../../docs/Casos-De-Uso/38-acessibilidade.md)
 - **Atores:** Cliente · **Pré-condições:** o cliente navega na plataforma e acessa as configurações de acessibilidade
@@ -35,7 +35,7 @@ das Observações de `user-stories.md` ("Acessibilidade narrador, daltonismo, al
 
 ## Requisitos
 
-> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-068).
+> **Fase MVP** desde 22/11/2026: as telas já estão no Figma, e o Daniel puxou a story para o MVP (ADR-069).
 
 | ID | Requisito | Tipo | Origem |
 |---|---|---|---|

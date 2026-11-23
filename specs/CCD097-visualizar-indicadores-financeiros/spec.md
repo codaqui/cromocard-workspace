@@ -1,6 +1,6 @@
 # CCD097 — Visualizar Indicadores Financeiros
 
-- **Status:** Rascunho (voltou de Planejada em 2026-11-22: o ADR-068 tirou `reviews` do DER e a reputação da lista de vendedores; o PO reaprova)
+- **Status:** Rascunho (voltou de Planejada em 2026-11-22: o ADR-069 tirou `reviews` do DER e a reputação da lista de vendedores; o PO reaprova)
 - **Fase:** Escopo Adicional
 - **User story:** #601 `CCD097-Visualizar Indicadores Financeiros` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [97-visualizar-indicadores-financeiros.md](../../docs/Casos-De-Uso/97-visualizar-indicadores-financeiros.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -20,7 +20,7 @@
 | R2 | Valor em custódia: soma dos pagamentos `APPROVED` de pedidos `PAID` ou `SHIPPED` | Campo | `97`, FP 2; DBML `payments`, `orders` |
 | R3 | Valor liquidado no período e quantidade de pedidos liberados (`DELIVERED` no período); no filtro Hoje, "liquidado hoje" | Campo | `97`, FP 3 (L6) |
 | R4 | Valor retido em garantia, sempre junto da custódia e do liquidado | Campo | `97`, FP 3 (L6) |
-| R5 | Volume anunciado de cada vendedor na lista de vendedores (a reputação saiu em 22/11/2026 junto com `reviews`, ADR-068) | Campo | `97`, FP 4; DBML `listings` |
+| R5 | Volume anunciado de cada vendedor na lista de vendedores (a reputação saiu em 22/11/2026 junto com `reviews`, ADR-069) | Campo | `97`, FP 4; DBML `listings` |
 | R6 | Filtro de período (Hoje, 7 dias, 30 dias, 1 ano) | Campo | `97`, FP 5–6 |
 | R7 | "Ver Livro Razão de Hoje": lista dos pagamentos recebidos e das liberações do dia, com hora, pedido, comprador, vendedor, tipo (pagamento ou liberação) e valor, e os totais recebido, liberado e retido | Tela | `97`, FP 7–8 (L7) |
 | R8 | Sem movimentação: indicadores em zero e a mensagem | Estado | `97`, FA 1–2 |
@@ -75,8 +75,8 @@ Conferidas em 11/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
 | L1 | Valor retido em garantia (proposta: pagamentos de pedidos `DELIVERED` há menos de 7 dias, o prazo de reclamação) | Pagamentos de pedidos `DELIVERED` há menos de 7 dias, o prazo de reclamação | `97`, FP 3 |
-| L2 | As tabelas do marketplace não existem no banco (proposta: esta story cria `listings`, `orders`, `payments` e `price_history` copiadas do DBML, com dados do seed, só para leitura) | Esta story cria `listings`, `orders`, `payments` e `price_history` copiadas do DBML, com dados do seed, só para leitura; `reviews` saiu do DER em 22/11/2026 | ADR-054; ADR-068 |
-| L3 | Reputação (proposta: média das notas recebidas em `reviews`, de 0 a 5) | Removida em 22/11/2026: sem tela de avaliação, `reviews` saiu do DER e a lista de vendedores fica sem reputação. Se o frame do BackOffice mostra a coluna, ela fica de fora (o BackOffice do Figma não é editado) | ADR-068; `97`, FP 4 |
+| L2 | As tabelas do marketplace não existem no banco (proposta: esta story cria `listings`, `orders`, `payments` e `price_history` copiadas do DBML, com dados do seed, só para leitura) | Esta story cria `listings`, `orders`, `payments` e `price_history` copiadas do DBML, com dados do seed, só para leitura; `reviews` saiu do DER em 22/11/2026 | ADR-054; ADR-069 |
+| L3 | Reputação (proposta: média das notas recebidas em `reviews`, de 0 a 5) | Removida em 22/11/2026: sem tela de avaliação, `reviews` saiu do DER e a lista de vendedores fica sem reputação. Se o frame do BackOffice mostra a coluna, ela fica de fora (o BackOffice do Figma não é editado) | ADR-069; `97`, FP 4 |
 | L4 | População e preço médio (proposta: população = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias) | População = soma das quantidades em coleções `OWNED` e `DUPLICATE`; preço médio = média de `price_history` nos últimos 30 dias | `escopo-adicional.md`, EA-061-05 |
 | L5 | Volume por grupo (proposta: soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING`) | Soma dos anúncios ativos compartilhados no grupo, mensagens `LISTING` | `escopo-adicional.md`, EA-062-03 |
 | L6 | O card mostra custódia, liquidado e garantia juntos? O que é "liquidado" fora do filtro Hoje? | Os três sempre juntos; "liquidado no período" (no filtro Hoje, "liquidado hoje"). Decisão do PO (Daniel, 11/11/2026), na revisão do Figma | `97`, FP 3 |

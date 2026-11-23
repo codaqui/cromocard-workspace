@@ -5,7 +5,7 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/601-visualizar-indicadores-financeiros`
 
-- [ ] **T1** · Criar migrations e seed das tabelas do marketplace usadas nos indicadores (sem `reviews`, ADR-068) — R2–R5, R9, R10 · AB#634
+- [ ] **T1** · Criar migrations e seed das tabelas do marketplace usadas nos indicadores (sem `reviews`, ADR-069) — R2–R5, R9, R10 · AB#634
   - Pronto quando: as 5 tabelas existem, uma migration por tabela, e o seed cria pedidos e pagamentos em cada status.
 - [ ] **T2** · Criar consultas dos indicadores financeiros e do livro razão — R2–R4, R6–R8 · CA1–CA4 · AB#635
   - Pronto quando: `finance.service.spec.ts` cobre CA1–CA4.

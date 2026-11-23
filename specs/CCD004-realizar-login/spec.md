@@ -1,6 +1,6 @@
 # CCD004 — Realizar Login
 
-- **Status:** Implementada
+- **Status:** Rascunho (voltou de `Implementada` em 22/11/2026: o caso 04, FA 6, passou a gerar o nome de usuário da conta criada pelo Google)
 - **Fase:** MVP
 - **User story:** #109 `CCD004-Realizar Login`
 - **Caso de uso:** [04-realizar-login.md](../../docs/Casos-De-Uso/04-realizar-login.md)
@@ -172,3 +172,4 @@ Enums: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED
 | L15 | Índice único em (`oauth_provider`, `oauth_id`) no DER | Índice único em (`oauth_provider`, `oauth_id`) | ADR-048, item 3; DBML `users` |
 | L16 | Variável de runtime do frontend para o client ID do Google: o ADR-045 só prevê `API_URL` | `GOOGLE_CLIENT_ID` no `/env.js` do frontend | ADR-048, item 4 |
 | L17 | O job de limpeza dos refresh tokens (R52) entra nesta story? | Sim, o job diário entra nesta story (R52) | R52; ADR-010 |
+| L18 | A conta criada pelo Google passou a ganhar um nome de usuário gerado a partir do e-mail, que pode ser trocado no perfil (caso 04, FA 6). Como ele é gerado quando o nome já existe, que requisito e critério de aceite entram, e o código é revisto nesta story ou numa nova? | pendente | — |

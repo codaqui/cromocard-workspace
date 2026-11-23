@@ -2,7 +2,7 @@
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 
-> **Fase MVP** desde 22/11/2026: o filtro "Vendedor" foi desenhado no Figma (ADR-068).
+> **Fase MVP** desde 22/11/2026: o filtro "Vendedor" foi desenhado no Figma (ADR-069).
 
 - **Spec:** [spec.md](spec.md), em Rascunho (L1, L3, L4 e L5 decididas em 22/11/2026; L2 e L6 pendentes)
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
@@ -21,7 +21,7 @@ Escolhido um vendedor, a grade mostra só os anúncios ativos dele, com o chip "
 
 - **CCD078:** `GET /listings`, `ListingCard` e o Explorar (`/marketplace`).
 - **CCD068:** chips de filtros ativos e o seletor "Ordenar" do Explorar (o chip do vendedor entra ao lado deles).
-- **CCD033:** removida em 22/11/2026 (L1, ADR-068).
+- **CCD033:** removida em 22/11/2026 (L1, ADR-069).
 
 ## Dados
 

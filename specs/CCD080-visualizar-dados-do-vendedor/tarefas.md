@@ -45,7 +45,7 @@
 | R1 | T6, T10 |
 | R2 | T1, T2, T3, T7, T8 |
 | R3 | T1, T2, T3, T7, T9 |
-| ~~R4~~ | removido (ADR-068) |
+| ~~R4~~ | removido (ADR-069) |
 | R5 | T3, T5, T8 |
 | R6 | T8, T9, T10 |
 | R7, R8 | T2, T4, T5, T6, T7, T10 |
