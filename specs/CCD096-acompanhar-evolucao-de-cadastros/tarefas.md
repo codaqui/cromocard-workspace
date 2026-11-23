@@ -23,7 +23,7 @@
 
 ## Fechamento — workspace
 
-- [ ] **T7** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#633
+- [x] **T7** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#633
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
 
 ## Cobertura

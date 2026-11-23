@@ -1,6 +1,6 @@
 # CCD096 — Acompanhar Evolução de Cadastros
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #600 `CCD096-Acompanhar Evolução de Cadastros` · responsável Lucca Rocha · Sprint 06
 - **Caso de uso:** [96-acompanhar-evolucao-de-cadastros.md](../../docs/Casos-De-Uso/96-acompanhar-evolucao-de-cadastros.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
