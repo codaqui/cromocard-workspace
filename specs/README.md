@@ -263,7 +263,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD104](CCD104-ordenar-categorias-padrao/spec.md) | Ordenar Categorias Padrão | Escopo Adicional | Implementada | #608 |
 | [CCD105](CCD105-duplicar-carta/spec.md) | Duplicar Carta | Escopo Adicional | Implementada | #609 |
 | [CCD106](CCD106-salvar-rascunho-de-carta/spec.md) | Salvar Rascunho de Carta | Escopo Adicional | Planejada | #610 |
-| [CCD107](CCD107-consultar-historico-de-relatorios/spec.md) | Consultar Histórico de Relatórios | Escopo Adicional | Em implementação | #611 |
+| [CCD107](CCD107-consultar-historico-de-relatorios/spec.md) | Consultar Histórico de Relatórios | Escopo Adicional | Implementada | #611 |
 | [CCD108](CCD108-conectar-conta-de-recebimento/spec.md) | Conectar Conta de Recebimento | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #920 |
 | [CCD109](CCD109-gerar-etiqueta-de-envio/spec.md) | Gerar Etiqueta de Envio | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #921 |
 | [CCD110](CCD110-confirmar-entrega-e-liberar-pagamento/spec.md) | Confirmar Entrega e Liberar Pagamento | MVP (fatia mínima do marketplace desde 18/11/2026: legenda de `user-stories.md` e ADR-027) | Rascunho | #922 |
