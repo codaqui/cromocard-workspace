@@ -1,6 +1,6 @@
 # ADR-066 — Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect
 
-- **Status:** Proposto
+- **Status:** Aceito (validado pelo PO, Felipe Consulim, em 2026-11-23)
 - **Data:** 2026-11-20
 - **Decisores:** Daniel Andrade (proposta); validação: Felipe Consulim (PO)
 

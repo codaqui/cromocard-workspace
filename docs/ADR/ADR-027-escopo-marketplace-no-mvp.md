@@ -1,6 +1,6 @@
 # ADR-027 — Escopo do Marketplace no MVP
 
-- **Status:** Proposto (proposta definida em 18/11/2026; aguarda a validação do PO)
+- **Status:** Aceito (validado pelo PO, Felipe Consulim, em 2026-11-23)
 - **Data:** 2026-09-29
 - **Decisores:** Equipe CromoCard
 
