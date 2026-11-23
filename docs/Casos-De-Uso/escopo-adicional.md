@@ -42,7 +42,7 @@ aprovadas.
 
 | Código | Item do protótipo | Tela | Entra em | Observação |
 |---|---|---|---|---|
-| EA-004-01 | Entrar com "e-mail ou ID colecionador" | `152-2587` | CCD098 | O "ID colecionador" é o nome de usuário (@) da CCD098. |
+| EA-004-01 | Entrar com "e-mail ou ID colecionador" | `152-2587` | CCD098 | O "ID colecionador" é o nome de usuário (@) da CCD098. O Figma passou a dizer "E-mail ou nome de usuário" na revisão da Área Pública (18/11/2026). |
 | EA-058-01 | Intervalo de datas personalizado | `208-1240` | **MVP** (CCD058, L4) | |
 | EA-058-02 | Variação do Total de usuários em relação ao período anterior | `208-1240` | CCD096 | Só o Total de usuários tem o selo de variação no protótipo (CCD096, L4). |
 | EA-058-03 | Total de usuários separado em colecionadores e lojistas | `208-1240` | CCD096 | |
@@ -88,6 +88,17 @@ aprovadas.
 | EA-065-04 | Busca por IP | `228-2395`, `749-624` | CCD102 | Campo "IP" nos filtros, IP na linha (embaixo do responsável) e no painel de detalhes (decisão do PO em 12/11/2026). |
 | EA-065-05 | Cargo do responsável | `228-2395` | CCD102 | O DER só tem o papel ADMIN; lacuna na spec. Não entra: o DER só tem o papel ADMIN (decisão do PO em 22/10/2026). |
 | EA-066-01 | Quantidade de cartas e selo de cada categoria padrão | `228-3048` | CCD104 | O admin define o selo no formulário de categoria. Selos em português ("Padrão", "Em alta") desde 12/11/2026. O selo é opcional ("Nenhum" = sem selo), e a quantidade soma as cartas da categoria e das subcategorias, direto ou pelos álbuns (decisões de 17/11/2026, L13 e L15 da CCD104). |
+| EA-001-01 | Menu lateral do visitante: Início, Marketplace, Pesquisar, Como funciona e Central de ajuda; logado, o menu é o da Área do Cliente | `1112-2169` e as demais telas públicas | CCD001 | Revisão da Área Pública (18 e 20/11/2026). Saem "Recursos", "Categorias" (as categorias viram filtro no Explorar e abas na Home) e "Comunidades" (entrar em grupo exige login; os grupos aparecem na busca). |
+| EA-001-02 | Página "Como funciona": abas "Quero comprar" (4 passos da compra e garantias) e "Quero vender" (conta de vendedor, conta Stripe, anúncio e envio, recebimento), com a taxa de 5% por venda | `1112-6532`, `1160-2268` | CCD005 | Página estática, sem dados (18/11/2026; aba do vendedor em 20/11/2026). |
+| EA-001-03 | Rodapé do site com Como funciona, Central de ajuda e Termos de Uso e Privacidade | Todas as telas públicas | CCD001 | Revisão da Área Pública (20/11/2026). |
+| EA-001-04 | Página "Termos de Uso e Política de Privacidade", com abas para cada documento | `1160-1033` | CCD003 | Aberta pelo cadastro, pelo aviso do Google no login, pelo "Entre para continuar" e pelo rodapé. Página estática; o texto final é do PO (20/11/2026). |
+| EA-002-01 | Página pública do álbum do catálogo: capa, descrição, total de cartas e lista das cartas, com "Adicionar à minha coleção" e "Favoritar", que pedem login | `1160-1845` | CCD002 | Aberta por "Ver álbum" na busca; cada carta leva ao perfil da carta (20/11/2026). |
+| EA-003-01 | Medidor de força da senha no cadastro | `238-1204` | CCD003 | Só visual; a regra continua a do caso de uso (20/11/2026). |
+| EA-005-01 | Busca dentro da Central de ajuda e os tópicos Primeiros passos, Pagamentos, Envio e entrega, Álbuns digitais, Vender na CromoCard e Segurança e denúncias | `1112-6843` | CCD005 | O tópico "Trocas" saiu (fora do MVP) (20/11/2026). |
+| EA-007-01 | Valor estimado da coleção e do álbum, com a variação em 30 dias | `1122-17812`, `1160-5395` | CCD007 | Soma do preço médio (`price_history`) das cartas marcadas como possuo (20/11/2026). |
+| EA-020-01 | Opção "Mostrar as cartas faltantes na página do link" ao compartilhar o progresso | `1160-6346` | CCD020 | Ligada, quem abre o link vê a lista das faltantes (20/11/2026). |
+| EA-053-01 | Escolher, por tipo de aviso, receber no site e por e-mail | `1160-15533` | CCD053 | Tipos: pedidos e pagamentos, mensagens, grupos, solicitações ao catálogo e avisos da plataforma. Sem WhatsApp nem push (ADR-058) (20/11/2026). |
+| EA-080-01 | Perfil público do usuário: nome de usuário, cidade, vendas concluídas e anúncios ativos | `1160-1396` | CCD080 | Aberto por "Ver perfil" na busca e pelo nome do vendedor no anúncio e no perfil da carta. Não mostra nome completo, e-mail, CPF nem endereço. É o "perfil público do vendedor" citado na CCD083 (20/11/2026). Sem nota de avaliação: avaliações ficam fora do MVP (ADR-027) (21/11/2026). |
 
 ## 3. O que não vira requisito
 
@@ -124,7 +135,20 @@ Execução de Segurança", "Timestamp: ISO 8601", os milissegundos de cada linha
 ("staff") e o botão "Sair" só nesta tela. Em Configurações (12/11/2026): "BackOffice Engine • Sistema Central",
 "mensageria com custódia transacional", "showcase", "canvas", "Banner ativo no ar", "Imagem Master", "cards indexados",
 "Status: Exibição Primária/Normal", o botão global "Salvar Todas as Alterações" e "Adicionar Nova Categoria" (criar
-categoria fica no Catálogo).
+categoria fica no Catálogo). Na Área Pública (18/11/2026): as telas Categoria `675-22400`, Em alta e rankings `675-22920`, Notícias
+`675-24385` e Lojas em destaque `675-24792` (sem caso de uso; Notícias também não tem tabela no DER), que foram
+para o Arquivo do Figma; "notícias" na Home; "tokenize", "autenticação espectral", "carteira física com seguro
+nominal", "liquidação instantânea", "cofre de cartas" (o vendedor envia direto ao comprador), "Garantia 100%",
+"Validação com seguro" e "saldo"; os selos "Aceita troca", "Envio imediato", "Frete grátis", "1º dono", "Vendedor
+Gold", "Vendedor PRO" e "Lojista verificado"; graduação PSA/BGS/CGC; produtos lacrados e lotes; filtro de
+localização e "somente verificados"; "estado de referência" da carta do catálogo; as colunas Idioma e Negociação
+nos anúncios; "Alerta de preço" (futuro) e "Compartilhar" no perfil da carta; "Quero trocar" e o chat do suporte. Na Área do Cliente (20/11/2026): propostas recebidas, responder proposta, denunciar usuário pela proposta e avaliações
+recebidas do vendedor (fora do MVP pelo ADR-027; telas no Arquivo e itens fora do menu); agendar encontro de troca
+presencial e o card "Próximo encontro" (sem caso de uso nem tabela); enviar carta, localização e anexo no chat e no grupo
+(`**`); alerta de preço (futuro); WhatsApp e push nas notificações; reativação automática do anúncio pausado; "Advertir
+usuário" na fila do grupo (a advertência é da plataforma, CCD099); seguidores e "amigos que participam"; categoria do
+grupo; graduação PSA/BGS como condição; "guilda", "sindicato", "escrow", "vault", "saldo", "XP", "chat ao vivo", "KYC",
+"2FA" e "custódia" nos textos.
 
 ## 4. Telas conferidas
 
@@ -160,3 +184,68 @@ perfil `229-3585` só para procurar o envio dos documentos do vendedor (não exi
   limite de exportação `849-1794`; o painel de detalhes `749-624` ganhou o IP.
   Configurações (12/11/2026): `228-3048` com os módulos de templates e metas e o verso padrão por franquia; link
   inválido `859-661`, banner atualizado `859-1068`, editar template `859-1479`.
+- Revisão da Área Pública (18/11/2026): Login `152-2587` e Criar conta `238-1204` (tipo de conta, sem Google no
+  cadastro) ajustados; telas novas de autenticação: erro ao entrar `1067-823`, confirme seu e-mail `1067-897`, esqueci
+  minha senha `1067-969`, link enviado `1067-1041`, redefinir senha `1067-1115`. Home `178-1214` (seção "Mais
+  procuradas"), Explorar marketplace `675-20577`, Busca `675-21216`, Perfil da carta `675-25998` e variações,
+  Entre para continuar `675-30471`, Como funciona `675-23513` e FAQ `675-23950` ajustados; telas novas: Detalhe do
+  anúncio `1067-1272`, anúncio indisponível `1067-1761`, marketplace sem resultados `1067-2277`, busca sem resultados
+  `1067-2699`. A Home logada com notificações (`478-2859`) foi para a seção de Notificações.
+- Refatoração visual da Área Pública (20/11/2026): as telas públicas foram refeitas em 1280 px no padrão da Área do
+  Cliente (menu lateral, busca no topo, painéis e tipografia) e substituem as de 18/11, que foram para o Arquivo:
+  Home `1112-2169`, Explorar marketplace `1112-3281` e sem resultados `1112-3674`, Busca `1112-3970` e sem resultados
+  `1112-4356`, Perfil da carta `1112-4615` e com o período de 1 ano `1112-5038` (as outras 4 variações saíram), Entre
+  para continuar `1112-5461`, Detalhe do anúncio `1112-5772` e indisponível `1112-6152`, Como funciona `1112-6532` e
+  Central de ajuda `1112-6843`. Login e autenticação ficaram como estavam. No Figma, as áreas viraram um bloco só,
+  "Site: público, cliente e vendedor", com as subseções numeradas na ordem de uso (1. Login e cadastro … 8. Vendedor).
+- Área do Cliente, marketplace (20/11/2026): Compras, com Checkout `1112-7309` e sem frete `1112-7631`, Pagamento
+  confirmado `1112-7935`, Pagamento não concluído `1112-8190`, Meus pedidos `1112-8445`, Detalhe do pedido `1112-8820` e
+  Confirmar recebimento `1112-9136` (CCD072, CCD077, CCD110). Vendedor: Gerar etiqueta `675-7788` (era "Informar
+  rastreio") e Etiqueta gerada `1112-9466` (CCD109), Conectar conta de recebimento `1112-9866` e em verificação
+  `1112-10347` (CCD108), Criar anúncio bloqueado `1112-10828` (CCD084); Pedidos e envios `675-7139`, Financeiro e
+  extrato `675-8493`, Criar anúncio `282-4482` e Editar anúncio `675-4218` ajustados. Não entram: saque via Pix (a tela
+  `675-9076` foi para o Arquivo; o repasse cai na conta Stripe do vendedor), chave Pix, "Aceitar propostas",
+  graduação PSA/BGS como condição e "Obrigatório p/ Escrow".
+- Menu lateral único (20/11/2026): todas as telas da Área do Cliente e do Vendedor usam o mesmo menu, com Início,
+  Pesquisar, Marketplace, Álbuns, Comunidades, Mensagens, Meus pedidos e Sugestões; Perfil, Configurações e Central de
+  ajuda; e, nas telas do vendedor, uma divisória com o grupo "Vendedor" (Visão geral, Meus anúncios, Pedidos e envios,
+  Propostas, Financeiro e Avaliações); no Figma, a coluna 3.9 segue a mesma ordem. Saem "Categorias", "Em alta", "Notícias" e "Recursos" (sem caso
+  de uso ou sem tela), o seletor "Colecionador / Vendedor" e o menu interno do Perfil ("Visão Geral / Hub").
+  A tela inicial do cliente (resumo da coleção, CCD007) foi refeita no padrão novo: `1122-17812`. As duas versões
+  antigas, `108-1423` e `284-5290` ("Painel Publico - Perfil"), foram para o Arquivo.
+- Organização do Figma (20/11/2026): a Área do Cliente virou "3. Área do Cliente", com uma coluna por item do menu, da
+  esquerda para a direita (3.1 Início … 3.12 Central de ajuda, mais 3.13 Notificações, que abre pelo sino do topo).
+  Pesquisar, Marketplace e Central de ajuda têm uma tela de referência (`1122-18396`, `1122-18861` e a da Central de
+  ajuda), com o menu do cliente, a miniatura da tela pública e o link para ela, em vez de repetir a tela.
+- Notificações (20/11/2026): a Home logada com o popup (`478-2859`) e o popup avulso (`480-805`) foram para o Arquivo e
+  deram lugar a "Início com notificações abertas" `1124-22490`, no padrão do cliente, com o popup abaixo do sino. Nas
+  notificações (`490-796`, `675-12111` e `675-13070`), o aviso de proposta de troca virou "Seu pedido foi enviado"
+  (propostas e trocas estão fora do MVP).
+- BackOffice, pedidos e pagamentos (20/11/2026, CCD111): item "Pedidos e pagamentos" no menu do admin, logo abaixo de
+  Catálogo, em todas as telas; Pedidos e pagamentos `1157-29979`, nenhum pedido encontrado `1157-35305`, detalhe do
+  pedido `1157-30793`, cancelar e reembolsar `1157-31707` e motivo obrigatório `1157-32634`, liberar agora `1157-33562`
+  e operação concluída `1157-34488`.
+- Revisão profunda da Área Pública (20/11/2026): cadastro com nome de usuário `238-1204`; aviso dos termos junto do Google
+  no login `152-2587`; estados novos de login e cadastro: e-mail não confirmado `1160-411`, conta suspensa `1160-486`,
+  conta excluída `1160-561`, e-mail confirmado `1160-636`, senha alterada `1160-711`, erros do cadastro `1160-786`, link
+  de confirmação expirado `1160-888` e link de redefinição expirado `1160-960`. Telas públicas novas: Termos de Uso e
+  Política de Privacidade `1160-1033`, perfil público do usuário `1160-1396`, álbum do catálogo `1160-1845`, Como
+  funciona para quem vende `1160-2268` e "Entre para continuar" na busca `1160-2457`. Ajustes: as cartas da Home ("Mais
+  procuradas") e da busca abrem o perfil da carta; grupos, Favoritar e Adicionar à coleção pedem login; "Anunciar esta
+  carta" não aparece para o visitante; rodapé em todas as telas públicas.
+- Revisão profunda da Área do Cliente (20/11/2026): Álbuns, Mensagens, Perfil e Configurações voltaram ao design
+  original do protótipo, adaptados aos 1280 px com o menu e o topo novos e com os textos fora do escopo tirados (custódia,
+  propostas de troca, graduação, 2FA, WhatsApp). As versões redesenhadas e as telas de origem estão no Arquivo. Álbuns:
+  Meus álbuns `1160-23080`, sem álbuns `1160-29088`, detalhe do álbum `1160-23696`, menu do álbum `1160-26090`,
+  compartilhar progresso `1160-25301` (modal original de `477-2419` com fundo escuro), compartilhar álbum vazio
+  `1160-26693`, resetar progresso `1160-27304`, remover álbum `1160-27915`, adicionar carta `1160-28449`, solicitar álbum
+  `1160-29609`, solicitar carta `1160-24389`, solicitação enviada `1160-24932`; compartilhar coleção na Início
+  `1160-9616`. Mensagens: conversas, com a resposta em andamento, `1160-32980`, sem conversas `1160-36236`, ações da
+  mensagem `1160-33616`, bloquear ou denunciar `1160-34298`, contato bloqueado `1160-37184`, nova conversa `1160-34999`.
+  Perfil: meu perfil com conquistas e acessibilidade `1160-37708`, erros `1160-38269`, salvo `1160-38711`, alterar foto
+  `1160-39158`, novo endereço `1160-39672`, editar endereço `1160-40220`, remover endereço `1160-40789`. Configurações
+  (conta e segurança, privacidade, canais e eventos de aviso, excluir conta) `1160-41305`, alterar senha `1160-41859`,
+  senha atual incorreta `1160-42338`, senha alterada `1160-42817`, excluir conta `1160-43273`. Perfil público com conquistas e "Denunciar perfil" `1160-1396` e denunciar perfil `1160-17495`. Vendedor:
+  o conteúdo deixou de ficar atrás do menu; criar, editar e bloqueado e editar perfil ganharam o fundo novo; Propostas e
+  Avaliações saíram do menu. Comunidades: topo no padrão e textos limpos. Uma pessoa só no cliente (Gabriel, @gabriel12)
+  e no vendedor (Rodrigo). Menu lateral e fluxos principais ligados no protótipo.

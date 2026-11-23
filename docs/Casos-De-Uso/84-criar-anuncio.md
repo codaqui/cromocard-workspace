@@ -2,17 +2,17 @@
 |---|---|
 | Finalidade/Objetivo | Como Vendedor preciso criar um anúncio para disponibilizar minhas cartas para venda no marketplace. |
 | Atores | Vendedor |
-| Pré Condições | O usuário deve estar autenticado com perfil de Vendedor e possuir a carta em seu inventário virtual. |
+| Pré Condições | O usuário deve estar autenticado com perfil de Vendedor, com a conta de recebimento pronta (Conectar Conta de Recebimento) e um endereço principal cadastrado, que é a origem do frete. |
 
 ### Fluxo Principal
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O vendedor seleciona a carta que deseja vender e clica em 'Criar Anúncio' |  |
-|  | 2. O sistema exibe o formulário de anúncio solicitando preço, estado de conservação e fotos |
-| 3. O vendedor preenche os dados e clica em 'Publicar' |  |
-|  | 4. O sistema valida as informações inseridas |
-|  | 5. O sistema cria o anúncio e o torna visível no marketplace |
+| 1. O vendedor seleciona "Criar anúncio" no Painel do vendedor ou "Anunciar esta carta" no perfil da carta. |  |
+|  | 2. O sistema exibe o formulário de anúncio: a carta, escolhida por busca no catálogo; a condição (Mint, Near Mint, Ótimo, Bom ou Regular); o preço; a quantidade disponível; a descrição; e até 4 fotos, opcionais. |
+| 3. O vendedor preenche os dados e clica em "Publicar anúncio". |  |
+|  | 4. O sistema valida as informações e mostra a taxa de 5% e o valor líquido que o vendedor recebe por unidade vendida. |
+|  | 5. O sistema cria o anúncio como ativo e o torna visível no marketplace. Sem fotos, o anúncio usa a imagem da carta no catálogo. |
 
 ### Fluxo Alternativo
 
@@ -20,3 +20,6 @@
 |---|---|
 | 1. O vendedor informa um valor de venda zerado ou negativo |  |
 |  | 2. O sistema exibe um alerta de validação 'Por favor, insira um valor válido maior que zero' |
+| 3. O vendedor sem conta de recebimento pronta seleciona "Criar anúncio". |  |
+|  | 4. O sistema avisa "Conecte sua conta de recebimento antes de anunciar" e oferece "Conectar conta Stripe". |
+|  | 5. Caso o vendedor não tenha endereço principal, o sistema pede o cadastro do endereço antes de publicar. |

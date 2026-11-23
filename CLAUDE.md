@@ -14,13 +14,13 @@ Idioma do projeto: **português (pt-BR)** — responda, documente e escreva comm
 cromocard-workspace/               (repo de documentação/workspace — branch de trabalho: development, principal: main)
 ├── docs/                          documentação — a fonte da verdade; só guarda documentação
 │   ├── ADR/                       ADR-001…061 + README.md (índice e modelo) — decisões de arquitetura; LEIA antes de mexer no backend ou no frontend
-│   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–107), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
+│   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–111), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
 │   ├── Diagramas/
 │   │   ├── DER/                   01-entidades, 02-relacionamentos, 03-der-completo (.dbml do dbdiagram.io + print .png) + README.md
 │   │   ├── Diagrama-de-Classe/    cromocard-diagrama-classes.v2.c4 (LikeC4) — 49 classes, 1:1 com o DER
 │   │   ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
-│   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml + .svg (CCD001–CCD107)
-│   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD107)
+│   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml + .svg (CCD001–CCD111)
+│   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD111)
 │   └── Infraestrutura/            README.md (visão geral), topologia.md (estado atual), runbooks.md, historico.md, teste-de-carga.md (plano do teste de carga, ADR-065) — decisões no ADR-055; o código fica em apps/cromocard-backend/infra/ e .github/workflows/
 ├── specs/                         SDD (ADR-047): README.md (fluxo e índice), template/ e uma pasta CCDnnn-nome/ por user story
 ├── apps/                          submódulos git (`.gitmodules`) — cada app é um repo git próprio
@@ -70,7 +70,7 @@ No diagrama de casos de uso também existe "Administrador do Grupo" (herda de Cl
 Web e BackOffice são **um único SPA** (`cromocard-frontend`, BackOffice em `/backoffice`) — ADR-038.
 **Não há aplicativo mobile** (ADR-058): quem usa celular acessa o SPA pelo navegador, e não há notificação push.
 
-**Sistemas externos:** Gateway de Pagamento (Stripe/Mercado Pago, HTTPS/Webhook) e Transportadora.
+**Sistemas externos:** Gateway de Pagamento (Stripe, ADR-066, HTTPS/Webhook) e Transportadora (Melhor Envio, ADR-067), em modo de teste.
 
 **Componentes da API** (organize o backend por esses módulos):
 Autenticação · Acesso Público · Coleção · Comunidade · Chat Pessoal · Perfil ·
@@ -78,7 +78,7 @@ Notificações e Favoritos · Pagamentos e Pedidos · Administração.
 
 ## Modelo de dados (DER — fonte: `docs/Diagramas/DER/`)
 
-**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 90 FKs, 26 enums).
+**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 90 FKs, 27 enums).
 As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos polimórficos, sincronia dos três
 `.dbml`) estão em `.claude/rules/modelagem-de-dados.md`.
 
@@ -95,7 +95,7 @@ As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos
 | 8 | Moderação e Administração | reports, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
 
 Enums principais: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED, BLOCKED) · `listing_status` (ACTIVE, PAUSED,
-CLOSED) · `order_status` (AWAITING_PAYMENT, PAID, SHIPPED, DELIVERED, CANCELED) ·
+CLOSED) · `order_status` (AWAITING_PAYMENT, PAID, SHIPPED, DELIVERED, COMPLETED, CANCELED) ·
 `payment_method` (CREDIT_CARD, PIX, BOLETO). Veja o DBML para os demais.
 
 A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DER/README.md`.
@@ -120,8 +120,9 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 - `80-visualizar-quantidade-disponivel.md` tem título duplicado; o conteúdo é **Visualizar Dados do Vendedor**.
 - Busca por vendedor aparece em `33-` e em `67-`.
 - CCD032/CCD033 divergem entre o board do Azure e a planilha `CromoCard 1.xlsx`.
-- Os arquivos `.md` vão até 93 (marketplace e painel do vendedor) e, de 94 a 107, o escopo adicional vindo do Figma;
-  a planilha `CromoCard 1.xlsx` tem uma aba por caso de uso (CCD001–CCD107).
+- Os arquivos `.md` vão até 93 (marketplace e painel do vendedor) de 94 a 107, o escopo adicional vindo do Figma
+  e, de 108 a 111, o marketplace mínimo (Stripe e Melhor Envio); a planilha `CromoCard 1.xlsx` tem uma aba por caso de uso
+  (CCD001–CCD111).
 
 ## SDD — da user story ao código (ADR-047)
 

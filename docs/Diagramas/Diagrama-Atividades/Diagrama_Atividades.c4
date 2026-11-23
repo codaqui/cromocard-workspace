@@ -180,11 +180,11 @@ model {
   // ---------------------------------------------------------------
 
   gatewayPagamento = sistemaExterno 'Gateway de Pagamento' {
-    description 'Provedor externo (ex: Stripe/Mercado Pago) que processa pagamentos de compras no marketplace e assinaturas do plano PRO'
+    description 'Stripe (ADR-066): Checkout com cartao, valor retido na plataforma e repasse ao vendedor pelo Connect, em modo de teste'
   }
 
   transportadora = sistemaExterno 'Transportadora' {
-    description 'Empresa terceirizada responsavel pela entrega fisica das cartas compradas no marketplace'
+    description 'Melhor Envio (ADR-067): cotacao de frete, etiqueta (Correios e Jadlog) e rastreio, no sandbox'
   }
 
   // ---------------------------------------------------------------
@@ -195,7 +195,7 @@ model {
 
   cliente -> appWeb 'Gerencia colecao, participa de grupos, conversa em tempo real, compra/vende cartas e configura o proprio perfil' 'HTTPS'
 
-  vendedor -> appWeb 'Cria e gerencia anuncios, propostas e metricas de venda' 'HTTPS'
+  vendedor -> appWeb 'Conecta a conta de recebimento, cria anuncios, gera etiquetas e acompanha as vendas' 'HTTPS'
 
   administrador -> backofficeApp 'Administra usuarios, catalogo, comunidade e configuracoes da plataforma' 'HTTPS'
 
@@ -217,8 +217,8 @@ model {
   modPagamentos -> bancoDados 'Le, grava e consulta' 'SQL via Prisma ORM'
   modAdministracao -> bancoDados 'Le, grava e consulta' 'SQL via Prisma ORM'
 
-  modPagamentos -> gatewayPagamento 'Processa pagamentos e assinaturas via' 'HTTPS/Webhook'
-  modPagamentos -> transportadora 'Solicita entrega das cartas compradas via'
+  modPagamentos -> gatewayPagamento 'Cobra o comprador, reembolsa e transfere ao vendedor via' 'HTTPS/Webhook'
+  modPagamentos -> transportadora 'Cota o frete, compra a etiqueta e acompanha o rastreio via' 'HTTPS/Webhook'
 }
 
 views {
@@ -273,15 +273,16 @@ views {
     description '''
       **Ator:** Visitante
       **Pre-condicao:** o visitante deve acessar a URL base da aplicacao.
-      **Fluxo alternativo:** nao mapeado no caso de uso.
+      **Fluxo alternativo:** sem vendas concluidas nos ultimos 30 dias, a secao Mais procuradas nao aparece; sem anuncios ativos, Cartas recem-anunciadas informa que ainda nao ha anuncios.
     '''
 
     visitante -> appWeb '1. acessa a tela Home da aplicacao'
-    appWeb -> modAcessoPublico '2. solicita destaques, cartas e noticias'
-    modAcessoPublico -> bancoDados '2. carrega os itens em destaque'
-    modAcessoPublico -> appWeb '2. retorna os carrosseis'
-    appWeb -> visitante '2. apresenta carrosseis de destaques, cartas e noticias, e as categorias padrao na ordem da CCD104'
+    appWeb -> modAcessoPublico '2. solicita o destaque, as mais procuradas e os anuncios recentes'
+    modAcessoPublico -> bancoDados '2. busca as 4 cartas com mais vendas concluidas em 30 dias, os anuncios ativos mais recentes e as categorias padrao na ordem da CCD104'
+    modAcessoPublico -> appWeb '2. retorna as secoes da Home'
+    appWeb -> visitante '2. apresenta o destaque, Mais procuradas e Cartas recem-anunciadas com o filtro por categoria'
     visitante -> appWeb '3. navega pelas categorias e itens em destaque'
+    appWeb -> visitante '4. abre o Explorar marketplace filtrado, o perfil da carta ou o anuncio escolhido'
   }
 
   dynamic view ccd002_buscar_global {
@@ -289,17 +290,16 @@ views {
     description '''
       **Ator:** Visitante
       **Pre-condicao:** estar na tela Home ou com a barra de busca visivel.
-      **Fluxo alternativo:** caso a busca nao retorne nenhum resultado, exibir a mensagem
-      "Nenhum resultado encontrado para o termo pesquisado".
+      **Fluxo alternativo:** caso a busca nao retorne nenhum resultado, exibir a mensagem "Nenhum resultado encontrado para o termo pesquisado".
     '''
 
     visitante -> appWeb '1. seleciona a barra de busca global'
     appWeb -> visitante '2. habilita o campo para digitacao'
     visitante -> appWeb '3. informa o termo desejado e submete a busca'
     appWeb -> modAcessoPublico '4. envia o termo pesquisado'
-    modAcessoPublico -> bancoDados '4. valida o termo e realiza a consulta'
-    modAcessoPublico -> appWeb '5. retorna os resultados encontrados'
-    appWeb -> visitante '5. apresenta os resultados na tela'
+    modAcessoPublico -> bancoDados '4. valida o termo e consulta cartas com anuncio ativo, usuarios, grupos e albuns'
+    modAcessoPublico -> appWeb '5. retorna os resultados agrupados'
+    appWeb -> visitante '5. apresenta os resultados em Cartas, Usuarios, Grupos e Albuns, com abas por grupo'
   }
 
   dynamic view ccd003_criar_conta {
@@ -308,6 +308,7 @@ views {
       **Ator:** Visitante
       **Pre-condicao:** estar na Home ou na tela de Login.
       **Fluxo alternativo:** campo invalido ou termos nao aceitos indicam o campo e nao registram;
+      nome de usuario em uso informa e nao registra;
       e-mail ja cadastrado informa "E-mail ja cadastrado" e oferece o reenvio da confirmacao se a
       conta nao confirmou o e-mail; e-mail de conta excluida oferece a reativacao (CCD052); falha
       no envio do e-mail mantem o cadastro e permite o reenvio, respeitando o limite de pedidos;
@@ -315,10 +316,10 @@ views {
     '''
 
     visitante -> appWeb '1. seleciona a opcao Cadastrar'
-    appWeb -> visitante '2. solicita nome, e-mail, senha, confirmacao da senha e o tipo de usuario (Cliente ou Vendedor)'
+    appWeb -> visitante '2. solicita nome, e-mail, nome de usuario, senha, confirmacao da senha e o tipo de usuario (Cliente ou Vendedor), com os links dos Termos'
     visitante -> appWeb '3. informa os campos solicitados e aceita os termos de uso'
     appWeb -> modAutenticacao '3. envia os dados de cadastro'
-    modAutenticacao -> bancoDados '4. valida os campos (senha forte) e a disponibilidade do e-mail, sem diferenciar maiusculas'
+    modAutenticacao -> bancoDados '4. valida os campos (senha forte; nome de usuario de 3 a 30 caracteres) e a disponibilidade do e-mail e do nome de usuario, sem diferenciar maiusculas'
     modAutenticacao -> bancoDados '5. registra o usuario com o e-mail ainda nao confirmado'
     modAutenticacao -> appWeb '5. envia o link de confirmacao (valido por 24 horas)'
     appWeb -> visitante '5. mostra a tela Confirme seu e-mail, com a opcao de reenviar'
@@ -336,15 +337,15 @@ views {
       **Fluxo alternativo:** credenciais que nao coincidem (inclusive em conta so Google) emitem
       "E-mail ou senha incorretos"; e-mail nao confirmado informa e oferece o reenvio; conta
       suspensa informa a suspensao; conta excluida oferece a reativacao (CCD052); login com
-      Google vincula a conta existente ou cria uma conta de Cliente; "Sair" no cabecalho encerra
+      Google vincula a conta existente ou cria uma conta de Cliente, com nome de usuario gerado do e-mail; "Sair" no cabecalho encerra
       a sessao e volta para a area publica.
     '''
 
     visitante -> appWeb '1. acessa a tela de Login'
-    appWeb -> visitante '2. apresenta e-mail, senha, a opcao Lembrar de mim (desmarcada) e o login com Google'
-    visitante -> appWeb '3. informa e-mail e senha, marca ou nao Lembrar de mim e clica em entrar'
+    appWeb -> visitante '2. apresenta e-mail ou nome de usuario, senha, a opcao Lembrar de mim (desmarcada) e o login com Google, com o aviso dos Termos'
+    visitante -> appWeb '3. informa e-mail (ou nome de usuario) e senha, marca ou nao Lembrar de mim e clica em entrar'
     appWeb -> modAutenticacao '3. envia as credenciais'
-    modAutenticacao -> bancoDados '4. confere o e-mail, sem diferenciar maiusculas, e a senha'
+    modAutenticacao -> bancoDados '4. confere o e-mail ou o nome de usuario, sem diferenciar maiusculas, e a senha'
     modAutenticacao -> bancoDados '5. grava a sessao (30 dias com Lembrar de mim; sem ela, ate fechar o navegador)'
     modAutenticacao -> appWeb '5. emite o token JWT e o refresh token'
     appWeb -> visitante '5. redireciona para a area do papel: Painel Cliente ou BackOffice (ou para a pagina protegida pedida antes)'
@@ -355,10 +356,10 @@ views {
     description '''
       **Ator:** Visitante
       **Pre-condicao:** nenhuma.
-      **Fluxo alternativo:** nenhum comportamento alternativo critico mapeado.
+      **Fluxo alternativo:** sem encontrar a resposta, o visitante seleciona Enviar e-mail e o sistema abre o e-mail com o endereco do suporte.
     '''
 
-    visitante -> appWeb '1. clica no link Central de Ajuda / FAQ no rodape'
+    visitante -> appWeb '1. clica em Central de ajuda no menu lateral'
     appWeb -> modAcessoPublico '2. solicita os topicos de ajuda'
     modAcessoPublico -> bancoDados '2. carrega a lista de topicos e perguntas frequentes'
     modAcessoPublico -> appWeb '2. retorna as perguntas frequentes'
@@ -713,33 +714,34 @@ views {
   dynamic view ccd030_visualizar_detalhes {
     title 'CCD030 - Visualizar Detalhes'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar autenticado e ter localizado a carta atraves da busca.
-      **Fluxo alternativo:** nao mapeado no caso de uso.
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** nenhuma; comprar, favoritar e adicionar a colecao pedem login.
+      **Fluxo alternativo:** visitante que seleciona Comprar, Favoritar ou Adicionar a colecao ve Entre para continuar e volta para a carta depois do login; sem anuncios ativos, a lista informa e o vendedor ve Anunciar esta carta.
     '''
 
-    cliente -> appWeb '1. seleciona a carta desejada na lista de resultados'
-    appWeb -> modColecao '2. solicita os detalhes da carta'
-    modColecao -> bancoDados '2. carrega caracteristicas, imagens e anuncios disponiveis'
-    modColecao -> appWeb '2. retorna os detalhes da carta'
-    appWeb -> cliente '2. apresenta a tela de detalhes da carta'
-    cliente -> appWeb '3. navega pelas informacoes apresentadas'
+    visitante -> appWeb '1. seleciona a carta na busca, no marketplace ou na Home'
+    appWeb -> modColecao '2. solicita o perfil da carta'
+    modColecao -> bancoDados '2. carrega imagens, preco medio, menor anuncio, dados de identificacao, historico de precos e anuncios ativos'
+    modColecao -> appWeb '2. retorna o perfil da carta'
+    appWeb -> visitante '2. apresenta o perfil da carta com os anuncios ordenados pelo menor preco'
+    visitante -> appWeb '3. navega pelas informacoes e seleciona Ver anuncio'
+    appWeb -> visitante '5. abre o detalhe do anuncio, de onde parte a compra (CCD072)'
   }
 
   dynamic view ccd031_visualizar_informacoes_carta {
     title 'CCD031 - Visualizar Informacoes da Carta'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar autenticado e na tela de detalhes da carta.
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** estar no perfil da carta (CCD030).
       **Fluxo alternativo:** nao mapeado no caso de uso.
     '''
 
-    cliente -> appWeb '1. acessa a secao de informacoes da carta na tela de detalhes'
+    visitante -> appWeb '1. acessa a secao de informacoes no perfil da carta'
     appWeb -> modColecao '2. solicita os dados de identificacao'
     modColecao -> bancoDados '2. consulta nome, numero, colecao, categoria, raridade e idioma'
     modColecao -> appWeb '2. retorna os dados de identificacao'
-    appWeb -> cliente '2. apresenta os dados de identificacao da carta'
-    cliente -> appWeb '3. consulta as informacoes apresentadas'
+    appWeb -> visitante '2. apresenta os dados de identificacao; a condicao e de cada anuncio, nao da carta'
+    visitante -> appWeb '3. consulta as informacoes apresentadas'
   }
 
   dynamic view ccd032_buscar_estado_carta {
@@ -1079,7 +1081,8 @@ views {
       **Pre-condicao:** estar autenticado e possuir um perfil cadastrado.
       **Fluxo alternativo:** com dados invalidos ou incompletos, o sistema impede o salvamento
       e informa quais campos precisam ser corrigidos; ao cancelar a edicao, descarta as
-      alteracoes e mantem os dados anteriores.
+      alteracoes e mantem os dados anteriores; ao tentar remover o endereco principal, pede que
+      outro endereco seja escolhido como principal antes.
     '''
 
     cliente -> appWeb '1. acessa seu perfil e seleciona a opcao Editar perfil'
@@ -1490,50 +1493,43 @@ views {
   dynamic view ccd068_071_ordenar_anuncios {
     title 'CCD068 a CCD071 - Ordenar Anuncios por Menor Preco, Maior Preco, Avaliacoes e Mais Recentes'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar visualizando a listagem de cartas ou anuncios.
-      **Observacao:** os casos de uso CCD068 (menor preco), CCD069 (maior preco),
-      CCD070 (avaliacoes) e CCD071 (mais recentes) possuem o mesmo fluxo principal,
-      alterando apenas o criterio de ordenacao.
-      **Fluxo alternativo:** sem anuncios disponiveis, exibir
-      "Nenhum anuncio disponivel para ordenacao"; sem avaliacoes suficientes, manter a
-      listagem e informar que alguns vendedores ainda nao possuem avaliacoes.
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** estar no Explorar marketplace ou na lista de anuncios do perfil da carta.
+      **Observacao:** CCD068 (menor preco), CCD069 (maior preco) e CCD071 (mais recentes, o padrao)
+      sao MVP; CCD070 (avaliacoes) continua futura. O fluxo e o mesmo, mudando so o criterio.
+      **Fluxo alternativo:** sem anuncios disponiveis, exibir "Nenhum anuncio encontrado".
     '''
 
-    cliente -> appWeb '1. acessa a listagem de cartas ou anuncios'
-    cliente -> appWeb '2. seleciona a opcao de ordenacao desejada (menor preco, maior preco, avaliacoes ou mais recentes)'
+    visitante -> appWeb '1. acessa o Explorar marketplace ou o perfil da carta'
+    visitante -> appWeb '2. seleciona a ordenacao (menor preco, maior preco, avaliacoes ou mais recentes)'
     appWeb -> modPagamentos '2. envia o criterio de ordenacao'
-    modPagamentos -> bancoDados '3. organiza os anuncios conforme o criterio selecionado'
+    modPagamentos -> bancoDados '3. organiza os anuncios ativos conforme o criterio'
     modPagamentos -> appWeb '4. retorna a listagem ordenada'
-    appWeb -> cliente '4. atualiza a listagem com os anuncios ordenados'
+    appWeb -> visitante '4. atualiza a listagem com os anuncios ordenados'
   }
 
   dynamic view ccd072_comprar {
     title 'CCD072 - Comprar'
     description '''
       **Ator:** Cliente
-      **Pre-condicao:** estar autenticado e a carta deve possuir quantidade disponivel.
-      **Fluxo alternativo:** carta indisponivel gera aviso de estoque insuficiente; pagamento
-      nao aprovado informa que nao foi possivel concluir a compra; erro na finalizacao informa
-      ao cliente que a compra nao foi concluida.
+      **Pre-condicao:** estar autenticado com a conta ativa; o anuncio deve estar ativo, com quantidade disponivel, e nao ser do proprio cliente.
+      **Fluxo alternativo:** visitante ve Entre para continuar; anuncio esgotado ou pausado mostra Indisponivel; carta esgotada antes do pagamento volta ao anuncio; sem frete para o CEP, pede outro endereco; pagamento cancelado ou nao feito em 30 minutos cancela o pedido com o motivo pagamento nao concluido e devolve a carta ao estoque; cartao recusado e tratado na pagina da Stripe.
     '''
 
-    cliente -> appWeb '1. acessa os detalhes de uma carta'
-    cliente -> appWeb '2. seleciona a opcao Comprar'
-    cliente -> appWeb '3. informa ou seleciona o endereco de entrega'
-    cliente -> appWeb '4. seleciona a forma de envio'
-    cliente -> appWeb '5. seleciona a forma de pagamento'
-    cliente -> appWeb '6. confirma a compra'
-    appWeb -> modPagamentos '6. envia os dados da compra'
-    modPagamentos -> bancoDados '7. verifica a disponibilidade da carta'
-    modPagamentos -> modPagamentos '8. calcula as informacoes necessarias para a compra'
-    modPagamentos -> gatewayPagamento '9. processa o pedido'
-    modPagamentos -> bancoDados '10. registra a compra'
-    modPagamentos -> bancoDados '11. atualiza a quantidade disponivel'
-    modPagamentos -> transportadora '11. solicita a entrega da carta comprada'
-    modPagamentos -> modNotificacoes '12. notifica o vendedor sobre o novo pedido'
-    modPagamentos -> appWeb '13. confirma a compra'
-    appWeb -> cliente '13. confirma a compra ao cliente'
+    cliente -> appWeb '1. seleciona Comprar no detalhe do anuncio'
+    appWeb -> cliente '2. apresenta o checkout com a carta, o vendedor, o endereco e as opcoes de frete'
+    cliente -> appWeb '3. escolhe ou cadastra o endereco de entrega e informa o CPF'
+    appWeb -> modPagamentos '4. solicita as opcoes de frete'
+    modPagamentos -> transportadora '4. cota o frete (Correios e Jadlog) do CEP do vendedor ao CEP de entrega, com o pacote padrao'
+    cliente -> appWeb '5. escolhe o frete e seleciona Ir para o pagamento'
+    appWeb -> modPagamentos '6. envia o pedido'
+    modPagamentos -> bancoDados '6. confere a disponibilidade, cria o pedido Aguardando pagamento e reserva a carta por 30 minutos'
+    modPagamentos -> gatewayPagamento '6. cria a sessao do Stripe Checkout com o total (carta + frete)'
+    cliente -> gatewayPagamento '7. paga com cartao na pagina da Stripe'
+    gatewayPagamento -> modPagamentos '8. confirma o pagamento (webhook)'
+    modPagamentos -> bancoDados '8. marca o pedido como Pago, com o valor retido na plataforma'
+    modPagamentos -> modNotificacoes '8. avisa o vendedor por e-mail que ha uma venda paga para enviar'
+    appWeb -> cliente '9. mostra Pagamento confirmado, com o numero do pedido e o prazo de 2 dias para o envio'
   }
 
   dynamic view ccd073_entrar_em_contato {
@@ -1558,38 +1554,35 @@ views {
   dynamic view ccd074_visualizar_fotos {
     title 'CCD074 - Visualizar Fotos'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar visualizando os detalhes de um anuncio.
-      **Fluxo alternativo:** caso o anuncio nao possua fotos adicionais, o sistema exibe
-      apenas as imagens disponiveis.
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** estar visualizando o detalhe de um anuncio.
+      **Fluxo alternativo:** anuncio sem fotos exibe a imagem da carta no catalogo.
     '''
 
-    cliente -> appWeb '1. acessa os detalhes do anuncio'
-    cliente -> appWeb '2. seleciona uma foto da carta'
-    appWeb -> modPagamentos '4. solicita as imagens do anuncio'
-    modPagamentos -> bancoDados '4. busca as imagens cadastradas no anuncio'
-    modPagamentos -> appWeb '5. retorna as fotos da carta'
-    appWeb -> cliente '5. exibe as fotos da carta'
-    cliente -> appWeb '3. navega entre as fotos disponiveis'
-    appWeb -> cliente '6. permite a visualizacao das demais imagens disponiveis'
+    visitante -> appWeb '1. acessa o detalhe do anuncio'
+    appWeb -> modPagamentos '2. solicita as fotos do anuncio'
+    modPagamentos -> bancoDados '2. busca as fotos do anuncio (ate 4)'
+    modPagamentos -> appWeb '2. retorna as fotos'
+    appWeb -> visitante '2. exibe a primeira foto e as miniaturas das demais'
+    visitante -> appWeb '3. seleciona uma miniatura ou usa as setas'
+    appWeb -> visitante '4. exibe a foto escolhida, com a opcao de ampliar'
   }
 
   dynamic view ccd075_historico_precos {
     title 'CCD075 - Visualizar Historico de Precos'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar visualizando os detalhes de uma carta.
-      **Fluxo alternativo:** sem dados historicos suficientes, informar
-      "Nao ha historico de precos disponivel para esta carta".
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** estar no perfil da carta (CCD030).
+      **Fluxo alternativo:** sem dados historicos suficientes, informa "Nao ha historico de precos disponivel para esta carta".
     '''
 
-    cliente -> appWeb '1. acessa os detalhes da carta'
-    cliente -> appWeb '2. seleciona a opcao Historico de precos'
-    appWeb -> modPagamentos '3. solicita o historico de precos'
-    modPagamentos -> bancoDados '3. busca os registros historicos de precos da carta'
-    modPagamentos -> modPagamentos '4. organiza os dados por periodo'
-    modPagamentos -> appWeb '5. retorna o historico de precos'
-    appWeb -> cliente '5. exibe o historico de precos ao cliente'
+    visitante -> appWeb '1. acessa o perfil da carta'
+    appWeb -> modPagamentos '2. solicita o historico de precos dos ultimos 7 dias'
+    modPagamentos -> bancoDados '2. busca as vendas concluidas da carta na CromoCard'
+    modPagamentos -> appWeb '2. retorna o grafico com minimo, maximo, media e variacao'
+    appWeb -> visitante '2. exibe o historico de precos'
+    visitante -> appWeb '3. escolhe outro periodo: 7 dias, 30 dias, 90 dias ou 1 ano'
+    appWeb -> visitante '4. atualiza o grafico e os valores para o periodo'
   }
 
   dynamic view ccd076_anuncios_ativos {
@@ -1614,62 +1607,66 @@ views {
     description '''
       **Ator:** Cliente
       **Pre-condicao:** estar autenticado.
-      **Fluxo alternativo:** sem pedidos, exibir "Voce ainda nao possui pedidos".
+      **Fluxo alternativo:** sem pedidos, exibir "Voce ainda nao possui pedidos"; pedido cancelado mostra o motivo e, se houve pagamento, o reembolso no cartao.
     '''
 
-    cliente -> appWeb '1. acessa o Dashboard ou a secao Meus Pedidos'
+    cliente -> appWeb '1. acessa Meus pedidos no menu lateral'
     appWeb -> modPagamentos '2. solicita os pedidos do cliente'
-    modPagamentos -> bancoDados '2. busca os pedidos relacionados ao cliente'
-    modPagamentos -> appWeb '3. retorna a lista de pedidos'
-    appWeb -> cliente '3. exibe a lista de pedidos e suas informacoes'
+    modPagamentos -> bancoDados '2. busca os pedidos com carta, vendedor, data, total e status'
+    modPagamentos -> appWeb '2. retorna a lista com as abas por status'
+    appWeb -> cliente '2. exibe a lista de pedidos'
+    cliente -> appWeb '3. seleciona Ver pedido'
+    appWeb -> cliente '4. exibe a linha do tempo, o rastreio, o endereco, o vendedor e os valores'
+    appWeb -> cliente '5. com o pedido Entregue, mostra a data da liberacao e o botao Confirmar recebimento (CCD110)'
   }
 
   dynamic view ccd078_mostrar_todas_cartas {
-    title 'CCD078 - Mostrar Todas as Cartas'
+    title 'CCD078 - Mostrar Todas as Cartas (Explorar marketplace)'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** acessar a secao de marketplace ou catalogo.
-      **Fluxo alternativo:** sem cartas cadastradas, informar que nao existem cartas disponiveis.
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** nenhuma.
+      **Fluxo alternativo:** nenhum anuncio com os filtros mostra "Nenhum anuncio encontrado" e Limpar filtros.
     '''
 
-    cliente -> appWeb '1. acessa a secao de cartas'
-    appWeb -> modPagamentos '2. solicita as cartas disponiveis'
-    modPagamentos -> bancoDados '2. busca as cartas cadastradas e disponiveis na plataforma'
-    modPagamentos -> appWeb '3. retorna a listagem de cartas'
-    appWeb -> cliente '3. exibe a listagem de cartas'
-    appWeb -> cliente '4. disponibiliza opcoes de busca, filtros e ordenacao'
+    visitante -> appWeb '1. seleciona Marketplace no menu ou Explorar o marketplace na Home'
+    appWeb -> modPagamentos '2. solicita os anuncios ativos'
+    modPagamentos -> bancoDados '2. busca os anuncios ativos, 8 por vez, e o total encontrado'
+    modPagamentos -> appWeb '2. retorna a listagem'
+    appWeb -> visitante '3. exibe os anuncios e os filtros por categoria, condicao e faixa de preco'
+    visitante -> appWeb '4. aplica filtros ou muda a ordenacao'
+    appWeb -> visitante '5. atualiza a lista e mostra os filtros aplicados'
+    visitante -> appWeb '6. seleciona um anuncio'
+    appWeb -> visitante '7. abre o detalhe do anuncio'
   }
 
   dynamic view ccd079_quantidade_disponivel {
     title 'CCD079 - Visualizar Quantidade Disponivel'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar visualizando os detalhes de um anuncio.
-      **Fluxo alternativo:** caso a quantidade seja igual a zero, informar que a carta esta indisponivel.
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** estar visualizando o detalhe de um anuncio.
+      **Fluxo alternativo:** quantidade zero ou anuncio pausado mostra Indisponivel no lugar de Comprar e os outros anuncios da carta.
     '''
 
-    cliente -> appWeb '1. acessa os detalhes do anuncio'
+    visitante -> appWeb '1. acessa o detalhe do anuncio'
     appWeb -> modPagamentos '2. solicita a quantidade disponivel'
     modPagamentos -> bancoDados '2. busca a quantidade disponivel da carta no anuncio'
     modPagamentos -> appWeb '3. retorna a quantidade disponivel'
-    appWeb -> cliente '3. exibe a quantidade disponivel ao cliente'
+    appWeb -> visitante '3. exibe a quantidade ao lado do preco e da condicao'
   }
 
   dynamic view ccd080_dados_vendedor {
     title 'CCD080 - Visualizar Dados do Vendedor'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar visualizando um anuncio ou o perfil de um vendedor.
-      **Fluxo alternativo:** caso algumas informacoes nao estejam disponiveis, exibir apenas
-      os dados publicos cadastrados pelo vendedor.
+      **Ator:** Visitante, Cliente
+      **Pre-condicao:** estar visualizando o detalhe de um anuncio ou a lista de anuncios do perfil da carta.
+      **Fluxo alternativo:** informacoes indisponiveis: exibir apenas os dados publicos cadastrados pelo vendedor.
     '''
 
-    cliente -> appWeb '1. acessa os detalhes de um anuncio'
-    cliente -> appWeb '2. seleciona o perfil ou as informacoes do vendedor'
-    appWeb -> modPerfil '3. solicita os dados publicos do vendedor'
-    modPerfil -> bancoDados '3. busca os dados publicos do vendedor'
-    modPerfil -> appWeb '4. retorna as informacoes disponiveis'
-    appWeb -> cliente '4. exibe as informacoes disponiveis do vendedor'
+    visitante -> appWeb '1. acessa o detalhe de um anuncio'
+    appWeb -> modPerfil '2. solicita os dados publicos do vendedor'
+    modPerfil -> bancoDados '2. busca nome de usuario, cidade, estado e nota media das avaliacoes'
+    modPerfil -> appWeb '3. retorna as informacoes disponiveis'
+    appWeb -> visitante '3. exibe os dados do vendedor'
   }
 
   dynamic view ccd081_visualizar_avaliacoes {
@@ -1732,19 +1729,17 @@ views {
     title 'CCD084 - Criar Anuncio'
     description '''
       **Ator:** Vendedor
-      **Pre-condicao:** estar autenticado com perfil de Vendedor e possuir a carta em seu
-      inventario virtual.
-      **Fluxo alternativo:** valor de venda zerado ou negativo faz o sistema exibir o alerta
-      de validacao "Por favor, insira um valor valido maior que zero".
+      **Pre-condicao:** estar autenticado com perfil de Vendedor, com a conta de recebimento pronta (CCD108) e um endereco principal cadastrado.
+      **Fluxo alternativo:** valor zerado ou negativo exibe "Por favor, insira um valor valido maior que zero"; sem conta de recebimento pronta, avisa e oferece Conectar conta Stripe; sem endereco principal, pede o cadastro antes de publicar.
     '''
 
-    vendedor -> appWeb '1. seleciona a carta que deseja vender e clica em Criar Anuncio'
-    appWeb -> vendedor '2. exibe o formulario solicitando preco, estado de conservacao e fotos'
-    vendedor -> appWeb '3. preenche os dados e clica em Publicar'
+    vendedor -> appWeb '1. seleciona Criar anuncio no Painel do vendedor ou Anunciar esta carta no perfil da carta'
+    appWeb -> vendedor '2. exibe o formulario: carta do catalogo, condicao, preco, quantidade, descricao e ate 4 fotos'
+    vendedor -> appWeb '3. preenche os dados e clica em Publicar anuncio'
     appWeb -> modPagamentos '3. envia os dados do anuncio'
-    modPagamentos -> modPagamentos '4. valida as informacoes inseridas'
-    modPagamentos -> bancoDados '5. cria o anuncio e o torna visivel no marketplace'
-    modPagamentos -> appWeb '5. confirma a publicacao'
+    modPagamentos -> bancoDados '4. confere a conta de recebimento e o endereco principal e valida os dados'
+    modPagamentos -> appWeb '4. retorna a taxa de 5% e o valor liquido por unidade'
+    modPagamentos -> bancoDados '5. cria o anuncio como ativo e visivel no marketplace'
     appWeb -> vendedor '5. exibe o anuncio publicado'
   }
 
@@ -1989,15 +1984,14 @@ views {
     title 'CCD097 - Visualizar Indicadores Financeiros'
     description '''
       **Ator:** Administrador
-      **Pre-condicao:** estar autenticado como administrador e o marketplace (compra, pedidos e
-      pagamentos) estar em funcionamento.
+      **Pre-condicao:** estar autenticado como administrador e o marketplace (compra, pedidos e pagamentos) estar em funcionamento.
       **Fluxo alternativo:** periodo sem movimentacao mostra os indicadores com valor zero.
     '''
 
     administrador -> backofficeApp '1. acessa o Dashboard Gerencial'
     backofficeApp -> modAdministracao '2. solicita os indicadores financeiros'
-    modAdministracao -> bancoDados '2. soma os pagamentos recebidos e ainda nao liberados (custodia)'
-    modAdministracao -> bancoDados '3. calcula o valor liquidado no dia, os pedidos liberados e o valor retido em garantia'
+    modAdministracao -> bancoDados '2. soma os pedidos Pagos, Enviados e Entregues ainda nao liberados (custodia)'
+    modAdministracao -> bancoDados '3. calcula o liquidado (pedidos Concluidos), os pedidos liberados e o retido (Entregues sem repasse)'
     modAdministracao -> bancoDados '4. calcula o volume anunciado e a nota de reputacao de cada vendedor'
     backofficeApp -> administrador '4. apresenta os indicadores e a lista de vendedores'
     administrador -> backofficeApp '5. seleciona o periodo: Hoje, 7 dias, 30 dias ou 1 ano'
@@ -2236,5 +2230,91 @@ views {
     backofficeApp -> modAdministracao '4. solicita o arquivo ja gerado'
     backofficeApp -> administrador '4. disponibiliza o mesmo arquivo da exportacao'
     modAdministracao -> modAdministracao '5. mantem cada arquivo disponivel por 90 dias'
+  }
+
+  // ---------------------------------------------------------------
+  // 12. MARKETPLACE MINIMO - RECEBIMENTO, ENVIO, LIBERACAO E BACKOFFICE (CCD108 a CCD111)
+  // ---------------------------------------------------------------
+
+  dynamic view ccd108_conectar_conta_recebimento {
+    title 'CCD108 - Conectar Conta de Recebimento'
+    description '''
+      **Ator:** Vendedor
+      **Pre-condicao:** estar autenticado com perfil de Vendedor.
+      **Fluxo alternativo:** saindo do cadastro sem terminar, o aviso continua e o cadastro segue de onde parou; se a Stripe pedir mais informacoes ou recusar, o aviso volta com o botao para completar e os anuncios continuam bloqueados.
+    '''
+
+    vendedor -> appWeb '1. acessa o Painel do vendedor sem a conta de recebimento pronta'
+    appWeb -> vendedor '2. mostra Conecte sua conta de recebimento para vender e o botao Conectar conta Stripe'
+    vendedor -> appWeb '3. seleciona Conectar conta Stripe'
+    appWeb -> modPagamentos '4. solicita o link de cadastro'
+    modPagamentos -> gatewayPagamento '4. cria a conta conectada (Connect Express), se ainda nao existir, e o link de cadastro'
+    modPagamentos -> bancoDados '4. guarda o id da conta Stripe do vendedor'
+    vendedor -> gatewayPagamento '5. preenche os dados na pagina da Stripe e volta ao CromoCard'
+    appWeb -> vendedor '6. mostra Estamos verificando sua conta na Stripe'
+    gatewayPagamento -> modPagamentos '7. avisa que a conta pode receber transferencias (webhook)'
+    modPagamentos -> bancoDados '7. marca a conta como pronta e libera a criacao de anuncios'
+  }
+
+  dynamic view ccd109_gerar_etiqueta_envio {
+    title 'CCD109 - Gerar Etiqueta de Envio'
+    description '''
+      **Ator:** Vendedor
+      **Pre-condicao:** estar autenticado e ter um pedido Pago, ainda nao enviado.
+      **Fluxo alternativo:** se o Melhor Envio recusar a etiqueta, informa o motivo e o pedido continua Pago; passado o prazo de 2 dias, o pedido ganha o selo atrasado para o administrador.
+    '''
+
+    vendedor -> appWeb '1. acessa Pedidos e envios no Painel do vendedor'
+    appWeb -> modPagamentos '2. solicita as vendas do vendedor'
+    modPagamentos -> bancoDados '2. busca as vendas por status, com o prazo de 2 dias para enviar'
+    appWeb -> vendedor '2. lista Aguardando envio, Em transito, Entregues e Cancelados'
+    vendedor -> appWeb '3. seleciona Gerar etiqueta num pedido aguardando envio'
+    appWeb -> vendedor '4. mostra a carta, o comprador, o endereco, o frete escolhido, o pacote padrao e o remetente'
+    vendedor -> appWeb '5. confirma Gerar etiqueta'
+    appWeb -> modPagamentos '6. solicita a etiqueta'
+    modPagamentos -> transportadora '6. compra a etiqueta como envio nao comercial com declaracao de conteudo'
+    modPagamentos -> bancoDados '6. marca o pedido como Enviado com o codigo e o link de rastreio'
+    modPagamentos -> modNotificacoes '6. avisa o comprador por e-mail com o codigo de rastreio'
+    appWeb -> vendedor '7. mostra Etiqueta gerada, com o codigo de rastreio e Imprimir etiqueta'
+  }
+
+  dynamic view ccd110_confirmar_entrega_liberar_pagamento {
+    title 'CCD110 - Confirmar Entrega e Liberar Pagamento'
+    description '''
+      **Ator:** Cliente (comprador), Sistema
+      **Pre-condicao:** o pedido deve estar Enviado, com etiqueta gerada pelo Melhor Envio.
+      **Fluxo alternativo:** sem confirmacao, o pagamento e liberado automaticamente 7 dias depois da entrega; pedido cancelado e reembolsado pelo administrador antes da liberacao nao transfere nada; falha na transferencia mantem o pedido Entregue, tenta de novo e aparece como pendente para o administrador.
+    '''
+
+    transportadora -> modPagamentos '1. avisa que a encomenda foi entregue (webhook order.delivered ou consulta do rastreio)'
+    modPagamentos -> bancoDados '1. marca o pedido como Entregue e calcula a data da liberacao'
+    modPagamentos -> modNotificacoes '2. avisa o comprador por e-mail, com a data da liberacao'
+    cliente -> appWeb '3. confere a carta e seleciona Confirmar recebimento no detalhe do pedido'
+    appWeb -> cliente '4. pede a confirmacao e avisa que o valor vai para o vendedor'
+    cliente -> appWeb '5. confirma'
+    appWeb -> modPagamentos '6. solicita a liberacao'
+    modPagamentos -> gatewayPagamento '6. transfere ao vendedor o valor da carta menos a taxa de 5% (source_transaction do pagamento)'
+    modPagamentos -> bancoDados '6. marca o pedido como Concluido, com a taxa e o id da transferencia'
+    modPagamentos -> modNotificacoes '6. avisa o vendedor por e-mail'
+  }
+
+  dynamic view ccd111_gerenciar_pedidos_pagamentos {
+    title 'CCD111 - Gerenciar Pedidos e Pagamentos'
+    description '''
+      **Ator:** Administrador
+      **Pre-condicao:** estar autenticado como administrador.
+      **Fluxo alternativo:** Cancelar e reembolsar (pedido Pago, Enviado ou Entregue) pede o motivo, reembolsa carta e frete pela Stripe, cancela o pedido, avisa as duas partes e grava o log de auditoria; sem motivo, informa que e obrigatorio; Liberar agora (pedido Entregue, inclusive com repasse falho) transfere como na CCD110; pedido Concluido ou Cancelado nao tem acoes; busca sem resultado oferece limpar os filtros.
+    '''
+
+    administrador -> backofficeApp '1. seleciona Pedidos e pagamentos no menu do BackOffice'
+    backofficeApp -> modAdministracao '2. solicita os totais e a lista de pedidos'
+    modAdministracao -> bancoDados '2. soma custodia, a liberar em 7 dias, liberado no mes e repasses pendentes e lista os pedidos com status e o selo Atrasado'
+    backofficeApp -> administrador '2. apresenta os totais e a lista do mais recente para o mais antigo'
+    administrador -> backofficeApp '3. filtra por status ou busca pelo pedido, comprador ou vendedor'
+    backofficeApp -> administrador '4. atualiza a lista'
+    administrador -> backofficeApp '5. seleciona um pedido'
+    backofficeApp -> modAdministracao '6. solicita o detalhe do pedido'
+    modAdministracao -> bancoDados '6. busca a linha do tempo, o pagamento, a taxa, o liquido, os ids na Stripe e o envio'
+    backofficeApp -> administrador '6. apresenta o detalhe do pedido'
   }
 }

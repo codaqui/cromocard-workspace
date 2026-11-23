@@ -65,6 +65,8 @@ model {
         - telefone: String
         - cpf: String
         - ultimoAcesso: DateTime
+        - contaStripeId: String
+        - statusContaStripe: StatusContaStripe
         - ipUltimoAcesso: String
         - suspensoAte: DateTime
         - dataCadastro: DateTime
@@ -242,6 +244,12 @@ model {
   statusUsuario = enumeracao "StatusUsuario" {
     metadata {
       valores """ATIVO, SUSPENSO, BLOQUEADO, EXCLUIDO"""
+    }
+  }
+
+  statusContaStripe = enumeracao "StatusContaStripe" {
+    metadata {
+      valores """PENDENTE, VERIFICANDO, PRONTA"""
     }
   }
 
@@ -766,12 +774,24 @@ model {
         - formaEnvio: String
         - status: StatusPedido
         - dataPedido: DateTime
+        - servicoFrete: String
+        - etiquetaId: String
+        - codigoRastreio: String
+        - urlRastreio: String
+        - taxaPlataforma: Decimal
+        - transferenciaStripeId: String
+        - motivoCancelamento: String
+        - pagoEm: DateTime
+        - enviadoEm: DateTime
+        - entregueEm: DateTime
+        - liberadoEm: DateTime
       """
       metodos """
         + calcularTotal()
         + confirmarPagamento()
         + marcarComoEnviado()
         + marcarComoEntregue()
+        + liberarPagamento()
         + cancelar()
       """
     }
@@ -785,6 +805,9 @@ model {
         - valor: Decimal
         - status: StatusPagamento
         - gatewayReferencia: String
+        - cobrancaId: String
+        - pagoEm: DateTime
+        - reembolsadoEm: DateTime
         - dataAtualizacao: DateTime
       """
       metodos """
@@ -826,7 +849,7 @@ model {
 
   statusPedido = enumeracao "StatusPedido" {
     metadata {
-      valores """AGUARDANDO_PAGAMENTO, PAGO, ENVIADO, ENTREGUE, CANCELADO"""
+      valores """AGUARDANDO_PAGAMENTO, PAGO, ENVIADO, ENTREGUE, CONCLUIDO, CANCELADO"""
     }
   }
 
@@ -1290,7 +1313,7 @@ views {
     title "Módulo 1 - Usuários, Perfil e Acesso"
     include usuario, cliente, vendedor, administrador, perfil, endereco,
       tokenRecuperacaoSenha, conquista, usuarioConquista, assinatura,
-      tipoUsuario, statusUsuario, privacidade, statusPlano, metodoPagamento
+      tipoUsuario, statusUsuario, statusContaStripe, privacidade, statusPlano, metodoPagamento
     autoLayout LeftRight
   }
 

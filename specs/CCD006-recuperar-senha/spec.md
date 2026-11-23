@@ -82,9 +82,11 @@ de Login é da [CCD004](../CCD004-realizar-login/spec.md).
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
 | Painel Login, link "Esqueceu a senha?" | [152-2587](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=152-2587) | R1 | ✅ Bate |
+| Esqueci minha senha | [1067-969](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=1067-969) | R2–R5 | ✅ Bate (nova em 18/11/2026) |
+| Esqueci minha senha, link enviado | [1067-1041](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=1067-1041) | R9–R10 | ✅ Bate (nova em 18/11/2026) |
+| Redefinir senha | [1067-1115](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=1067-1115) | R18, R20 | ✅ Bate (nova em 18/11/2026) |
 
-- **O que falta no Figma:** R2–R9 (tela "Esqueci minha senha" com o campo e a confirmação genérica) e R18–R22 (tela
-  "Redefinir senha", a mensagem de link inválido ou expirado e a de sucesso). Implementar no estilo da tela de Login.
+- **Fica sem tela própria:** o link inválido, expirado ou já usado (R19, R22) e o "Senha alterada" são mensagens no Login.
 
 ## Fora do escopo
 

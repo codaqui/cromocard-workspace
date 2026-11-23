@@ -26,6 +26,12 @@ Enum user_status {
   BLOCKED
 }
 
+Enum stripe_account_status {
+  PENDING
+  VERIFYING
+  READY
+}
+
 Enum privacy {
   PUBLIC
   PRIVATE
@@ -101,6 +107,7 @@ Enum order_status {
   PAID
   SHIPPED
   DELIVERED
+  COMPLETED
   CANCELED
 }
 
@@ -193,6 +200,8 @@ Table users [headercolor: #3E5F8A] {
   last_login_at  timestamptz
   last_login_ip  varchar(45)
   suspended_until timestamptz
+  stripe_account_id     varchar(60) [unique]
+  stripe_account_status stripe_account_status
   created_at     timestamptz  [not null]
   updated_at     timestamptz  [not null]
   deleted_at     timestamptz
@@ -625,6 +634,17 @@ Table orders [headercolor: #A63D5F] {
   total_amount        decimal(10,2) [not null]
   shipping_method     varchar(60)   [not null]
   status              order_status  [not null, default: 'AWAITING_PAYMENT']
+  shipping_service    varchar(60)
+  shipping_label_id   varchar(60)
+  tracking_code       varchar(40)
+  tracking_url        varchar(255)
+  platform_fee        decimal(10,2)
+  stripe_transfer_id  varchar(60)
+  cancel_reason       varchar(255)
+  paid_at             timestamptz
+  shipped_at          timestamptz
+  delivered_at        timestamptz
+  released_at         timestamptz
   created_at          timestamptz   [not null]
   updated_at          timestamptz   [not null]
   deleted_at          timestamptz
@@ -637,6 +657,9 @@ Table payments [headercolor: #A63D5F] {
   value             decimal(10,2)  [not null]
   status            payment_status [not null, default: 'PENDING']
   gateway_reference varchar(120)
+  charge_id         varchar(60)
+  paid_at           timestamptz
+  refunded_at       timestamptz
   created_at        timestamptz    [not null]
   updated_at        timestamptz    [not null]
   deleted_at        timestamptz
@@ -779,7 +802,7 @@ Table seller_verifications [headercolor: #5A5A66] {
   status                  seller_verification_status [not null, default: 'UNDER_REVIEW']
   legal_name              varchar(160) [not null]
   trade_name              varchar(160)
-  cnpj                    varchar(18) [not null, unique]
+  cnpj                    varchar(18) [unique]
   state_registration      varchar(30)
   opening_date            date
   company_size            varchar(40)

@@ -3,16 +3,16 @@
 
 > Legenda:
 > - `**` = Futuro
-> - `***` = Futuro Marketplace
+> - `***` = Futuro Marketplace. Desde 18/11/2026, a fatia mínima do marketplace (explorar, ver anúncio, comprar com Stripe, enviar com Melhor Envio e liberar o pagamento) é MVP e perdeu a marca: CCD068, 069, 071, 072, 074, 075, 078, 079 e 080, e as novas CCD108–111.
 > - `++` = Escopo Adicional: veio do protótipo no Figma e não estava na documentação ([escopo-adicional.md](escopo-adicional.md))
 
 ## 1. Painel Público (Home, Login, Cadastro)
 
 | User Story | Narrativa |
 |---|---|
-| Visualizar Destaques | Como visitante eu quero ver destaques, cartas mais procuradas, categorias e notícias na tela Home. |
+| Visualizar Destaques | Como visitante eu quero ver destaques, cartas mais procuradas, anúncios recentes e categorias na tela Home. |
 | Buscar Global | Como visitante eu quero buscar cartas, usuários e grupos diretamente no painel público. |
-| Criar Conta | Como visitante eu quero me cadastrar via e-mail informando tipo de usuário, aceitando termos e confirmando o e-mail. |
+| Criar Conta | Como visitante eu quero me cadastrar via e-mail informando nome de usuário e tipo de usuário, aceitando termos e confirmando o e-mail. |
 | Realizar Login | Como visitante eu quero fazer login com e-mail/senha ou Google, com a opção de lembrar usuário. |
 | Central de Ajuda /FAQ | Como visitante eu quero acessar uma página de dúvidas frequentes (FAQ) para entender como a plataforma gerencia trocas e álbuns antes de criar minha conta. |
 | Recuperar Senha | Como visitante eu quero solicitar a recuperação da minha senha caso eu a esqueça. |
@@ -48,27 +48,28 @@
 | Visualizar Informações da Carta | Como Cliente preciso visualizar as informações da carta para conhecer suas características e identificação. |
 | Buscar por Estado da Carta | Como Cliente preciso filtrar cartas por estado de conservação para encontrar itens de acordo com a condição desejada.** |
 | Buscar por Vendedor | Como Cliente preciso buscar cartas por vendedor para visualizar os anúncios disponibilizados por um usuário específico.*** |
-| Ordenar por Menor Preço | Como Cliente preciso ordenar as cartas pelo menor preço para encontrar as opções mais econômicas.*** |
-| Ordenar por Maior Preço | Como Cliente preciso ordenar as cartas pelo maior preço para comparar os itens de maior valor.*** |
+| Ordenar por Menor Preço | Como Cliente preciso ordenar as cartas pelo menor preço para encontrar as opções mais econômicas. |
+| Ordenar por Maior Preço | Como Cliente preciso ordenar as cartas pelo maior preço para comparar os itens de maior valor. |
 | Ordenar por Avaliações | Como Cliente preciso ordenar as cartas pelas avaliações para encontrar anúncios com melhor reputação.*** |
-| Ordenar por Mais Recentes | Como Cliente preciso ordenar as cartas pelas mais recentes para visualizar os novos anúncios publicados.*** |
+| Ordenar por Mais Recentes | Como Cliente preciso ordenar as cartas pelas mais recentes para visualizar os novos anúncios publicados. |
 | Comparar Preços | Como Cliente preciso comparar preços de uma carta para identificar a melhor opção de compra.** |
-| Comprar | Como Cliente preciso comprar uma carta para adquirir o item disponibilizado no marketplace.*** |
+| Comprar | Como Cliente preciso comprar uma carta para adquirir o item disponibilizado no marketplace. |
 | Entrar em Contato | Como Cliente preciso entrar em contato com o vendedor pelo chat para negociar e tirar dúvidas.*** |
-| Visualizar Fotos | Como Cliente preciso visualizar fotos da carta para verificar visualmente o item antes da compra.*** |
+| Visualizar Fotos | Como Cliente preciso visualizar fotos da carta para verificar visualmente o item antes da compra. |
 | Ampliar Carta | Como Cliente preciso ampliar as imagens da carta para analisar seus detalhes e estado de conservação.** |
-| Visualizar Histórico de Preços | Como Cliente preciso visualizar o histórico de preços para acompanhar a variação do valor da carta.*** |
+| Visualizar Histórico de Preços | Como Cliente preciso visualizar o histórico de preços para acompanhar a variação do valor da carta. |
 | Visualizar Anúncios Ativos | Como Cliente preciso visualizar meus anúncios ativos para acompanhar os itens que estão atualmente disponíveis para venda.*** |
-| Visualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma.*** |
+| Visualizar Pedidos | Como Cliente preciso visualizar meus pedidos para acompanhar as compras e vendas realizadas na plataforma. |
+| Confirmar Entrega e Liberar Pagamento | Como Cliente quero que o pagamento só seja liberado ao vendedor depois que a carta for entregue para comprar com segurança. |
 | Escanear Carta por Imagem | Como Cliente preciso escanear uma carta por imagem para identificar o item de forma automática.** |
 | Escanear Código | Como Cliente preciso escanear o código de uma carta para localizar suas informações de forma rápida.** |
-| Mostrar Todas as Cartas | Como Cliente preciso visualizar todas as cartas disponíveis no marketplace para encontrar itens de meu interesse.*** |
+| Mostrar Todas as Cartas | Como Cliente preciso visualizar todas as cartas disponíveis no marketplace para encontrar itens de meu interesse. |
 | Visualizar Estado da Carta | Como Cliente preciso visualizar o estado da carta para avaliar sua condição de conservação antes da compra.** |
-| Visualizar Quantidade Disponível | Como Cliente preciso visualizar a quantidade disponível para saber quantas unidades podem ser adquiridas.*** |
-| Visualizar Dados do Vendedor | Como Cliente preciso visualizar os dados do vendedor para conhecer o responsável pelo anúncio.*** |
+| Visualizar Quantidade Disponível | Como Cliente preciso visualizar a quantidade disponível para saber quantas unidades podem ser adquiridas. |
+| Visualizar Dados do Vendedor | Como Cliente preciso visualizar os dados do vendedor para conhecer o responsável pelo anúncio. |
 | Visualizar Avaliações | Como Cliente preciso visualizar as avaliações do vendedor para avaliar sua reputação na plataforma.*** |
 | Conversar com Vendedor | Como Cliente preciso conversar com o vendedor para esclarecer dúvidas sobre a carta antes da compra.*** |
-| Comprar Carta | Como Cliente preciso comprar a carta diretamente pelo anúncio para realizar a aquisição do item.*** |
+| Comprar Carta | Como Cliente preciso comprar a carta diretamente pelo anúncio para realizar a aquisição do item. |
 | Compartilhar Anúncio | Como Cliente preciso compartilhar um anúncio para permitir que outras pessoas visualizem a carta disponível.** |
 | Denunciar Anúncio | Como Cliente preciso denunciar um anúncio para informar à plataforma possíveis irregularidades.*** |
 | Denunciar Vendedor | Como Cliente preciso denunciar um vendedor que tenha uma irregularidade dentro da plataforma.*** |
@@ -108,7 +109,7 @@
 | Visualizar Mensagens | Como Cliente preciso visualizar minhas mensagens para acompanhar as conversas realizadas com outros usuários dentro do grupo. |
 | Moderar Contatos Privados | Como Cliente preciso ter a opção de bloquear ou denunciar usuários com comportamento inadequado no chat. |
 | Visualizar Status de Leitura | Como Cliente preciso ver um indicador (ex: check azul) para saber se o colecionador já leu minha mensagem.** |
-| Conversar com Colecionador | Como Cliente preciso conversar com outros colecionadores de forma privada via chat para alinhar trocas.** |
+| Conversar com Colecionador | Como Cliente preciso conversar com outros colecionadores de forma privada via chat para alinhar trocas. |
 | Enviar Anexos e Localização | Como Cliente preciso enviar imagens, compartilhar minhas cartas e mandar minha localização no chat.** |
 
 ## 6. Perfil e Configurações
@@ -160,6 +161,7 @@
 | Duplicar Carta | Como Administrador eu quero criar uma carta a partir de outra já cadastrada para não digitar de novo os dados em comum.++ |
 | Salvar Rascunho de Carta | Como Administrador eu quero salvar uma carta incompleta como rascunho, fora do catálogo, para terminar o cadastro depois.++ |
 | Consultar Histórico de Relatórios | Como Administrador eu quero ver os relatórios exportados recentemente e baixar de novo um arquivo já gerado para não precisar exportar outra vez.++ |
+| Gerenciar Pedidos e Pagamentos | Como Administrador eu quero acompanhar os pedidos e pagamentos do marketplace e cancelar com reembolso ou liberar o pagamento de um pedido para resolver problemas entre comprador e vendedor. |
 
 ## 9. Painel Vendedor
 
@@ -175,6 +177,8 @@
 | Editar Perfil | Como Vendedor preciso editar meu perfil para manter minhas informações atualizadas. |
 | Visualizar Total de Vendas | Como Vendedor preciso visualizar o total de vendas para acompanhar a quantidade de negociações realizadas. |
 | Visualizar Cartas Mais Vendidas | Como Vendedor preciso visualizar as cartas mais vendidas para identificar quais produtos possuem maior procura. |
+| Conectar Conta de Recebimento | Como Vendedor preciso conectar minha conta de recebimento na Stripe para receber o valor das minhas vendas. |
+| Gerar Etiqueta de Envio | Como Vendedor preciso gerar a etiqueta de envio de um pedido pago para despachar a carta com rastreio. |
 
 ## Observações
 

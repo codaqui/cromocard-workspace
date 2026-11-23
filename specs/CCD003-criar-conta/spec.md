@@ -1,6 +1,6 @@
 # CCD003 — Criar Conta
 
-- **Status:** Implementada
+- **Status:** Rascunho (voltou de `Implementada` em 22/11/2026: o caso 03 passou a pedir o nome de usuário no cadastro)
 - **Fase:** MVP
 - **User story:** #108 `CCD003-Criar Conta`
 - **Caso de uso:** [03-criar-conta.md](../../docs/Casos-De-Uso/03-criar-conta.md)
@@ -95,17 +95,14 @@ Enums: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Painel Login, aba Criar Conta | [238-1204](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=238-1204) | R3–R6, R8, R24 | ❌ Não bate |
+| Painel Login, aba Criar Conta | [238-1204](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=238-1204) | R3–R8, R24 | ✅ Bate (ajustada em 18/11/2026) |
+| Confirme seu e-mail | [1067-897](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/Untitled?node-id=1067-897) | R28–R30, R33 | ✅ Bate (nova em 18/11/2026) |
 
-- **Onde o Figma está errado** (vale a documentação): 238-1204 — o botão "Entrar com Google" fica na aba de cadastro;
-  o login com Google é da CCD004 (e ele cria a conta, ver L6 da CCD004).
-- **O que falta no Figma:**
-  - R7 — o seletor de tipo de usuário;
-  - R28–R33 — as telas "confirme seu e-mail" (com reenviar), "e-mail confirmado" e "link inválido ou expirado";
-  - R13–R15 — as mensagens de e-mail já cadastrado e de conta excluída.
-- O Figma mostra nome, e-mail, senha com medidor de força, confirmar senha e aceite de "Termos de Uso" e "Política de
-  Privacidade", que batem com R4–R6 e R8. A regra "mínimo 8 com números e símbolos" do Figma não está na
-  documentação (L2).
+- Na revisão da Área Pública (18/11/2026), o Figma ganhou o seletor de tipo de conta (Cliente ou Vendedor), perdeu o
+  botão do Google na aba de cadastro e passou a dizer "E-mail" e "Mínimo de 8 caracteres, com letra, número e símbolo".
+- **Fica sem tela própria:** "e-mail confirmado" e "link inválido ou expirado" são mensagens no Login (R25), e as
+  mensagens de e-mail já cadastrado e de conta excluída (R13–R15) aparecem sobre o formulário, como o erro do Login
+  (`1067-823`).
 
 ## Fora do escopo
 
@@ -129,3 +126,4 @@ Enums: `user_role` (CUSTOMER, SELLER, ADMIN) · `user_status` (ACTIVE, SUSPENDED
 | L9 | Falha no envio do e-mail derruba o cadastro? | Não derruba: mantém o cadastro e permite o reenvio | `03`, FA 4 |
 | L10 | Detalhes técnicos sem ADR (caminho do endpoint, códigos de erro, rate limit do cadastro e do reenvio): o plano define seguindo os ADRs? | Sim, o plano define seguindo os ADRs 005, 011 e 019 | plano.md |
 | L11 | E-mail que já pertence a uma conta criada pelo Google: `409` ou vincula a senha? | `409 EMAIL_ALREADY_REGISTERED`; vincular a conta Google acontece só no login com Google | `03`, FA 2; `04`, FA 6 |
+| L12 | O cadastro passou a pedir o nome de usuário (caso 03, FP 2, FP 4 e FA 2: 3 a 30 caracteres, minúsculas, números, ponto e sublinhado, único). Quais requisitos e critérios de aceite entram, e o plano e o código são revistos nesta story ou numa nova? | pendente | — |

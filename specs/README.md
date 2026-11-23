@@ -171,8 +171,8 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 
 | CCD | User story | Fase | Status | Work item |
 |---|---|---|---|---|
-| [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Implementada | #108 |
-| [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Implementada | #109 |
+| [CCD003](CCD003-criar-conta/spec.md) | Criar Conta | MVP | Rascunho | #108 |
+| [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Rascunho | #109 |
 | [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Implementada | #111 |
 | [CCD058](CCD058-visualizar-dashboard-gerencial/spec.md) | Visualizar Dashboard Gerencial | MVP | Implementada | #333 |
 | [CCD059](CCD059-gestao-de-usuarios/spec.md) | Gestão de Usuários | MVP | Implementada | #334 |

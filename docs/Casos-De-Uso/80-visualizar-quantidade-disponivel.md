@@ -1,17 +1,16 @@
 | Nome do Caso de Uso | Visualizar Quantidade Disponível |
 |---|---|
 | Finalidade/Objetivo | Como Cliente preciso visualizar os dados do vendedor para conhecer suas informações e avaliar sua confiabilidade antes de realizar uma compra. |
-| Atores | Cliente |
-| Pré Condições | O cliente deve estar visualizando um anúncio ou o perfil de um vendedor. |
+| Atores | Visitante, Cliente |
+| Pré Condições | O ator deve estar visualizando o detalhe de um anúncio ou a lista de anúncios do perfil da carta. |
 
 ### Fluxo Principal
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-| 1. O cliente acessa os detalhes de um anúncio. |  |
-| 2. O cliente seleciona o perfil ou as informações do vendedor. |  |
-|  | 3. O sistema busca os dados públicos do vendedor. |
-|  | 4. O sistema exibe as informações disponíveis do vendedor. |
+| 1. O ator acessa o detalhe de um anúncio. |  |
+|  | 2. O sistema busca os dados públicos do vendedor. |
+|  | 3. O sistema exibe o nome de usuário do vendedor, a cidade e o estado e a nota média das avaliações recebidas (de 0 a 5). |
 
 ### Fluxo Alternativo
 
