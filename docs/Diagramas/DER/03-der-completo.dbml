@@ -649,6 +649,8 @@ Table orders [headercolor: #A63D5F] {
   platform_fee        decimal(10,2) [note: 'Taxa de 5% da plataforma (ADR-066)']
   stripe_transfer_id  varchar(60)   [note: 'Transferencia ao vendedor (CCD110)']
   cancel_reason       varchar(255)
+  problem_description varchar(500)  [note: 'Problema relatado pelo comprador (CCD110)']
+  problem_reported_at timestamptz   [note: 'Preenchido suspende a liberacao automatica (CCD110)']
   paid_at             timestamptz
   shipped_at          timestamptz
   delivered_at        timestamptz

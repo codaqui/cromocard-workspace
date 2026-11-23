@@ -19,6 +19,10 @@
 
 | Ações do Ator | Ações do Sistema |
 |---|---|
-|  | 1. Caso o comprador não confirme, o sistema libera o pagamento automaticamente quando passam os 7 dias depois da entrega. |
+|  | 1. Caso o comprador não confirme nem relate um problema, o sistema libera o pagamento automaticamente quando passam os 7 dias depois da entrega. |
 |  | 2. Caso o administrador cancele e reembolse o pedido antes da liberação (Gerenciar Pedidos e Pagamentos), o pedido fica Cancelado e nada é transferido. |
 |  | 3. Caso a transferência falhe na Stripe, o pedido continua Entregue, o sistema tenta de novo na próxima execução e o administrador vê o pedido como pendente. |
+| 4. O comprador seleciona "Relatar problema" no detalhe de um pedido Enviado ou Entregue, antes da liberação, porque a carta chegou errada, danificada ou não chegou. |  |
+|  | 5. O sistema pede a descrição do problema (obrigatória). |
+| 6. O comprador descreve o problema e confirma. |  |
+|  | 7. O sistema suspende a liberação automática, marca o pedido com "Problema relatado" para o administrador resolver (Gerenciar Pedidos e Pagamentos) e informa ao comprador que o pagamento fica retido até lá. |

@@ -781,6 +781,8 @@ model {
         - taxaPlataforma: Decimal
         - transferenciaStripeId: String
         - motivoCancelamento: String
+        - descricaoProblema: String
+        - problemaRelatadoEm: DateTime
         - pagoEm: DateTime
         - enviadoEm: DateTime
         - entregueEm: DateTime
@@ -792,6 +794,7 @@ model {
         + marcarComoEnviado()
         + marcarComoEntregue()
         + liberarPagamento()
+        + relatarProblema()
         + cancelar()
       """
     }
