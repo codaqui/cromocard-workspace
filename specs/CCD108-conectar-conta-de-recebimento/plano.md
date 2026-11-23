@@ -33,7 +33,7 @@ Stripe mantém o estado em dia e marca a conta `READY`, o que libera a criação
 
 | Tabela | Já no `schema.prisma`? | Migration | Observação |
 |---|---|---|---|
-| `users` | sim, sem as colunas da Stripe | `add_stripe_account_to_users_table` | `stripe_account_id` varchar(60) único e `stripe_account_status` varchar(20), copiados do DBML |
+| `users` | sim, sem as colunas da Stripe | `add_stripe_account_to_users_table` | `stripe_account_id` varchar(60) único e `stripe_account_status` do enum `stripe_account_status` (`PENDING`, `VERIFYING`, `READY`), copiados do DBML |
 
 Estados de `stripe_account_status` (depende da L3): nulo = sem conta conectada; `PENDING` = cadastro não terminado, pedido
 de mais informações ou recusa; `VERIFYING` = cadastro enviado e em análise; `READY` = transferências liberadas. Sem enum,

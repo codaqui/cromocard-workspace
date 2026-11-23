@@ -62,7 +62,7 @@
 
 | Tabela | Colunas e enums usados | Observação |
 |---|---|---|
-| `users` | `role`, `stripe_account_id`, `stripe_account_status` | `stripe_account_id` varchar(60) único (conta Express); `stripe_account_status` varchar(20) com `PENDING`, `VERIFYING` ou `READY`, sem enum (L3) |
+| `users` | `role`, `stripe_account_id`, `stripe_account_status` | `stripe_account_id` varchar(60) único (conta Express); `stripe_account_status` do enum `stripe_account_status` (`PENDING`, `VERIFYING`, `READY`); estados a mais dependem da L3 |
 
 ## Telas (Figma)
 
