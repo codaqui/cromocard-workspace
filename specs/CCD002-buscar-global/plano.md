@@ -168,3 +168,4 @@ Feature nova `src/features/search/` no modelo de `src/features/users/` (ADR-040)
   da `.claude/rules/git.md` (ou usar `catalog`).
 - Um pedido só devolve contagens e itens, para as abas mostrarem os números sem quatro chamadas.
 - O `LoginRequiredDialog` fica na feature `auth` e sai pelo `index.ts`, porque a CCD030 e a CCD039 usam o mesmo modal.
+  Ele recebe a mensagem por prop (aqui, "Faça login para entrar no grupo."; na CCD030, "Faça login para continuar. É rápido e grátis.") e mostra o rodapé de "Termos de Uso e Política de Privacidade" do frame `1112-5461`.

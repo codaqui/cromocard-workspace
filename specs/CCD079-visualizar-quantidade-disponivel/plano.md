@@ -75,6 +75,8 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 - **Entrada:** `excludeListingId` (uuid, opcional), `sort=price` (padrão), `page`, `pageSize` (padrão 10).
 - **Sucesso:** `200` `{ data: ListingSummary[], meta: { page, pageSize, total } }`, com
   `ListingSummary = { id, price, condition: { name }, seller: { id, username } }` (a cidade do vendedor entra pela CCD080).
+  A CCD030 propõe acrescentar `availableQuantity` e tornar `condition` anulável (L12, L13 da CCD030): se o PO aceitar, o
+  contrato muda nos dois planos.
 - **Erros:** `400 VALIDATION_ERROR` (parâmetro inválido), `404 CARD_NOT_FOUND` (carta inexistente) — R6.
 
 ## Backend — `apps/cromocard-backend`

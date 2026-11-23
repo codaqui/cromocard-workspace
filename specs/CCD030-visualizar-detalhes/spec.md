@@ -5,7 +5,7 @@
 - **User story:** #163 `CCD030 - Visualizar Detalhes`
 - **Caso de uso:** [30-visualizar-detalhes.md](../../docs/Casos-De-Uso/30-visualizar-detalhes.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** nenhuma; comprar, favoritar e adicionar à coleção pedem login
-- **Data:** 2026-11-21 · **Autor:** Daniel Andrade
+- **Data:** 2026-11-21 (revisada em 2026-11-23) · **Autor:** Daniel Andrade
 - **Aprovação:** —
 
 ## Objetivo
@@ -48,7 +48,7 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | R11 | O visitante que seleciona "Adicionar à coleção" ou "Favoritar" vê o modal "Entre para continuar", com "Faça login para continuar. É rápido e grátis.", "Continuar com Google", "Entrar com e-mail e senha", "Criar conta grátis" e "Ao continuar, você aceita os Termos de Uso e a Política de Privacidade."; depois do login, volta para a carta | Ação | `30`, FA 1–2; Figma `1112-5461` (L11) |
 | R12 | Sem anúncios ativos, a lista informa que não há anúncios; o vendedor logado vê "Anunciar esta carta" e o visitante não vê o botão | Estado | `30`, FA 3; `84`, FP 1 |
 | R13 | Carta inexistente, excluída ou em rascunho (`DRAFT`) não abre: a API responde `404` | Regra | DBML `cards.status` ("DRAFT = rascunho fora do catálogo"); ADR-011 (L9) |
-| R14 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames `1112-4615`, `1112-5038`, `1112-5461`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
+| R14 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames `1112-4615`, `1112-5038`, `1112-5461`); ADR-060, itens 1 e 5; ADR-070; `CLAUDE.md`, Figma |
 
 ## Critérios de aceite
 
@@ -89,7 +89,8 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 |---|---|---|
 | `cards` | `id`, `name`, `number`, `album_id`, `category_id`, `rarity_id`, `language_id`, `front_image_url`, `back_image_url`, `status`, `deleted_at` | só `ACTIVE` e não excluída abre (R13) |
 | `card_photos` | `card_id`, `url`, `sort_order`, `deleted_at` | imagem de detalhe (L1) |
-| `listings` | `card_id`, `seller_id`, `condition_id`, `price`, `status` (`listing_status`: `ACTIVE`, `PAUSED`, `CLOSED`), `deleted_at` | lista, contagem e menor anúncio (R7, R8) |
+| `albums` · `categories` · `rarities` · `languages` | `id`, `title`/`name` | identificação da carta (R5, regras da CCD031) |
+| `listings` | `card_id`, `seller_id`, `condition_id`, `price`, `available_quantity`, `status` (`listing_status`: `ACTIVE`, `PAUSED`, `CLOSED`), `deleted_at` | lista, contagem e menor anúncio (R7, R8); `condition_id` aceita nulo (L13); `available_quantity` pode ser 0 num anúncio `ACTIVE` (L12) |
 | `card_conditions` | `name`, `sort_order` | condição do anúncio (ex.: Mint, Near Mint, Ótimo, Bom, Regular) |
 | `users` | `username`, `role` | vendedor na lista; `SELLER` vê "Anunciar esta carta" |
 | `profiles` | `city`, `avatar_url` | cidade do vendedor, se a L5 aceitar |
@@ -125,13 +126,16 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
 | L1 | Imagens: o FP 2 pede frente, verso e detalhe; o Figma mostra a principal e uma miniatura. Quantas miniaturas? A de "detalhe" vem de `card_photos`? | pendente | — |
-| L2 | De onde sai o "Preço médio de mercado" e de que período (`price_history`, só `SALE` ou também `LISTING`)? Sem vendas, o que aparece? | pendente | — |
+| L2 | De onde sai o "Preço médio de mercado" e de que período (`price_history`, só `SALE` ou também `LISTING`)? A CCD075 baseia o histórico só em vendas concluídas (`SALE`): o preço médio segue a mesma base? Sem vendas, o que aparece? (proposta: média dos últimos 30 dias, só `SALE`, igual à CCD075; sem vendas, "—"). A Gestão de Catálogo (CCD097, L4) usa todo o `price_history` dos 30 dias: a decisão vale para as duas telas, e se for só `SALE` a CCD097 muda | pendente | — |
 | L3 | O FP 2 fixa a ordem pelo menor preço; o Figma tem o select "Ordenar: Menor preço ▾". Quais outras ordens (maior preço, CCD069; mais recentes, CCD071), ou só a fixa? | pendente | — |
 | L4 | "Ver anúncios (4)" (rola até a lista?) e "Pagamento retido pela CromoCard até você receber a carta" só existem no Figma: faz sentido implementar? | pendente | — |
 | L5 | A cidade do vendedor ("São Paulo - SP") na lista só existe no Figma. Faz sentido? Configurações tem "Mostrar a cidade no perfil público", mas o DBML não tem coluna para essa escolha | pendente | — |
 | L6 | De onde vêm os selos do topo ("LENDÁRIA", "COPA DO MUNDO 2026", "SELEÇÕES"), o "Argentina" do subtítulo e o caminho que começa em "Marketplace" mesmo quando o ator veio da Home ou da busca? | pendente | — |
 | L7 | O Figma só desenha o perfil do visitante. Para o cliente e o vendedor logados, a tela usa o menu do cliente e o topo com notificações? O que muda nos botões? | pendente | — |
-| L8 | A lista mostra todos os anúncios ativos ou pagina? (proposta: todos, até 20, com "Carregar mais") | pendente | — |
+| L8 | A lista mostra todos os anúncios ativos ou pagina? (proposta: 20 por página, com "Carregar mais"; o endpoint é o mesmo da CCD079, cujo padrão é 10) | pendente | — |
 | L9 | O Figma não desenha a carta não encontrada (`404`): pedir o desenho ou seguir o estado vazio da busca (`1112-4356`)? | pendente | — |
 | L10 | O FA 1 cita "Comprar" no perfil da carta, mas o perfil não tem esse botão: a compra parte do anúncio (FP 5, CCD072). Tirar "Comprar" do FA 1? | pendente | — |
 | L11 | O modal "Entre para continuar" abre por cima do perfil; "Criar conta grátis" também volta para a carta depois do cadastro e da confirmação do e-mail? | pendente | — |
+| L12 | Um anúncio `ACTIVE` com `available_quantity = 0` aparece como "Indisponível" na CCD079. Ele entra na lista, na contagem de "Anúncios ativos" e no "Menor anúncio" da CCD030, ou só contam os com quantidade maior que 0? (proposta: só quantidade maior que 0 conta no menor anúncio e na contagem; o esgotado continua na lista, marcado como indisponível; o título "Anúncios disponíveis (<n>)" usa a mesma contagem do card, e o contrato da lista ganha `availableQuantity`, nos planos da CCD030 e da CCD079) | pendente | — |
+| L13 | `listings.condition_id` aceita nulo no DBML, mas a lista mostra a condição de cada anúncio. Sem condição, a lista mostra "—" ou o anúncio exige condição na criação (CCD084)? | pendente | — |
+| L14 | "Anunciar esta carta" aparece para todo vendedor logado? A CCD084 exige conta de recebimento pronta e endereço principal; o Figma tem o estado "Criar anúncio bloqueado" (`1112-10828`). Sem isso, o botão leva ao estado bloqueado ou fica desabilitado? | pendente | — |
