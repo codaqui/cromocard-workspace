@@ -23,6 +23,6 @@
 |  | 3. Caso a conta esteja suspensa, informar 'Sua conta está suspensa. Entre em contato com o suporte.' |
 |  | 4. Caso a conta tenha sido excluída, informar que a conta foi excluída e oferecer a reativação (CCD052). |
 | 5. O visitante escolhe entrar com o Google. |  |
-|  | 6. O sistema valida a conta Google. Se o e-mail já tem conta, vincula e entra; se não tem, cria uma conta de Cliente com o e-mail confirmado, os termos aceitos e um nome de usuário gerado a partir do e-mail, que pode ser trocado no perfil, (o aviso "Ao continuar, você aceita os Termos de Uso" fica junto do botão) e entra. |
+|  | 6. O sistema valida a conta Google. Se o e-mail já tem conta, vincula e entra; se não tem, cria uma conta de Cliente com o e-mail confirmado, os termos aceitos e um nome de usuário gerado a partir do e-mail (a parte antes do @; se já estiver em uso, com um número no fim, ex.: joao.silva2), que pode ser trocado no perfil, (o aviso "Ao continuar, você aceita os Termos de Uso" fica junto do botão) e entra. |
 | 7. O usuário logado clica em "Sair" no cabeçalho. |  |
 |  | 8. O sistema encerra a sessão e volta para a área pública. |
