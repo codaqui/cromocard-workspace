@@ -1,0 +1,137 @@
+# CCD030 — Visualizar Detalhes
+
+- **Status:** Rascunho
+- **Fase:** MVP
+- **User story:** #163 `CCD030 - Visualizar Detalhes`
+- **Caso de uso:** [30-visualizar-detalhes.md](../../docs/Casos-De-Uso/30-visualizar-detalhes.md)
+- **Atores:** Visitante, Cliente · **Pré-condições:** nenhuma; comprar, favoritar e adicionar à coleção pedem login
+- **Data:** 2026-11-21 · **Autor:** Daniel Andrade
+- **Aprovação:** —
+
+## Objetivo
+
+> Como Cliente preciso visualizar os detalhes de uma carta para conhecer suas características antes de realizar uma compra.
+
+O caso de uso estende a story ao visitante, que vê a página inteira.
+
+## Fidelidade ao Figma (obrigatória)
+
+> ⚠️ **A tela implementada tem que ficar IGUAL ao Figma.** Os frames listados em **Telas (Figma)** são o contrato visual
+> desta user story: não são referência, sugestão nem inspiração. Layout, ordem dos blocos, medidas, espaçamentos,
+> alinhamentos, cores, tipografia (fonte, peso, tamanho e altura de linha), raios, bordas, sombras, ícones, imagens, textos
+> (letra por letra) e estados (vazio, erro, carregando, hover, foco, desabilitado) seguem o frame. Medidas e cores saem do
+> Figma, nunca "a olho".
+>
+> - Nada é inventado, trocado ou "melhorado" fora do frame. Diferença entre o Figma e a documentação vira lacuna em
+>   **Lacunas e decisões** e é decidida antes do código (ADR-060). Até a decisão, vale a documentação.
+> - O que o Figma não desenha (R marcado em "O que falta no Figma") segue o estilo da própria tela: os mesmos componentes,
+>   tokens e espaçamentos.
+> - A tela só está pronta quando o print dela em 1280 px, lado a lado com o print do frame, não mostra diferença. Em
+>   celular (375 px), tablet (768 px) e laptop (1024 px), mantém o mesmo design adaptado, sem quebra, corte nem rolagem
+>   horizontal.
+> - A revisão (`/cromocard-revisor`) reprova o PR que não estiver igual ao Figma.
+
+## Requisitos
+
+| ID | Requisito | Tipo | Origem |
+|---|---|---|---|
+| R1 | O perfil da carta é público: abre sem login, e o visitante vê a página inteira | Permissão | `30`, Pré-condições |
+| R2 | O ator chega ao perfil da carta selecionando a carta na busca, no marketplace ou na Home | Ação | `30`, FP 1; `escopo-adicional.md`, revisão da Área Pública de 20/11/2026 |
+| R3 | O perfil mostra as imagens da carta: frente, verso e detalhe | Tela | `30`, FP 2 (L1) |
+| R4 | O perfil mostra "Preço médio de mercado", "Menor anúncio" e "Anúncios ativos" (quantidade) | Tela | `30`, FP 2; Figma `1112-4615` (L2) |
+| R5 | O perfil mostra os dados de identificação da carta, pelas regras da CCD031 | Tela | `30`, FP 2 |
+| R6 | O perfil mostra o histórico de preços, pelas regras da CCD075 | Tela | `30`, FP 2; `75`, FP 2–4 |
+| R7 | "Anúncios disponíveis (<n>)" lista os anúncios com vendedor, condição, preço e "Ver anúncio", ordenados pelo menor preço | Tela | `30`, FP 2; Figma `1112-4615` (L3, L5) |
+| R8 | Só os anúncios ativos (`listing_status` = `ACTIVE`, não excluídos) entram na lista, na contagem e no menor anúncio | Regra | `30`, FP 2 ("anúncios ativos"); DBML `listings.status`; ADR-015, item 5 |
+| R9 | "Ver anúncio" abre o detalhe do anúncio, de onde parte a compra | Ação | `30`, FP 4–5 |
+| R10 | Ao visitante, o perfil mostra "Ainda não tem conta? Você pode ver tudo nesta página; para comprar, favoritar ou adicionar à coleção, basta entrar."; o cliente logado não vê o aviso | Mensagem | `30`, Pré-condições; Figma `1112-4615` |
+| R11 | O visitante que seleciona "Adicionar à coleção" ou "Favoritar" vê o modal "Entre para continuar", com "Faça login para continuar. É rápido e grátis.", "Continuar com Google", "Entrar com e-mail e senha", "Criar conta grátis" e "Ao continuar, você aceita os Termos de Uso e a Política de Privacidade."; depois do login, volta para a carta | Ação | `30`, FA 1–2; Figma `1112-5461` (L11) |
+| R12 | Sem anúncios ativos, a lista informa que não há anúncios; o vendedor logado vê "Anunciar esta carta" e o visitante não vê o botão | Estado | `30`, FA 3; `84`, FP 1 |
+| R13 | Carta inexistente, excluída ou em rascunho (`DRAFT`) não abre: a API responde `404` | Regra | DBML `cards.status` ("DRAFT = rascunho fora do catálogo"); ADR-011 (L9) |
+| R14 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames `1112-4615`, `1112-5038`, `1112-5461`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
+
+## Critérios de aceite
+
+- **CA1** (R1–R7) — **Dado** uma carta com 4 anúncios ativos, **quando** um visitante a seleciona na busca, **então** vê
+  as imagens, o preço médio de mercado, o menor anúncio, "4" em anúncios ativos, os dados de identificação, o histórico de
+  preços e "Anúncios disponíveis (4)".
+- **CA2** (R7, R8) — **Dado** uma carta com anúncios ativos de R$ 1.980, R$ 1.750 e R$ 2.390 e um pausado de R$ 1.500,
+  **quando** o ator abre o perfil, **então** a lista mostra os três ativos na ordem R$ 1.750, R$ 1.980, R$ 2.390, o menor
+  anúncio é R$ 1.750 e o pausado não aparece.
+- **CA3** (R9) — **Dado** a lista de anúncios, **quando** o ator seleciona "Ver anúncio", **então** abre o detalhe daquele
+  anúncio.
+- **CA4** (R10, R11) — **Dado** um visitante no perfil da carta, **quando** seleciona "Favoritar", **então** vê o modal
+  "Entre para continuar"; **quando** entra com e-mail e senha, **então** volta para o perfil da mesma carta.
+- **CA5** (R11) — **Dado** um visitante no perfil da carta, **quando** seleciona "Adicionar à coleção", **então** vê o
+  modal "Entre para continuar".
+- **CA6** (R10) — **Dado** um cliente logado, **quando** abre o perfil da carta, **então** não vê o aviso "Ainda não tem
+  conta?…".
+- **CA7** (R12) — **Dado** uma carta sem anúncios ativos, **quando** um visitante abre o perfil, **então** a lista informa
+  que não há anúncios e não mostra "Anunciar esta carta"; **quando** um vendedor logado abre, **então** vê "Anunciar esta
+  carta".
+- **CA8** (R13) — **Dado** uma carta em rascunho, **quando** o ator abre o endereço dela, **então** a API responde `404`.
+- **CA9** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é
+  comparado lado a lado com o print do frame `1112-4615`, **então** não há diferença de layout, medida, espaçamento, cor,
+  fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem
+  horizontal.
+- **CA10** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o período "1 ano"
+  escolhido, **quando** o print dela é comparado lado a lado com o print do frame `1112-5038`, **então** não há diferença de
+  layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem
+  quebra, corte nem rolagem horizontal.
+- **CA11** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o modal "Entre para
+  continuar" aberto, **quando** o print dela é comparado lado a lado com o print do frame `1112-5461`, **então** não há
+  diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se
+  adapta sem quebra, corte nem rolagem horizontal.
+
+## Dados
+
+| Tabela | Colunas e enums usados | Observação |
+|---|---|---|
+| `cards` | `id`, `name`, `number`, `album_id`, `category_id`, `rarity_id`, `language_id`, `front_image_url`, `back_image_url`, `status`, `deleted_at` | só `ACTIVE` e não excluída abre (R13) |
+| `card_photos` | `card_id`, `url`, `sort_order`, `deleted_at` | imagem de detalhe (L1) |
+| `listings` | `card_id`, `seller_id`, `condition_id`, `price`, `status` (`listing_status`: `ACTIVE`, `PAUSED`, `CLOSED`), `deleted_at` | lista, contagem e menor anúncio (R7, R8) |
+| `card_conditions` | `name`, `sort_order` | condição do anúncio (ex.: Mint, Near Mint, Ótimo, Bom, Regular) |
+| `users` | `username`, `role` | vendedor na lista; `SELLER` vê "Anunciar esta carta" |
+| `profiles` | `city`, `avatar_url` | cidade do vendedor, se a L5 aceitar |
+| `price_history` | `card_id`, `price`, `reference_date`, `source` (`price_source`: `SALE`, `LISTING`) | preço médio de mercado (L2) e histórico (CCD075) |
+
+## Telas (Figma)
+
+| Tela | Frame | Requisitos | Veredito |
+|---|---|---|---|
+| Público - Perfil da carta | [1112-4615](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-4615) | R1–R10 | ❌ Não bate: uma imagem e uma miniatura no lugar de frente, verso e detalhe (L1); ordenação em select (L3); "Ver anúncios (4)" e cidade do vendedor só no Figma (L4, L5) |
+| Público - Perfil da carta - 1 ano | [1112-5038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5038) | R6 | ✅ Bate (o período é da CCD075) |
+| Público - Entre para continuar | [1112-5461](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5461) | R11 | ✅ Bate |
+
+- **Diferenças com o Figma** (decisão em Lacunas e decisões): perfil — imagens: o FP 2 pede frente, verso e detalhe; o
+  frame mostra a imagem principal e uma miniatura (L1). Lista: o FP 2 fixa a ordem pelo menor preço; o frame tem o select
+  "Ordenar: Menor preço ▾" (L3).
+- **Só no Figma** (faz sentido implementar? decisão em Lacunas e decisões): "Ver anúncios (4)" e "Pagamento retido pela
+  CromoCard até você receber a carta" (L4); a cidade do vendedor na lista (L5); os selos do topo, o subtítulo
+  "Nº 10 • Argentina • Panini Copa do Mundo 2026" e o caminho "Início / Marketplace / Futebol / …" (L6).
+- **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R12 a lista sem anúncios e o botão "Anunciar esta
+  carta"; R10 o perfil para o cliente e para o vendedor logados (L7); R13 a tela de carta não encontrada (L9).
+
+## Fora do escopo
+
+- Os dados de identificação em si — CCD031. O gráfico e os períodos do histórico — CCD075.
+- O detalhe do anúncio (CCD074, CCD079, CCD080) e a compra (CCD072), da fatia mínima do marketplace (ADR-027).
+- Favoritar a carta logado — CCD056. Adicionar à coleção logado — CCD022.
+- Criar o anúncio por "Anunciar esta carta" — CCD084.
+- "Alerta de preço" e "Compartilhar" no perfil da carta — não viram requisito (`escopo-adicional.md`, seção 3).
+
+## Lacunas e decisões
+
+| ID | Pergunta | Decisão | Onde foi registrada |
+|---|---|---|---|
+| L1 | Imagens: o FP 2 pede frente, verso e detalhe; o Figma mostra a principal e uma miniatura. Quantas miniaturas? A de "detalhe" vem de `card_photos`? | pendente | — |
+| L2 | De onde sai o "Preço médio de mercado" e de que período (`price_history`, só `SALE` ou também `LISTING`)? Sem vendas, o que aparece? | pendente | — |
+| L3 | O FP 2 fixa a ordem pelo menor preço; o Figma tem o select "Ordenar: Menor preço ▾". Quais outras ordens (maior preço, CCD069; mais recentes, CCD071), ou só a fixa? | pendente | — |
+| L4 | "Ver anúncios (4)" (rola até a lista?) e "Pagamento retido pela CromoCard até você receber a carta" só existem no Figma: faz sentido implementar? | pendente | — |
+| L5 | A cidade do vendedor ("São Paulo - SP") na lista só existe no Figma. Faz sentido? Configurações tem "Mostrar a cidade no perfil público", mas o DBML não tem coluna para essa escolha | pendente | — |
+| L6 | De onde vêm os selos do topo ("LENDÁRIA", "COPA DO MUNDO 2026", "SELEÇÕES"), o "Argentina" do subtítulo e o caminho que começa em "Marketplace" mesmo quando o ator veio da Home ou da busca? | pendente | — |
+| L7 | O Figma só desenha o perfil do visitante. Para o cliente e o vendedor logados, a tela usa o menu do cliente e o topo com notificações? O que muda nos botões? | pendente | — |
+| L8 | A lista mostra todos os anúncios ativos ou pagina? (proposta: todos, até 20, com "Carregar mais") | pendente | — |
+| L9 | O Figma não desenha a carta não encontrada (`404`): pedir o desenho ou seguir o estado vazio da busca (`1112-4356`)? | pendente | — |
+| L10 | O FA 1 cita "Comprar" no perfil da carta, mas o perfil não tem esse botão: a compra parte do anúncio (FP 5, CCD072). Tirar "Comprar" do FA 1? | pendente | — |
+| L11 | O modal "Entre para continuar" abre por cima do perfil; "Criar conta grátis" também volta para a carta depois do cadastro e da confirmação do e-mail? | pendente | — |

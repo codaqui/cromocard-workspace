@@ -89,6 +89,8 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [066](ADR-066-pagamento-com-stripe-checkout-e-repasse-pelo-connect.md) | Backend | Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect (decide o 024) | Proposto |
 | [067](ADR-067-frete-e-rastreio-pelo-melhor-envio.md) | Backend | Frete, etiqueta e rastreio pelo Melhor Envio (decide o 025) | Proposto |
 | [068](ADR-068-storage-privado-para-arquivos-sem-url-publica.md) | Backend | Storage privado para arquivos sem URL pública (complementa o 009) | Aceito |
+| [069](ADR-069-remover-avaliacoes-e-propostas.md) | Escopo | Remover avaliações e propostas (CCD033, 070, 081, 089, `offers` e `reviews`) e puxar para o MVP as futuras com tela no Figma; substitui trechos dos 010, 015 e 054 | Proposto |
+| [070](ADR-070-fidelidade-ao-figma-obrigatoria-na-spec.md) | Processo | Fidelidade ao Figma obrigatória na spec: requisito `Fidelidade` e critério de aceite por frame, em 1280 px lado a lado e adaptado em 375, 768 e 1024 px (complementa o 060) | Proposto |
 
 ## Modelo
 

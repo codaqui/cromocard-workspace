@@ -17,7 +17,7 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–111), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
 │   ├── Diagramas/
 │   │   ├── DER/                   01-entidades, 02-relacionamentos, 03-der-completo (.dbml do dbdiagram.io + print .png) + README.md
-│   │   ├── Diagrama-de-Classe/    cromocard-diagrama-classes.v2.c4 (LikeC4) — 49 classes, 1:1 com o DER
+│   │   ├── Diagrama-de-Classe/    cromocard-diagrama-classes.v2.c4 (LikeC4) — 47 classes, 1:1 com o DER
 │   │   ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
 │   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml + .svg (CCD001–CCD111)
 │   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD111)
@@ -78,7 +78,7 @@ Notificações e Favoritos · Pagamentos e Pedidos · Administração.
 
 ## Modelo de dados (DER — fonte: `docs/Diagramas/DER/`)
 
-**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 90 FKs, 27 enums).
+**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (48 tabelas, 85 FKs, 26 enums).
 As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos polimórficos, sincronia dos três
 `.dbml`) estão em `.claude/rules/modelagem-de-dados.md`.
 
@@ -90,7 +90,7 @@ As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos
 | 3 | Coleção do Cliente | collections (1:1 usuário), user_albums, collection_cards (status OWNED/MISSING/DUPLICATE + quantity) |
 | 4 | Comunidade (Grupos) | groups, group_members, group_join_requests, group_messages, polls, poll_options, poll_votes |
 | 5 | Chat Pessoal | conversations, conversation_participants, messages, user_blocks |
-| 6 | Marketplace | listings, listing_photos, offers, orders, payments, reviews |
+| 6 | Marketplace | listings, listing_photos, orders, payments |
 | 7 | Notificações e Favoritos | favorites, price_alerts, notifications, global_notifications |
 | 8 | Moderação e Administração | reports, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
 
@@ -118,11 +118,10 @@ A tabela de rastreabilidade entidade → caso de uso está em `docs/Diagramas/DE
 ### Inconsistências conhecidas na documentação (não "corrigir" sem confirmar com o usuário)
 - `10-buscar-album.md` tem título "Buscar Álbum", mas o conteúdo é **Solicitar Álbum** (CCD010).
 - `80-visualizar-quantidade-disponivel.md` tem título duplicado; o conteúdo é **Visualizar Dados do Vendedor**.
-- Busca por vendedor aparece em `33-` e em `67-`.
-- CCD032/CCD033 divergem entre o board do Azure e a planilha `CromoCard 1.xlsx`.
+- CCD032 diverge entre o board do Azure e a planilha `CromoCard 1.xlsx` (a CCD033, que também divergia, foi removida).
 - Os arquivos `.md` vão até 93 (marketplace e painel do vendedor) de 94 a 107, o escopo adicional vindo do Figma
   e, de 108 a 111, o marketplace mínimo (Stripe e Melhor Envio); a planilha `CromoCard 1.xlsx` tem uma aba por caso de uso
-  (CCD001–CCD111).
+  (CCD001–CCD111). Removidos em 22/11/2026 (ADR-069), sem tela no Figma ou duplicados: CCD033, CCD070, CCD081 e CCD089; os números não são reaproveitados.
 
 ## SDD — da user story ao código (ADR-047)
 

@@ -9,11 +9,11 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O cliente acessa a seção de busca do marketplace. |  |
-| 2. O cliente seleciona a opção de busca por vendedor. |  |
+| 2. O cliente abre o filtro "Vendedor" na linha de filtros do Explorar marketplace (Figma, 22/11/2026). |  |
 | 3. O cliente informa o nome do vendedor. |  |
-|  | 4. O sistema busca os vendedores correspondentes ao nome informado. |
-|  | 5. O sistema localiza os anúncios ativos do vendedor selecionado. |
-|  | 6. O sistema exibe os anúncios encontrados. |
+|  | 4. O sistema lista os vendedores cujo nome de usuário corresponde ao nome informado, com a cidade e o número de anúncios ativos de cada um. |
+|  | 5. Quando o cliente escolhe um vendedor da lista, o sistema localiza os anúncios ativos dele. |
+|  | 6. O sistema exibe os anúncios encontrados, com o chip "Vendedor: <nome> ✕" nos filtros ativos para desfazer o filtro. |
 
 ### Fluxo Alternativo
 

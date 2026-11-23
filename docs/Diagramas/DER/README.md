@@ -3,7 +3,7 @@
 Modelo de dados derivado dos **Casos de Uso / User Stories** em `../../Casos-De-Uso/`
 e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + PostgreSQL).
 
-**50 entidades organizadas em 8 modulos, 90 chaves estrangeiras e 27 enums.** Nomes de tabelas, colunas e
+**48 entidades organizadas em 8 modulos, 85 chaves estrangeiras e 26 enums.** Em 22/11/2026 sairam `offers`, `reviews` e o enum `offer_status`, junto com as CCD070, CCD081 e CCD089 (ADR-069). Nomes de tabelas, colunas e
 enums em **ingles** (glossario PT → EN no fim deste arquivo). O DER e escrito em DBML para o
 [dbdiagram.io](https://dbdiagram.io/d); cada diagrama tem o `.dbml` e o print tirado do site.
 
@@ -38,7 +38,7 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | 3 | Colecao do Cliente | roxo `#7B4F9D` | collections, user_albums, collection_cards |
 | 4 | Comunidade (Grupos) | laranja `#C2703D` | groups, group_members, group_join_requests, group_messages, polls, poll_options, poll_votes |
 | 5 | Chat Pessoal | ciano `#2A7B8C` | conversations, conversation_participants, messages, user_blocks |
-| 6 | Marketplace | vinho `#A63D5F` | listings, listing_photos, offers, orders, payments, reviews |
+| 6 | Marketplace | vinho `#A63D5F` | listings, listing_photos, orders, payments |
 | 7 | Notificacoes e Favoritos | dourado `#B08A2E` | favorites, price_alerts, notifications, global_notifications |
 | 8 | Moderacao e Administracao | cinza `#5A5A66` | reports, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
 
@@ -56,10 +56,8 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `group_messages`, `polls`, `poll_options`, `poll_votes` | 42 Historico do Grupo, 44 Chat do Grupo, 41 Silenciar, 62 Gestao de Comunidade |
 | `conversations`, `conversation_participants`, `messages`, `user_blocks` | 45 Responder Mensagem, 46 Visualizar Mensagens, 47 Moderar Contatos, 73 Entrar em Contato |
 | `listings`, `listing_photos` | 84 Criar / 85 Editar / 86 Excluir / 87 Pausar / 88 Reativar Anuncio, 76 Anuncios Ativos |
-| `offers` | 89 Visualizar Propostas |
 | `orders`, `payments` | 72 Comprar, 77 Visualizar Pedidos, 92 Total de Vendas, 93 Cartas Mais Vendidas, 97 Indicadores Financeiros, 109 Gerar Etiqueta de Envio, 110 Confirmar Entrega e Liberar Pagamento, 111 Gerenciar Pedidos e Pagamentos (ADR-066, ADR-067) |
 | `users.stripe_account_id`, `users.stripe_account_status` | 108 Conectar Conta de Recebimento, 84 Criar Anúncio (ADR-066) |
-| `reviews` | 70 Ordenar por Avaliacoes, 81 Visualizar Avaliacoes |
 | `favorites` | 55 Favoritar Album, 56 Favoritar Carta, 57 Favoritar Grupo |
 | `price_alerts` | Configurar Alertas de Preco (futuro) |
 | `notifications`, `global_notifications` | 53 Visualizar Notificacoes, 54 Limpar Central, 60 Disparar Notificacao Global, 100 Agendar e 101 Segmentar Notificacao Global |
@@ -128,10 +126,8 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `bloqueio_usuario` | `user_blocks` |
 | `anuncio` | `listings` |
 | `foto_anuncio` | `listing_photos` |
-| `proposta` | `offers` |
 | `pedido` | `orders` |
 | `pagamento` | `payments` |
-| `avaliacao` | `reviews` |
 | `favorito` | `favorites` |
 | `alerta_preco` | `price_alerts` |
 | `notificacao` | `notifications` |
@@ -159,7 +155,6 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `status_solicitacao` | `request_status` |
 | `tipo_conteudo_msg` | `message_content_type` |
 | `status_anuncio` | `listing_status` |
-| `status_proposta` | `offer_status` |
 | `status_pedido` | `order_status` |
 | `metodo_pagamento` | `payment_method` |
 | `status_pagamento` | `payment_status` |
