@@ -3,8 +3,8 @@
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
 
 - **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L11 pendentes)
-- **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
-- **Data:** 2026-11-22 · **Autor:** Daniel Andrade
+- **Repositórios:** backend · frontend (relidos em 2026-11-23 no `develop` dos dois apps, que já tem `cards.code` e `cards.variants` da CCD105; o perfil não os mostra, a CCD031 decide)
+- **Data:** 2026-11-22 (revisado em 2026-11-23) · **Autor:** Daniel Andrade
 
 ## Solução
 
@@ -24,8 +24,10 @@ não há anúncios.
   histórico; esta story só o encaixa na página (R6).
 - **CCD031** — regras do bloco de identificação; o campo vem nesta resposta e a CCD031 fecha a categoria (L1) e o
   marcador de vazio (L2).
-- **CCD079** — reaproveita `GET /cards/:cardId/listings` (acrescenta `excludeListingId`) e o detalhe do anúncio, destino de
-  "Ver anúncio" (R9).
+- **CCD079** — divide `GET /cards/:cardId/listings` com esta story (a que entrar primeiro cria; a outra só acrescenta
+  `excludeListingId` ou `sort`) e entrega o detalhe do anúncio, destino de "Ver anúncio" (R9).
+- **CCD002** — cria o `LoginRequiredDialog` na feature `auth` ("Entre para continuar"); a CCD030 o reaproveita com a
+  mensagem do perfil da carta. Quem entrar primeiro cria o componente.
 - **CCD004** — login e o retorno pela `loginRedirect` (`src/routes/guards/loginRedirect.ts`).
 - **CCD021** — também cria o módulo `src/domains/catalog/cards/` (`/cards`); quem entrar primeiro cria.
 
@@ -43,9 +45,13 @@ não há anúncios.
 
 - **Anúncio ativo** (R8): `status = ACTIVE` e `deleted_at` nulo; vale para a lista, a contagem e o menor anúncio.
 - **Ordem** (R7): `price` asc, depois `created_at` asc; o select "Ordenar" só com "Menor preço" até a L3.
-- **Página da lista** (depende da L8): até 20 por página, com "Carregar mais".
-- **Preço médio de mercado** (R4, depende da L2): média de `price_history.price` nos últimos 30 dias, todas as fontes;
-  sem preço, `null` e a tela mostra "—".
+- **Página da lista** (proposta, depende da L8): o frontend pede `pageSize=20` e mostra "Carregar mais"; o padrão do
+  endpoint é 10, o mesmo da CCD079.
+- **Anúncio esgotado** (depende da L12): `available_quantity = 0` fica fora da contagem e do menor anúncio, e continua
+  na lista como indisponível.
+- **Condição nula** (depende da L13): `condition` vem `null` e a tela mostra "—".
+- **Preço médio de mercado** (proposta, depende da L2): média de `price_history.price` dos últimos 30 dias, só
+  `source = SALE` (a mesma base da CCD075); sem vendas, `null` e a tela mostra "—".
 - **Imagens** (R3, depende da L1): frente, verso e as fotos de `card_photos` não excluídas.
 - **Carta inválida** (R13): inexistente, excluída ou `DRAFT` → `404 CARD_NOT_FOUND`.
 
@@ -72,16 +78,17 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 ### `GET /api/v1/cards/:cardId/listings` — R7, R8
 
 - **Acesso:** público.
-- **Entrada:** `page`, `pageSize` (padrão 20, máximo 50).
+- **Entrada:** `page`, `pageSize` (padrão 10, máximo 50), `sort=price` (padrão) e `excludeListingId` (uuid, opcional,
+  usado pela CCD079). O contrato é o mesmo da CCD079.
 - **Sucesso:** `200` `{ data: ListingSummary[], meta: { page, pageSize, total } }`, com
-  `ListingSummary = { id, price, condition: { name }, seller: { id, username } }` — o mesmo formato da CCD079.
+  `ListingSummary = { id, price, condition: { name } | null, seller: { id, username } }`.
 - **Erros:** `400 VALIDATION_ERROR`, `404 CARD_NOT_FOUND` — R7, R13.
 
 ## Backend — `apps/cromocard-backend`
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/domains/catalog/cards/cards.validator.ts` · `cards.errors.ts` | `cardIdParams`; `CardNotFoundError` (`404 CARD_NOT_FOUND`) | R13 |
+| `src/domains/catalog/cards/cards.validator.ts` | `cardIdParams`; o `404 CARD_NOT_FOUND` reaproveita o `CardNotFoundError` que já existe em `src/domains/catalog/catalog.errors.ts` | R13 |
 | `src/domains/catalog/cards/cards.repository.ts` | `findPublicById` com álbum, categoria, raridade, idioma e fotos; só `ACTIVE` não excluída | R3, R5, R13 |
 | `src/domains/catalog/cards/cards.service.ts` + `.spec.ts` | monta o perfil; preço médio e resumo dos anúncios pelas services exportadas do marketplace e do histórico | R3–R5, R13 |
 | `src/domains/catalog/cards/cards.controller.ts` · `.routes.ts` · `.swagger.ts` · `cards.module.ts` | `GET /cards/:id`, público | R1 |
@@ -100,7 +107,7 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
 | `catalog/components/CardMarketStats/` | "Preço médio de mercado", "Menor anúncio", "Anúncios ativos" — frame `1112-4615` | R4, R14 |
 | `catalog/components/CardIdentification/` | bloco de identificação (regras da CCD031) — frame `1112-4615` | R5, R14 |
 | `marketplace/listings/components/CardListingsList/` | "Anúncios disponíveis (<n>)", vendedor, condição, preço, "Ver anúncio" (`/anuncios/:id`, CCD079), "Carregar mais"; vazia com a mensagem e "Anunciar esta carta" só para `SELLER` — frame `1112-4615` | R7–R9, R12, R14 |
-| `catalog/components/LoginToContinueModal/` | "Entre para continuar", "Faça login para continuar. É rápido e grátis.", "Continuar com Google", "Entrar com e-mail e senha", "Criar conta grátis" e o rodapé dos termos; leva ao login com o retorno para a carta — frame `1112-5461` | R11, R14 |
+| `auth/components/LoginRequiredDialog/` (da CCD002; sai pelo `index.ts` da feature `auth`) | "Entre para continuar", a mensagem "Faça login para continuar. É rápido e grátis.", "Continuar com Google", "Entrar com e-mail e senha", "Criar conta grátis" e o rodapé dos termos; leva ao login com o retorno para a carta — frame `1112-5461` | R11, R14 |
 | `catalog/pages/CardProfilePage/` | a página, com o aviso "Ainda não tem conta?…" só para o visitante, "Adicionar à coleção" e "Favoritar" abrindo o modal para o visitante, e o histórico da CCD075 — frames `1112-4615` e `1112-5038` | R1–R6, R10, R11, R14 |
 | `catalog.routes.ts` · `src/routes/paths.ts` · `app/router.tsx` | `cardProfile: '/cartas/:id'` e `cardProfilePathFor(id)`, no `PublicLayout` (que já troca o topo para o logado, L7) | R1, R2 |
 | cartões da busca (CCD002), do marketplace e da Home (CCD001) | o clique leva a `cardProfilePathFor(id)` | R2 |
@@ -116,7 +123,7 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
 | CA1 | 4 anúncios: imagens, preço médio, menor anúncio, "4", identificação, histórico e "Anúncios disponíveis (4)" | `cards.service.spec.ts` · `tests/integration/cards-profile.spec.ts` · `CardProfilePage.spec.tsx` |
 | CA2 | ordem R$ 1.750, 1.980, 2.390; pausado fora; menor = 1.750 | `listings.service.spec.ts` · integração |
 | CA3 | "Ver anúncio" leva a `/anuncios/:id` | `CardListingsList.spec.tsx` |
-| CA4, CA5 | visitante: "Favoritar" e "Adicionar à coleção" abrem o modal; login volta para a carta | `CardProfilePage.spec.tsx` · `LoginToContinueModal.spec.tsx` |
+| CA4, CA5 | visitante: "Favoritar" e "Adicionar à coleção" abrem o modal; login volta para a carta | `CardProfilePage.spec.tsx` · `LoginRequiredDialog.spec.tsx` |
 | CA6 | logado não vê o aviso | `CardProfilePage.spec.tsx` |
 | CA7 | sem anúncios: mensagem; "Anunciar esta carta" só para `SELLER` | `CardListingsList.spec.tsx` |
 | CA8 | rascunho: `404` | integração |
@@ -129,3 +136,4 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
   `listings.module.ts`, sem o catálogo ler o repository do marketplace.
 - Os selos do topo, o subtítulo com "Argentina", a cidade do vendedor e "Ver anúncios (4)" (L4–L6) não entram: viram
   requisitos se o PO aceitar.
+- O `GET /cards/:cardId/listings` é um contrato só para a CCD030 e a CCD079; mudar um parâmetro é mudar os dois planos.
