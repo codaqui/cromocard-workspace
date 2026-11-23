@@ -370,7 +370,7 @@ Table cards [headercolor: #2E7D5B] {
   front_image_url varchar(255)
   back_image_url  varchar(255)
   status          card_status [not null, default: 'ACTIVE', note: 'DRAFT = rascunho fora do catalogo (CCD106)']
-  code            varchar(30) [unique, note: 'Codigo da carta, ex.: CRD-POK-0004 (CCD105)']
+  code            varchar(30) [note: 'Codigo da carta, ex.: CRD-POK-0004 (CCD105)']
   variants        varchar(120) [note: 'Variantes separadas por virgula, ex.: Shadowless, Holofoil (CCD105)']
   release_year    smallint [note: 'Ano de lancamento da carta (CCD106)']
   created_at      timestamptz  [not null, default: `now()`]
@@ -378,6 +378,7 @@ Table cards [headercolor: #2E7D5B] {
   deleted_at      timestamptz
   indexes {
     (album_id, number) [unique]
+    code [unique, note: 'Indice parcial: WHERE deleted_at IS NULL (ADR-063)']
   }
 }
 

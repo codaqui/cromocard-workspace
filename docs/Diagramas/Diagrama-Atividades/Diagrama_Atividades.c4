@@ -2184,15 +2184,13 @@ views {
     description '''
       **Ator:** Administrador
       **Pre-condicao:** estar autenticado com permissao para gerenciar o catalogo.
-      **Fluxo alternativo:** numeracao repetida no mesmo album e recusada; ao cancelar, o
-      formulario fecha sem criar a carta.
+      **Fluxo alternativo:** numeracao repetida no mesmo album ou codigo em uso por outra carta
+      ativa e recusado; ao cancelar, o formulario fecha sem criar a carta.
     '''
 
     administrador -> backofficeApp '1. seleciona Duplicar numa carta da Gestao de Catalogo'
-    backofficeApp -> modAdministracao '2. solicita os dados da carta de origem'
-    modAdministracao -> bancoDados '2. consulta a carta de origem'
-    backofficeApp -> administrador '2. abre o formulario preenchido, sem a numeracao e sem as imagens'
-    administrador -> backofficeApp '3. informa a numeracao, as imagens e ajusta os demais dados'
+    backofficeApp -> administrador '2. abre o formulario com nome, franquia, album, raridade, idioma, variantes e descricao da carta de origem, sem numeracao, codigo e imagens'
+    administrador -> backofficeApp '3. informa a numeracao, o codigo, as imagens e ajusta os demais dados'
     administrador -> backofficeApp '4. confirma o cadastro'
     backofficeApp -> modAdministracao '5. envia a carta nova'
     modAdministracao -> modAdministracao '5. valida os dados como num cadastro novo'
