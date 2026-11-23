@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O usuário acessa o Painel Cliente (Dashboard). |  |
-|  | 2. O sistema consulta o banco de dados e calcula o total de álbuns ativos, cartas registradas e percentual médio de completude. |
+|  | 2. O sistema consulta o banco de dados e calcula o total de álbuns ativos, o percentual médio de completude e os contadores de cartas: total de cartas dos álbuns ativos, cartas que possui, cartas faltantes e cartas repetidas. |
 |  | 3. O sistema apresenta os indicadores consolidados em formato de cards visuais na tela. |
 
 ### Fluxo Alternativo
