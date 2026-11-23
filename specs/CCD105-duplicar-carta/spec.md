@@ -1,6 +1,6 @@
 # CCD105 — Duplicar Carta
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #609 `CCD105-Duplicar Carta` · responsável Lucas Oliveira Lima · Sprint 06
 - **Caso de uso:** [105-duplicar-carta.md](../../docs/Casos-De-Uso/105-duplicar-carta.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)

@@ -58,7 +58,8 @@
 
 ## Fechamento — workspace
 
-- [ ] **T8** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#709
+- [x] **T8** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#709
+  - **Feita em 22/11/2026:** codaqui/cromocard-backend#39 (`7656a8c`) e #40, codaqui/cromocard-frontend#31 (`e723fc0`), revisados e mergeados no `develop`.
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
 
 ## Cobertura
