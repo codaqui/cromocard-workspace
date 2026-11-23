@@ -29,7 +29,7 @@ paths:
 - Toda spec tem a seção **Fidelidade ao Figma (obrigatória)**, copiada do modelo: a tela implementada fica **igual** ao
   frame (layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados). O frame é o contrato visual,
   não uma referência.
-- Toda spec tem um requisito do tipo `Fidelidade` (origem: os frames da seção Telas, ADR-060 e o `CLAUDE.md`) e um
+- Toda spec tem um requisito do tipo `Fidelidade` (origem: os frames da seção Telas, ADR-060, ADR-070 e o `CLAUDE.md`) e um
   critério de aceite de fidelidade para cada frame desenhado: print em 1280 px lado a lado com o frame, sem diferença, e o
   mesmo design adaptado em 375, 768 e 1024 px.
 - Tela sem frame no Figma: a spec diz isso em **Telas**, abre uma lacuna pedindo o desenho e o requisito de fidelidade
