@@ -47,7 +47,7 @@ Nenhuma rota nova (L11): duas da CCD066 e três da CCD061 mudam de corpo.
 - **Sucesso:** `200`, ordenado por `isPinned` desc, `displayOrder` asc e `name` asc
 
   ```json
-  { "data": [{ "id": "uuid", "name": "Pokémon", "type": "CARD", "slug": "pokemon", "badge": "TRENDING",
+  { "data": [{ "id": "uuid", "name": "Pokémon", "slug": "pokemon", "badge": "TRENDING",
                "isPinned": true, "displayOrder": 0, "cardsCount": 18240, "backImageUrl": null }] }
   ```
 
