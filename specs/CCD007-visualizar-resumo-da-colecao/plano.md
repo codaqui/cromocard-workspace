@@ -43,7 +43,8 @@ do marketplace. O valor estimado (R7) e o "Menor anúncio" (R8) ligam quando `pr
 | `albums`, `cards`, `categories`, `users` | sim | — | só leitura |
 
 Nenhuma coluna fora do DBML. O seed `database/seeds/collection.seed.ts` cria, para o cliente de exemplo, a coleção com os
-4 álbuns e as cartas do frame `1122-17812` e o histórico de preços dos últimos 60 dias (CA1, CA3, CA8).
+4 álbuns e as cartas do frame `1122-17812` (CA1, CA8). O histórico de preços dos últimos 60 dias (CA3 e o valor do CA8)
+entra no seed junto com a T2, quando `price_history` existir.
 
 ## Regras
 
@@ -122,9 +123,10 @@ Domínio `src/domains/collection/`, no modelo de `src/domains/users/` (ADR-004),
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `database/schema.prisma` + 4 migrations | modelos `Collection`, `UserAlbum`, `CollectionCard`, `PriceHistory` e os enums `CollectionCardStatus`, `PriceSource`, com as relações em `User`, `Album` e `Card` | R3, R4, R7 |
-| `database/seeds/collection.seed.ts` · `data/collection.json` | coleção de exemplo com os dados do frame e o histórico de preços | CA1, CA3, CA8 |
+| `database/seeds/collection.seed.ts` · `data/collection.json` | coleção de exemplo com os dados do frame (T3); o histórico de preços entra com a T2, quando `price_history` existir | CA1, CA3, CA8 |
 | `collection.repository.ts` | `findOrCreateByUserId`, contagens dos álbuns e das cartas, média do progresso, álbum em destaque | R1, R3–R5, R9 |
-| `collection-prices.repository.ts` | preço médio por carta numa janela de datas (`$queryRaw` com `AVG` agrupado por `card_id`) | R7 |
+| `collection-prices.ts` | interface `CollectionPrices` (`averagePrices(cardIds, range)`) e a implementação nula, que devolve preço vazio enquanto `price_history` não existir | R7 (L5) |
+| `collection-prices.repository.ts` | implementação Prisma de `CollectionPrices`: preço médio por carta numa janela de datas (`$queryRaw` com `AVG` agrupado por `card_id`); entra com a T2, quando `price_history` existir | R7 |
 | `collection-cards.repository.ts` | cartas dos álbuns ativos com status, filtros, contagem por status e ordem por valor | R8 |
 | `collection-listing-prices.ts` | interface `ListingPrices` (`lowestActivePrice(cardIds)`) e a implementação nula até existir `listings` | R8 (L6) |
 | `collection.service.ts` + `.spec.ts` | resumo, valor estimado e variação, álbum em destaque, saudação, lista paginada | R3–R9 |
@@ -143,7 +145,7 @@ registradas no `CustomerLayout` do `app/router.tsx`.
 | `collection.types.ts` · `collection.api.ts` · `collection.queries.ts` · `collection.labels.ts` · `collection.format.ts` | tipos do contrato, chamadas, queries do TanStack Query, rótulos dos status ("Possuo", "Repetida (x2)", "Faltante") e formato de dinheiro e percentual | R3–R8 |
 | `components/CollectionSummaryCards/` | "Valor estimado", "Total de cartas", "Possuo", "Faltantes" e "Repetidas", com o `KpiCard`; frame `1122-17812` | R4, R6, R7 |
 | `components/FeaturedAlbum/` | "Álbum em destaque: <álbum>", barra, "<n> de <total> cartas • <n>% completo", "Abrir álbum" (L7); frame `1122-17812` | R12 |
-| `components/CollectionCardsGrid/` · `components/CollectionCardTile/` | abas com contagem (`Tabs`), "Buscar carta na coleção" (`SearchBar`), "Ordenar: Maior valor", filtros por categoria, cartões com selo, "Preço médio" / "Menor anúncio" e os botões "Ver carta", "Anunciar repetida" (só `SELLER`) e "Comprar no marketplace" como links; "Ver carta" e "Anunciar repetida" levam a rotas de `underConstructionRoute` até a CCD030 e a CCD084 entrarem (L6, L10); paginação com `Pagination`; frame `1122-17812` | R8, R14 |
+| `components/CollectionCardsGrid/` · `components/CollectionCardTile/` | abas com contagem (`Tabs`), "Buscar carta na coleção" (`SearchBar`), "Ordenar: Maior valor", filtros por categoria, cartões com selo, "Preço médio" / "Menor anúncio" e os botões "Ver carta", "Anunciar repetida" (só `SELLER`) e "Comprar no marketplace" como links; "Ver carta", "Anunciar repetida" e "Comprar no marketplace" levam a rotas de `underConstructionRoute` até a CCD030, a CCD084 e o marketplace (CCD078, CCD072) entrarem (L6, L10); paginação com `Pagination`; frame `1122-17812` | R8, R14 |
 | `pages/CollectionHomePage/` | saudação (L9), subtítulo "Colecionador desde … • <n> álbuns ativos" com o percentual médio de completude ao lado (L4), os blocos acima, o vazio com "Adicionar Primeiro Álbum" levando à CCD022 (L8), `LoadingState` e `ErrorState`; frame `1122-17812` | R2, R3, R5, R9–R11, R13 |
 | `src/routes/paths.ts` | `dashboard: '/inicio'`; `homePathByRole` de `CUSTOMER` e `SELLER` passa a `/inicio` | R2 |
 | `app/layouts/SiteShell/siteMenu.ts` | item "Início" aponta para `paths.dashboard` | R2 |
@@ -161,7 +163,7 @@ registradas no `CustomerLayout` do `app/router.tsx`.
 |---|---|---|
 | CA1 | 4 álbuns, cartas, média do progresso | `collection.service.spec.ts` · `tests/integration/collection-summary.spec.ts` · `CollectionHomePage.spec.tsx` |
 | CA2 | álbum com `deleted_at` fora da contagem | `collection.service.spec.ts` · integração |
-| CA3 | soma dos preços médios e variação em 30 dias | `collection.service.spec.ts` · integração |
+| CA3 | soma dos preços médios e variação em 30 dias (service com `CollectionPrices` falso já na T5; integração só depois da T2) | `collection.service.spec.ts` · integração |
 | CA4 | lista com nome e status, carta sem marcação como faltante, abas e busca | `collection.service.spec.ts` · integração · `CollectionCardsGrid.spec.tsx` |
 | CA5 | coleção nova zerada e botão "Adicionar Primeiro Álbum" | `collection.service.spec.ts` · `CollectionHomePage.spec.tsx` |
 | CA6 | `401` sem token, `403` para `ADMIN`, isolamento entre dois clientes | integração |
@@ -178,7 +180,8 @@ Meta de 90% de cobertura nos arquivos alterados (ADR-060).
 - O catálogo não lê tabela de outro domínio (ADR-001); do mesmo jeito, a coleção não lê `listings` direto: recebe a
   interface `ListingPrices` pelo construtor, com a implementação nula (`null`) enquanto a tabela não existir. A story
   que criar `listings` (CCD084 ou CCD097) liga a implementação Prisma no `collection.module.ts` (L6). O mesmo
-  vale para o preço médio: sem `price_history`, a implementação nula devolve preço vazio e o resumo mostra zero (L5).
+  vale para o preço médio: a coleção recebe a interface `CollectionPrices` pelo construtor, com a implementação nula
+  enquanto `price_history` não existir; o resumo mostra `"0.00"` e variação `null` (L5). A T2 liga a implementação Prisma.
 - O preço médio e a ordem por valor são calculados no banco (`$queryRaw` com `AVG` e `GROUP BY card_id`), numa consulta
   por página, para não carregar o histórico inteiro na memória.
 - A coleção nascer na primeira leitura (L2) é uma regra de negócio decidida pelo PO em 23/11/2026; o caso de uso 07 só

@@ -46,18 +46,18 @@
 | R11 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames da seção Telas: `1122-17812`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 | R12 | O Início mostra o "Álbum em destaque": o álbum favorito (`user_albums.is_favorite`) ou, sem favorito, o último em que o cliente marcou carta, com a barra de progresso, "<n> de <total> cartas • <n>% completo" e "Abrir álbum" | Tela | Figma `1122-17812` (L7) |
 | R13 | O Início mostra a saudação "Olá, <primeiro nome>" (de `users.name`) e "Colecionador desde <mês> de <ano>" (de `users.created_at`) | Tela | Figma `1122-17812` (L9) |
-| R14 | Os cartões têm "Ver carta" (CCD030), "Anunciar repetida" (CCD084, só para `SELLER`; o `CUSTOMER` vê "Ver carta") e "Comprar no marketplace"; "Ver carta" e "Anunciar repetida" usam `underConstructionRoute` até essas stories entrarem | Ação | Figma `1122-17812` (L10) |
+| R14 | Os cartões têm "Ver carta" (CCD030), "Anunciar repetida" (CCD084, só para `SELLER`; o `CUSTOMER` vê "Ver carta") e "Comprar no marketplace"; "Ver carta", "Anunciar repetida" e "Comprar no marketplace" (CCD078 e CCD072) usam `underConstructionRoute` até essas stories entrarem | Ação | Figma `1122-17812` (L10) |
 
 ## Critérios de aceite
 
 - **CA1** (R2, R3, R4, R5, R6) — **Dado** um cliente com 4 álbuns na coleção (264 cartas no total) e cartas marcadas, **quando** ele abre o Início, **então** vê "4 álbuns ativos" com o percentual médio de completude ao lado e os cards "Total de cartas" (264), "Possuo", "Faltantes" (264 − possuo) e "Repetidas".
 - **CA2** (R3) — **Dado** um cliente que removeu um dos seus 4 álbuns (CCD011), **quando** abre o Início, **então** o total de álbuns ativos é 3.
-- **CA3** (R7) — **Dado** um cliente com cartas marcadas como possuo que têm preço em `price_history` nos últimos 30 dias, **quando** abre o Início, **então** o card "Valor estimado" mostra a soma dos preços médios dessas cartas e a variação em 30 dias.
+- **CA3** (R7; verificável só depois que `price_history` entrar no `develop`) — **Dado** um cliente com cartas marcadas como possuo que têm preço em `price_history` nos últimos 30 dias, **quando** abre o Início, **então** o card "Valor estimado" mostra a soma dos preços médios dessas cartas e a variação em 30 dias.
 - **CA4** (R8) — **Dado** um cliente com 10 cartas na coleção, **quando** abre o Início, **então** vê as 8 de maior valor na primeira página, com o selo de status; a faltante sem anúncio mostra "Menor anúncio" "—".
 - **CA5** (R9) — **Dado** um cliente sem nenhum álbum nem carta, **quando** abre o Início, **então** vê todos os contadores em 0 e o botão "Adicionar Primeiro Álbum".
 - **CA6** (R1) — **Dado** um visitante sem login, **quando** chama a API do resumo, **então** recebe `401`; **dado** dois clientes, **quando** o primeiro abre o Início, **então** os números não incluem nada da coleção do segundo.
 - **CA7** (R10) — **Dado** a API do resumo fora do ar, **quando** o cliente abre o Início, **então** vê o estado de erro com a mensagem da API, e enquanto a resposta não chega vê o estado de carregando.
-- **CA8** (R11) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1122-17812`, **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
+- **CA8** (R11; o card "Valor estimado" só fica igual ao frame depois que `price_history` entrar no `develop`) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1122-17812`, **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 - **CA9** (R12) — **Dado** um cliente sem álbum favorito, **quando** abre o Início, **então** o álbum em destaque é o último em que ele marcou carta.
 
 ## Dados
@@ -77,7 +77,7 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Cliente - Início (minha coleção) | [1122-17812](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1122-17812) | R2–R14 | ✅ Bate depois das decisões L3–L10 (23/11/2026); o percentual médio (R5) e o Início vazio (R9) entram no estilo da tela |
+| Cliente - Início (minha coleção) | [1122-17812](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1122-17812) | R2–R14 | ✅ Bate, com duas inclusões decididas que o frame não desenha: o percentual médio no subtítulo (R5) e o Início vazio (R9), no estilo da tela (L4, L8, 23/11/2026) |
 
 - **Diferenças com o Figma** (decisão em Lacunas e decisões):
   - Início — os cards são "Valor estimado", "Total de cartas", "Possuo", "Faltantes" e "Repetidas"; o caso de uso pede álbuns ativos, cartas registradas e percentual médio de completude (L3, L4). O total de álbuns aparece só no subtítulo "Colecionador desde out. de 2026 • 4 álbuns ativos".

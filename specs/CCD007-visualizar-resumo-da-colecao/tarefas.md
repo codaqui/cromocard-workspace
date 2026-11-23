@@ -3,21 +3,25 @@
 - **Plano:** [plano.md](plano.md) · **User story:** AB#113
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Tasks no Azure criadas em 22/11/2026 (Sprint 08), atribuídas a quem o plano final indica.
-- Revisadas em 23/11/2026 com as decisões do PO. Ordem de entrega: T1 e T3–T8 primeiro; o valor estimado e o "Menor
-  anúncio" ficam zerados ou com "—" até `price_history` e `listings` estarem no `develop`.
+- Revisadas em 23/11/2026 com as decisões do PO. Ordem de entrega: T1 e T3–T8 primeiro, sem preços; o valor estimado e o "Menor
+  anúncio" ficam zerados ou com "—" até `price_history` e `listings` estarem no `develop`. A T2 (preços) vem por último no
+  backend e só entra quando a tabela existir. O CA3 e o valor do CA8 ficam pendentes até lá.
 
 ## Backend — `apps/cromocard-backend`, branch `feature/113-visualizar-resumo-da-colecao`
 
 - [ ] **T1** · Criar migrations de collections, user_albums e collection_cards — R3, R4 · AB#971
   - Pronto quando: as 3 migrations (`create_<tabela>_table`) criam as tabelas e o enum `collection_card_status` iguais
     ao DBML, com os índices únicos, e o `prisma migrate dev` não acusa diferença.
-- [ ] **T2** · Criar migration de price_history — R7 · AB#972
+- [ ] **T2** · Criar migration de price_history — R7 · CA3 · AB#972
+  - Vem depois da T8, quando `price_history` puder existir no `develop`. Liga a implementação Prisma de
+    `CollectionPrices` no `collection.module.ts` e acrescenta ao seed o histórico de preços dos últimos 60 dias.
   - Pronto quando: `create_price_history_table` cria a tabela e o enum `price_source` do DBML (ou a tarefa é removida,
     se a CCD097, PR backend #41, ou a base do marketplace já tiver criado a tabela).
 - [ ] **T3** · Criar seed da coleção de exemplo com histórico de preços — R3–R8 · CA1, CA3, CA8 · AB#973
-  - Pronto quando: o cliente do seed tem 4 álbuns, cartas `OWNED`, `MISSING` e `DUPLICATE` e preços nos últimos 60 dias,
-    com os números do frame `1122-17812`.
-- [ ] **T4** · Criar repositories da coleção, das cartas e dos preços — R1, R3–R5, R7, R8 · AB#974
+  - Pronto quando: o cliente do seed tem 4 álbuns e cartas `OWNED`, `MISSING` e `DUPLICATE`, com os números do frame
+    `1122-17812`. Os preços entram com a T2.
+- [ ] **T4** · Criar repositories da coleção e das cartas e a interface de preços — R1, R3–R5, R7, R8 · AB#974
+  - A interface `CollectionPrices` sai com a implementação nula; a implementação Prisma vem na T2.
   - Pronto quando: `findOrCreateByUserId` cria a coleção uma vez só (L2) e as consultas filtram `deleted_at`
     nos álbuns, nas cartas e nas marcações.
 - [ ] **T5** · Criar service do resumo da coleção — R3–R7, R9, R12, R13 · CA1–CA3, CA5, CA9 · AB#975
@@ -40,7 +44,7 @@
     formatos de dinheiro e percentual.
 - [ ] **T10** · Criar indicadores, álbum em destaque e grade de cartas do Início — R4, R6–R8, R12, R14 · CA1, CA3, CA4, CA9 · AB#980
   - Pronto quando: `CollectionCardsGrid.spec.tsx` cobre abas, busca, filtro e os links "Ver carta" e "Anunciar
-    repetida" (só `SELLER`) para rotas de `underConstructionRoute`, e print em 1280 px igual ao frame
+    repetida" (só `SELLER`) e "Comprar no marketplace" para rotas de `underConstructionRoute`, e print em 1280 px igual ao frame
     `1122-17812` e sem quebra em 375/768/1024 px.
 - [ ] **T11** · Criar página Início do cliente com estados vazio, carregando e erro — R2, R3, R5, R9–R11, R13 · CA1, CA5, CA7, CA8 · AB#981
   - Pronto quando: `/inicio` abre pelo item "Início" do menu e pelo login do cliente, `CollectionHomePage.spec.tsx`
