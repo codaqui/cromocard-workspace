@@ -95,7 +95,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 | `src/domains/catalog/cards/cards.service.ts` + `.spec.ts` | monta o perfil; preço médio e resumo dos anúncios pelas services exportadas do marketplace e do histórico | R3–R5, R13 |
 | `src/domains/catalog/cards/cards.controller.ts` · `.routes.ts` · `.swagger.ts` · `cards.module.ts` | `GET /cards/:id`, público | R1 |
 | `src/domains/marketplace/listings/listings.repository.ts` · `listings.service.ts` + `.spec.ts` | `findActiveByCard` (ordem e página) e `summaryByCard` (contagem e menor preço) | R7, R8 |
-| `src/domains/marketplace/listings/listings.routes.ts` · `.swagger.ts` · `listings.module.ts` | `GET /cards/:cardId/listings`, público | R7 |
+| `src/domains/marketplace/listings/listings.module.ts` | exporta a `ListingsService`; a rota `GET /cards/:cardId/listings` fica no `cards.routes.ts`, que confere a carta (404) antes de listar, sem dependência circular entre os módulos | R7, R13 |
 | `src/routes.ts` | registra `cardsModule` e `listingsModule` | R1 |
 
 ## Frontend — `apps/cromocard-frontend`
