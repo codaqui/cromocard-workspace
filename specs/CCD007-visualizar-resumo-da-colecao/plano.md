@@ -1,0 +1,174 @@
+# Plano — CCD007 Visualizar Resumo da Coleção
+
+> Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
+
+- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L11 pendentes)
+- **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
+- **Data:** 2026-11-22 · **Autor:** Daniel Andrade
+
+## Solução
+
+Esta story cria o domínio `collection` do backend e a feature `collection` do frontend, de que as CCD008 a CCD018
+dependem. O Início do cliente (`/inicio`) chama `GET /api/v1/collections/me/summary` (indicadores, valor estimado, álbum
+em destaque e saudação) e `GET /api/v1/collections/me/cards` (a grade dos principais itens). A coleção do cliente nasce
+na primeira leitura ou escrita da API (depende da L2): sem coleção, o resumo vem zerado.
+
+## Dependências
+
+- **CCD004 (Realizar Login)**: `authenticate`, `authorize` e o `RequireAuth` do frontend (já no código).
+- **CCD061 (Gestão de Catálogo)**: `albums`, `cards` e `categories` já existem no `schema.prisma`.
+- **CCD097 (Indicadores Financeiros)**: também planeja `create_price_history_table`. A story que entrar primeiro cria a
+  tabela; a outra só lê.
+- **CCD084 / CCD097**: criam `listings` (`create_listings_table`). O "Menor anúncio" da carta faltante (depende da L6)
+  lê essa tabela por uma interface (ver Decisões técnicas).
+- **CCD022 (Adicionar Carta)** e a página pública do álbum (EA-002-01) são quem põe álbuns na coleção; até lá, o seed
+  desta story cria a coleção de exemplo.
+
+## Dados
+
+| Tabela | Já no `schema.prisma`? | Migration | Observação |
+|---|---|---|---|
+| `collections` | não | `create_collections_table` | copiada do DBML: `user_id` único, `is_public` default `false`, `share_link` único (R1, R3) |
+| `user_albums` | não | `create_user_albums_table` | copiada do DBML: único (`collection_id`, `album_id`), `is_favorite`, `progress_percentage decimal(5,2)` (R3, R5) |
+| `collection_cards` | não | `create_collection_cards_table` | copiada do DBML, com o enum `collection_card_status` (`OWNED`, `MISSING`, `DUPLICATE`) e `market_value`; único (`collection_id`, `card_id`) (R4) |
+| `price_history` | não | `create_price_history_table` (se a CCD097 não criou) | copiada do DBML, com o enum `price_source` (`SALE`, `LISTING`) (R7) |
+| `albums`, `cards`, `categories`, `users` | sim | — | só leitura |
+
+Nenhuma coluna fora do DBML. O seed `database/seeds/collection.seed.ts` cria, para o cliente de exemplo, a coleção com os
+4 álbuns e as cartas do frame `1122-17812` e o histórico de preços dos últimos 60 dias (CA1, CA3, CA8).
+
+## Regras
+
+- **Coleção** (depende da L2): `findOrCreateByUserId` faz `upsert` em `collections.user_id` com `is_public = false`.
+- **Álbuns ativos** (R3): `user_albums` sem `deleted_at`, de `albums` sem `deleted_at`.
+- **Cartas** (R4, depende da L3): total = soma de `albums.total_cards` dos álbuns ativos; possuo = cartas desses álbuns
+  com status `OWNED` ou `DUPLICATE`; faltantes = total − possuo; repetidas = soma de `quantity − 1` das `DUPLICATE`.
+- **Percentual médio** (R5, depende da L4): média de `progress_percentage` dos álbuns ativos, com 2 casas; sem álbum, 0.
+- **Valor estimado** (R7, depende da L5): uma vez por carta possuída (`OWNED` ou `DUPLICATE`); preço médio = média de
+  `price_history.price` com `reference_date` nos últimos 30 dias; sem preço, zero. Variação = valor de hoje contra o
+  valor com os preços de 30 a 60 dias atrás; sem valor anterior, `null`.
+- **Álbum em destaque** (depende da L7): o favorito (`is_favorite`); sem favorito, o álbum da `collection_cards` com o
+  `updated_at` mais recente; sem marcação, o álbum adicionado por último; sem álbum, `null`.
+- **Principais itens** (R8, depende da L6): cartas dos álbuns ativos; carta sem linha em `collection_cards` conta como
+  faltante; ordem padrão "maior valor" (preço médio, e para faltante o menor anúncio); 8 por página.
+- **Saudação** (depende da L9): primeiro nome de `users.name` e mês e ano de `users.created_at`.
+- **Papel** (R1, depende da L1): `CUSTOMER` e `SELLER`; `ADMIN` recebe `403`.
+
+## Contrato da API
+
+Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCase, dinheiro como string decimal, erros
+`{ error, message, details? }`. Todas as rotas `/collections/me/*` usam `authenticate` + `authorize('CUSTOMER', 'SELLER')`.
+
+### `GET /api/v1/collections/me/summary` — R1, R3–R7, R9
+
+- **Acesso:** `authenticate` + `authorize('CUSTOMER', 'SELLER')` (depende da L1)
+- **Sucesso:** `200`
+
+  ```json
+  { "data": {
+      "collector": { "firstName": "Daniel", "memberSince": "2026-10-01" },
+      "activeAlbums": 4,
+      "averageProgress": 69.7,
+      "cards": { "total": 264, "owned": 184, "missing": 80, "duplicates": 28 },
+      "estimatedValue": { "amount": "1234.50", "variationPercent": 14.2 },
+      "featuredAlbum": { "albumId": "uuid", "title": "Copa do Mundo 2026", "coverUrl": "https://…",
+        "ownedCards": 43, "totalCards": 54, "progressPercentage": 79.63 } } }
+  ```
+
+  Sem álbum nem carta: contadores em 0, `estimatedValue.amount = "0.00"`, `variationPercent: null` e
+  `featuredAlbum: null` (R9).
+
+- **Erros:**
+
+  | Status | `error` | Quando | Requisito |
+  |---|---|---|---|
+  | 401 | `UNAUTHORIZED` | sem token ou token inválido | R1 |
+  | 403 | `FORBIDDEN` | papel `ADMIN` (depende da L1) | R1 |
+
+### `GET /api/v1/collections/me/cards` — R1, R8
+
+- **Acesso:** `authenticate` + `authorize('CUSTOMER', 'SELLER')`
+- **Entrada (query):** `status` (`OWNED` · `MISSING` · `DUPLICATE`, opcional = todas), `q` (trecho do nome, opcional),
+  `categoryId` (uuid, opcional), `sort` (`value_desc`, padrão), `page` (padrão 1), `pageSize` (padrão 8, máximo 48)
+  (depende da L6)
+- **Sucesso:** `200`
+
+  ```json
+  { "data": [ { "cardId": "uuid", "name": "Pikachu VMAX", "frontImageUrl": "https://…",
+      "album": { "id": "uuid", "title": "Destinos Brilhantes" }, "category": { "id": "uuid", "name": "Pokémon" },
+      "status": "DUPLICATE", "quantity": 2, "averagePrice": "180.00", "lowestListingPrice": null } ],
+    "meta": { "page": 1, "pageSize": 8, "total": 264,
+      "counts": { "all": 264, "owned": 184, "missing": 80, "duplicates": 28 },
+      "categories": [ { "id": "uuid", "name": "Pokémon" } ] } }
+  ```
+
+  `lowestListingPrice` só vem na carta `MISSING` (depende da L6); `categories` são as dos álbuns ativos, para os filtros.
+
+- **Erros:** `400 VALIDATION_ERROR` (query inválida), `401`, `403` (R1).
+
+## Backend — `apps/cromocard-backend`
+
+Domínio `src/domains/collection/`, no modelo de `src/domains/users/` (ADR-004), registrado em `src/routes.ts` com
+`basePath: '/collections'`.
+
+| Arquivo | O que muda | Requisitos |
+|---|---|---|
+| `database/schema.prisma` + 4 migrations | modelos `Collection`, `UserAlbum`, `CollectionCard`, `PriceHistory` e os enums `CollectionCardStatus`, `PriceSource`, com as relações em `User`, `Album` e `Card` | R3, R4, R7 |
+| `database/seeds/collection.seed.ts` · `data/collection.json` | coleção de exemplo com os dados do frame e o histórico de preços | CA1, CA3, CA8 |
+| `collection.repository.ts` | `findOrCreateByUserId`, contagens dos álbuns e das cartas, média do progresso, álbum em destaque | R1, R3–R5, R9 |
+| `collection-prices.repository.ts` | preço médio por carta numa janela de datas (`$queryRaw` com `AVG` agrupado por `card_id`) | R7 |
+| `collection-cards.repository.ts` | cartas dos álbuns ativos com status, filtros, contagem por status e ordem por valor | R8 |
+| `collection-listing-prices.ts` | interface `ListingPrices` (`lowestActivePrice(cardIds)`) e a implementação nula até existir `listings` | R8 (depende da L6) |
+| `collection.service.ts` + `.spec.ts` | resumo, valor estimado e variação, álbum em destaque, saudação, lista paginada | R3–R9 |
+| `collection.validator.ts` · `collection.errors.ts` | query da lista; códigos de erro do domínio | R8 |
+| `collection.controller.ts` · `collection.routes.ts` · `collection.swagger.ts` · `collection.module.ts` | as 2 rotas, com `authenticate` + `authorize('CUSTOMER', 'SELLER')` | R1 |
+| `src/routes.ts` | registra `collectionModule` | R1 |
+| `tests/integration/collection-summary.spec.ts` | rotas de ponta a ponta | CA1–CA6 |
+
+## Frontend — `apps/cromocard-frontend`
+
+Feature `src/features/collection/`, no modelo de `src/features/users/` (ADR-040), rotas em `collection.routes.ts`, já
+registradas no `CustomerLayout` do `app/router.tsx`.
+
+| Arquivo | O que muda | Requisitos |
+|---|---|---|
+| `collection.types.ts` · `collection.api.ts` · `collection.queries.ts` · `collection.labels.ts` · `collection.format.ts` | tipos do contrato, chamadas, queries do TanStack Query, rótulos dos status ("Possuo", "Repetida (x2)", "Faltante") e formato de dinheiro e percentual | R3–R8 |
+| `components/CollectionSummaryCards/` | "Valor estimado", "Total de cartas", "Possuo", "Faltantes", "Repetidas" e o percentual médio, com o `KpiCard`; frame `1122-17812` (percentual: depende da L4) | R3–R7 |
+| `components/FeaturedAlbum/` | "Álbum em destaque: <álbum>", barra, "<n> de <total> cartas • <n>% completo", "Abrir álbum" (depende da L7); frame `1122-17812` | R8 |
+| `components/CollectionCardsGrid/` · `components/CollectionCardTile/` | abas com contagem (`Tabs`), "Buscar carta na coleção" (`SearchBar`), "Ordenar: Maior valor", filtros por categoria, cartões com selo, "Preço médio" / "Menor anúncio" e os botões "Ver carta", "Anunciar repetida" (só `SELLER`) e "Comprar no marketplace" como links (depende da L6, L10); paginação com `Pagination`; frame `1122-17812` | R8 |
+| `pages/CollectionHomePage/` | saudação (depende da L9), subtítulo "Colecionador desde … • <n> álbuns ativos", os blocos acima, o vazio com "Adicionar Primeiro Álbum" para Pesquisar (depende da L8), `LoadingState` e `ErrorState`; frame `1122-17812` | R2, R6, R9–R11 |
+| `src/routes/paths.ts` | `dashboard: '/inicio'`; `homePathByRole` de `CUSTOMER` e `SELLER` passa a `/inicio` | R2 |
+| `app/layouts/SiteShell/siteMenu.ts` | item "Início" aponta para `paths.dashboard` | R2 |
+| `collection.routes.ts` | rota `/inicio` (lazy) | R2 |
+
+- **Rotas:** `/inicio` em `routes/paths.ts`, dentro do `RequireAuth` + `CustomerLayout`.
+- **Estados:** carregando, erro e vazio com `LoadingState`, `ErrorState` e o estado vazio do Início (R9, que o Figma não
+  desenha: no estilo do `1160-29088`, depende da L8).
+- **Componentes reaproveitados de `src/components/`:** `KpiCard`, `Tabs`, `SearchBar`, `Select`, `Badge`, `Button`,
+  `Pagination`, `EmptyState`, `LoadingState`, `ErrorState`.
+
+## Testes
+
+| Critério | O que o teste verifica | Onde |
+|---|---|---|
+| CA1 | 4 álbuns, cartas, média do progresso | `collection.service.spec.ts` · `tests/integration/collection-summary.spec.ts` · `CollectionHomePage.spec.tsx` |
+| CA2 | álbum com `deleted_at` fora da contagem | `collection.service.spec.ts` · integração |
+| CA3 | soma dos preços médios e variação em 30 dias | `collection.service.spec.ts` · integração |
+| CA4 | lista com nome e status, carta sem marcação como faltante, abas e busca | `collection.service.spec.ts` · integração · `CollectionCardsGrid.spec.tsx` |
+| CA5 | coleção nova zerada e botão "Adicionar Primeiro Álbum" | `collection.service.spec.ts` · `CollectionHomePage.spec.tsx` |
+| CA6 | `401` sem token, `403` para `ADMIN`, isolamento entre dois clientes | integração |
+| CA7 | carregando e erro com a mensagem da API | `CollectionHomePage.spec.tsx` |
+| CA8 | print em 1280 px igual ao `1122-17812`; 375, 768 e 1024 px sem quebra | revisão visual (`/cromocard-revisor`) com o seed |
+
+Meta de 90% de cobertura nos arquivos alterados (ADR-060).
+
+## Decisões técnicas
+
+- O domínio `collection` concentra coleção, álbuns da coleção e marcações: as CCD008 a CCD018 só acrescentam rotas e
+  métodos a ele, sem módulo novo.
+- O catálogo não lê tabela de outro domínio (ADR-001); do mesmo jeito, a coleção não lê `listings` direto: recebe a
+  interface `ListingPrices` pelo construtor, com a implementação nula (`null`) enquanto a tabela não existir. A story
+  que criar `listings` (CCD084 ou CCD097) liga a implementação Prisma no `collection.module.ts` (depende da L6).
+- O preço médio e a ordem por valor são calculados no banco (`$queryRaw` com `AVG` e `GROUP BY card_id`), numa consulta
+  por página, para não carregar o histórico inteiro na memória.
+- A coleção nascer na primeira leitura (L2) é uma regra de negócio: volta para o caso de uso quando decidida.
