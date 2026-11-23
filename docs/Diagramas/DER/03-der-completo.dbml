@@ -27,6 +27,12 @@ Enum user_status {
   BLOCKED
 }
 
+Enum stripe_account_status {
+  PENDING
+  VERIFYING
+  READY
+}
+
 Enum privacy {
   PUBLIC
   PRIVATE
@@ -194,7 +200,7 @@ Table users [headercolor: #3E5F8A] {
   cpf            varchar(14) [unique, note: 'CPF, visivel so no BackOffice (CCD098)']
   last_login_at  timestamptz [note: 'Ultimo login bem-sucedido (CCD098)']
   stripe_account_id     varchar(60) [unique, note: 'Conta conectada Express do vendedor (CCD108, ADR-066)']
-  stripe_account_status varchar(20) [note: 'PENDING, VERIFYING ou READY (CCD108)']
+  stripe_account_status stripe_account_status [note: 'Situacao da conta Stripe do vendedor (CCD108)']
   last_login_ip  varchar(45) [note: 'IP do ultimo login (CCD098)']
   suspended_until timestamptz [note: 'Fim da suspensao temporaria; nulo = sem prazo (CCD099)']
   created_at     timestamptz  [not null, default: `now()`]

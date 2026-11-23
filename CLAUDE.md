@@ -78,7 +78,7 @@ Notificações e Favoritos · Pagamentos e Pedidos · Administração.
 
 ## Modelo de dados (DER — fonte: `docs/Diagramas/DER/`)
 
-**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 90 FKs, 26 enums).
+**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 90 FKs, 27 enums).
 As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos polimórficos, sincronia dos três
 `.dbml`) estão em `.claude/rules/modelagem-de-dados.md`.
 

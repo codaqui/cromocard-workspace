@@ -26,6 +26,12 @@ Enum user_status {
   BLOCKED
 }
 
+Enum stripe_account_status {
+  PENDING
+  VERIFYING
+  READY
+}
+
 Enum privacy {
   PUBLIC
   PRIVATE
@@ -195,7 +201,7 @@ Table users [headercolor: #3E5F8A] {
   last_login_ip  varchar(45)
   suspended_until timestamptz
   stripe_account_id     varchar(60) [unique]
-  stripe_account_status varchar(20)
+  stripe_account_status stripe_account_status
   created_at     timestamptz  [not null]
   updated_at     timestamptz  [not null]
   deleted_at     timestamptz
