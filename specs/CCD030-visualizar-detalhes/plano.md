@@ -81,7 +81,11 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 - **Entrada:** `page`, `pageSize` (padrão 10, máximo 50), `sort=price` (padrão) e `excludeListingId` (uuid, opcional,
   usado pela CCD079). O contrato é o mesmo da CCD079.
 - **Sucesso:** `200` `{ data: ListingSummary[], meta: { page, pageSize, total } }`, com
-  `ListingSummary = { id, price, condition: { name } | null, seller: { id, username } }`.
+  `ListingSummary = { id, price, availableQuantity, condition: { name } | null, seller: { id, username } }`.
+  `availableQuantity` deixa a tela marcar o anúncio esgotado (L12) e `condition` anulável cobre a L13. Se o PO aceitar
+  a L12 e a L13, o contrato muda nos dois planos (CCD030 e CCD079); até lá, a CCD079 segue com `condition: { name }`.
+- **Contagem na tela** (L12): o título "Anúncios disponíveis (<n>)" usa `market.activeListingsCount` do perfil, o mesmo
+  número do card "Anúncios ativos"; o `meta.total` da lista serve só à paginação.
 - **Erros:** `400 VALIDATION_ERROR`, `404 CARD_NOT_FOUND` — R7, R13.
 
 ## Backend — `apps/cromocard-backend`
@@ -107,7 +111,7 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
 | `catalog/components/CardMarketStats/` | "Preço médio de mercado", "Menor anúncio", "Anúncios ativos" — frame `1112-4615` | R4, R14 |
 | `catalog/components/CardIdentification/` | bloco de identificação (regras da CCD031) — frame `1112-4615` | R5, R14 |
 | `marketplace/listings/components/CardListingsList/` | "Anúncios disponíveis (<n>)", vendedor, condição, preço, "Ver anúncio" (`/anuncios/:id`, CCD079), "Carregar mais"; vazia com a mensagem e "Anunciar esta carta" só para `SELLER` — frame `1112-4615` | R7–R9, R12, R14 |
-| `auth/components/LoginRequiredDialog/` (da CCD002; sai pelo `index.ts` da feature `auth`) | "Entre para continuar", a mensagem "Faça login para continuar. É rápido e grátis.", "Continuar com Google", "Entrar com e-mail e senha", "Criar conta grátis" e o rodapé dos termos; leva ao login com o retorno para a carta — frame `1112-5461` | R11, R14 |
+| `auth/components/LoginRequiredDialog/` (da CCD002; sai pelo `index.ts` da feature `auth`; recebe a mensagem por prop e mostra o rodapé dos termos, o que a CCD002 registra no plano dela) | "Entre para continuar", a mensagem "Faça login para continuar. É rápido e grátis.", "Continuar com Google", "Entrar com e-mail e senha", "Criar conta grátis" e o rodapé dos termos; leva ao login com o retorno para a carta — frame `1112-5461` | R11, R14 |
 | `catalog/pages/CardProfilePage/` | a página, com o aviso "Ainda não tem conta?…" só para o visitante, "Adicionar à coleção" e "Favoritar" abrindo o modal para o visitante, e o histórico da CCD075 — frames `1112-4615` e `1112-5038` | R1–R6, R10, R11, R14 |
 | `catalog.routes.ts` · `src/routes/paths.ts` · `app/router.tsx` | `cardProfile: '/cartas/:id'` e `cardProfilePathFor(id)`, no `PublicLayout` (que já troca o topo para o logado, L7) | R1, R2 |
 | cartões da busca (CCD002), do marketplace e da Home (CCD001) | o clique leva a `cardProfilePathFor(id)` | R2 |

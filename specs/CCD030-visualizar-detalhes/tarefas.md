@@ -7,7 +7,7 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/163-visualizar-detalhes`
 
-- [ ] **T1** · Criar validator, erro e repository do perfil público da carta — R3, R5, R13 · AB#1106
+- [ ] **T1** · Criar validator e repository do perfil público da carta — R3, R5, R13 · AB#1106
   - O `404` reaproveita o `CardNotFoundError` de `catalog.errors.ts`.
   - Pronto quando: `findPublicById` traz identificação e fotos e ignora excluída e rascunho.
 - [ ] **T2** · Criar leitura dos anúncios ativos da carta — R7, R8 · CA2 · AB#1107
