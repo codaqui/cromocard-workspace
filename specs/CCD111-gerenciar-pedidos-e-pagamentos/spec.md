@@ -142,3 +142,4 @@
 | L10 | "Liberar agora" sem a conta do vendedor pronta: bloqueia com aviso? (proposta: sim, `422` com "A conta Stripe do vendedor não está pronta") | pendente | — |
 | L11 | A busca pelo comprador ou vendedor é por nome de usuário, nome ou e-mail? (proposta: nome de usuário e nome, sem diferenciar maiúsculas) | pendente | — |
 | L12 | Quantos pedidos por página? O frame mostra 8 (proposta: 8, como no frame) | pendente | — |
+| L13 | O caso 111 ganhou o selo e o filtro "Problema relatado", a descrição do problema no detalhe e o "Liberar agora" depois de resolver o problema (decidido pelo PO em 23/11/2026, CCD110 FA 4–7). Quais requisitos e critérios de aceite entram? O reembolso depois do envio (devolver a carta ou só o valor da carta, e quem paga a etiqueta) continua em aberto com o Daniel | pendente | — |
