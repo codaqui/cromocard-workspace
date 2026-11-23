@@ -47,7 +47,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [024](ADR-024-integracao-gateway-pagamento.md) | Integrações | Integração com gateway de pagamento externo via HTTPS/Webhook | Proposto |
 | [025](ADR-025-integracao-transportadora.md) | Integrações | Integração com transportadora terceirizada para entrega física | Proposto |
 | [026](ADR-026-estrutura-multi-repositorio.md) | Processo | Estrutura multi-repositório (workspace para SDD e documentação; um repositório por aplicação) | Aceito |
-| [027](ADR-027-escopo-marketplace-no-mvp.md) | Produto | Escopo do Marketplace no MVP | Proposto |
+| [027](ADR-027-escopo-marketplace-no-mvp.md) | Produto | Escopo do Marketplace no MVP | Aceito |
 | [028](ADR-028-stack-backend-node-express-prisma.md) | Backend | Stack de backend: Node.js + Express + Prisma | Substituído por ADR-002 |
 | [029](ADR-029-banco-de-dados-postgresql.md) | Dados | Banco de dados relacional: PostgreSQL via Prisma ORM | Substituído por ADR-003 e ADR-014 |
 | [030](ADR-030-autenticacao-jwt-compartilhada.md) | Backend | Autenticação via JWT compartilhado entre API REST e serviço de tempo real | Substituído por ADR-005 |
@@ -86,8 +86,8 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [063](ADR-063-codigo-de-carta-unico-entre-as-ativas.md) | Dados | Código de carta único só entre as não excluídas, com índice parcial e sem restaurar (exceção ao item 7 do 015) | Aceito |
 | [064](ADR-064-categoria-sem-tipo-e-franquia-da-carta-pelo-album.md) | Dados | Categoria sem tipo (`ALBUM`/`CARD`): a mesma franquia serve a álbuns e cartas, e a carta com álbum tem a franquia do álbum | Aceito |
 | [065](ADR-065-teste-de-carga-com-k6.md) | Infraestrutura | Teste de carga e de estresse da API com k6: meta de 1 mi de escritas e 2 mi de leituras por dia (105 req/s no pico), réplica, hml e projeto descartável no servidor | Aceito |
-| [066](ADR-066-pagamento-com-stripe-checkout-e-repasse-pelo-connect.md) | Backend | Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect (decide o 024) | Proposto |
-| [067](ADR-067-frete-e-rastreio-pelo-melhor-envio.md) | Backend | Frete, etiqueta e rastreio pelo Melhor Envio (decide o 025) | Proposto |
+| [066](ADR-066-pagamento-com-stripe-checkout-e-repasse-pelo-connect.md) | Backend | Pagamento com Stripe Checkout, valor retido na plataforma e repasse pelo Connect (decide o 024) | Aceito |
+| [067](ADR-067-frete-e-rastreio-pelo-melhor-envio.md) | Backend | Frete, etiqueta e rastreio pelo Melhor Envio (decide o 025) | Aceito |
 | [068](ADR-068-storage-privado-para-arquivos-sem-url-publica.md) | Backend | Storage privado para arquivos sem URL pública (complementa o 009) | Aceito |
 | [069](ADR-069-remover-avaliacoes-e-propostas.md) | Escopo | Remover avaliações e propostas (CCD033, 070, 081, 089, `offers` e `reviews`) e puxar para o MVP as futuras com tela no Figma; substitui trechos dos 010, 015 e 054 | Proposto |
 | [070](ADR-070-fidelidade-ao-figma-obrigatoria-na-spec.md) | Processo | Fidelidade ao Figma obrigatória na spec: requisito `Fidelidade` e critério de aceite por frame, em 1280 px lado a lado e adaptado em 375, 768 e 1024 px (complementa o 060) | Proposto |

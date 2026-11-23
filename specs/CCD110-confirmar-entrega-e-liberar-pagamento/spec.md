@@ -111,3 +111,4 @@
 | L6 | Frequência dos jobs de liberação automática, de nova tentativa e da consulta do rastreio (ADR-010 não os lista) (proposta: a cada hora, os três; registrar no ADR-010 ou num ADR novo) | pendente | — |
 | L7 | A data de liberação conta 7 dias corridos a partir de `delivered_at`, inclusive horário? (proposta: `delivered_at` + 7 × 24 h) | pendente | — |
 | L8 | A conta do vendedor deixou de estar pronta (`READY`) na hora da liberação: tenta, falha e fica pendente, ou nem tenta? (proposta: nem tenta e fica pendente, como no FA 3) | pendente | — |
+| L9 | O caso 110 ganhou o "Relatar problema" (FA 4–7, decidido pelo PO em 23/11/2026): o comprador relata o problema num pedido Enviado ou Entregue, antes da liberação, e a liberação automática fica suspensa (`orders.problem_description` e `problem_reported_at`). Quais requisitos e critérios de aceite entram, e o "Falar com o suporte" da L1 vira esse botão? | pendente | — |

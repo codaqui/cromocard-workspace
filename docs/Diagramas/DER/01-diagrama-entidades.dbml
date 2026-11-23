@@ -624,6 +624,8 @@ Table orders [headercolor: #A63D5F] {
   platform_fee        decimal(10,2)
   stripe_transfer_id  varchar(60)
   cancel_reason       varchar(255)
+  problem_description varchar(500)
+  problem_reported_at timestamptz
   paid_at             timestamptz
   shipped_at          timestamptz
   delivered_at        timestamptz

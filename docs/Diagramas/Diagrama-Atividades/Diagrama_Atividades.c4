@@ -2256,7 +2256,7 @@ views {
     description '''
       **Ator:** Cliente (comprador), Sistema
       **Pre-condicao:** o pedido deve estar Enviado, com etiqueta gerada pelo Melhor Envio.
-      **Fluxo alternativo:** sem confirmacao, o pagamento e liberado automaticamente 7 dias depois da entrega; pedido cancelado e reembolsado pelo administrador antes da liberacao nao transfere nada; falha na transferencia mantem o pedido Entregue, tenta de novo e aparece como pendente para o administrador.
+      **Fluxo alternativo:** sem confirmacao nem problema relatado, o pagamento e liberado automaticamente 7 dias depois da entrega; Relatar problema (pedido Enviado ou Entregue, antes da liberacao) pede a descricao, suspende a liberacao automatica e marca o pedido para o administrador; pedido cancelado e reembolsado pelo administrador antes da liberacao nao transfere nada; falha na transferencia mantem o pedido Entregue, tenta de novo e aparece como pendente para o administrador.
     '''
 
     transportadora -> modPagamentos '1. avisa que a encomenda foi entregue (webhook order.delivered ou consulta do rastreio)'
@@ -2276,18 +2276,18 @@ views {
     description '''
       **Ator:** Administrador
       **Pre-condicao:** estar autenticado como administrador.
-      **Fluxo alternativo:** Cancelar e reembolsar (pedido Pago, Enviado ou Entregue) pede o motivo, reembolsa carta e frete pela Stripe, cancela o pedido, avisa as duas partes e grava o log de auditoria; sem motivo, informa que e obrigatorio; Liberar agora (pedido Entregue, inclusive com repasse falho) transfere como na CCD110; pedido Concluido ou Cancelado nao tem acoes; busca sem resultado oferece limpar os filtros.
+      **Fluxo alternativo:** Cancelar e reembolsar (pedido Pago, Enviado ou Entregue) pede o motivo, reembolsa carta e frete pela Stripe, cancela o pedido, avisa as duas partes e grava o log de auditoria; sem motivo, informa que e obrigatorio; Liberar agora (pedido Entregue, inclusive com repasse falho ou problema resolvido a favor do vendedor) transfere como na CCD110; pedido Concluido ou Cancelado nao tem acoes; busca sem resultado oferece limpar os filtros.
     '''
 
     administrador -> backofficeApp '1. seleciona Pedidos e pagamentos no menu do BackOffice'
     backofficeApp -> modAdministracao '2. solicita os totais e a lista de pedidos'
-    modAdministracao -> bancoDados '2. soma custodia, a liberar em 7 dias, liberado no mes e repasses pendentes e lista os pedidos com status e o selo Atrasado'
+    modAdministracao -> bancoDados '2. soma custodia, a liberar em 7 dias, liberado no mes e repasses pendentes e lista os pedidos com status e os selos Atrasado e Problema relatado'
     backofficeApp -> administrador '2. apresenta os totais e a lista do mais recente para o mais antigo'
-    administrador -> backofficeApp '3. filtra por status ou busca pelo pedido, comprador ou vendedor'
+    administrador -> backofficeApp '3. filtra por status (ou problema relatado) ou busca pelo pedido, comprador ou vendedor'
     backofficeApp -> administrador '4. atualiza a lista'
     administrador -> backofficeApp '5. seleciona um pedido'
     backofficeApp -> modAdministracao '6. solicita o detalhe do pedido'
-    modAdministracao -> bancoDados '6. busca a linha do tempo, o pagamento, a taxa, o liquido, os ids na Stripe e o envio'
+    modAdministracao -> bancoDados '6. busca a linha do tempo, o pagamento, a taxa, o liquido, os ids na Stripe, o envio e o problema relatado'
     backofficeApp -> administrador '6. apresenta o detalhe do pedido'
   }
 }
