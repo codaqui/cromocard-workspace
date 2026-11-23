@@ -17,11 +17,11 @@
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/601-visualizar-indicadores-financeiros`
 
-- [ ] **T5** [P] · Criar api, queries e types dos indicadores financeiros — R2–R10 · AB#638
+- [x] **T5** [P] · Criar api, queries e types dos indicadores financeiros — R2–R10 · AB#638
   - Pronto quando: o typecheck passa.
-- [ ] **T6** · Criar cards financeiros e o livro razão no Dashboard — R2–R4, R6–R8 · AB#639
+- [x] **T6** · Criar cards financeiros e o livro razão no Dashboard — R2–R4, R6–R8 · AB#639
   - Pronto quando: os cards e o livro razão mostram os dados do seed.
-- [ ] **T7** · Acrescentar volume, reputação, população, preço médio e volume por grupo nas listas — R5, R9, R10 · AB#640
+- [x] **T7** · Acrescentar volume, reputação, população, preço médio e volume por grupo nas listas — R5, R9, R10 · AB#640
   - Pronto quando: as três listas mostram as colunas novas.
 
 ## Fechamento — workspace
