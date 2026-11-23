@@ -2,11 +2,12 @@
 
 - **Plano:** [plano.md](plano.md) · **User story:** AB#163
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
-- Depende de `cards.status` (CCD106, Planejada), `listings`/`card_conditions` (CCD084) e `price_history` (CCD075 ou CCD007); sem elas, as tarefas T1 a T4 não rodam de ponta a ponta.
-- Spec em Rascunho com as lacunas L1–L14 pendentes: o plano é provisório até o PO decidir.
+- A T12 cria antes o mínimo das dependências (decisão de 23/11/2026, no plano).
 
 ## Backend — `apps/cromocard-backend`, branch `feature/163-visualizar-detalhes`
 
+- [ ] **T12** · Criar `cards.status`, `card_conditions`, `listings` e `price_history` no schema, com migration e seed — R8, R13 · AB#163
+  - Pronto quando: `prisma migrate` aplica e o schema bate com o DBML.
 - [ ] **T1** · Criar validator e repository do perfil público da carta — R3, R5, R13 · AB#1106
   - O `404` reaproveita o `CardNotFoundError` de `catalog.errors.ts`.
   - Pronto quando: `findPublicById` traz identificação e fotos e ignora excluída e rascunho.
@@ -24,12 +25,12 @@
   - Pronto quando: o typecheck passa e `card-profile.api.spec.ts` cobre as duas chamadas.
 - [ ] **T6** · Criar galeria, preços e identificação do perfil da carta — R3–R5, R14 · CA1, CA9 · AB#1111
   - Pronto quando: `CardGallery.spec.tsx`, `CardMarketStats.spec.tsx` e `CardIdentification.spec.tsx` passam; print em 1280 px igual ao frame `1112-4615` e sem quebra em 375/768/1024 px.
-- [ ] **T7** · Criar lista de anúncios disponíveis da carta — R7–R9, R12, R14 · CA2, CA3, CA7, CA9 · AB#1112
+- [ ] **T7** · Criar lista de anúncios disponíveis da carta — R7–R9, R12, R14, R16, R18 · CA2, CA3, CA7, CA9 · AB#1112
   - Pronto quando: `CardListingsList.spec.tsx` cobre a ordem, "Ver anúncio", vazia e o botão do vendedor; print em 1280 px igual ao frame `1112-4615` e sem quebra em 375/768/1024 px.
 - [ ] **T8** · Criar modal Entre para continuar com retorno para a carta — R11, R14 · CA4, CA5, CA11 · AB#1113
   - Reaproveita o `LoginRequiredDialog` da CCD002 (feature `auth`); se a CCD030 entrar antes, cria o componente lá.
   - Pronto quando: `LoginRequiredDialog.spec.tsx` cobre as três saídas e o retorno; print em 1280 px igual ao frame `1112-5461` e sem quebra em 375/768/1024 px.
-- [ ] **T9** · Criar página e rota /cartas/:id com o histórico de preços — R1, R2, R6, R10, R14 · CA1, CA4–CA6, CA9, CA10 · AB#1114
+- [ ] **T9** · Criar página e rota /cartas/:id com o histórico de preços — R1, R2, R6, R10, R14, R15, R17 · CA1, CA4–CA6, CA9, CA10 · AB#1114
   - Pronto quando: `CardProfilePage.spec.tsx` cobre visitante, logado, carregando, erro e `404`; print em 1280 px igual aos frames `1112-4615` e `1112-5038` e sem quebra em 375/768/1024 px.
 - [ ] **T10** · Ligar os cartões da busca, do marketplace e da Home ao perfil da carta — R2 · CA1 · AB#1115
   - Pronto quando: o clique nos cartões existentes leva a `/cartas/:id`, coberto nos testes de cada lista.
@@ -55,3 +56,5 @@
 | R12 | T5, T7 |
 | R13 | T1, T3, T4 |
 | R14 | T6, T7, T8, T9 |
+| R15, R17 | T9 |
+| R16, R18 | T7 |

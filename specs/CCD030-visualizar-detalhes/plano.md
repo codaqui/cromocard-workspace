@@ -1,8 +1,8 @@
 # Plano — CCD030 Visualizar Detalhes
 
-> Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
+> Revisado em 23/11/2026 com as lacunas L1–L14 decididas e a spec aprovada.
 
-- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L11 pendentes)
+- **Spec:** [spec.md](spec.md), Aprovada (L1–L14 decididas)
 - **Repositórios:** backend · frontend (relidos em 2026-11-23 no `develop` dos dois apps, que já tem `cards.code` e `cards.variants` da CCD105; o perfil não os mostra, a CCD031 decide)
 - **Data:** 2026-11-22 (revisado em 2026-11-23) · **Autor:** Daniel Andrade
 
@@ -17,19 +17,18 @@ não há anúncios.
 
 ## Dependências
 
-- **CCD106** — `cards.status`, para o `404` do rascunho (R13).
-- **CCD084** — tabelas `listings` e `card_conditions` (`create_listings_table`, `create_card_conditions_table`) e a página
-  de criar anúncio ("Anunciar esta carta").
-- **CCD075** — tabela `price_history` (`create_price_history_table`, ou da CCD007 se ela entrar antes) e o componente do
-  histórico; esta story só o encaixa na página (R6).
-- **CCD031** — regras do bloco de identificação; o campo vem nesta resposta e a CCD031 fecha a categoria (L1) e o
-  marcador de vazio (L2).
-- **CCD079** — divide `GET /cards/:cardId/listings` com esta story (a que entrar primeiro cria; a outra só acrescenta
-  `excludeListingId` ou `sort`) e entrega o detalhe do anúncio, destino de "Ver anúncio" (R9).
-- **CCD002** — cria o `LoginRequiredDialog` na feature `auth` ("Entre para continuar"); a CCD030 o reaproveita com a
-  mensagem do perfil da carta. Quem entrar primeiro cria o componente.
-- **CCD004** — login e o retorno pela `loginRedirect` (`src/routes/guards/loginRedirect.ts`).
-- **CCD021** — também cria o módulo `src/domains/catalog/cards/` (`/cards`); quem entrar primeiro cria.
+Decisão de 23/11/2026: esta spec cria o mínimo de que depende, só para leitura, igual ao DBML; as specs donas passam a
+usar o que já existe.
+
+- **CCD106** — esta spec cria o enum `card_status` e a coluna `cards.status` (padrão `ACTIVE`), para o `404` do rascunho (R13).
+- **CCD084** — esta spec cria `listing_status`, `card_conditions` e `listings` (migration `create_listings_and_card_conditions`);
+  a CCD084 fica com a escrita e a página de criar anúncio ("Anunciar esta carta", em construção até lá).
+- **CCD075** — esta spec cria `price_source` e `price_history`; o gráfico e os períodos continuam da CCD075, e o perfil
+  reserva o bloco "Histórico de preços" para ela (em construção até lá).
+- **CCD031** — regras do bloco de identificação.
+- **CCD079** — divide `GET /cards/:cardId/listings`; esta story cria o endpoint.
+- **CCD002** — esta spec cria o `LoginRequiredDialog` na feature `auth`, com a mensagem por prop.
+- **CCD004** — login e o retorno pela `loginRedirect`.
 
 ## Dados
 
@@ -44,15 +43,14 @@ não há anúncios.
 ## Regras
 
 - **Anúncio ativo** (R8): `status = ACTIVE` e `deleted_at` nulo; vale para a lista, a contagem e o menor anúncio.
-- **Ordem** (R7): `price` asc, depois `created_at` asc; o select "Ordenar" só com "Menor preço" até a L3.
-- **Página da lista** (proposta, depende da L8): o frontend pede `pageSize=20` e mostra "Carregar mais"; o padrão do
+- **Ordem** (R7, L3): `price` asc, depois `created_at` asc; o select "Ordenar" só com "Menor preço".
+- **Página da lista** (L8): o frontend pede `pageSize=20` e mostra "Carregar mais"; o padrão do
   endpoint é 10, o mesmo da CCD079.
-- **Anúncio esgotado** (depende da L12): `available_quantity = 0` fica fora da contagem e do menor anúncio, e continua
-  na lista como indisponível.
-- **Condição nula** (depende da L13): `condition` vem `null` e a tela mostra "—".
-- **Preço médio de mercado** (proposta, depende da L2): média de `price_history.price` dos últimos 30 dias, só
+- **Anúncio esgotado** (L12): `available_quantity = 0` fica fora da lista, da contagem e do menor anúncio.
+- **Condição nula** (L13): `condition` vem `null` e a tela mostra "—".
+- **Preço médio de mercado** (L2): média de `price_history.price` dos últimos 30 dias, só
   `source = SALE` (a mesma base da CCD075); sem vendas, `null` e a tela mostra "—".
-- **Imagens** (R3, depende da L1): frente, verso e as fotos de `card_photos` não excluídas.
+- **Imagens** (R3, L1): frente, verso e as fotos de `card_photos` não excluídas.
 - **Carta inválida** (R13): inexistente, excluída ou `DRAFT` → `404 CARD_NOT_FOUND`.
 
 ## Contrato da API
@@ -68,6 +66,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
   ```json
   { "data": { "id": "uuid", "name": "Lionel Messi",
     "images": { "front": "https://…", "back": "https://…", "photos": ["https://…"] },
+    "breadcrumb": { "category": { "id": "uuid", "name": "Futebol" } },
     "identification": { "number": "10", "album": { "id": "uuid", "title": "Copa do Mundo 2026" },
       "category": { "id": "uuid", "name": "Seleções" }, "rarity": { "name": "Lendária" }, "language": { "name": "Português - Brasil" } },
     "market": { "averagePrice": "1890.00", "lowestListingPrice": "1750.00", "activeListingsCount": 4 } } }
@@ -81,9 +80,8 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 - **Entrada:** `page`, `pageSize` (padrão 10, máximo 50), `sort=price` (padrão) e `excludeListingId` (uuid, opcional,
   usado pela CCD079). O contrato é o mesmo da CCD079.
 - **Sucesso:** `200` `{ data: ListingSummary[], meta: { page, pageSize, total } }`, com
-  `ListingSummary = { id, price, availableQuantity, condition: { name } | null, seller: { id, username } }`.
-  `availableQuantity` deixa a tela marcar o anúncio esgotado (L12) e `condition` anulável cobre a L13. Se o PO aceitar
-  a L12 e a L13, o contrato muda nos dois planos (CCD030 e CCD079); até lá, a CCD079 segue com `condition: { name }`.
+  `ListingSummary = { id, price, condition: { name } | null, seller: { id, username } }`; só anúncios com estoque
+  (L12) e `condition` anulável (L13).
 - **Contagem na tela** (L12): o título "Anúncios disponíveis (<n>)" usa `market.activeListingsCount` do perfil, o mesmo
   número do card "Anúncios ativos"; o `meta.total` da lista serve só à paginação.
 - **Erros:** `400 VALIDATION_ERROR`, `404 CARD_NOT_FOUND` — R7, R13.
@@ -138,6 +136,6 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
 - O perfil é uma rota pública do catálogo (`/cards/:id`) e a lista de anúncios fica no marketplace
   (`/cards/:cardId/listings`), cada domínio com o seu dado; o resumo de anúncios entra no perfil pela service exportada do
   `listings.module.ts`, sem o catálogo ler o repository do marketplace.
-- Os selos do topo, o subtítulo com "Argentina", a cidade do vendedor e "Ver anúncios (4)" (L4–L6) não entram: viram
-  requisitos se o PO aceitar.
+- Selos, subtítulo e caminho (R17) saem da identificação; "Ver anúncios (<n>)" (R15) e a nota (R16) são do frontend; a
+  cidade do vendedor fica com a CCD080 (L5).
 - O `GET /cards/:cardId/listings` é um contrato só para a CCD030 e a CCD079; mudar um parâmetro é mudar os dois planos.
