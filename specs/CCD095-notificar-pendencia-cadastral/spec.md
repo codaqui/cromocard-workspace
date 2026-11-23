@@ -6,7 +6,7 @@
 - **Caso de uso:** [95-notificar-pendencia-cadastral.md](../../docs/Casos-De-Uso/95-notificar-pendencia-cadastral.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Administrador · **Pré-condições:** autenticado com papel `ADMIN`
 - **Data:** 2026-10-22 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-10-22, Daniel Andrade (PO); tela 246-2038 reconferida em 14/11/2026 (Felipe Consulim), depois do merge da CCD059/098; revista em 2026-11-19 (L5 a L7, Felipe Consulim)
+- **Aprovação:** 2026-10-22, Daniel Andrade (PO na época); tela 246-2038 reconferida em 14/11/2026 (Felipe Consulim, PO), depois do merge da CCD059/098; revista em 2026-11-19 (L5 a L7, Felipe Consulim)
 
 ## Objetivo
 
