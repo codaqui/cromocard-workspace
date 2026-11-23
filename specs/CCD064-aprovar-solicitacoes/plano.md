@@ -1,13 +1,20 @@
 # Plano — CCD064 Aprovar Solicitações
 
-- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
+- **Spec:** [spec.md](spec.md), aprovada em 2026-10-22 e revista em 2026-11-12 e 2026-11-16
 - **Data:** 2026-10-21 · **Autor:** Daniel Andrade
 
 ## Solução
 
-Subdomínio `catalog/requests`: lista e detalhe das solicitações, aprovar (usa o `catalogService` da CCD061 para criar
-o item, numa transação com a mudança de status) e recusar com motivo. Cada decisão grava `audit_logs` e avisa o
-solicitante com uma notificação.
+Subdomínio `catalog/requests`: lista e detalhe das solicitações, aprovar e recusar com motivo. Cada decisão grava
+`audit_logs` e avisa o solicitante pelo `notificationsService`.
+
+- **Aprovar:** reserva a solicitação (passa para `APPROVED` só se ainda estiver `PENDING`, para dois admins não criarem
+  o item duas vezes), cria o item com o `catalogService` da CCD061 e, numa única transação, grava o vínculo, o log
+  `CATALOG_REQUEST_APPROVED` e a notificação. A criação fica fora da transação, porque o `catalogService` não aceita
+  uma; se o catálogo recusar o item, a solicitação volta a `PENDING` (R16).
+- **Recusar:** a mudança de status, o log e a notificação entram numa única transação.
+
+Ajustado ao implementado na revisão do backend #29 (Lucca, 17/11/2026).
 
 ## Dependências
 
@@ -21,8 +28,8 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog-
 |---|---|---|---|---|
 | `GET /` | `type`, `status` (padrão `PENDING`), `page`, `pageSize` | `200` `{ data, meta }` + `meta.pendingByType` | `400` | R3, R4 |
 | `GET /:id` | — | `200` com `data` e o solicitante | `404 CATALOG_REQUEST_NOT_FOUND` | R5 |
-| `POST /:id/approve` | — | `200` com o item criado | `404`, `409 REQUEST_ALREADY_REVIEWED`, `409 CARD_NUMBER_TAKEN` | R6–R11, R13 |
-| `POST /:id/reject` | `{ reason }` | `200` | `404`, `409 REQUEST_ALREADY_REVIEWED` | R14 |
+| `POST /:id/approve` | — | `200` com a solicitação revisada e `createdItem: { type, id, name }` | `404`, `409 REQUEST_ALREADY_REVIEWED`, `409 CARD_NUMBER_TAKEN` e os demais erros do catálogo, `422 REQUEST_DATA_INCOMPLETE` | R6–R11, R13, R16 |
+| `POST /:id/reject` | `{ reason }` (3 a 500) | `200` com a solicitação revisada | `400`, `404`, `409 REQUEST_ALREADY_REVIEWED` | R14 |
 
 ## Backend
 
@@ -39,7 +46,7 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog-
 |---|---|---|
 | `src/features/catalog/requests/` (api, queries, types) | chamadas | R3–R7 |
 | `pages/CatalogRequestsPage/` | abas por tipo com contadores e lista de cartões | R2–R4 |
-| `components/CatalogRequestCard/` | dados por tipo (carta, álbum com lista de cartas, categoria), "Aprovar e integrar" e "Recusar" com `ConfirmDialog` | R5–R12 |
+| `components/CatalogRequestCard/` | dados por tipo (carta com franquia, raridade, idioma e imagens; álbum; categoria), "Aprovar" e "Recusar" | R5–R12 |
 
 ## Testes
 
@@ -55,3 +62,25 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog-
 - R6: `ApproveRequestDialog` resume o que será criado; R14: `RejectRequestDialog` com o motivo obrigatório e o erro.
 - R11: o `409` de solicitação processada devolve quem e quando, e a tela mostra o diálogo `847-1878`.
 - R16: o `409` do catálogo (número repetido) mostra o diálogo `847-2371` e a solicitação continua pendente.
+
+## Revisão de 16/11/2026 (L8–L11)
+
+- **Dados sugeridos** (`catalog_requests.data`): carta `{ name, albumId?, number?, categoryId, rarityId, languageId,
+  frontImageUrl, backImageUrl? }`; álbum `{ title, categoryId?, publisher?, year? }`; categoria `{ name, type }`. O
+  service valida a carta com o `createCardSchema` do catálogo antes de criar: faltou campo, `422
+  REQUEST_DATA_INCOMPLETE` com `details` por campo, e nada é gravado (R16, CA8).
+- **Aprovar** cria o item com o `catalogService` da CCD061 (carta publicada, álbum sem cartas, categoria com
+  `data.createdCategoryId`), muda o status só se ainda estiver `PENDING`, grava `CATALOG_REQUEST_APPROVED` e cria a
+  notificação. O log de criação do próprio catálogo (`CARD_CREATED` etc.) continua, porque registra o item novo.
+- **`409 REQUEST_ALREADY_REVIEWED`** devolve em `details` a lista padrão de erro (`{ field, message }`, ADR-006) com três
+  itens: `status` (`APPROVED`/`REJECTED`), `reviewedBy` (o `username` de quem analisou, ou o nome quando não há
+  `username`) e `reviewedAt` (ISO 8601), para o diálogo `847-1878`. Ajustado ao implementado na revisão do backend #29
+  (Lucca, 17/11/2026): o frontend já lê esse formato.
+- **`GET /`**: `meta.pendingByType` = `{ CARD, ALBUM, CATEGORY, ALL }`; cada item traz o solicitante (`id`, `name`,
+  `username`) e é ordenado do mais antigo para o mais novo. Os ids da carta (franquia, raridade, idioma, álbum) vêm
+  resolvidos em nomes para exibir no card.
+- **Código `#SOL-`**: os 4 últimos caracteres do id em maiúsculas (o início do UUID v7 é o horário e se repete).
+- **Notificação** (L11): `type = CATALOG_REQUEST`, título e mensagem do caso de uso, sem `reference_link`.
+- **Abas** (L10): "Todas · Cartas · Álbuns · Categorias", com o selo "STATUS DA FILA · N Pendentes".
+- **Seed**: a sugestão de carta pendente ganha franquia, raridade, idioma e imagem; entram uma sugestão sem idioma
+  (CA8), uma carta com número repetido pendente (CA6) e uma solicitação já aprovada (CA5).
