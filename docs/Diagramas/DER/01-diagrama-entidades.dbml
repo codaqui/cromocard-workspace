@@ -31,11 +31,6 @@ Enum privacy {
   PRIVATE
 }
 
-Enum category_type {
-  ALBUM
-  CARD
-}
-
 Enum album_status {
   ACTIVE
   INACTIVE
@@ -302,7 +297,6 @@ Table categories [headercolor: #2E7D5B] {
   id                 uuid          [pk, default: `uuidv7()`]
   parent_category_id uuid          [note: 'FK -> categories.id (selecao / time)']
   name               varchar(90)   [not null]
-  type               category_type [not null]
   description        varchar(255)
   is_default         boolean       [not null, default: false]
   slug               varchar(100)
@@ -371,7 +365,7 @@ Table cards [headercolor: #2E7D5B] {
   front_image_url varchar(255)
   back_image_url  varchar(255)
   status          card_status [not null, default: 'ACTIVE']
-  code            varchar(30) [unique]
+  code            varchar(30)
   variants        varchar(120)
   release_year    smallint
   created_at      timestamptz  [not null]
@@ -379,6 +373,7 @@ Table cards [headercolor: #2E7D5B] {
   deleted_at      timestamptz
   indexes {
     (album_id, number) [unique]
+    code [unique, note: 'So entre as nao excluidas (ADR-063)']
   }
 }
 
