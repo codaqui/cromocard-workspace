@@ -6,7 +6,7 @@
 - **Caso de uso:** [30-visualizar-detalhes.md](../../docs/Casos-De-Uso/30-visualizar-detalhes.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** nenhuma; comprar, favoritar e adicionar à coleção pedem login
 - **Data:** 2026-11-21 (revisada em 2026-11-23) · **Autor:** Daniel Andrade
-- **Aprovação:** Lucas Oliveira Lima, pelo PO, em 23/11/2026
+- **Aprovação:** Lucas Oliveira Lima, pelo PO, em 23/11/2026; reaprovada em 24/11/2026 com as L9 (revista), L18 e L19
 
 ## Objetivo
 
