@@ -179,7 +179,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD004](CCD004-realizar-login/spec.md) | Realizar Login | MVP | Rascunho | #109 |
 | [CCD005](CCD005-acessar-central-de-ajuda-faq/spec.md) | Acessar Central de Ajuda (FAQ) | MVP | Rascunho | #110 |
 | [CCD006](CCD006-recuperar-senha/spec.md) | Recuperar Senha | MVP | Implementada | #111 |
-| [CCD007](CCD007-visualizar-resumo-da-colecao/spec.md) | Visualizar Resumo da Coleção | MVP | Rascunho | #113 |
+| [CCD007](CCD007-visualizar-resumo-da-colecao/spec.md) | Visualizar Resumo da Coleção | MVP | Aprovada | #113 |
 | [CCD008](CCD008-listar-album/spec.md) | Listar Álbum | MVP | Rascunho | #114 |
 | [CCD009](CCD009-buscar-album/spec.md) | Buscar Álbum | MVP | Rascunho | #115 |
 | [CCD010](CCD010-solicitar-album/spec.md) | Solicitar Álbum | MVP | Rascunho | #116 |

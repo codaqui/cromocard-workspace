@@ -1,12 +1,12 @@
 # CCD007 — Visualizar Resumo da Coleção
 
-- **Status:** Rascunho
+- **Status:** Aprovada
 - **Fase:** MVP
 - **User story:** #113 `CCD007-Visualizar Resumo da Coleção`
 - **Caso de uso:** [07-visualizar-resumo-da-colecao.md](../../docs/Casos-De-Uso/07-visualizar-resumo-da-colecao.md) · complemento EA-007-01 em [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
 - **Atores:** Cliente · **Pré-condições:** autenticado e na tela inicial do Painel Cliente (Dashboard)
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade
-- **Aprovação:** — (decisões do PO registradas em 23/11/2026; aguarda a aprovação)
+- **Aprovação:** Felipe Consulim (PO), 23/11/2026
 
 ## Objetivo
 

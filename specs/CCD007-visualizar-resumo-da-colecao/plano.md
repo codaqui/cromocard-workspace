@@ -1,9 +1,9 @@
 # Plano — CCD007 Visualizar Resumo da Coleção
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026), e revisado por Lucca Rocha em 23/11/2026 com as
-> decisões do PO (L1–L11). A spec aguarda a aprovação do PO.
+> decisões do PO (L1–L11). Spec aprovada pelo PO em 23/11/2026.
 
-- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L11 decididas em 23/11/2026; aguarda a aprovação)
+- **Spec:** [spec.md](spec.md), Aprovada pelo PO em 23/11/2026 (lacunas L1–L11 decididas)
 - **Repositórios:** backend · frontend (relidos em 23/11/2026 no `develop` dos dois apps)
 - **Data:** 2026-11-22 (revisado em 2026-11-23) · **Autor:** Daniel Andrade · **Revisão:** Lucca Rocha
 
