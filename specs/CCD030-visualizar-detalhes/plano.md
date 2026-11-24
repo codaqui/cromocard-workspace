@@ -79,9 +79,12 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 - **Acesso:** público.
 - **Entrada:** `page`, `pageSize` (padrão 10, máximo 50), `sort=price` (padrão) e `excludeListingId` (uuid, opcional,
   usado pela CCD079). O contrato é o mesmo da CCD079.
-- **Sucesso:** `200` `{ data: ListingSummary[], meta: { page, pageSize, total } }`, com
-  `ListingSummary = { id, price, condition: { name } | null, seller: { id, username } }`; só anúncios com estoque
-  (L12) e `condition` anulável (L13).
+- **Sucesso:** `200` `{ data: ListingSummary[], meta: { page, pageSize, total, totalPages } }`, com
+  `ListingSummary = { id, price, condition: { name } | null, seller: { id, username: string | null } }`; só anúncios
+  com estoque de vendedor ativo e não excluído (L12) e `condition` anulável (L13). O `username` é anulável porque a
+  coluna `users.username` é opcional no DER.
+- **Índices** (desempenho da lista e do perfil): `listings (card_id, status, price)` e
+  `price_history (card_id, source, reference_date)`, uma migration por tabela, registrados no DER.
 - **Contagem na tela** (L12): o título "Anúncios disponíveis (<n>)" usa `market.activeListingsCount` do perfil, o mesmo
   número do card "Anúncios ativos"; o `meta.total` da lista serve só à paginação.
 - **Erros:** `400 VALIDATION_ERROR`, `404 CARD_NOT_FOUND` — R7, R13.
@@ -95,6 +98,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 | `src/domains/catalog/cards/cards.service.ts` + `.spec.ts` | monta o perfil; preço médio e resumo dos anúncios pelas services exportadas do marketplace e do histórico | R3–R5, R13 |
 | `src/domains/catalog/cards/cards.controller.ts` · `.routes.ts` · `.swagger.ts` · `cards.module.ts` | `GET /cards/:id`, público | R1 |
 | `src/domains/marketplace/listings/listings.repository.ts` · `listings.service.ts` + `.spec.ts` | `findActiveByCard` (ordem e página) e `summaryByCard` (contagem e menor preço) | R7, R8 |
+| `src/domains/marketplace/listings/listings.contract.ts` | tipos e schema da lista, para o `cards` importar sem montar o módulo (sem Prisma) | R7 |
 | `src/domains/marketplace/listings/listings.module.ts` | exporta a `ListingsService`; a rota `GET /cards/:cardId/listings` fica no `cards.routes.ts`, que confere a carta (404) antes de listar, sem dependência circular entre os módulos | R7, R13 |
 | `src/routes.ts` | registra `cardsModule` e `listingsModule` | R1 |
 

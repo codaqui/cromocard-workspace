@@ -19,6 +19,6 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O visitante seleciona "Favoritar" ou "Adicionar à coleção". |  |
-|  | 2. O sistema mostra "Entre para continuar", com "Continuar com Google", "Entrar com e-mail e senha" e "Criar conta grátis"; depois do login, do login pelo Google ou do cadastro, o usuário volta para a carta. O visitante vê ainda o aviso "Ainda não tem conta? Você pode ver tudo nesta página; para comprar, favoritar ou adicionar à coleção, basta entrar."; o usuário logado não vê o aviso. |
+|  | 2. O sistema mostra "Entre para continuar", com "Continuar com Google", "Entrar com e-mail e senha" e "Criar conta grátis"; depois do login ou do cadastro, o usuário volta para a carta (o login pelo Google é da CCD004 e, até ela existir, leva a uma página em construção). O visitante vê ainda o aviso "Ainda não tem conta? Você pode ver tudo nesta página; para comprar, favoritar ou adicionar à coleção, basta entrar."; o usuário logado não vê o aviso. |
 |  | 3. Caso a carta não tenha anúncios ativos, a lista informa que não há anúncios, e o vendedor logado vê a opção "Anunciar esta carta" (o visitante não vê o botão); o botão leva a Criar Anúncio. |
-|  | 4. Caso a carta não exista, tenha sido excluída ou seja um rascunho, o sistema mostra "Carta não encontrada", com o link para o marketplace. |
+|  | 4. Caso a carta não exista, tenha sido excluída ou seja um rascunho, o sistema mostra "Carta não encontrada", com o link "Voltar para o marketplace", que leva à página inicial enquanto o marketplace não tem tela própria. |
