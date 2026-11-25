@@ -6,18 +6,18 @@
 - Se a CCD072 ainda não tiver criado a base do `PaymentProvider` e do webhook da Stripe, a T2 e a T4 criam essa base como
   o plano da CCD072 descreve.
 
-## Backend — `apps/cromocard-backend`, branch `feature/920-conectar-conta-de-recebimento`
+## Backend — `apps/cromocard-backend`, branch `feature/920-conectar-conta-de-recebimento` (sai do #43 com o #44 mesclado)
 
-- [ ] **T1** · Criar migration add_stripe_account_to_users_table e o seed dos vendedores — R3, R4 · AB#1505
-  - Pronto quando: `users` tem `stripe_account_id` (único) e `stripe_account_status`, e o seed traz vendedores sem conta,
-    `PENDING`, `VERIFYING` e `READY`.
+- [ ] **T1** · Criar o seed dos vendedores com a conta de recebimento — R3, R4 · AB#1505
+  - Pronto quando: o seed traz vendedores sem conta, `PENDING`, `VERIFYING` e `READY` (as colunas vêm da migration
+    `add_stripe_account_to_users_table` do backend #44).
 - [ ] **T2** · Acrescentar a conta conectada Express ao PaymentProvider — R3, R7, R9 · AB#1506
   - Pronto quando: Stripe e provider falso têm `createConnectedAccount`, `createOnboardingLink` e `getConnectedAccount`, e o
     `.spec.ts` do falso passa.
 - [ ] **T3** · Criar service da conta de recebimento com o mapa de status — R3–R5, R7, R8 · CA2, CA3, CA6, CA7, CA9 · AB#1507
   - Pronto quando: `connected-accounts.service.spec.ts` e `connected-accounts.status.spec.ts` cobrem CA2, CA3, CA6, CA7 e
     CA9, inclusive o `assertReady` com `422 STRIPE_ACCOUNT_NOT_READY`.
-- [ ] **T4** · Tratar o evento account.updated no webhook da Stripe — R5, R6 · CA4, CA5 · AB#1508
+- [ ] **T4** · Tratar o evento account.updated no webhook da Stripe — R5, R6, R11 · CA4, CA5, CA12 · AB#1508
   - Pronto quando: o evento válido grava o estado, o repetido não muda nada e a assinatura inválida responde `400`.
 - [ ] **T5** · Criar rotas GET /me/stripe-account, POST /onboarding-link e POST /refresh — R1 · CA8 · AB#1509
   - Pronto quando: as rotas aparecem no `/docs` e estão registradas em `src/routes.ts`.
@@ -57,3 +57,4 @@
 | R8 | T3, T8, T9 |
 | R9 | T2 |
 | R10 | T9 |
+| R11 | T3, T4 |
