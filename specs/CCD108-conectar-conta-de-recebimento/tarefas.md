@@ -8,34 +8,34 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/920-conectar-conta-de-recebimento` (sai do #43 com o #44 mesclado)
 
-- [ ] **T1** · Criar o seed dos vendedores com a conta de recebimento — R3, R4 · AB#1505
+- [x] **T1** · Criar o seed dos vendedores com a conta de recebimento — R3, R4 · AB#1505
   - Pronto quando: o seed traz vendedores sem conta, `PENDING`, `VERIFYING` e `READY` (as colunas vêm da migration
     `add_stripe_account_to_users_table` do backend #44).
-- [ ] **T2** · Acrescentar a conta conectada Express ao PaymentProvider — R3, R7, R9 · AB#1506
+- [x] **T2** · Acrescentar a conta conectada Express ao PaymentProvider — R3, R7, R9 · AB#1506
   - Pronto quando: Stripe e provider falso têm `createConnectedAccount`, `createOnboardingLink` e `getConnectedAccount`, e o
     `.spec.ts` do falso passa.
-- [ ] **T3** · Criar service da conta de recebimento com o mapa de status — R3–R5, R7, R8 · CA2, CA3, CA6, CA7, CA9 · AB#1507
+- [x] **T3** · Criar service da conta de recebimento com o mapa de status — R3–R5, R7, R8 · CA2, CA3, CA6, CA7, CA9 · AB#1507
   - Pronto quando: `connected-accounts.service.spec.ts` e `connected-accounts.status.spec.ts` cobrem CA2, CA3, CA6, CA7 e
     CA9, inclusive o `assertReady` com `422 STRIPE_ACCOUNT_NOT_READY`.
-- [ ] **T4** · Tratar o evento account.updated no webhook da Stripe — R5, R6, R11 · CA4, CA5, CA12 · AB#1508
+- [x] **T4** · Tratar o evento account.updated no webhook da Stripe — R5, R6, R11 · CA4, CA5, CA12 · AB#1508
   - Pronto quando: o evento válido grava o estado, o repetido não muda nada e a assinatura inválida responde `400`.
-- [ ] **T5** · Criar rotas GET /me/stripe-account, POST /onboarding-link e POST /refresh — R1 · CA8 · AB#1509
+- [x] **T5** · Criar rotas GET /me/stripe-account, POST /onboarding-link e POST /refresh — R1 · CA8 · AB#1509
   - Pronto quando: as rotas aparecem no `/docs` e estão registradas em `src/routes.ts`.
-- [ ] **T6** · Criar testes de integração da conta de recebimento — R1–R8 · CA2, CA4, CA5, CA7, CA8 · AB#1510
+- [x] **T6** · Criar testes de integração da conta de recebimento — R1–R8 · CA2, CA4, CA5, CA7, CA8 · AB#1510
   - Pronto quando: `tests/integration/marketplace/connected-accounts.spec.ts` passa, com 90% de cobertura nos arquivos
     alterados.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/920-conectar-conta-de-recebimento`
 
-- [ ] **T7** [P] · Criar rotas e menu do Painel do vendedor — R1, R2 · AB#1511
+- [x] **T7** [P] · Criar rotas e menu do Painel do vendedor — R1, R2 · AB#1511
   - Pronto quando: `/vendedor` abre só para `SELLER` e o menu lateral tem o grupo "Vendedor" com "Visão geral".
-- [ ] **T8** · Criar api e queries da conta de recebimento — R3–R8 · AB#1512
+- [x] **T8** · Criar api e queries da conta de recebimento — R3–R8 · AB#1512
   - Pronto quando: o typecheck passa e o `.api.spec.ts` cobre os três endpoints.
-- [ ] **T9** · Criar aviso da conta de recebimento na Visão geral — R2, R4, R7, R8, R10 · CA1, CA3, CA6, CA7, CA9–CA11 · AB#1513
+- [x] **T9** · Criar aviso da conta de recebimento na Visão geral — R2, R4, R7, R8, R10 · CA1, CA3, CA6, CA7, CA9–CA11 · AB#1513
   - Pronto quando: `SellerOverviewPage.spec.tsx` e `StripeAccountNotice.spec.tsx` cobrem os quatro estados, o carregamento
     e o erro; print em 1280 px igual aos frames `1112-9866` e `1112-10347` (o aviso; as métricas do fundo entram com a
     CCD092) e sem quebra em 375/768/1024 px.
-- [ ] **T10** · Criar páginas de volta e de renovação do cadastro na Stripe — R4, R7 · CA3, CA6 · AB#1514
+- [x] **T10** · Criar páginas de volta e de renovação do cadastro na Stripe — R4, R7 · CA3, CA6 · AB#1514
   - Pronto quando: `StripeReturnPage.spec.tsx` grava o estado e volta ao painel, e a renovação redireciona para o link novo.
 
 ## Fechamento — workspace
