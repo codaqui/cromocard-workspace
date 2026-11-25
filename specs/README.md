@@ -244,7 +244,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD080](CCD080-visualizar-dados-do-vendedor/spec.md) | Visualizar Dados do Vendedor | MVP (fatia mínima do marketplace, ADR-027; a user story perdeu a marca `***` em 18/11/2026) | Rascunho | #1421 |
 | [CCD082](CCD082-denunciar-anuncio/spec.md) | Denunciar Anúncio | MVP (era Futuro Marketplace; o Figma ganhou a denúncia em 22/11/2026) | Rascunho | #1433 |
 | [CCD083](CCD083-denunciar-vendedor/spec.md) | Denunciar Vendedor | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #1440 |
-| [CCD084](CCD084-criar-anuncio/spec.md) | Criar Anúncio | MVP (sem marca na user story; fatia mínima do marketplace, "Vender", no ADR-027) | Planejada | #343 |
+| [CCD084](CCD084-criar-anuncio/spec.md) | Criar Anúncio | MVP (sem marca na user story; fatia mínima do marketplace, "Vender", no ADR-027) | Em implementação | #343 |
 | [CCD085](CCD085-editar-anuncio/spec.md) | Editar Anúncio (agrupa CCD086, CCD087, CCD088) | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #344 #345 #346 #347 |
 | [CCD090](CCD090-denunciar-usuario/spec.md) | Denunciar Usuário | MVP pela legenda (a user story, no Painel Vendedor, não tem marca); o ADR-027 tira do MVP as denúncias do marketplace: ver L1 | Rascunho | #349 |
 | [CCD091](CCD091-editar-perfil/spec.md) | Editar Perfil | MVP (sem marca nas user stories do Painel Vendedor) | Rascunho | #350 |

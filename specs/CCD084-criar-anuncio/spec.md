@@ -1,6 +1,6 @@
 # CCD084 — Criar Anúncio
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP (sem marca na user story; fatia mínima do marketplace, "Vender", no ADR-027)
 - **User story:** #343 `CCD084-Criar Anúncio`
 - **Caso de uso:** [84-criar-anuncio.md](../../docs/Casos-De-Uso/84-criar-anuncio.md)

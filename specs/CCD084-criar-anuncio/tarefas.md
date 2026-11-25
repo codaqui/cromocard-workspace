@@ -6,20 +6,20 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/343-criar-anuncio`
 
-- [ ] **T1** · Acrescentar fotos de exemplo aos anúncios do seed — R8 · AB#1448
+- [x] **T1** · Acrescentar fotos de exemplo aos anúncios do seed — R8 · AB#1448
   - As tabelas e as 5 condições já vieram na base do marketplace (backend #44, 24/11/2026).
   - Pronto quando: o seed traz anúncios com e sem foto em `listing_photos`.
-- [ ] **T2** · Criar cálculo da taxa de 5% e do líquido — R6 · CA1 · AB#1449
+- [x] **T2** · Criar cálculo da taxa de 5% e do líquido — R6 · CA1 · AB#1449
   - Pronto quando: `platform-fee.spec.ts` cobre R$ 1.850,00 → R$ 92,50 / R$ 1.757,50 e o arredondamento para baixo.
-- [ ] **T3** · Criar endpoints GET /cards e GET /card-conditions — R3, R4 · CA3 · AB#1450
+- [x] **T3** · Criar endpoints GET /cards e GET /card-conditions — R3, R4 · CA3 · AB#1450
   - Pronto quando: a busca não traz carta excluída e as condições vêm na ordem. O filtro de `DRAFT` entra com a CCD106 (L15).
-- [ ] **T4** · Liberar o upload de fotos de anúncio para o vendedor — R8 · CA6 · AB#1451
+- [x] **T4** · Liberar o upload de fotos de anúncio para o vendedor — R8 · CA6 · AB#1451
   - Pronto quando: `SELLER` envia para a pasta `listings` e o arquivo de 5 MB ou PDF é recusado.
-- [ ] **T5** · Criar service de criação de anúncio com elegibilidade — R3, R5–R10 · CA1, CA3–CA5, CA7, CA8, CA13 · AB#1452
+- [x] **T5** · Criar service de criação de anúncio com elegibilidade — R3, R5–R10 · CA1, CA3–CA5, CA7, CA8, CA13 · AB#1452
   - Pronto quando: `seller-listings.service.spec.ts` cobre CA1, CA3–CA5, CA7, CA8 e CA13 (condição obrigatória, quantidade 1–99).
-- [ ] **T6** · Criar endpoints GET /me/listings/eligibility e POST /me/listings — R1, R3 · CA9 · AB#1453
+- [x] **T6** · Criar endpoints GET /me/listings/eligibility e POST /me/listings — R1, R3 · CA9 · AB#1453
   - Pronto quando: as rotas aparecem no `/docs` e estão em `src/routes.ts`.
-- [ ] **T7** · Criar testes de integração da criação de anúncio — R1, R3–R10 · CA1, CA3–CA9, CA13 · AB#1454
+- [x] **T7** · Criar testes de integração da criação de anúncio — R1, R3–R10 · CA1, CA3–CA9, CA13 · AB#1454
   - Pronto quando: `tests/integration/marketplace/seller-listings.spec.ts` passa, com 90% de cobertura nos arquivos alterados.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/343-criar-anuncio`

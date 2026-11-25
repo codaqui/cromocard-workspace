@@ -43,7 +43,8 @@ líquido e publica com `POST /api/v1/me/listings`, que grava `listings` `ACTIVE`
 | `cards` | sim | — (status vem da CCD106) | `status`, `deleted_at`, `front_image_url` |
 | `users` · `addresses` | sim | — (#44 criou as colunas Stripe; a CCD108 as preenche) | `stripe_account_status`; `is_primary`, `deleted_at` |
 
-Sem tabela nem coluna nova. A condição obrigatória (L5) fica na validação, sem mudar o DBML. A quantidade é inteira de 1 a
+Sem tabela nem coluna nova. A migration `insert_card_conditions` grava as 5 condições com os mesmos ids do seed, para
+existirem também em homologação e produção, onde o seed não roda. A condição obrigatória (L5) fica na validação, sem mudar o DBML. A quantidade é inteira de 1 a
 99 (L10). Dois anúncios iguais do mesmo vendedor são permitidos (L13).
 
 ## Regras
