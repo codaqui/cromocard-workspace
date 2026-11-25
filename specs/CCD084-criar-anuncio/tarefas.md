@@ -12,7 +12,7 @@
 - [ ] **T2** · Criar cálculo da taxa de 5% e do líquido — R6 · CA1 · AB#1449
   - Pronto quando: `platform-fee.spec.ts` cobre R$ 1.850,00 → R$ 92,50 / R$ 1.757,50 e o arredondamento para baixo.
 - [ ] **T3** · Criar endpoints GET /cards e GET /card-conditions — R3, R4 · CA3 · AB#1450
-  - Pronto quando: a busca não traz carta `DRAFT` nem excluída e as condições vêm na ordem.
+  - Pronto quando: a busca não traz carta excluída e as condições vêm na ordem. O filtro de `DRAFT` entra com a CCD106 (L15).
 - [ ] **T4** · Liberar o upload de fotos de anúncio para o vendedor — R8 · CA6 · AB#1451
   - Pronto quando: `SELLER` envia para a pasta `listings` e o arquivo de 5 MB ou PDF é recusado.
 - [ ] **T5** · Criar service de criação de anúncio com elegibilidade — R3, R5–R10 · CA1, CA3–CA5, CA7, CA8, CA13 · AB#1452
@@ -23,6 +23,8 @@
   - Pronto quando: `tests/integration/marketplace/seller-listings.spec.ts` passa, com 90% de cobertura nos arquivos alterados.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/343-criar-anuncio`
+
+> Começa depois que a CCD108 (frontend #34 e backend #45) entrar no `develop` (L14).
 
 - [ ] **T8** [P] · Criar tipos, schema, taxa, api e queries do anúncio — R3, R5, R6 · CA1, CA4, CA13 · AB#1455
   - Pronto quando: `listings.schemas.spec.ts` e `listings.fee.spec.ts` passam e o typecheck passa.
@@ -35,7 +37,8 @@
   - Pronto quando: `useCreateListingFlow.spec.tsx` cobre CA7 e CA8; print em 1280 px igual ao frame `1112-10828` e sem
     quebra em 375/768/1024 px.
 - [ ] **T12** · Ligar Criar anúncio no Painel do vendedor, Anunciar esta carta no perfil da carta e Anunciar repetida na Início — R2 · CA2, CA14 · AB#1459
-  - Pronto quando: os três botões abrem o fluxo; o do perfil da carta e o da Início já vêm com a carta escolhida, e "Anunciar repetida" não aparece para `CUSTOMER`.
+  - Pronto quando: o botão do Painel abre o fluxo e o fluxo aceita uma carta já escolhida. "Anunciar esta carta" (CCD030) e
+    "Anunciar repetida" (CCD007) chamam o fluxo quando essas páginas existirem (L16).
 
 ## Fechamento — workspace
 

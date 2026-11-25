@@ -53,7 +53,10 @@ Sem tabela nem coluna nova. A condição obrigatória (L5) fica na validação, 
   CCD111. A tela recalcula enquanto o vendedor digita (L2).
 - **Pode anunciar** (R9, R10): conta `READY` e endereço principal não excluído. A ordem das checagens é a da conta e
   depois a do endereço. O credenciamento (`seller_verifications`) não entra (L11).
-- **Carta do catálogo** (R4): `cards.status = ACTIVE` e `deleted_at` nulo; outra carta responde `404 CARD_NOT_FOUND`.
+- **Carta do catálogo** (R4): `deleted_at` nulo; outra carta responde `404 CARD_NOT_FOUND`. O filtro `cards.status = ACTIVE`
+  entra quando a CCD106 criar a coluna (L15).
+- **Conta pronta** (R9): `users.stripe_account_status = READY`, lido direto do usuário; quando a CCD108 trouxer o
+  `connectedAccountsService.assertReady`, a checagem passa a usá-lo (L14).
 - **Fotos** (R8): até 4 URLs devolvidas pelo upload, gravadas com `sort_order` 0–3 na ordem do corpo. Sem foto, o anúncio
   usa `cards.front_image_url` (quem mostra é o detalhe da CCD079).
 
@@ -84,8 +87,8 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 ### `POST /api/v1/uploads` (existente) — R8
 
 - Muda só o acesso, para `authorize('ADMIN', 'SELLER')`, e a pasta, que ganha `listings`. O limite de 4 MB e PNG, JPG ou
-  WEBP já estão no `uploads.validator.ts` (`400 VALIDATION_ERROR` / `FILE_TOO_LARGE` / `UNSUPPORTED_FILE_TYPE`, os erros
-  que o domínio já usa).
+  WEBP já estão no domínio (`400 VALIDATION_ERROR`, `413 FILE_TOO_LARGE` e `415 UNSUPPORTED_FILE_TYPE`, os erros que o
+  domínio já usa, ADR-050).
 
 ### `POST /api/v1/me/listings` — R1, R3–R10
 
@@ -94,7 +97,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 
   ```json
   { "cardId": "uuid", "conditionId": "uuid", "price": "1850.00", "availableQuantity": 1,
-    "description": "string até 2000", "photoUrls": ["https://…"] }
+    "description": "opcional, até 2000", "photoUrls": ["https://…"] }
   ```
 
 - **Sucesso:** `201`
