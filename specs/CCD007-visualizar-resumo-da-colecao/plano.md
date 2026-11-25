@@ -22,9 +22,8 @@ do marketplace. O valor estimado (R7) e o "Menor anúncio" (R8) ligam quando `pr
 
 - **CCD004 (Realizar Login)**: `authenticate`, `authorize` e o `RequireAuth` do frontend (já no código).
 - **CCD061 (Gestão de Catálogo)**: `albums`, `cards` e `categories` já existem no `schema.prisma`.
-- **CCD097 (Indicadores Financeiros)**: o PR codaqui/cromocard-backend#41 (aberto) cria `listings`, `orders`, `payments`
-  e `price_history`. O PO também planeja essas tabelas na base do marketplace (Onda 0). Quem entrar primeiro cria; a
-  T2 desta story sai se `price_history` já estiver no `develop`.
+- **CCD097 (Indicadores Financeiros)**: o codaqui/cromocard-backend#41, mergeado em 24/11/2026, criou `listings`, `orders`,
+  `payments` e `price_history`, e o #44 completou as tabelas do marketplace. A T2 desta story fica sem migration.
 - **CCD084 / CCD097**: criam `listings` (`create_listings_table`). O "Menor anúncio" da carta faltante (L6) lê essa
   tabela por uma interface (ver Decisões técnicas); sem anúncio, "—".
 - **CCD030 (Visualizar Detalhes)** e **CCD084 (Criar Anúncio)**: destinos de "Ver carta" e "Anunciar repetida". Até
@@ -39,7 +38,7 @@ do marketplace. O valor estimado (R7) e o "Menor anúncio" (R8) ligam quando `pr
 | `collections` | não | `create_collections_table` | copiada do DBML: `user_id` único, `is_public` default `false`, `share_link` único (R1, R3) |
 | `user_albums` | não | `create_user_albums_table` | copiada do DBML: único (`collection_id`, `album_id`), `is_favorite`, `progress_percentage decimal(5,2)` (R3, R5) |
 | `collection_cards` | não | `create_collection_cards_table` | copiada do DBML, com o enum `collection_card_status` (`OWNED`, `MISSING`, `DUPLICATE`) e `market_value`; único (`collection_id`, `card_id`) (R4) |
-| `price_history` | não | `create_price_history_table` (se a CCD097 não criou) | copiada do DBML, com o enum `price_source` (`SALE`, `LISTING`) (R7) |
+| `price_history` | sim (backend #41) | — | só leitura (R7) |
 | `albums`, `cards`, `categories`, `users` | sim | — | só leitura |
 
 Nenhuma coluna fora do DBML. O seed `database/seeds/collection.seed.ts` cria, para o cliente de exemplo, a coleção com os
@@ -122,7 +121,7 @@ Domínio `src/domains/collection/`, no modelo de `src/domains/users/` (ADR-004),
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/schema.prisma` + 4 migrations | modelos `Collection`, `UserAlbum`, `CollectionCard`, `PriceHistory` e os enums `CollectionCardStatus`, `PriceSource`, com as relações em `User`, `Album` e `Card` | R3, R4, R7 |
+| `database/schema.prisma` + 3 migrations | modelos `Collection`, `UserAlbum` e `CollectionCard` e o enum `CollectionCardStatus`, com as relações em `User`, `Album` e `Card` | R3, R4, R7 |
 | `database/seeds/collection.seed.ts` · `data/collection.json` | coleção de exemplo com os dados do frame (T3); o histórico de preços entra com a T2, quando `price_history` existir | CA1, CA3, CA8 |
 | `collection.repository.ts` | `findOrCreateByUserId`, contagens dos álbuns e das cartas, média do progresso, álbum em destaque | R1, R3–R5, R9 |
 | `collection-prices.ts` | interface `CollectionPrices` (`averagePrices(cardIds, range)`) e a implementação nula, que devolve preço vazio enquanto `price_history` não existir | R7 (L5) |

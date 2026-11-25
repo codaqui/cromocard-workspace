@@ -1,6 +1,6 @@
 # CCD007 — Visualizar Resumo da Coleção
 
-- **Status:** Aprovada
+- **Status:** Em implementação
 - **Fase:** MVP
 - **User story:** #113 `CCD007-Visualizar Resumo da Coleção`
 - **Caso de uso:** [07-visualizar-resumo-da-colecao.md](../../docs/Casos-De-Uso/07-visualizar-resumo-da-colecao.md) · complemento EA-007-01 em [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -82,6 +82,7 @@
 - **Diferenças com o Figma** (decisão em Lacunas e decisões):
   - Início — os cards são "Valor estimado", "Total de cartas", "Possuo", "Faltantes" e "Repetidas"; o caso de uso pede álbuns ativos, cartas registradas e percentual médio de completude (L3, L4). O total de álbuns aparece só no subtítulo "Colecionador desde out. de 2026 • 4 álbuns ativos".
   - Início — o percentual médio de completude não aparece em lugar nenhum (L4).
+  - Início — o frame diz "4 álbuns ativos", mas os 8 cartões da grade são de 8 álbuns; e "44 de 54 cartas" dá 81%, não 82%. O seed segue os números dos cards em 4 álbuns (25/11/2026).
 - **Só no Figma** (faz sentido implementar? decisão em Lacunas e decisões):
   - Início — cards "Possuo", "Faltantes" e "Repetidas" (L3).
   - Início — "Álbum em destaque: <álbum>", com a barra de progresso, "<n> de <total> cartas • <n>% completo" e o botão "Abrir álbum" (L7).

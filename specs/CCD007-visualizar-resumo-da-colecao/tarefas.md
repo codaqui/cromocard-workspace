@@ -4,19 +4,19 @@
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - Tasks no Azure criadas em 22/11/2026 (Sprint 08), atribuídas a quem o plano final indica.
 - Revisadas em 23/11/2026 com as decisões do PO. Ordem de entrega: T1 e T3–T8 primeiro, sem preços; o valor estimado e o "Menor
-  anúncio" ficam zerados ou com "—" até `price_history` e `listings` estarem no `develop`. A T2 (preços) vem por último no
-  backend e só entra quando a tabela existir. O CA3 e o valor do CA8 ficam pendentes até lá.
+  anúncio" ficam zerados ou com "—" até a T2 entrar. A T2 (preços) vem por último no backend.
+- Em 25/11/2026, `price_history` e `listings` já estão no `develop` (backend #41 e #44): a T2 fica sem migration, e o CA3 e
+  o valor do CA8 podem ser verificados nesta story.
 
 ## Backend — `apps/cromocard-backend`, branch `feature/113-visualizar-resumo-da-colecao`
 
 - [ ] **T1** · Criar migrations de collections, user_albums e collection_cards — R3, R4 · AB#971
   - Pronto quando: as 3 migrations (`create_<tabela>_table`) criam as tabelas e o enum `collection_card_status` iguais
     ao DBML, com os índices únicos, e o `prisma migrate dev` não acusa diferença.
-- [ ] **T2** · Criar migration de price_history — R7 · CA3 · AB#972
-  - Vem depois da T8, quando `price_history` puder existir no `develop`. Liga a implementação Prisma de
-    `CollectionPrices` no `collection.module.ts` e acrescenta ao seed o histórico de preços dos últimos 60 dias.
-  - Pronto quando: `create_price_history_table` cria a tabela e o enum `price_source` do DBML (ou a tarefa é removida,
-    se a CCD097, PR backend #41, ou a base do marketplace já tiver criado a tabela).
+- [ ] **T2** · Ligar os preços de price_history ao resumo da coleção — R7 · CA3 · AB#972
+  - Vem depois da T8. A migration saiu: a CCD097 (backend #41) já criou `price_history`.
+  - Pronto quando: a implementação Prisma de `CollectionPrices` está ligada no `collection.module.ts`, o seed tem o
+    histórico de preços dos últimos 60 dias e o teste de integração cobre o CA3.
 - [ ] **T3** · Criar seed da coleção de exemplo com histórico de preços — R3–R8 · CA1, CA3, CA8 · AB#973
   - Pronto quando: o cliente do seed tem 4 álbuns e cartas `OWNED`, `MISSING` e `DUPLICATE`, com os números do frame
     `1122-17812`. Os preços entram com a T2.
