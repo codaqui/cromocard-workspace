@@ -98,7 +98,7 @@
 | User Story | Narrativa |
 |---|---|
 | Responder Mensagem Específica | Como Cliente preciso poder dar "reply" diretamente em uma mensagem antiga no chat para manter o contexto da conversa. |
-| Visualizar Mensagens | Como Cliente preciso visualizar minhas mensagens para acompanhar as conversas realizadas com outros usuários dentro do grupo. |
+| Visualizar Mensagens | Como Cliente preciso visualizar minhas mensagens para acompanhar as conversas pessoais com outros colecionadores. |
 | Moderar Contatos Privados | Como Cliente preciso ter a opção de bloquear ou denunciar usuários com comportamento inadequado no chat. |
 | Visualizar Status de Leitura | Como Cliente preciso ver um indicador (ex: check azul) para saber se o colecionador já leu minha mensagem.** |
 | Conversar com Colecionador | Como Cliente preciso conversar com outros colecionadores de forma privada via chat para alinhar trocas. |
