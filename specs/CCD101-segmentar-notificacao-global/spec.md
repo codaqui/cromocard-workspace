@@ -1,6 +1,6 @@
 # CCD101 — Segmentar Notificação Global
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #605 `CCD101-Segmentar Notificação Global` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [101-segmentar-notificacao-global.md](../../docs/Casos-De-Uso/101-segmentar-notificacao-global.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)

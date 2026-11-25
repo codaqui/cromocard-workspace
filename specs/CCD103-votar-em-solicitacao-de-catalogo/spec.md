@@ -1,6 +1,6 @@
 # CCD103 — Votar em Solicitação de Catálogo
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #607 `CCD103-Votar em Solicitação de Catálogo` · responsável Daniel Andrade (tela de Solicitações; no Azure ainda consta Gabriel Nascimento) · Sprint 06
 - **Caso de uso:** [103-votar-em-solicitacao-de-catalogo.md](../../docs/Casos-De-Uso/103-votar-em-solicitacao-de-catalogo.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)

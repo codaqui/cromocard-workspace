@@ -1,6 +1,6 @@
 # CCD064 — Aprovar Solicitações
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #339 `CCD064-Aprovar Solicitações` · responsável Felipe Consulim · Sprint 07
 - **Caso de uso:** [64-aprovar-solicitacoes.md](../../docs/Casos-De-Uso/64-aprovar-solicitacoes.md) (pré-condições e passos 3, 7 e 8 têm texto do caso 63)

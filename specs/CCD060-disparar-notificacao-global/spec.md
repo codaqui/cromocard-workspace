@@ -1,6 +1,6 @@
 # CCD060 — Disparar Notificação Global
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** MVP
 - **User story:** #335 `CCD060-Disparar Notificação Global` · responsável Daniel Andrade · Sprint 07
 - **Caso de uso:** [60-disparar-notificacao-global.md](../../docs/Casos-De-Uso/60-disparar-notificacao-global.md)

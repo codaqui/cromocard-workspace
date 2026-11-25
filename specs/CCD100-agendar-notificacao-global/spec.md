@@ -1,6 +1,6 @@
 # CCD100 — Agendar Notificação Global
 
-- **Status:** Em implementação
+- **Status:** Implementada
 - **Fase:** Escopo Adicional
 - **User story:** #604 `CCD100-Agendar Notificação Global` · responsável Felipe Consulim · Sprint 06
 - **Caso de uso:** [100-agendar-notificacao-global.md](../../docs/Casos-De-Uso/100-agendar-notificacao-global.md) · índice: [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)

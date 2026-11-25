@@ -27,7 +27,8 @@
 
 ## Fechamento — workspace
 
-- [ ] **T6** · Atualizar os ponteiros `apps/*` e marcar as specs CCD060, CCD100 e CCD101 como `Implementada` · AB#566 AB#670 AB#677
+- [x] **T6** · Atualizar os ponteiros `apps/*` e marcar as specs CCD060, CCD100 e CCD101 como `Implementada` · AB#566 AB#670 AB#677
+  - **Feita em 24/11/2026:** codaqui/cromocard-backend#30 (`1c68f6f`) e codaqui/cromocard-frontend#23 (`ebe080c`), mergeados no `develop` em 20/11/2026; as três specs fecham juntas (L9).
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
 
 ## Cobertura
