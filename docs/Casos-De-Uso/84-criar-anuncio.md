@@ -20,6 +20,6 @@
 |---|---|
 | 1. O vendedor informa um valor de venda zerado ou negativo |  |
 |  | 2. O sistema exibe um alerta de validação 'Por favor, insira um valor válido maior que zero' |
-| 3. O vendedor sem conta de recebimento pronta seleciona "Criar anúncio". |  |
-|  | 4. O sistema avisa "Conecte sua conta de recebimento antes de anunciar" e oferece "Conectar conta Stripe". |
+| 3. O vendedor sem a conta de recebimento pronta acessa o Painel do vendedor. |  |
+|  | 4. O sistema mostra "Criar Novo Anúncio" e "Criar Anúncio" desabilitados e o aviso da conta de recebimento (CCD108); se a criação chegar ao sistema mesmo assim, ele recusa com o aviso "Conecte sua conta de recebimento antes de anunciar" e oferece "Conectar conta Stripe". |
 |  | 5. Caso o vendedor não tenha endereço principal, o sistema pede o cadastro do endereço antes de publicar. |
