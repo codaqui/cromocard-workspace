@@ -96,12 +96,12 @@ OrderResult = { id, code, status, cardName, totalAmount, cancelReason, listingId
 
 | Arquivo | O que faz | Requisitos |
 |---|---|---|
-| `payment/payment.provider.ts` | interface `PaymentProvider`: `createCheckoutSession`, `expireCheckoutSession`, `parseWebhookEvent(rawBody, signature)` → `{ id, type, sessionId, chargeId? }` | R11–R13, R19, R22 |
-| `payment/stripe.payment-provider.ts` + `.spec.ts` | SDK `stripe`, com `STRIPE_SECRET_KEY` e `STRIPE_WEBHOOK_SECRET` | R11–R13, R19 |
+| `payment/payment.provider.ts` | interface `PaymentProvider`: `createCheckoutSession`, `expireCheckoutSession`, `parseWebhookEvent(rawBody, signature)` → `Promise<{ id, type: 'completed' \| 'expired' \| 'ignored', sessionId?, orderId?, chargeId? }>`; `ignored` traz só o `id`, e `chargeId` é a cobrança `ch_…` (ADR-066, item 8) | R11–R13, R19, R22 |
+| `payment/stripe.payment-provider.ts` + `.spec.ts` | SDK `stripe`, com `STRIPE_SECRET_KEY` e `STRIPE_WEBHOOK_SECRET`, versão da API fixa e tempo limite de 10 s; checkout só com cartão (`allowed_payment_method_types: ['card']`, ADR-066, item 1), e os eventos `async_payment_*` são ignorados; no `completed` pago, busca o `latest_charge` do PaymentIntent | R11–R13, R19 |
 | `payment/fake.payment-provider.ts` | guarda as sessões em memória; a `checkoutUrl` é a `success_url`; no PC dispara `completed` no mesmo handler do webhook; nos testes o evento é disparado pelo teste | R22 |
 | `payment/payment.factory.ts` | escolhe pelo `PAYMENT_DRIVER` (`fake` ou `stripe`) | R22 |
-| `shipping/shipping.provider.ts` | interface `ShippingProvider`: `quote({ fromZipCode, toZipCode, package, declaredValue })` → `ShippingOption[]` | R8, R22 |
-| `shipping/melhor-envio.shipping-provider.ts` + `.spec.ts` | `POST /api/v2/me/shipment/calculate`, com `MELHOR_ENVIO_TOKEN` e `MELHOR_ENVIO_BASE_URL` (sandbox em homologação); filtra Correios e Jadlog e descarta os serviços com erro | R8, R18 |
+| `shipping/shipping.provider.ts` | interface `ShippingProvider`: `quote({ fromZipCode, toZipCode, package, declaredValueInCents })` → opções com `priceInCents`; a API da T5 converte para `price` em string decimal (ADR-011) sem ponto flutuante | R8, R22 |
+| `shipping/melhor-envio.shipping-provider.ts` + `.spec.ts` | `POST /api/v2/me/shipment/calculate`, com `MELHOR_ENVIO_TOKEN` e `MELHOR_ENVIO_BASE_URL` (sandbox em homologação); filtra Correios e Jadlog e descarta os serviços com erro; tempo limite de 10 s, e falha vira `502 SHIPPING_PROVIDER_ERROR` (L12) | R8, R18, R24 |
 | `shipping/fake.shipping-provider.ts` | frete fixo de Correios e Jadlog; CEPs de uma lista de teste sem frete (CA10) | R22 |
 | `shipping/shipping.factory.ts` | escolhe pelo `SHIPPING_DRIVER` (`fake` ou `melhor-envio`) | R22 |
 | `src/config/env.ts` | as variáveis acima; em produção, `fake` é recusado | R22 |
@@ -166,4 +166,5 @@ Feature `src/features/marketplace/orders/`, no modelo de `src/features/users/` (
 - O frete é cotado de novo no `POST /orders`: o total gravado nunca depende de um valor vindo do navegador.
 - A sessão da Stripe é criada dentro da transação do pedido, depois das escritas e antes do commit; se ela falha, nada fica
   gravado. Se o commit falha depois da sessão criada, a sessão expira sozinha em 30 minutos e o webhook não acha o pedido.
-- O token do Melhor Envio vem do secret do ambiente (ADR-067, item 2); a renovação automática não é requisito desta spec.
+- O token do Melhor Envio é fixo, vem do secret do ambiente e é renovado à mão antes de vencer (ADR-072, que complementa o
+  item 2 do ADR-067); a renovação automática fica para quando houver produção.

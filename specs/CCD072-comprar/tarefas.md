@@ -16,7 +16,7 @@
   - Pronto quando: `orders` e `payments` da CCD097 estão no `schema.prisma` e o seed tem anúncios compráveis, endereços principais dos vendedores e um cliente sem CPF.
 - [ ] **T3** [P] · Criar PaymentProvider com Stripe Checkout e versão falsa — R11–R13, R19, R22 · CA14 · AB#1355
   - Pronto quando: `stripe.payment-provider.spec.ts` (SDK mockado) e `payment.factory.spec.ts` passam, e o `fake` é recusado em produção.
-- [ ] **T4** [P] · Criar ShippingProvider com Melhor Envio e versão falsa — R8, R18, R22 · CA10, CA14 · AB#1356
+- [ ] **T4** [P] · Criar ShippingProvider com Melhor Envio e versão falsa — R8, R18, R22, R24 · CA10, CA14 · AB#1356
   - Pronto quando: `melhor-envio.shipping-provider.spec.ts` (HTTP mockado) filtra Correios e Jadlog e `shipping.factory.spec.ts` passa.
 - [ ] **T5** · Criar endpoints de checkout e cotação de frete — R1–R4, R6–R8, R18 · CA1, CA8, CA10, CA13, CA15 · AB#1357
   - Pronto quando: `checkout.service.spec.ts` e `tests/integration/checkout.spec.ts` cobrem `200`, `401`, `403`, `422` (próprio, pausado, esgotado, sem frete) e `cpfRequired`.
@@ -67,3 +67,4 @@
 | R21 | T7 |
 | R22 | T3, T4 |
 | R23 | T10, T11, T12 |
+| R24 | T4, T5, T11 |
