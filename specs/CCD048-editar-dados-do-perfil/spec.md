@@ -53,18 +53,18 @@
 
 ## Critérios de aceite
 
-- **CA1** (R2–R4, R7) — **Dado** Gabriel logado, **quando** abre "Perfil", troca o texto de "Conte um pouco sobre você" e seleciona "Salvar alterações", **então** `profiles.bio` é gravado e aparece o aviso "Perfil atualizado" com "Suas alterações foram salvas.".
-- **CA2** (R5) — **Dado** "Nome Completo" vazio, **quando** Gabriel seleciona "Salvar alterações", **então** nada é gravado, o rótulo mostra "Nome completo • informe o nome" em vermelho e a API responde `400` com o campo `name`.
-- **CA3** (R6) — **Dado** o @ `marcos_tcg` já usado por outra conta, **quando** Gabriel salva com ele, **então** a API responde `409` com o campo `username` e a tela indica o campo.
-- **CA4** (R8) — **Dado** alterações não salvas, **quando** Gabriel seleciona "Descartar", **então** os campos voltam aos valores gravados.
-- **CA5** (R9, R10) — **Dado** o modal "Alterar Foto do Perfil", **quando** Gabriel envia um JPG de 2 MB e seleciona "Aplicar e Salvar Foto", **então** `profiles.avatar_url` é gravado e a foto substitui as iniciais; **quando** envia um GIF ou um arquivo de 6 MB, **então** a API recusa e a tela avisa.
-- **CA6** (R12, R14) — **Dado** um endereço principal, **quando** Gabriel cria um endereço novo com "Definir como Endereço Principal" marcado, **então** o novo é gravado com `is_primary = true` e o anterior passa a `false`.
-- **CA7** (R12) — **Dado** o modal "Novo endereço" sem número, **quando** Gabriel seleciona "Salvar Endereço", **então** nada é gravado e o campo "Número" indica o erro.
-- **CA8** (R13) — **Dado** o endereço "Studio Campinas", **quando** Gabriel o edita, troca o complemento e seleciona "Salvar Alterações", **então** o endereço é atualizado na lista.
-- **CA9** (R14) — **Dado** o endereço secundário, **quando** Gabriel seleciona "Tornar Padrão", **então** ele recebe o selo "Endereço Principal (Padrão)" e o outro passa a "SECUNDÁRIO".
-- **CA10** (R15) — **Dado** um endereço secundário, **quando** Gabriel seleciona remover e confirma "Remover endereço", **então** `addresses.deleted_at` é preenchido e o endereço some da lista; com "Cancelar", nada muda.
-- **CA11** (R16) — **Dado** o endereço principal, **quando** Gabriel tenta removê-lo, **então** ele não é removido, a tela pede que outro seja escolhido como principal e a API responde `409`.
-- **CA12** (R1) — **Dado** um visitante sem login, **quando** chama as rotas do perfil, **então** recebe `401`; **dado** Gabriel, **quando** edita o endereço de outra conta, **então** recebe `404`.
+- **CA1** (R2–R4, R7) — **Dado** Ana logado, **quando** abre "Perfil", troca o texto de "Conte um pouco sobre você" e seleciona "Salvar alterações", **então** `profiles.bio` é gravado e aparece o aviso "Perfil atualizado" com "Suas alterações foram salvas.".
+- **CA2** (R5) — **Dado** "Nome Completo" vazio, **quando** Ana seleciona "Salvar alterações", **então** nada é gravado, o rótulo mostra "Nome completo • informe o nome" em vermelho e a API responde `400` com o campo `name`.
+- **CA3** (R6) — **Dado** o @ `marcos_tcg` já usado por outra conta, **quando** Ana salva com ele, **então** a API responde `409` com o campo `username` e a tela indica o campo.
+- **CA4** (R8) — **Dado** alterações não salvas, **quando** Ana seleciona "Descartar", **então** os campos voltam aos valores gravados.
+- **CA5** (R9, R10) — **Dado** o modal "Alterar Foto do Perfil", **quando** Ana envia um JPG de 2 MB e seleciona "Aplicar e Salvar Foto", **então** `profiles.avatar_url` é gravado e a foto substitui as iniciais; **quando** envia um GIF ou um arquivo de 6 MB, **então** a API recusa e a tela avisa.
+- **CA6** (R12, R14) — **Dado** um endereço principal, **quando** Ana cria um endereço novo com "Definir como Endereço Principal" marcado, **então** o novo é gravado com `is_primary = true` e o anterior passa a `false`.
+- **CA7** (R12) — **Dado** o modal "Novo endereço" sem número, **quando** Ana seleciona "Salvar Endereço", **então** nada é gravado e o campo "Número" indica o erro.
+- **CA8** (R13) — **Dado** o endereço "Studio Campinas", **quando** Ana o edita, troca o complemento e seleciona "Salvar Alterações", **então** o endereço é atualizado na lista.
+- **CA9** (R14) — **Dado** o endereço secundário, **quando** Ana seleciona "Tornar Padrão", **então** ele recebe o selo "Endereço Principal (Padrão)" e o outro passa a "SECUNDÁRIO".
+- **CA10** (R15) — **Dado** um endereço secundário, **quando** Ana seleciona remover e confirma "Remover endereço", **então** `addresses.deleted_at` é preenchido e o endereço some da lista; com "Cancelar", nada muda.
+- **CA11** (R16) — **Dado** o endereço principal, **quando** Ana tenta removê-lo, **então** ele não é removido, a tela pede que outro seja escolhido como principal e a API responde `409`.
+- **CA12** (R1) — **Dado** um visitante sem login, **quando** chama as rotas do perfil, **então** recebe `401`; **dado** Ana, **quando** edita o endereço de outra conta, **então** recebe `404`.
 - **CA13** (R17) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1160-37708` (meu perfil), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 - **CA14** (R17) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1160-38269` (erros de validação), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 - **CA15** (R17) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1160-38711` (alterações salvas), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
@@ -128,3 +128,6 @@
 | L10 | Remover o principal: o botão fica desabilitado ou a tela avisa depois do clique (e o "Remover este Endereço" do editar)? O primeiro endereço vira principal sozinho? Quem tem um endereço só nunca consegue removê-lo? | pendente | — |
 | L11 | Só no Figma: "STATUS Colecionador". O que mostra (o papel: Colecionador para `CUSTOMER`, Vendedor para `SELLER`)? | pendente | — |
 | L12 | A cidade do perfil público (`profiles.city`, EA-080-01) não tem campo nesta página. Onde o usuário a informa (campo novo aqui ou a cidade do endereço principal)? | pendente | — |
+| L13 | A T1 (tabela `profiles` e o seed) pode entrar antes da spec ser aprovada? | Sim: só a T1, copiada do DER, que nenhuma lacuna muda; da T2 em diante, só com a spec aprovada. Decisão do PO na revisão do backend #46 (26/11/2026) | `tarefas.md` (T1) |
+| L14 | O plano pedia o seed do "Gabriel", que não existe no seed | Vale a **Ana** (`ana@cromocard.dev`), com o principal "Casa" e o secundário "Studio Campinas"; o rótulo definitivo depende da L7. Decisão do PO na revisão do #46 | CA1–CA12; `plano.md` (Dados); `tarefas.md` (T1) |
+| L15 | O seed também traz `city`, os perfis da Elisa e da Gabriela e o portfólio `PRIVATE`, que nenhum requisito pede | Mantém, como dados de exemplo em colunas do DER. Decisão do PO na revisão do #46 | `plano.md` (Dados) |
