@@ -209,7 +209,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD042](CCD042-pesquisar-no-historico-do-grupo/spec.md) | Pesquisar no Histórico do Grupo | MVP | Rascunho | #145 |
 | [CCD043](CCD043-criar-e-administrar-grupo/spec.md) | Criar e Administrar Grupo | MVP | Rascunho | #146 |
 | [CCD044](CCD044-interagir-no-chat-do-grupo/spec.md) | Interagir no Chat do Grupo | MVP | Rascunho | #147 |
-| [CCD045](CCD045-responder-mensagem-especifica/spec.md) | Responder Mensagem Específica | MVP | Rascunho | #1208 |
+| [CCD045](CCD045-responder-mensagem-especifica/spec.md) | Responder Mensagem Específica | MVP | Em implementação | #1208 |
 | [CCD046](CCD046-visualizar-mensagens/spec.md) | Visualizar Mensagens | MVP | Rascunho | #1217 |
 | [CCD047](CCD047-moderar-contatos-privados/spec.md) | Moderar Contatos Privados | MVP | Rascunho | #1231 |
 | [CCD048](CCD048-editar-dados-do-perfil/spec.md) | Editar Dados do Perfil | MVP | Rascunho | #1242 |
