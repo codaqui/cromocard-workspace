@@ -146,7 +146,7 @@ Feature `src/features/marketplace/listings/` (a mesma da CCD079), no modelo de `
 | `components/ListingBlockedDialog/` | aviso do frame `1112-10828` com "Agora não" (L8) e "Conectar conta Stripe", que usa o link da CCD108 | R9, R11 |
 | `components/PrimaryAddressRequiredDialog/` | pedido do endereço principal no estilo do aviso bloqueado, com "Cadastrar endereço" para o Perfil (L12) | R10 |
 | `hooks/useCreateListingFlow.ts` | consulta a elegibilidade e abre o aviso, o pedido de endereço ou o modal | R2, R9, R10 |
-| `pages/SellerOverviewPage/` (CCD108) · perfil da carta (CCD030) | botões "Criar Novo Anúncio"/"Criar Anúncio" habilitados (L7) e "Anunciar esta carta" só para `SELLER`, com a carta escolhida | R2 |
+| `pages/SellerOverviewPage/` (CCD108) · perfil da carta (CCD030) | botões "Criar Novo Anúncio"/"Criar Anúncio" desabilitados sem a conta `READY` (L7; já feitos na CCD108) e "Anunciar esta carta" só para `SELLER`, com a carta escolhida | R2 |
 | `features/collection` (Início, CCD007) | "Anunciar repetida" só para `SELLER`, abrindo o fluxo com a carta escolhida, no lugar do `underConstructionRoute` (L9) | R2 |
 
 - **Estados:** busca carregando e sem resultado; erro da API no modal, com os campos preenchidos (CA10).
