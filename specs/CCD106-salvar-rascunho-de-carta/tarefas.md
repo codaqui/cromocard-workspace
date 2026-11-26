@@ -6,10 +6,13 @@
 ## Backend — `apps/cromocard-backend`, branch `feature/610-salvar-rascunho-de-carta`
 
 - [ ] **T1** · Criar migration de status e ano em cards e o seed do verso padrão — R2, R8, R9 · AB#710
-  - Pronto quando: as colunas e o enum existem e a chave está no seed.
+  - Só depois do merge da CCD030 (PR codaqui/cromocard-backend#47), que já cria `cards.status` e o enum `card_status`:
+    esta tarefa cria só a migration `add_release_year_to_cards_table` e o seed do verso padrão.
+  - Pronto quando: `release_year` existe, `status` continua o da CCD030 (sem migration duplicada) e a chave está no seed.
 - [ ] **T2** · Criar rascunho e publicação de carta com auditoria — R2, R5, R6 · CA1, CA3, CA4 · AB#711
   - Pronto quando: `catalog.service.spec.ts` cobre CA1, CA3 e CA4.
 - [ ] **T3** · Esconder rascunhos das consultas públicas do catálogo — R3 · CA1 · AB#712
+  - O perfil público da carta (CCD030) já esconde rascunhos; falta a busca e as demais consultas públicas do catálogo.
   - Pronto quando: as consultas públicas só devolvem cartas `ACTIVE`.
 - [ ] **T4** · Criar verso padrão, aviso de duplicata e tamanho mínimo da imagem — R9–R11 · CA5–CA7 · AB#713
   - Pronto quando: os testes cobrem CA5 e CA7 e a rota de duplicatas responde.
