@@ -6,7 +6,7 @@
 - **Caso de uso:** [30-visualizar-detalhes.md](../../docs/Casos-De-Uso/30-visualizar-detalhes.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** nenhuma; comprar, favoritar e adicionar à coleção pedem login
 - **Data:** 2026-11-21 (revisada em 2026-11-23) · **Autor:** Daniel Andrade
-- **Aprovação:** Lucas Oliveira Lima, pelo PO, em 23/11/2026; reaprovada em 24/11/2026 com as L9 (revista), L18 e L19
+- **Aprovação:** Lucas Oliveira Lima, pelo PO, em 23/11/2026; reaprovada em 24/11/2026 com as L9 (revista), L18 e L19, e em 26/11/2026 com a L20
 
 ## Objetivo
 
@@ -149,4 +149,5 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | L16 | Como "Criar conta grátis" volta para a carta, se o cadastro passa pela confirmação do e-mail? | O endereço da carta fica no `sessionStorage` ao abrir o cadastro pelo modal; o próximo login no mesmo navegador volta para ela. Confirmando em outro dispositivo, segue o destino padrão | esta spec, R11 |
 | L18 | O login com Google (CCD004) ainda não existe: para onde vai "Continuar com Google" no modal? | Para a rota em construção `/login/google` (`underConstructionRoute`, CCD004), como no Figma; e-mail e senha e cadastro seguem voltando para a carta | `30-visualizar-detalhes.md` (24/11/2026), FA 2 |
 | L19 | Até quando vale a carta guardada pela L16, se a pessoa desiste do cadastro? | 30 minutos; depois disso o login segue o destino padrão do papel | esta spec, R11 |
+| L20 | O título "Anúncios disponíveis (<n>)" usa a contagem do perfil ou o total da lista? Com o perfil em cache dizendo 0, a lista nem era consultada | A lista é sempre consultada e o total dela manda no título e no estado vazio; a contagem do perfil só aparece enquanto a lista carrega | esta spec e `plano.md` (26/11/2026), revisão da CCD030 |
 | L17 | A busca, o marketplace e a Home ainda não têm cartões de carta no `develop` (rotas em construção) | O perfil fica pronto em `/cartas/:id` e `cardProfilePathFor(id)` é exportado; cada lista liga o cartão quando for feita (CCD001, CCD002, CCD068) | esta spec, R2 |

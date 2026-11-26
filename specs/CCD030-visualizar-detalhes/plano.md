@@ -26,7 +26,7 @@ usar o que já existe.
 - **CCD075** — esta spec cria `price_source` e `price_history`; o gráfico e os períodos continuam da CCD075, e o perfil
   reserva o bloco "Histórico de preços" para ela (em construção até lá).
 - **CCD031** — regras do bloco de identificação.
-- **CCD079** — divide `GET /cards/:cardId/listings`; esta story cria o endpoint.
+- **CCD079** — divide `GET /cards/:id/listings`; esta story cria o endpoint.
 - **CCD002** — esta spec cria o `LoginRequiredDialog` na feature `auth`, com a mensagem por prop.
 - **CCD004** — login e o retorno pela `loginRedirect`.
 
@@ -74,7 +74,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 
 - **Erros:** `400 VALIDATION_ERROR` (id não é uuid), `404 CARD_NOT_FOUND` (R13).
 
-### `GET /api/v1/cards/:cardId/listings` — R7, R8
+### `GET /api/v1/cards/:id/listings` — R7, R8
 
 - **Acesso:** público.
 - **Entrada:** `page`, `pageSize` (padrão 10, máximo 50), `sort=price` (padrão) e `excludeListingId` (uuid, opcional,
@@ -85,8 +85,8 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
   coluna `users.username` é opcional no DER.
 - **Índices** (desempenho da lista e do perfil): `listings (card_id, status, price)` e
   `price_history (card_id, source, reference_date)`, uma migration por tabela, registrados no DER.
-- **Contagem na tela** (L12): o título "Anúncios disponíveis (<n>)" usa `market.activeListingsCount` do perfil, o mesmo
-  número do card "Anúncios ativos"; o `meta.total` da lista serve só à paginação.
+- **Contagem na tela** (L20): a lista é sempre consultada, e o título "Anúncios disponíveis (<n>)" e o estado vazio usam o
+  `meta.total` dela; `market.activeListingsCount` do perfil só aparece enquanto a lista carrega.
 - **Erros:** `400 VALIDATION_ERROR`, `404 CARD_NOT_FOUND` — R7, R13.
 
 ## Backend — `apps/cromocard-backend`
@@ -97,9 +97,9 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 | `src/domains/catalog/cards/cards.repository.ts` | `findPublicById` com álbum, categoria, raridade, idioma e fotos; só `ACTIVE` não excluída | R3, R5, R13 |
 | `src/domains/catalog/cards/cards.service.ts` + `.spec.ts` | monta o perfil; preço médio e resumo dos anúncios pelas services exportadas do marketplace e do histórico | R3–R5, R13 |
 | `src/domains/catalog/cards/cards.controller.ts` · `.routes.ts` · `.swagger.ts` · `cards.module.ts` | `GET /cards/:id`, público | R1 |
-| `src/domains/marketplace/listings/listings.repository.ts` · `listings.service.ts` + `.spec.ts` | `findActiveByCard` (ordem e página) e `summaryByCard` (contagem e menor preço) | R7, R8 |
+| `src/domains/marketplace/listings/listings.repository.ts` · `listings.service.ts` + `.spec.ts` | `findAvailableByCard` (página, com a ordem do `sort` num mapa) e `summarizeAvailableByCard` (contagem e menor preço) | R7, R8 |
 | `src/domains/marketplace/listings/listings.contract.ts` | tipos e schema da lista, para o `cards` importar sem montar o módulo (sem Prisma) | R7 |
-| `src/domains/marketplace/listings/listings.module.ts` | exporta a `ListingsService`; a rota `GET /cards/:cardId/listings` fica no `cards.routes.ts`, que confere a carta (404) antes de listar, sem dependência circular entre os módulos | R7, R13 |
+| `src/domains/marketplace/listings/listings.module.ts` | exporta a `ListingsService`; a rota `GET /cards/:id/listings` fica no `cards.routes.ts`, que confere a carta (404) antes de listar, sem dependência circular entre os módulos | R7, R13 |
 | `src/routes.ts` | registra `cardsModule` e `listingsModule` | R1 |
 
 ## Frontend — `apps/cromocard-frontend`
@@ -118,9 +118,9 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
 | `catalog.routes.ts` · `src/routes/paths.ts` · `app/router.tsx` | `cardProfile: '/cartas/:id'` e `cardProfilePathFor(id)`, no `PublicLayout` (que já troca o topo para o logado, L7) | R1, R2 |
 | cartões da busca (CCD002), do marketplace e da Home (CCD001) | o clique leva a `cardProfilePathFor(id)` | R2 |
 
-- **Estados:** carregando e erro com `LoadingState` e `ErrorState`; `404` com `NotFoundPage`, no estilo do vazio da busca (L9).
+- **Estados:** carregando e erro com `LoadingState` e `ErrorState`; `404` com `EmptyState` ("Carta não encontrada" e link para a Home), no estilo do vazio da busca (L9).
 - **Componentes reaproveitados de `src/components/`:** `Modal`, `Button`, `Badge`, `Select`, `DataTable`, `LoadingState`,
-  `ErrorState`, `NotFoundPage`, `EmptyState`.
+  `ErrorState`, `EmptyState`.
 
 ## Testes
 
@@ -138,8 +138,8 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
 ## Decisões técnicas
 
 - O perfil é uma rota pública do catálogo (`/cards/:id`) e a lista de anúncios fica no marketplace
-  (`/cards/:cardId/listings`), cada domínio com o seu dado; o resumo de anúncios entra no perfil pela service exportada do
+  (`/cards/:id/listings`), cada domínio com o seu dado; o resumo de anúncios entra no perfil pela service exportada do
   `listings.module.ts`, sem o catálogo ler o repository do marketplace.
 - Selos, subtítulo e caminho (R17) saem da identificação; "Ver anúncios (<n>)" (R15) e a nota (R16) são do frontend; a
   cidade do vendedor fica com a CCD080 (L5).
-- O `GET /cards/:cardId/listings` é um contrato só para a CCD030 e a CCD079; mudar um parâmetro é mudar os dois planos.
+- O `GET /cards/:id/listings` é um contrato só para a CCD030 e a CCD079; mudar um parâmetro é mudar os dois planos.
