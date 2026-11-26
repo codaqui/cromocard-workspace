@@ -40,6 +40,8 @@
 
 - [ ] **T11** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#1116
   - Pronto quando: os PRs dos apps estão mergeados em `develop` e o índice de `specs/README.md` foi atualizado.
+  - Prints do DER: não mudam. A CCD030 só acrescentou `indexes` no `01-diagrama-entidades.dbml` e no
+    `03-der-completo.dbml`, e o dbdiagram.io não desenha índices no diagrama; os `.png` atuais continuam valendo.
 
 ## Cobertura
 
