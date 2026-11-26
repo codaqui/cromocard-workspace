@@ -3,7 +3,7 @@
 - **Plano:** [plano.md](plano.md) · **User story:** AB#1231
 - Ordem de execução de cima para baixo. `[P]` = pode ser feita em paralelo com a anterior.
 - As branches dos apps (`feature/1231-moderar-contatos-privados`) saem empilhadas sobre a CCD046 (backend #49, frontend
-  #36). As T11–T14, que vieram das decisões de 26/11/2026, ficam "AB# a criar" e os commits delas usam o AB#1231.
+  #36). A T11 e a T12, que vieram das decisões de 26/11/2026, foram criadas no Azure no mesmo dia (AB#1561 e AB#1562); os commits delas usam o AB#1231.
 
 ## Backend — `apps/cromocard-backend`, branch `feature/1231-moderar-contatos-privados`
 
@@ -17,7 +17,7 @@
   - Pronto quando: `chat.service.spec.ts` e `chat-socket.spec.ts` mostram `422 CONTACT_BLOCKED` nos dois sentidos, sem gravar nem emitir, e a lista devolve `block`.
 - [x] **T5** · Criar endpoints POST /me/blocks, DELETE /me/blocks/:userId, GET /me/blocks e POST /me/contact-reports (multipart) — R1, R4, R13, R14, R16 · CA4, CA7, CA9, CA10, CA15 · AB#1236
   - Pronto quando: as rotas aparecem no `/docs` e `contact-moderation.spec.ts` cobre CA1, CA4, CA7–CA10, CA15 e CA17 com o PostgreSQL.
-- [x] **T11** · Estender a Fila de moderação às denúncias do chat e resolver a denúncia pela sanção — R19 · CA18 · AB# a criar
+- [x] **T11** · Estender a Fila de moderação às denúncias do chat e resolver a denúncia pela sanção — R19 · CA18 · AB#1561
   - Pronto quando: `community-admin.service.spec.ts` e a integração mostram o card do chat com `origin`, `evidences` e a gravidade, o dispensar e a sanção resolvendo a denúncia.
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/1231-moderar-contatos-privados`
@@ -30,7 +30,7 @@
   - Pronto quando: `BlockedNotice.spec.tsx` e `ConversationView.spec.tsx` cobrem os dois avisos e o desbloquear; print em 1280 px igual aos frames `1160-32980` e `1160-37184`.
 - [x] **T9** · Criar o modal Contatos bloqueados para a CCD051 — R13, R14 · CA9 · AB#1240
   - Pronto quando: `BlockedContactsDialog.spec.tsx` cobre "1 contato bloqueado", o vazio e o desbloquear, e o `index.ts` exporta o modal.
-- [x] **T12** · Mostrar o card do chat na Fila de moderação — R19 · CA18 · AB# a criar
+- [x] **T12** · Mostrar o card do chat na Fila de moderação — R19 · CA18 · AB#1562
   - Pronto quando: `ReportCard.spec.tsx` cobre a origem "Chat pessoal", os prints e as ações "Dispensar Denúncia" e "Aplicar sanção ao autor"; o subtítulo da fila mudou.
 
 ## Fechamento — workspace
