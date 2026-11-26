@@ -2,7 +2,7 @@
 //  CromoCard - Sistema de Gestao de Cartas Colecionaveis
 //  3/3 - DER COMPLETO (entidades + atributos + relacionamentos)
 //  Cole em https://dbdiagram.io/d
-//  Organizacao: 50 tabelas, 8 modulos (cores por modulo + TableGroup),
+//  Organizacao: 51 tabelas, 8 modulos (cores por modulo + TableGroup),
 //  relacionamentos declarados no final, agrupados por modulo.
 //  Export sugerido para o relatorio: PDF ou PNG (botao Export).
 // =====================================================================
@@ -739,6 +739,17 @@ Table reports [headercolor: #5A5A66] {
   Note: 'Alvo polimorfico: anuncio, usuario/vendedor/perfil ou mensagem de grupo, conforme target_type.'
 }
 
+Table report_evidences [headercolor: #5A5A66] {
+  id         uuid         [pk, default: `uuidv7()`]
+  report_id  uuid         [not null]
+  url        varchar(255) [not null]
+  sort_order smallint     [not null, default: 0]
+  created_at timestamptz  [not null, default: `now()`]
+  updated_at timestamptz  [not null, default: `now()`]
+  deleted_at timestamptz
+  Note: 'Prints que comprovam a denuncia (1 a 3 por denuncia do chat pessoal, CCD047; ADR-072).'
+}
+
 Table catalog_requests [headercolor: #5A5A66] {
   id             uuid                 [pk, default: `uuidv7()`]
   requester_id   uuid                 [not null]
@@ -958,6 +969,7 @@ Ref: reports.moderator_id                 > users.id
 Ref: reports.listing_id                   > listings.id
 Ref: reports.target_user_id              > users.id
 Ref: reports.group_message_id            > group_messages.id
+Ref: report_evidences.report_id          > reports.id
 Ref: catalog_requests.requester_id   > users.id
 Ref: catalog_requests.reviewed_by_id  > users.id
 Ref: catalog_requests.card_id         > cards.id
@@ -1042,6 +1054,7 @@ TableGroup "7 - Notificacoes e Favoritos" {
 
 TableGroup "8 - Moderacao e Administracao" {
   reports
+  report_evidences
   catalog_requests
   audit_logs
   global_settings

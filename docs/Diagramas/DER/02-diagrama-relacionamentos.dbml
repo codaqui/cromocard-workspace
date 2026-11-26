@@ -267,6 +267,11 @@ Table reports [headercolor: #5A5A66] {
   group_message_id uuid
 }
 
+Table report_evidences [headercolor: #5A5A66] {
+  id        uuid [pk]
+  report_id uuid [not null]
+}
+
 Table catalog_requests [headercolor: #5A5A66] {
   id             uuid [pk]
   requester_id   uuid [not null]
@@ -409,6 +414,7 @@ Ref: reports.moderator_id               > users.id        // modera
 Ref: reports.listing_id                 > listings.id        // alvo
 Ref: reports.target_user_id            > users.id        // alvo
 Ref: reports.group_message_id          > group_messages.id // alvo
+Ref: report_evidences.report_id        > reports.id      // comprova
 Ref: catalog_requests.requester_id  > users.id       // solicita
 Ref: catalog_requests.reviewed_by_id > users.id       // aprova
 Ref: catalog_requests.card_id        > cards.id         // resulta em
@@ -493,6 +499,7 @@ TableGroup "7 - Notificacoes e Favoritos" {
 
 TableGroup "8 - Moderacao e Administracao" {
   reports
+  report_evidences
   catalog_requests
   audit_logs
   global_settings

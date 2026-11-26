@@ -729,6 +729,16 @@ Table reports [headercolor: #5A5A66] {
   deleted_at       timestamptz
 }
 
+Table report_evidences [headercolor: #5A5A66] {
+  id         uuid         [pk, default: `uuidv7()`]
+  report_id  uuid         [not null, note: 'FK -> reports.id']
+  url        varchar(255) [not null]
+  sort_order smallint     [not null, default: 0]
+  created_at timestamptz  [not null]
+  updated_at timestamptz  [not null]
+  deleted_at timestamptz
+}
+
 Table catalog_requests [headercolor: #5A5A66] {
   id             uuid                 [pk, default: `uuidv7()`]
   requester_id   uuid                 [not null, note: 'FK -> users.id']
@@ -921,6 +931,7 @@ TableGroup "7 - Notificacoes e Favoritos" {
 
 TableGroup "8 - Moderacao e Administracao" {
   reports
+  report_evidences
   catalog_requests
   audit_logs
   global_settings
