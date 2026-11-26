@@ -1,11 +1,12 @@
 # Plano — CCD007 Visualizar Resumo da Coleção
 
 > Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026), e revisado por Lucca Rocha em 23/11/2026 com as
-> decisões do PO (L1–L11). Spec aprovada pelo PO em 23/11/2026.
+> decisões do PO (L1–L11). Spec aprovada pelo PO em 23/11/2026. Atualizado em 26/11/2026 por Lucca Rocha com o que o
+> backend entregou (codaqui/cromocard-backend#48) e com as correções da revisão de código.
 
 - **Spec:** [spec.md](spec.md), Aprovada pelo PO em 23/11/2026 (lacunas L1–L11 decididas)
 - **Repositórios:** backend · frontend (relidos em 23/11/2026 no `develop` dos dois apps)
-- **Data:** 2026-11-22 (revisado em 2026-11-23) · **Autor:** Daniel Andrade · **Revisão:** Lucca Rocha
+- **Data:** 2026-11-22 (revisado em 2026-11-23 e em 2026-11-26) · **Autor:** Daniel Andrade · **Revisão:** Lucca Rocha
 
 ## Solução
 
@@ -15,8 +16,8 @@ em destaque e saudação) e `GET /api/v1/collections/me/cards` (a grade dos prin
 na primeira leitura ou escrita da API (L2): sem coleção, o resumo vem zerado.
 
 **Ordem de entrega** (orientação do PO, 23/11/2026): primeiro o domínio `collection` e os contadores, que não dependem
-do marketplace. O valor estimado (R7) e o "Menor anúncio" (R8) ligam quando `price_history` e `listings` estiverem no
-`develop`; até lá, valor `"0.00"`, variação `null` e "—".
+do marketplace, e por último os preços. Como `price_history` e `listings` já estavam no `develop` (backend #41 e #44),
+o valor estimado (R7) e o "Menor anúncio" (R8) entraram ligados no mesmo PR do backend (#48), sem implementação nula.
 
 ## Dependências
 
@@ -26,6 +27,9 @@ do marketplace. O valor estimado (R7) e o "Menor anúncio" (R8) ligam quando `pr
   `payments` e `price_history`, e o #44 completou as tabelas do marketplace. A T2 desta story fica sem migration.
 - **CCD084 / CCD097**: criam `listings` (`create_listings_table`). O "Menor anúncio" da carta faltante (L6) lê essa
   tabela por uma interface (ver Decisões técnicas); sem anúncio, "—".
+- **CCD061 / CCD105 (trava da exclusão de carta)**: o catálogo recebe a `CardUsage` (`cardIdsInCollections(ids)`) e,
+  até `collection_cards` existir, injetava `noCollectionsYet` (CCD105, L14). Como esta story cria a tabela, ela liga a
+  consulta real (ver Decisões técnicas). Isso antecipa a T5 da CCD014 (AB#1033).
 - **CCD030 (Visualizar Detalhes)** e **CCD084 (Criar Anúncio)**: destinos de "Ver carta" e "Anunciar repetida". Até
   entrarem, os links levam a rotas de `underConstructionRoute` (L10).
 - **CCD022 (Adicionar Carta)** e a página pública do álbum (EA-002-01) são quem põe álbuns na coleção; até lá, o seed
@@ -42,23 +46,26 @@ do marketplace. O valor estimado (R7) e o "Menor anúncio" (R8) ligam quando `pr
 | `albums`, `cards`, `categories`, `users` | sim | — | só leitura |
 
 Nenhuma coluna fora do DBML. O seed `database/seeds/collection.seed.ts` cria, para o cliente de exemplo, a coleção com os
-4 álbuns e as cartas do frame `1122-17812` (CA1, CA8). O histórico de preços dos últimos 60 dias (CA3 e o valor do CA8)
-entra no seed junto com a T2, quando `price_history` existir.
+4 álbuns e as cartas do frame `1122-17812` (CA1, CA8), o histórico de preços dos últimos 60 dias (CA3 e o valor do CA8)
+e os anúncios ativos do "Menor anúncio".
 
 ## Regras
 
-- **Coleção** (L2): `findOrCreateByUserId` faz `upsert` em `collections.user_id` com `is_public = false`.
+- **Coleção** (L2): `findOrCreateByUserId` faz `upsert` em `collections.user_id` com `is_public = false`; se a
+  linha existir com `deleted_at`, o `upsert` a restaura (`deleted_at = NULL`), como pede o ADR-015.
 - **Álbuns ativos** (R3): `user_albums` sem `deleted_at`, de `albums` sem `deleted_at`.
 - **Cartas** (R4, L3): total = soma de `albums.total_cards` dos álbuns ativos; possuo = cartas desses álbuns
   com status `OWNED` ou `DUPLICATE`; faltantes = total − possuo; repetidas = soma de `quantity − 1` das `DUPLICATE`.
 - **Percentual médio** (R5, L4): média de `progress_percentage` dos álbuns ativos, com 2 casas; sem álbum, 0.
 - **Valor estimado** (R7, L5): uma vez por carta possuída (`OWNED` ou `DUPLICATE`); preço médio = média de
   `price_history.price` com `reference_date` nos últimos 30 dias; sem preço, zero. Variação = valor de hoje contra o
-  valor com os preços de 30 a 60 dias atrás; sem valor anterior, `null`. Sem a tabela `price_history`, `"0.00"` e `null`.
+  valor com os preços de 30 a 60 dias atrás; sem valor anterior, `null`. Sem preço nenhum, `"0.00"` e `null`.
 - **Álbum em destaque** (R12, L7): o favorito (`is_favorite`); sem favorito, o álbum da `collection_cards` com o
   `updated_at` mais recente; sem marcação, o álbum adicionado por último; sem álbum, `null`.
 - **Principais itens** (R8, L6): cartas dos álbuns ativos; carta sem linha em `collection_cards` conta como
-  faltante; ordem padrão "maior valor" (preço médio, e para faltante o menor anúncio); 8 por página.
+  faltante; ordem padrão "maior valor" (preço médio, e para faltante o menor anúncio, sem preço no fim); 8 por página.
+- **Carta usada em coleções** (CCD061 FA 5, CCD105 R10): a carta tem marcação em `collection_cards` sem `deleted_at`,
+  de qualquer status, numa coleção sem `deleted_at`.
 - **Saudação** (R13, L9): primeiro nome de `users.name` e mês e ano de `users.created_at`.
 - **Papel** (R1, L1): `CUSTOMER` e `SELLER`; `ADMIN` recebe `403`.
 
@@ -123,16 +130,18 @@ Domínio `src/domains/collection/`, no modelo de `src/domains/users/` (ADR-004),
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `database/schema.prisma` + 3 migrations | modelos `Collection`, `UserAlbum` e `CollectionCard` e o enum `CollectionCardStatus`, com as relações em `User`, `Album` e `Card` | R3, R4, R7 |
-| `database/seeds/collection.seed.ts` · `data/collection.json` | coleção de exemplo com os dados do frame (T3); o histórico de preços entra com a T2, quando `price_history` existir | CA1, CA3, CA8 |
-| `collection.repository.ts` | `findOrCreateByUserId`, contagens dos álbuns e das cartas, média do progresso, álbum em destaque | R1, R3–R5, R9 |
-| `collection-prices.ts` | interface `CollectionPrices` (`averagePrices(cardIds, range)`) e a implementação nula, que devolve preço vazio enquanto `price_history` não existir | R7 (L5) |
-| `collection-prices.repository.ts` | implementação Prisma de `CollectionPrices`: preço médio por carta numa janela de datas (`$queryRaw` com `AVG` agrupado por `card_id`); entra com a T2, quando `price_history` existir | R7 |
-| `collection-cards.repository.ts` | cartas dos álbuns ativos com status e filtros (`rank`: id e status de todas, por nome), dados das cartas da página (`findRows`), contagem por status e categorias | R8 |
-| `collection-listing-prices.ts` | interface `ListingPrices` (`lowestActivePrice(cardIds)`) e a implementação nula até existir `listings` | R8 (L6) |
-| `collection.service.ts` + `.spec.ts` | resumo, valor estimado e variação, álbum em destaque, saudação, lista paginada | R3–R9 |
-| `collection.validator.ts` · `collection.errors.ts` | query da lista; códigos de erro do domínio | R8 |
+| `database/seeds/collection.seed.ts` · `data/collection.json` | coleção de exemplo com os dados do frame, o histórico de preços e os anúncios ativos (T3) | CA1, CA3, CA8 |
+| `collection.repository.ts` | `findOrCreateByUserId` (restaura a coleção excluída), álbuns ativos, marcações por álbum e cartas possuídas | R1, R3–R5, R7, R9 |
+| `collection-prices.ts` | interface `CollectionPrices` (`averagePrices(cardIds, range)`), em centavos | R7 (L5) |
+| `collection-prices.repository.ts` | implementação Prisma de `CollectionPrices`: preço médio por carta numa janela de datas (`$queryRaw` com `AVG` agrupado por `card_id`) (T2) | R7 |
+| `collection-cards.repository.ts` | cartas dos álbuns ativos com status e filtros (`rank`: id e status de todas, por nome), dados das cartas da página (`findRows`), contagem por status, categorias e as cartas marcadas em coleções (`findCardIdsInCollections`) | R8 |
+| `collection-listing-prices.ts` · `collection-listing-prices.repository.ts` | interface `ListingPrices` (`lowestActivePrice(cardIds)`) e a implementação Prisma: o menor anúncio `ACTIVE` não excluído por carta (T2) | R8 (L6) |
+| `collection.service.ts` + `.spec.ts` | resumo, valor estimado e variação, álbum em destaque, saudação, lista paginada e `cardIdsInCollections` para o catálogo; a query da lista é tipada pelo `z.infer` do validator (ADR-006) | R3–R9 |
+| `collection.validator.ts` | query da lista; não há `collection.errors.ts`, porque o domínio não tem erro próprio (os `400`, `401` e `403` são os compartilhados) | R8 |
 | `collection.controller.ts` · `collection.routes.ts` · `collection.swagger.ts` · `collection.module.ts` | as 2 rotas, com `authenticate` + `authorize('CUSTOMER', 'SELLER')` | R1 |
 | `src/routes.ts` | registra `collectionModule` | R1 |
+| `catalog.module.ts` · `catalog.ports.ts` (CCD061) | o catálogo passa a receber o `collectionService` como `CardUsage`; sai o `noCollectionsYet` | CCD061 FA 5 |
+| `tests/integration/catalog-card-usage.spec.ts` | a carta marcada numa coleção não é excluída (`422 CARD_IN_USE`) e a exclusão em lote a pula | CCD105 CA9 |
 | `tests/integration/collection-summary.spec.ts` | rotas de ponta a ponta | CA1–CA6 |
 
 ## Frontend — `apps/cromocard-frontend`
@@ -163,7 +172,7 @@ registradas no `CustomerLayout` do `app/router.tsx`.
 |---|---|---|
 | CA1 | 4 álbuns, cartas, média do progresso | `collection.service.spec.ts` · `tests/integration/collection-summary.spec.ts` · `CollectionHomePage.spec.tsx` |
 | CA2 | álbum com `deleted_at` fora da contagem | `collection.service.spec.ts` · integração |
-| CA3 | soma dos preços médios e variação em 30 dias (service com `CollectionPrices` falso já na T5; integração só depois da T2) | `collection.service.spec.ts` · integração |
+| CA3 | soma dos preços médios e variação em 30 dias | `collection.service.spec.ts` · integração |
 | CA4 | lista com nome e status, carta sem marcação como faltante, abas e busca | `collection.service.spec.ts` · integração · `CollectionCardsGrid.spec.tsx` |
 | CA5 | coleção nova zerada e botão "Adicionar Primeiro Álbum" | `collection.service.spec.ts` · `CollectionHomePage.spec.tsx` |
 | CA6 | `401` sem token, `403` para `ADMIN`, isolamento entre dois clientes | integração |
@@ -177,11 +186,15 @@ Meta de 90% de cobertura nos arquivos alterados (ADR-060).
 
 - O domínio `collection` concentra coleção, álbuns da coleção e marcações: as CCD008 a CCD018 só acrescentam rotas e
   métodos a ele, sem módulo novo.
-- O catálogo não lê tabela de outro domínio (ADR-001); do mesmo jeito, a coleção não lê `listings` direto: recebe a
-  interface `ListingPrices` pelo construtor, com a implementação nula (`null`) enquanto a tabela não existir. A story
-  que criar `listings` (CCD084 ou CCD097) liga a implementação Prisma no `collection.module.ts` (L6). O mesmo
-  vale para o preço médio: a coleção recebe a interface `CollectionPrices` pelo construtor, com a implementação nula
-  enquanto `price_history` não existir; o resumo mostra `"0.00"` e variação `null` (L5). A T2 liga a implementação Prisma.
+- O catálogo não lê tabela de outro domínio (ADR-001); do mesmo jeito, o service da coleção não lê `listings` nem
+  `price_history` direto: recebe as interfaces `ListingPrices` (L6) e `CollectionPrices` (L5) pelo construtor, e o
+  `collection.module.ts` injeta as implementações Prisma (T2). Os preços circulam em centavos e viram string com 2 casas
+  só na resposta, numa função só do service.
+- A trava "carta já usada em coleções" do catálogo (CCD061 FA 5) passa a valer nesta story, porque é ela que cria
+  `collection_cards`: sem isso, o admin conseguiria excluir uma carta marcada na coleção de um cliente. Pela regra do
+  backend (o domínio só usa a service exportada pelo `.module.ts` do outro), o `catalog.module.ts` recebe o
+  `collectionService`, que implementa a `CardUsage`, em vez da `PrismaCardUsage` que o plano da CCD014 previa.
+  Revisão de código de 26/11/2026; a T5 da CCD014 (AB#1033) fica coberta.
 - O preço médio é calculado no banco (`$queryRaw` com `AVG` e `GROUP BY card_id`), para não carregar o histórico inteiro
   na memória. A ordem por valor fica no service (revisto na T6, 25/11/2026): como os preços entram pelas interfaces
   `CollectionPrices` e `ListingPrices`, a consulta das cartas não junta `price_history` nem `listings`. O service busca o
