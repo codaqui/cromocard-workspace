@@ -105,12 +105,13 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
   { "data": [ { "cardId": "uuid", "name": "Pikachu VMAX", "frontImageUrl": "https://…",
       "album": { "id": "uuid", "title": "Destinos Brilhantes" }, "category": { "id": "uuid", "name": "Pokémon" },
       "status": "DUPLICATE", "quantity": 2, "averagePrice": "180.00", "lowestListingPrice": null } ],
-    "meta": { "page": 1, "pageSize": 8, "total": 264,
+    "meta": { "page": 1, "pageSize": 8, "total": 264, "totalPages": 33,
       "counts": { "all": 264, "owned": 184, "missing": 80, "duplicates": 28 },
       "categories": [ { "id": "uuid", "name": "Pokémon" } ] } }
   ```
 
-  `lowestListingPrice` só vem na carta `MISSING` (L6); `categories` são as dos álbuns ativos, para os filtros.
+  `lowestListingPrice` só vem na carta `MISSING` (L6); `averagePrice` vem em todas, `null` sem preço nos últimos 30 dias;
+  a carta `MISSING` vem com `quantity: 0`; `categories` são as dos álbuns ativos, para os filtros.
 
 - **Erros:** `400 VALIDATION_ERROR` (query inválida), `401`, `403` (R1).
 
@@ -126,7 +127,7 @@ Domínio `src/domains/collection/`, no modelo de `src/domains/users/` (ADR-004),
 | `collection.repository.ts` | `findOrCreateByUserId`, contagens dos álbuns e das cartas, média do progresso, álbum em destaque | R1, R3–R5, R9 |
 | `collection-prices.ts` | interface `CollectionPrices` (`averagePrices(cardIds, range)`) e a implementação nula, que devolve preço vazio enquanto `price_history` não existir | R7 (L5) |
 | `collection-prices.repository.ts` | implementação Prisma de `CollectionPrices`: preço médio por carta numa janela de datas (`$queryRaw` com `AVG` agrupado por `card_id`); entra com a T2, quando `price_history` existir | R7 |
-| `collection-cards.repository.ts` | cartas dos álbuns ativos com status, filtros, contagem por status e ordem por valor | R8 |
+| `collection-cards.repository.ts` | cartas dos álbuns ativos com status e filtros (`rank`: id e status de todas, por nome), dados das cartas da página (`findRows`), contagem por status e categorias | R8 |
 | `collection-listing-prices.ts` | interface `ListingPrices` (`lowestActivePrice(cardIds)`) e a implementação nula até existir `listings` | R8 (L6) |
 | `collection.service.ts` + `.spec.ts` | resumo, valor estimado e variação, álbum em destaque, saudação, lista paginada | R3–R9 |
 | `collection.validator.ts` · `collection.errors.ts` | query da lista; códigos de erro do domínio | R8 |
@@ -181,7 +182,10 @@ Meta de 90% de cobertura nos arquivos alterados (ADR-060).
   que criar `listings` (CCD084 ou CCD097) liga a implementação Prisma no `collection.module.ts` (L6). O mesmo
   vale para o preço médio: a coleção recebe a interface `CollectionPrices` pelo construtor, com a implementação nula
   enquanto `price_history` não existir; o resumo mostra `"0.00"` e variação `null` (L5). A T2 liga a implementação Prisma.
-- O preço médio e a ordem por valor são calculados no banco (`$queryRaw` com `AVG` e `GROUP BY card_id`), numa consulta
-  por página, para não carregar o histórico inteiro na memória.
+- O preço médio é calculado no banco (`$queryRaw` com `AVG` e `GROUP BY card_id`), para não carregar o histórico inteiro
+  na memória. A ordem por valor fica no service (revisto na T6, 25/11/2026): como os preços entram pelas interfaces
+  `CollectionPrices` e `ListingPrices`, a consulta das cartas não junta `price_history` nem `listings`. O service busca o
+  id e o status das cartas da aba, pede um preço por carta às interfaces, ordena (sem preço vai para o fim) e só então
+  carrega os dados das 8 cartas da página.
 - A coleção nascer na primeira leitura (L2) é uma regra de negócio decidida pelo PO em 23/11/2026; o caso de uso 07 só
   descreve o resumo, e a regra fica registrada na spec.
