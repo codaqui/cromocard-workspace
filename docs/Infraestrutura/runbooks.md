@@ -197,6 +197,16 @@ secret* do Google não é usado.
 O `TEAM_WEBHOOK` citado no `segredos.md` e no `infra/README.md` do backend **não é mais usado**: a equipe
 descartou os alertas automáticos em 23/10 (decisão 18 do ADR-055). Não cadastre esse secret.
 
+### `MELHOR_ENVIO_TOKEN` (cotação de frete)
+
+O token do sandbox do Melhor Envio é fixo e vale 30 dias (ADR-072). Ele é **secret** do Environment do **backend**.
+
+1. Antes de vencer, entre no painel do sandbox do Melhor Envio com a conta da plataforma, gere um token novo com
+   a permissão de cálculo de frete e anote a data de validade.
+2. Troque o secret `MELHOR_ENVIO_TOKEN` no Environment do backend e refaça o deploy do backend.
+3. Confira no checkout de homologação que o frete aparece. Token vencido faz a cotação responder
+   `502 SHIPPING_PROVIDER_ERROR`, e o log da `api` mostra a falha do Melhor Envio com o status `401`.
+
 ### `TS_AUTHKEY_OPS` (nó `cromocard-ops`)
 
 Só vale no primeiro registro e expira em até 90 dias depois de gerada; só é preciso trocar se o volume

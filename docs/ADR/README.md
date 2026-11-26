@@ -92,6 +92,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [069](ADR-069-remover-avaliacoes-e-propostas.md) | Escopo | Remover avaliações e propostas (CCD033, 070, 081, 089, `offers` e `reviews`) e puxar para o MVP as futuras com tela no Figma; substitui trechos dos 010, 015 e 054 | Proposto |
 | [070](ADR-070-fidelidade-ao-figma-obrigatoria-na-spec.md) | Processo | Fidelidade ao Figma obrigatória na spec: requisito `Fidelidade` e critério de aceite por frame, em 1280 px lado a lado e adaptado em 375, 768 e 1024 px (complementa o 060) | Proposto |
 | [071](ADR-071-webhook-da-conta-conectada-reconsulta-a-stripe.md) | Backend | O `account.updated` da Stripe reconsulta a conta conectada e grava o estado atual, sem tabela de eventos (complementa o 066) | Proposto |
+| [072](ADR-072-token-fixo-do-melhor-envio-no-sandbox.md) | Backend | Token fixo do Melhor Envio no sandbox, renovado à mão antes de vencer (complementa o 067) | Proposto |
 
 ## Modelo
 
