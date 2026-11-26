@@ -28,5 +28,6 @@
 |  | 4. Caso a carta esgote antes do pagamento (passo 6), o sistema informa que ela não está mais disponível e volta ao anúncio. |
 |  | 5. Caso não haja frete para o CEP de entrega, o sistema informa e pede outro endereço. |
 | 6. O cliente cancela na página da Stripe ou não paga em 30 minutos. |  |
-|  | 7. O sistema marca o pedido como "Cancelado", com o motivo "pagamento não concluído", devolve a carta ao estoque e mostra "Pagamento não concluído", com "Tentar de novo". O pedido continua em Meus pedidos. |
+|  | 7. Ao voltar da página da Stripe sem pagar, ou passados os 30 minutos, o sistema marca o pedido como "Cancelado", com o motivo "pagamento não concluído", devolve a carta ao estoque e mostra "Pagamento não concluído", com "Tentar de novo". O pedido continua em Meus pedidos. |
 |  | 8. Caso o cartão seja recusado, a própria página da Stripe informa e permite usar outro cartão. |
+|  | 9. Caso o cálculo do frete falhe (Melhor Envio fora do ar ou com erro), o sistema mostra "Não foi possível calcular o frete agora. Tente novamente em instantes.", diferente do aviso de "sem frete", e o cliente não segue para o pagamento. |

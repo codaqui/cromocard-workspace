@@ -1517,7 +1517,7 @@ views {
     description '''
       **Ator:** Cliente
       **Pre-condicao:** estar autenticado com a conta ativa; o anuncio deve estar ativo, com quantidade disponivel, e nao ser do proprio cliente.
-      **Fluxo alternativo:** visitante ve Entre para continuar; anuncio esgotado ou pausado mostra Indisponivel; carta esgotada antes do pagamento volta ao anuncio; sem frete para o CEP, pede outro endereco; pagamento cancelado ou nao feito em 30 minutos cancela o pedido com o motivo pagamento nao concluido e devolve a carta ao estoque; cartao recusado e tratado na pagina da Stripe.
+      **Fluxo alternativo:** visitante ve Entre para continuar; anuncio esgotado ou pausado mostra Indisponivel; carta esgotada antes do pagamento volta ao anuncio; sem frete para o CEP, pede outro endereco; pagamento cancelado (a sessao da Stripe expira na hora, ao voltar) ou nao feito em 30 minutos cancela o pedido com o motivo pagamento nao concluido e devolve a carta ao estoque; cartao recusado e tratado na pagina da Stripe; falha no calculo do frete mostra Nao foi possivel calcular o frete agora, diferente do sem frete.
     '''
 
     cliente -> appWeb '1. seleciona Comprar no detalhe do anuncio'
