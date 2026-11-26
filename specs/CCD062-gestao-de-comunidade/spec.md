@@ -84,7 +84,7 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 - Criar e editar grupo pelo admin (o caso de uso cita; a user story não — L1).
 - Sanções ao autor pela fila (advertir, suspender, banir, remover e advertir) e advertir grupo — CCD099.
 - Franquia do grupo, "guilda", textos de detecção automática e de efeito: retirados do Figma em 12/11/2026.
-- Denúncias de perfil, usuário e anúncio.
+- Denúncias de perfil e anúncio. As denúncias de contato do chat pessoal entram na fila pela CCD047 (L9).
 
 ## Lacunas e decisões
 
@@ -98,3 +98,4 @@ Conferidas em 12/11/2026, depois do ajuste do Figma à documentação. Links: `h
 | L6 | Detalhes do grupo: modal ou página? | Modal, com as informações e as ações do status. Decisão do PO (Daniel, 12/11/2026), na revisão do Figma | `62`, FP 4 |
 | L7 | Que ações aparecem em cada status? | Ativo: advertir, suspender, excluir. Advertido: reativar (tira o selo), suspender, excluir. Suspenso: reativar, excluir. Decisão do PO (Daniel, 12/11/2026) | `62`, FP 4 |
 | L8 | O Figma mostrava a franquia do grupo, que não existe no DER | Sai a franquia; entra o tipo de acesso (`access_type`), e o "líder" vira o criador (`creator_id`). Decisão do PO (Daniel, 12/11/2026) | `62`, FP 2 |
+| L9 | A fila também recebe as denúncias de contato do chat pessoal (`target_type = USER`, CCD047)? | Sim: mesma fila e mesmo contador "Denúncias pendentes", com o card do chat (origem "Chat pessoal", motivo, descrição e as miniaturas dos prints) e as ações "Dispensar Denúncia" e "Aplicar sanção ao autor"; "Golpe / pagamento externo" e "Assédio" entram em Críticos e "Spam" em Spam. Feito na CCD047 (L7 dela). Decisão do Daniel, 26/11/2026 | `62`, FP 10–12; ADR-072 |
