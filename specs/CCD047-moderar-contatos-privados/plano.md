@@ -97,11 +97,11 @@ Convenções do ADR-011. `ContactReportReason = 'Golpe / pagamento externo' | 'A
 | Contrato | O que muda | Requisitos |
 |---|---|---|
 | `GET /me/conversations` e `POST /me/conversations` (CCD046) | cada conversa ganha `block: 'BY_ME' \| 'BY_CONTACT' \| null` | R8, R12, R17 |
-| `message:send` (CCD046) | ack de erro `{ error: 'CONTACT_BLOCKED', status: 422 }` com bloqueio ativo | R7 |
-| `GET /admin/community/reports` (CCD062) | inclui as denúncias `USER`; cada item ganha `origin: 'GROUP' \| 'CHAT'` e `evidences: [{ url }]`; `message` e `group` nulos na do chat | R19 |
+| `message:send` (CCD046) | ack de erro `{ error: 'CONTACT_BLOCKED', message }` com bloqueio ativo (o ack do socket não leva status) | R7 |
+| `GET /admin/community/reports` (CCD062) | inclui as denúncias `USER` com print; cada item ganha `origin: 'GROUP' \| 'CHAT'`, `reporterUsername`, `reportedUser` (`id`, `name`, `username`, `accountAgeDays`, `warnings`; só no chat) e `evidences` (lista de URLs); `message` nula na do chat | R19 |
 | `GET /admin/community/summary` (CCD062) | "Denúncias pendentes" conta as do chat | R19 |
 | `POST /admin/community/reports/:id/dismiss` (CCD062) | aceita a denúncia do chat | R19 |
-| Sanção da CCD099 com `reportId` | resolve a denúncia do chat na mesma transação | R19 |
+| Sanção da CCD099 (`POST /users/:id/warn`, `/suspend`, `/block`) | as três aceitam `reportId` (antes só a advertência) e resolvem a denúncia do chat na mesma transação | R19 |
 
 ## Backend — `apps/cromocard-backend`
 
