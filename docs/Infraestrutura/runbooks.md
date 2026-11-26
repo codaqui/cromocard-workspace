@@ -31,13 +31,13 @@ mudou. Estado atual: [topologia.md](topologia.md).
 
 ```bash
 curl -fsS https://hml-api.cromocard.com.br/health      # {"status":"ok"}
-curl -fsS https://hml.cromocard.com.br/env.js          # window.__ENV__ = { API_URL: "...", GOOGLE_CLIENT_ID: "..." };
+curl -fsS https://hml.cromocard.com.br/env.js          # window.__ENV__ = { API_URL: "...", WS_URL: "...", GOOGLE_CLIENT_ID: "..." };
 ```
 
 | Resposta | Significado |
 |---|---|
 | `hml-api /health` = 200 | API de hml no ar, túnel funcionando |
-| `hml.cromocard.com.br` = 200 e `/env.js` com a `API_URL` | Frontend de hml no ar |
+| `hml.cromocard.com.br` = 200 e `/env.js` com a `API_URL` e a `WS_URL` | Frontend de hml no ar |
 | `hml.cromocard.com.br` = 502 | O `web` não está rodando: veja o último *Deploy do web em hml* do frontend |
 | `hml-ws` = 404 na raiz | Esperado: o `ws` só responde `/health` |
 

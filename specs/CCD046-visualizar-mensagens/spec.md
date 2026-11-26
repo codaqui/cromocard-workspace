@@ -112,3 +112,4 @@
 | L13 | Quando a mensagem passa a lida (`is_read = true`, `read_at`)? (proposta: quando o destinatário abre a conversa) | pendente | — |
 | L14 | Ordem da lista (proposta: pela última mensagem, a mais recente primeiro), quantas mensagens carregar por vez e o estado carregando, que não tem frame | pendente | — |
 | L15 | O ator é Cliente: `SELLER` e `ADMIN` também usam o chat pessoal? (proposta: `CUSTOMER` e `SELLER`) | pendente | — |
+| L16 | A T12 (servidor Socket.IO autenticado por JWT) e a T13 (cliente Socket.IO e `VITE_WS_URL`), a base da Onda 0, podem entrar antes da aprovação desta spec? | Sim (PO, 25/11/2026, nas revisões de codaqui/cromocard-backend#42 e codaqui/cromocard-frontend#33): as duas não dependem de nenhuma lacuna pendente. O resto da spec só entra depois da aprovação | esta tabela; plano da CCD044 (handshake) |

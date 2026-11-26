@@ -85,9 +85,9 @@ rede, banco e `.env` próprios. Limites de memória: [ADR-055, orçamento](../AD
   Sem `FRONTEND_TAG` no `.env`, o deploy do backend grava `FRONTEND_TAG=sem-frontend` e acrescenta
   `compose.sem-frontend.yml`, que tira o `web` (modo sem frontend, que valeu em hml até 05/11 e vale em prod
   até o primeiro release do frontend) ✅.
-- **`env.js`:** o `web` gera o arquivo na subida com `API_URL` e `GOOGLE_CLIENT_ID` do `.env` (ADR-045). Hoje
-  em hml: `API_URL` = `https://hml-api.cromocard.com.br` e `GOOGLE_CLIENT_ID` vazio, então o botão do Google não
-  aparece ✅.
+- **`env.js`:** o `web` gera o arquivo na subida com `API_URL`, `WS_URL` e `GOOGLE_CLIENT_ID` do `.env` (ADR-045); sem
+  `API_URL` ou `WS_URL` o container não sobe. Hoje em hml: `API_URL` = `https://hml-api.cromocard.com.br`, `WS_URL` =
+  `wss://hml-ws.cromocard.com.br` e `GOOGLE_CLIENT_ID` vazio, então o botão do Google não aparece ✅.
 - **`hml-ws`** responde 404 na raiz, o que é esperado: o `ws` só responde `/health`.
 - **Redes:** `edge` tem internet; `data` é `internal: true`. Homologação e produção não se enxergam. Faixa do
   Docker: `10.200.0.0/16` em redes `/24`.
