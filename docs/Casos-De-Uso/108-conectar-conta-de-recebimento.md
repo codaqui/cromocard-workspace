@@ -14,7 +14,7 @@
 |  | 4. O sistema cria a conta conectada do vendedor na Stripe, se ainda não existir, e o leva ao cadastro na página da Stripe. |
 | 5. O vendedor preenche os dados na Stripe e volta para o CromoCard. |  |
 |  | 6. Na volta, o sistema consulta a conta na Stripe e, enquanto ela analisa o cadastro, mostra "Estamos verificando sua conta na Stripe", com o selo "Verificando" e a ajuda "Você poderá publicar anúncios assim que a Stripe liberar a conta. Isso costuma levar poucos minutos." |
-|  | 7. Quando a Stripe avisa que a conta pode receber transferências, o sistema marca a conta como pronta, tira o aviso e libera a criação de anúncios. |
+|  | 7. Quando a Stripe avisa que a conta mudou, o sistema consulta a conta na Stripe e, se ela pode receber transferências, marca a conta como pronta, tira o aviso e libera a criação de anúncios. |
 
 ### Fluxo Alternativo
 
