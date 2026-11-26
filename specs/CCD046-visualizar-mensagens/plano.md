@@ -35,7 +35,7 @@ Tabelas copiadas do DBML (`03-der-completo.dbml`, módulo 5). Nenhuma coluna nov
 |---|---|---|---|---|
 | `conversations` | não | `create_conversations_table` | `listing_id` com FK para `listings`, que já existe | R1, R3 |
 | `conversation_participants` | não | `create_conversation_participants_table` | PK `(conversation_id, user_id)` | R1, R3, R9 |
-| `messages` | não | `create_messages_table` | autorrelação `reply_to_id`; índice `(conversation_id, created_at)` | R3–R5, R9, R18 |
+| `messages` | não | `create_messages_table` | autorrelação `reply_to_id`; ordem por `created_at` e `id`, sem índice novo fora do DER | R3–R5, R9, R18 |
 | `user_blocks` | não | `create_user_blocks_table` | único `(blocker_id, blocked_id)`; a CCD047 grava | R13 |
 
 Seed (`database/seeds/chat.seed.ts` + `data/conversations.json`), com os dados do frame `1160-32980`:
@@ -50,7 +50,7 @@ Seed (`database/seeds/chat.seed.ts` + `data/conversations.json`), com os dados d
 - **Papéis:** `CUSTOMER` e `SELLER`; `ADMIN` recebe `403` (L15).
 - **Minhas conversas:** o usuário é participante com `deleted_at` nulo, a conversa não está excluída e o outro participante não tem `users.deleted_at` (R1, R9). Conversa de outra pessoa responde `404 CONVERSATION_NOT_FOUND`.
 - **Ordem:** pela `created_at` da última mensagem não excluída, da mais recente para a mais antiga; conversa sem mensagem usa a própria `created_at` (L14).
-- **Busca (`q`):** `name` ou `username` do outro participante, sem diferenciar maiúsculas nem acentos (`unaccent`, que já é usado no catálogo) (L3).
+- **Busca (`q`):** `name` ou `username` do outro participante, sem diferenciar maiúsculas (`ILIKE`), como as outras buscas do projeto (L3).
 - **Abas (`filter`):** `all` ou `unread`, esta só com as conversas que têm não lidas. O `meta` traz `totals: { all, unread }` para o selo, as abas e o rodapé (L4, L6).
 - **Prévia:** a última mensagem não excluída; com `fromMe = true` o frontend prefixa "Você: " (R3).
 - **Não lidas:** `is_read = false`, `author_id` diferente do usuário e `deleted_at` nulo (R5).
@@ -151,7 +151,7 @@ Feature `src/features/chat/`, no modelo de `src/features/users/` (ADR-040). Cont
 |---|---|---|
 | `chat.types.ts` · `chat.labels.ts` · `chat.format.ts` | tipos, textos, hora ou data da prévia e o separador "Hoje, 31 de Outubro" | R2–R4, R12, R17 |
 | `chat.api.ts` · `chat.queries.ts` | as 5 rotas; `useInfiniteQuery` nas mensagens; atualização do cache pelo socket | R3–R5, R7, R11–R13 |
-| `hooks/useConversationSocket.ts` · `usePresence.ts` · `useSendMessage.ts` | join/leave, `message:new`, presença e envio pelo cliente da Onda 0 | R8, R15, R18 |
+| `hooks/useChatSocket.ts` · `usePresence.ts` · `useSendMessage.ts` | join/leave, `message:new`, presença e envio pelo cliente da Onda 0 | R8, R15, R18 |
 | `components/ConversationList/` · `ConversationListItem/` · `ConversationFilters/` | coluna "Conversas": "N ativas", "Nova conversa", busca, abas, itens e o rodapé "N de N conversas listadas" | R2, R3, R5, R11, R12, R14, R15 |
 | `components/ConversationView/` · `ConversationHeader/` · `MessageBubble/` · `DaySeparator/` · `SafetyTip/` | topo com "Ver Perfil" e o escudo, a dica, as mensagens, o destaque e as anteriores ao rolar | R4, R5, R16, R17 |
 | `components/MessageComposer/` | campo, "Enviar", Enter e o aviso de compras; texto mantido se o envio falhar | R17, R18 |
@@ -176,7 +176,7 @@ arquivos alterados (ADR-060).
 | CA3 | `unreadCount = 1` com Renata; destaque; `POST /read` zera | `conversations.spec.ts` · `ConversationView.spec.tsx` |
 | CA4 | estado vazio do frame | `MessagesPage.spec.tsx` |
 | CA5 | erro na lista e na conversa | `MessagesPage.spec.tsx` |
-| CA6 | `message:new` entra na conversa, lida, e atualiza a lista | `chat-socket.spec.ts` · `useConversationSocket.spec.tsx` |
+| CA6 | `message:new` entra na conversa, lida, e atualiza a lista | `chat-socket.spec.ts` · `useChatSocket.spec.tsx` |
 | CA7 | `401`, `403` (ADMIN) e `404` na conversa alheia (REST e `conversation:join`) | `conversations.spec.ts` · `chat-socket.spec.ts` |
 | CA8 | mensagem excluída fora da conversa e da prévia | `chat.service.spec.ts` · `conversations.spec.ts` |
 | CA9–CA11 | print em 1280 px igual aos três frames; sem quebra em 375/768/1024 px | validação no navegador (Fases 6 e 7) |
