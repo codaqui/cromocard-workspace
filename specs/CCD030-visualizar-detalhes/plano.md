@@ -34,10 +34,10 @@ usar o que já existe.
 
 | Tabela | Já no `schema.prisma`? | Migration | Observação |
 |---|---|---|---|
-| `cards` | sim, sem `status` | `status` da CCD106 | só `ACTIVE` não excluída abre (R13) |
+| `cards` | sim, sem `status` | `status` e o enum `card_status` desta story (a CCD106 só reaproveita) | só `ACTIVE` não excluída abre (R13) |
 | `card_photos` | sim | — | a imagem de detalhe (L1): a primeira por `sort_order` |
 | `listings` · `card_conditions` | não | da CCD084 | só leitura (R7, R8) |
-| `price_history` | não | da CCD075 / CCD007 | só leitura, preço médio (R4, depende da L2) |
+| `price_history` | não | da CCD075 / CCD007 | só leitura, preço médio só com `source = SALE` dos últimos 30 dias (R4, L2) |
 | `users` | sim (`username`, `role`) | — | vendedor do anúncio; `SELLER` vê "Anunciar esta carta" |
 
 ## Regras
@@ -133,6 +133,8 @@ Feature `src/features/catalog/` (perfil público) e `src/features/marketplace/li
 | CA6 | logado não vê o aviso | `CardProfilePage.spec.tsx` |
 | CA7 | sem anúncios: mensagem; "Anunciar esta carta" só para `SELLER` | `CardListingsList.spec.tsx` |
 | CA8 | rascunho: `404` | integração |
+| CA12, CA14 | "Ver anúncios (n)" rola até a lista; caminho, selos e subtítulo "Nº <número> • <álbum>" | `CardProfilePage.spec.tsx` |
+| CA13, CA15 | nota "Pagamento retido…" sob o título; 20 por vez com "Carregar mais", que some no fim | `CardListingsList.spec.tsx` |
 | CA9–CA11 | print em 1280 px igual aos frames `1112-4615`, `1112-5038` e `1112-5461`; sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
 
 ## Decisões técnicas

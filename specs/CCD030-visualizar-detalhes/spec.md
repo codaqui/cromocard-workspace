@@ -86,6 +86,15 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
   continuar" aberto, **quando** o print dela é comparado lado a lado com o print do frame `1112-5461`, **então** não há
   diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se
   adapta sem quebra, corte nem rolagem horizontal.
+- **CA12** (R15) — **Dado** uma carta com 4 anúncios ativos, **quando** o ator seleciona "Ver anúncios (4)" no card de
+  preços, **então** a página rola até a lista "Anúncios disponíveis".
+- **CA13** (R16) — **Dado** o perfil de uma carta, **quando** o ator chega à lista de anúncios, **então** vê a nota
+  "Pagamento retido pela CromoCard até você receber a carta" sob o título.
+- **CA14** (R17) — **Dado** uma carta com categoria, álbum e raridade, **quando** o ator abre o perfil, **então** vê o caminho
+  "Início / Marketplace / <categoria> / <álbum> / <carta>", os selos de raridade, álbum e categoria e o subtítulo
+  "Nº <número> • <álbum>".
+- **CA15** (R18) — **Dado** uma carta com 25 anúncios ativos, **quando** o ator abre o perfil, **então** a lista mostra 20
+  anúncios e "Carregar mais"; **quando** seleciona "Carregar mais", **então** vê os 25 e o botão some.
 
 ## Dados
 
@@ -104,7 +113,7 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Público - Perfil da carta | [1112-4615](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-4615) | R1–R10 | ✅ Bate, com uma diferença decidida: a lista não mostra a cidade do vendedor (L5) |
+| Público - Perfil da carta | [1112-4615](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-4615) | R1–R10, R15–R18 | ✅ Bate, com diferenças decididas: a lista não mostra a cidade do vendedor (L5), o select só tem "Menor preço" (L3) e o subtítulo não tem o país (L6) |
 | Público - Perfil da carta - 1 ano | [1112-5038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5038) | R6 | ✅ Bate (o período é da CCD075) |
 | Público - Entre para continuar | [1112-5461](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5461) | R11 | ✅ Bate |
 
@@ -114,7 +123,7 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 - **Só no Figma** (faz sentido implementar? decisão em Lacunas e decisões): "Ver anúncios (4)" e "Pagamento retido pela
   CromoCard até você receber a carta" (L4); a cidade do vendedor na lista (L5); os selos do topo, o subtítulo
   "Nº 10 • Argentina • Panini Copa do Mundo 2026" e o caminho "Início / Marketplace / Futebol / …" (L6).
-- **Diferenças aceitas:** a casca do site (menu, topo e rodapé) é o `SiteShell` atual (L15); a lista não mostra a cidade do vendedor (L5).
+- **Diferenças aceitas:** a casca do site (menu, topo e rodapé) é o `SiteShell` atual (L15); a lista não mostra a cidade do vendedor (L5); o select "Ordenar" só tem "Menor preço" (L3); o subtítulo é "Nº <número> • <álbum>", sem o país (L6).
 - **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R12 a lista sem anúncios e o botão "Anunciar esta
   carta"; R10 o perfil para o cliente e para o vendedor logados (L7); R13 a tela de carta não encontrada (L9).
 
@@ -147,7 +156,7 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | L14 | "Anunciar esta carta" aparece para todo vendedor logado? A CCD084 exige conta de recebimento pronta e endereço principal; o Figma tem o estado "Criar anúncio bloqueado" (`1112-10828`). Sem isso, o botão leva ao estado bloqueado ou fica desabilitado? | Aparece para todo `SELLER` e leva à criação de anúncio (CCD084, em construção até lá), que decide o bloqueio | `30-visualizar-detalhes.md` (23/11/2026), FA 3 |
 | L15 | A casca do frame (menu lateral, "Entrar"/"Criar conta grátis" e rodapé) difere do `SiteShell` de todas as páginas públicas | A CCD030 desenha o conteúdo da página igual ao frame, dentro do `SiteShell` atual; a casca fica para a story da Área Pública | esta spec, Telas |
 | L16 | Como "Criar conta grátis" volta para a carta, se o cadastro passa pela confirmação do e-mail? | O endereço da carta fica no `sessionStorage` ao abrir o cadastro pelo modal; o próximo login no mesmo navegador volta para ela. Confirmando em outro dispositivo, segue o destino padrão | esta spec, R11 |
+| L17 | A busca, o marketplace e a Home ainda não têm cartões de carta no `develop` (rotas em construção) | O perfil fica pronto em `/cartas/:id` e `cardProfilePathFor(id)` é exportado; cada lista liga o cartão quando for feita (CCD001, CCD002, CCD068) | esta spec, R2 |
 | L18 | O login com Google (CCD004) ainda não existe: para onde vai "Continuar com Google" no modal? | Para a rota em construção `/login/google` (`underConstructionRoute`, CCD004), como no Figma; e-mail e senha e cadastro seguem voltando para a carta | `30-visualizar-detalhes.md` (24/11/2026), FA 2 |
 | L19 | Até quando vale a carta guardada pela L16, se a pessoa desiste do cadastro? | 30 minutos; depois disso o login segue o destino padrão do papel | esta spec, R11 |
 | L20 | O título "Anúncios disponíveis (<n>)" usa a contagem do perfil ou o total da lista? Com o perfil em cache dizendo 0, a lista nem era consultada | A lista é sempre consultada e o total dela manda no título e no estado vazio; a contagem do perfil só aparece enquanto a lista carrega | esta spec e `plano.md` (26/11/2026), revisão da CCD030 |
-| L17 | A busca, o marketplace e a Home ainda não têm cartões de carta no `develop` (rotas em construção) | O perfil fica pronto em `/cartas/:id` e `cardProfilePathFor(id)` é exportado; cada lista liga o cartão quando for feita (CCD001, CCD002, CCD068) | esta spec, R2 |
