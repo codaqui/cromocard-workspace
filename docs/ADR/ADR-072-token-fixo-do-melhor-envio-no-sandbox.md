@@ -3,7 +3,7 @@
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-11-25
 - **Decisores:** Felipe Consulim (PO), na revisão do backend codaqui/cromocard-backend#43
-- **Complementa:** ADR-067 (item 2)
+- **Substitui parcialmente:** ADR-067 (item 2: a renovação automática do token no plano)
 
 ## Contexto
 
