@@ -12,8 +12,8 @@ Cada carta do detalhe do álbum (CCD013) ganha os marcadores "Possuo", "Falta" e
 tela na hora (otimista, depende da L9) e chama `PUT /api/v1/collections/me/cards/:cardId/status`, que aplica a transição
 de status e quantidade, restaura a linha excluída se houver, recalcula `user_albums.progress_percentage` na mesma
 transação e devolve a carta e o progresso. Esta story cria a regra de estado da carta (`collection-card-state.ts`) e o
-recálculo do progresso (`collection-progress.ts`), que a CCD017 e a CCD018 reaproveitam, e liga a `CardUsage` que a
-CCD061 deixou pendente.
+recálculo do progresso (`collection-progress.ts`), que a CCD017 e a CCD018 reaproveitam. A `CardUsage` que a
+CCD061 deixou pendente já foi ligada pela CCD007 (backend #48).
 
 ## Dependências
 
@@ -96,8 +96,7 @@ Domínio `src/domains/collection/`.
 | `collection-progress.ts` + `.spec.ts` | `recalculateAlbumProgress(tx, collectionId, albumId)` e as contagens do álbum | R9 |
 | `collection-cards-marking.repository.ts` | carta válida da coleção, linha atual, `upsert` restaurando `deleted_at` | R1, R3 |
 | `collection-cards-marking.service.ts` + `.spec.ts` | transação: lê, aplica o estado, grava, recalcula, devolve | R1–R9 |
-| `collection-card-usage.ts` | `PrismaCardUsage implements CardUsage` | R12 |
-| `catalog.module.ts` (CCD061) | passa `cardUsage: new PrismaCardUsage(prisma)` ao `CatalogService` | R12 |
+| `catalog.module.ts` (CCD061) | já recebe o `collectionService` como `CardUsage` (`cardIdsInCollections`), entregue pela CCD007 (backend #48); nada a fazer aqui | R12 |
 | `collection.errors.ts` | `COLLECTION_CARD_NOT_FOUND`, `CARD_STATUS_UNCHANGED` | R1, R5, R6 |
 | `collection.validator.ts` · `.controller.ts` · `.routes.ts` · `.swagger.ts` | body e a rota `PUT /me/cards/:cardId/status` | R1 |
 | `tests/integration/collection-card-marking.spec.ts` | rota de ponta a ponta e a exclusão bloqueada no catálogo | CA1–CA3, CA5, CA6, CA8, CA9 |
@@ -139,4 +138,5 @@ Feature `src/features/collection/`.
   CCD018; o frontend tem uma cópia só para a atualização otimista, e a resposta da API sempre prevalece.
 - Status, quantidade e progresso são gravados numa transação, para o progresso nunca ficar diferente das marcações.
 - A `CardUsage` é implementada no domínio `collection` e injetada no catálogo: o catálogo continua sem ler tabela de
-  outro domínio (ADR-001), como a CCD061 planejou.
+  outro domínio (ADR-001), como a CCD061 planejou. A CCD007 (backend #48) já fez isso pelo `collectionService`, em vez
+  da `PrismaCardUsage` prevista aqui.
