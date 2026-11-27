@@ -49,7 +49,7 @@
 | R9 | Depois de cada marcação, a API recalcula o progresso do álbum (`user_albums.progress_percentage`): cartas possuídas do álbum dividido pelo total de cartas do álbum (repetidas: L8) | Regra | `14`, FP 4; `15`, FP 3; `19`, FP 2 |
 | R10 | A carta e o progresso do álbum mudam na tela logo depois da marcação | Tela | `15`, FP 3; `16`, FP 3 |
 | R11 | Se a conexão falha, a tela informa o erro ao salvar e orienta o cliente a tentar novamente (texto: L9) | Mensagem | `14`, FA 1 |
-| R12 | Carta marcada na coleção de algum cliente passa a contar como "usada em coleções" e não pode ser excluída no catálogo (a CCD014 liga a implementação de `CardUsage` que a CCD061 deixou pendente) | Regra | `61`, FA 5; CCD061, L2 e `plano.md` (pendência da CCD014) |
+| R12 | Carta marcada na coleção de algum cliente passa a contar como "usada em coleções" e não pode ser excluída no catálogo (a trava da `CardUsage` que a CCD061 deixou pendente foi ligada pela CCD007, que cria `collection_cards`; esta story garante que a marcação a aciona) | Regra | `61`, FA 5; CCD061, L2; CCD007, `plano.md` (Decisões técnicas) |
 | R13 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames da seção Telas: `1160-23696`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 
 ## Critérios de aceite
