@@ -4,7 +4,7 @@
 > decisões do PO (L1–L11). Spec aprovada pelo PO em 23/11/2026. Atualizado em 26/11/2026 por Lucca Rocha com o que o
 > backend entregou (codaqui/cromocard-backend#48) e com as correções da revisão de código.
 
-- **Spec:** [spec.md](spec.md), Aprovada pelo PO em 23/11/2026 (lacunas L1–L11 decididas)
+- **Spec:** [spec.md](spec.md), aprovada pelo PO em 23/11/2026 (lacunas L1–L11 decididas; L12 em 27/11/2026)
 - **Repositórios:** backend · frontend (relidos em 23/11/2026 no `develop` dos dois apps)
 - **Data:** 2026-11-22 (revisado em 2026-11-23 e em 2026-11-26) · **Autor:** Daniel Andrade · **Revisão:** Lucca Rocha
 

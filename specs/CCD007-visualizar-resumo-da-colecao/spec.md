@@ -1,6 +1,6 @@
 # CCD007 — Visualizar Resumo da Coleção
 
-- **Status:** Em implementação
+- **Status:** Em implementação (Planejada em 23/11/2026, com o plano e as tarefas revisados)
 - **Fase:** MVP
 - **User story:** #113 `CCD007-Visualizar Resumo da Coleção`
 - **Caso de uso:** [07-visualizar-resumo-da-colecao.md](../../docs/Casos-De-Uso/07-visualizar-resumo-da-colecao.md) · complemento EA-007-01 em [escopo-adicional.md](../../docs/Casos-De-Uso/escopo-adicional.md)
@@ -82,7 +82,7 @@
 - **Diferenças com o Figma** (decisão em Lacunas e decisões):
   - Início — os cards são "Valor estimado", "Total de cartas", "Possuo", "Faltantes" e "Repetidas"; o caso de uso pede álbuns ativos, cartas registradas e percentual médio de completude (L3, L4). O total de álbuns aparece só no subtítulo "Colecionador desde out. de 2026 • 4 álbuns ativos".
   - Início — o percentual médio de completude não aparece em lugar nenhum (L4).
-  - Início — o frame diz "4 álbuns ativos", mas os 8 cartões da grade são de 8 álbuns; e "44 de 54 cartas" dá 81%, não 82%. O seed segue os números dos cards em 4 álbuns (25/11/2026).
+  - Início — o frame diz "4 álbuns ativos", mas os 8 cartões da grade são de 8 álbuns; e "44 de 54 cartas" dá 81%, não 82%. O seed segue os números dos cards em 4 álbuns, e o percentual sai da regra (L12).
 - **Só no Figma** (faz sentido implementar? decisão em Lacunas e decisões):
   - Início — cards "Possuo", "Faltantes" e "Repetidas" (L3).
   - Início — "Álbum em destaque: <álbum>", com a barra de progresso, "<n> de <total> cartas • <n>% completo" e o botão "Abrir álbum" (L7).
@@ -124,3 +124,4 @@ Primeiro o domínio `collection` e os contadores (R1–R6, R9–R13), que não d
 | L9 | Saudação "Olá, <nome>" e "Colecionador desde <mês> de <ano>" só existem no Figma. Fazem sentido? De onde vem a data? (proposta: sim; primeiro nome de `users.name` e mês e ano de `users.created_at`) | Sim: primeiro nome de `users.name` e mês e ano de `users.created_at`. Felipe Consulim (PO), 23/11/2026 | R13 |
 | L10 | Os botões dos cartões ("Ver carta", "Anunciar repetida", "Comprar no marketplace") levam a outras stories. Fazem sentido nesta tela? "Anunciar repetida" aparece para quem não é vendedor? (proposta: sim, como links para as telas da CCD030, CCD084 e do marketplace; "Anunciar repetida" só para `SELLER`, e para o `CUSTOMER` a repetida mostra "Ver carta") | Sim, como links. "Ver carta" (CCD030) e "Anunciar repetida" (CCD084) usam `underConstructionRoute` até essas stories entrarem; "Anunciar repetida" só para `SELLER`, e o `CUSTOMER` vê "Ver carta". Felipe Consulim (PO), 23/11/2026 | R14 |
 | L11 | O EA-007-01 cita o frame `1160-5395`, que não está mais no Figma (índice de 21/11/2026); o valor do álbum aparece hoje em `1160-23080` e `1160-23696`. Atualizar a referência no `escopo-adicional.md`? (proposta: sim) | Sim: a referência do EA-007-01 passa a ser `1160-23080` / `1160-23696`. Felipe Consulim (PO), 23/11/2026 | `escopo-adicional.md`, EA-007-01 |
+| L12 | Os dados de exemplo do frame `1122-17812` não fecham: "4 álbuns ativos" com cartões de 8 álbuns na grade, e "44 de 54 cartas" (81%) mostrado como 82%. Qual número o seed e a tela seguem? (proposta: os cards, com 4 álbuns, e o percentual calculado pela regra) | O seed segue os cards (4 álbuns ativos) e o percentual sai da regra (81%); a tela difere do frame só nesses números de exemplo, sem mudar regra. Lucas Oliveira Lima, 27/11/2026 | Dados, CA1, CA8; Telas |
