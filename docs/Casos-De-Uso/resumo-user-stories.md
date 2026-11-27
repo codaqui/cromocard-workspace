@@ -60,7 +60,7 @@
 | Visualizar Estado da Carta | Como Cliente preciso visualizar o estado da carta para avaliar sua condição de conservação antes da compra.** |
 | Visualizar Quantidade Disponível | Como Cliente preciso visualizar a quantidade disponível para saber quantas unidades podem ser adquiridas. |
 | Visualizar Dados do Vendedor | Como Cliente preciso visualizar os dados do vendedor para conhecer o responsável pelo anúncio. |
-| Conversar com Vendedor | Como Cliente preciso conversar com o vendedor para esclarecer dúvidas sobre a carta antes da compra.*** |
+| Conversar com Vendedor | Como Cliente preciso conversar com o vendedor para esclarecer dúvidas sobre a carta antes da compra.*** Atendida pela CCD073 Entrar em Contato (decisão de 27/11/2026). |
 | Comprar Carta | Como Cliente preciso comprar a carta diretamente pelo anúncio para realizar a aquisição do item. |
 | Compartilhar Anúncio | Como Cliente preciso compartilhar um anúncio para permitir que outras pessoas visualizem a carta disponível.** |
 | Denunciar Anúncio | Como Cliente preciso denunciar um anúncio para informar à plataforma possíveis irregularidades. |
