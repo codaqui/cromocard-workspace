@@ -9,7 +9,7 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O vendedor acessa o Painel do vendedor sem a conta de recebimento pronta. |  |
-|  | 2. O sistema mostra o aviso "Conecte sua conta de recebimento para vender", com a ajuda "O cadastro é feito na própria Stripe e leva poucos minutos. Sem a conta pronta, não é possível publicar anúncios.", e o botão "Conectar conta Stripe". "Criar Novo Anúncio" e "Criar Anúncio" ficam desabilitados. |
+|  | 2. O sistema mostra o aviso "Conecte sua conta de recebimento para vender", com a ajuda "O cadastro é feito na própria Stripe e leva poucos minutos. Sem a conta pronta, não é possível publicar anúncios.", e o botão "Conectar conta Stripe". "Criar Novo Anúncio" e "Criar Anúncio" ficam desabilitados. "Ver Loja Pública" leva à loja pública do vendedor. |
 | 3. O vendedor seleciona "Conectar conta Stripe". |  |
 |  | 4. O sistema cria a conta conectada do vendedor na Stripe, se ainda não existir, e o leva ao cadastro na página da Stripe. |
 | 5. O vendedor preenche os dados na Stripe e volta para o CromoCard. |  |
