@@ -44,7 +44,7 @@
 | R7 | O vendedor recebe a mensagem em tempo real na conversa (room `user:<id>` da CCD046, com o contador de não lidas). O aviso no sino (`notifications`, tipo `NEW_MESSAGE`) entra com a CCD053 | Regra | `73`, FP 7; ADR-012 (L9) |
 | R8 | Se o vendedor está suspenso, bloqueado pela plataforma ou excluído, ou se bloqueou o cliente, o anúncio mostra "Não foi possível iniciar a conversa com este vendedor." e nada é criado (`422 SELLER_UNAVAILABLE`; o bloqueio feito pelo vendedor não é revelado) | Mensagem | `73`, FA 1 (L4, L6) |
 | R9 | Se o cliente bloqueou o vendedor, o anúncio mostra "Você bloqueou @<vendedor>. Para conversar de novo, desbloqueie em Configurações › Privacidade." e nada é criado (`403 CONTACT_BLOCKED`) | Regra | `73`, FA 2; `user_blocks`; texto do frame `1160-37184` (L6) |
-| R10 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**); o botão, sem frame, segue o estilo do botão cinza "Favoritar" do mesmo anúncio | Fidelidade | Figma (frames da seção Telas); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
+| R10 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**); o botão segue o do quadro do vendedor de `1112-5772`, no estilo do botão cinza "Favoritar" do mesmo anúncio | Fidelidade | Figma (frames da seção Telas); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 | R11 | O botão é um componente do chat (`ContactSellerButton`, exportado pelo `index.ts` da feature) que a página do anúncio (CCD079/CCD080) monta passando o anúncio, o vendedor, se o usuário é o dono e a ação de pedir o login | Regra | L10 |
 
 ## Critérios de aceite
@@ -76,12 +76,12 @@
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
 | Mensagens — conversas | [1160-32980](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-32980) | R3, R5, R6 | ✅ A conversa aberta é a da CCD046; o texto sugerido entra no campo (L1) |
-| Detalhe do anúncio | [1112-5772](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5772) | R2, R8, R9, R10 | ⚠️ Sem o botão: entra no quadro do vendedor, à esquerda de "⚑ Denunciar anúncio", no estilo de "Favoritar" (L1). A página é da CCD079/CCD080 (L10) |
+| Detalhe do anúncio | [1112-5772](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5772) | R2, R8, R9, R10 | ✅ O botão "Entrar em contato" (`1344:381`) entrou no quadro do vendedor, à esquerda de "⚑ Denunciar anúncio", no estilo de "Favoritar", em 27/11/2026 (L1). A página é da CCD079/CCD080 (L10) |
 | Entre para continuar | [1112-5461](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5461) | R2 | ✅ O mesmo aviso de Comprar e Favoritar (L7) |
 
 - Textos de `1160-32980`: "Dica de segurança", "Nunca pague por Pix ou link fora da CromoCard. Compre pelo anúncio no marketplace: o pagamento fica retido até a entrega.", "Digite sua mensagem para @marcos_tcg...", "Enviar", "Faça compras e pagamentos só pelo marketplace da CromoCard."
 - Textos de `1112-5772` no quadro do vendedor: "tiago_trocas", "São Paulo - SP", "⚑ Denunciar anúncio".
-- **O que falta no Figma** (implementar mesmo assim, no estilo da tela): o botão "Entrar em contato" (R2); os avisos de vendedor indisponível (R8), de bloqueio feito pelo cliente (R9) e de erro ao abrir a conversa (CA6), abaixo do botão, no quadro do vendedor.
+- **O que falta no Figma** (implementar mesmo assim, no estilo da tela): os avisos de vendedor indisponível (R8), de bloqueio feito pelo cliente (R9) e de erro ao abrir a conversa (CA6), abaixo do botão, no quadro do vendedor.
 
 ## Fora do escopo
 
