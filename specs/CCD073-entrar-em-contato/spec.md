@@ -1,6 +1,6 @@
 # CCD073 — Entrar em Contato
 
-- **Status:** Planejada
+- **Status:** Em implementação
 - **Fase:** MVP (era Futuro Marketplace; puxada para o MVP em 22/11/2026 com as telas já no Figma, ADR-069)
 - **User story:** #1366 `CCD073 - Entrar em Contato` (criada em 22/11/2026)
 - **Caso de uso:** [73-entrar-em-contato.md](../../docs/Casos-De-Uso/73-entrar-em-contato.md)

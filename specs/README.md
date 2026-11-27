@@ -234,7 +234,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD067](CCD067-buscar-por-vendedor/spec.md) | Buscar por Vendedor | MVP (era Futuro Marketplace; o Figma ganhou o filtro em 22/11/2026) | Rascunho | #1335 |
 | [CCD068](CCD068-ordenar-por-menor-preco/spec.md) | Ordenar por Menor Preço (agrupa CCD069 e CCD071) | MVP | Rascunho | #1343 |
 | [CCD072](CCD072-comprar/spec.md) | Comprar | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1352 |
-| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | MVP (puxada em 22/11/2026, ADR-069) | Planejada | #1366 |
+| [CCD073](CCD073-entrar-em-contato/spec.md) | Entrar em Contato | MVP (puxada em 22/11/2026, ADR-069) | Em implementação | #1366 |
 | [CCD074](CCD074-visualizar-fotos/spec.md) | Visualizar Fotos | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1373 |
 | [CCD075](CCD075-visualizar-historico-de-precos/spec.md) | Visualizar Histórico de Preços | MVP (fatia mínima do marketplace, ADR-027) | Rascunho | #1378 |
 | [CCD076](CCD076-visualizar-anuncios-ativos/spec.md) | Visualizar Anúncios Ativos | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #1384 |
