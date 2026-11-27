@@ -195,7 +195,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD022](CCD022-adicionar-carta/spec.md) | Adicionar Carta | MVP | Rascunho | #128 |
 | [CCD023](CCD023-solicitar-cadastro-da-carta/spec.md) | Solicitar Cadastro da Carta | MVP | Rascunho | #156 |
 | [CCD024](CCD024-buscar-por-nome/spec.md) | Buscar por Nome (agrupa CCD025, CCD026, CCD027, CCD028, CCD029) | MVP | Rascunho | #157 #158 #159 #160 #161 #162 |
-| [CCD030](CCD030-visualizar-detalhes/spec.md) | Visualizar Detalhes | MVP | Rascunho | #163 |
+| [CCD030](CCD030-visualizar-detalhes/spec.md) | Visualizar Detalhes | MVP | Em implementação | #163 |
 | [CCD031](CCD031-visualizar-informacoes-da-carta/spec.md) | Visualizar Informações da Carta | MVP | Rascunho | #164 |
 | [CCD032](CCD032-buscar-por-estado-da-carta/spec.md) | Buscar por Estado da Carta | MVP (puxada em 22/11/2026, ADR-069) | Rascunho | #165 |
 | [CCD034](CCD034-buscar-categoria-do-album/spec.md) | Buscar Categoria do Álbum | MVP (era Futuro; o Figma ganhou o filtro em 22/11/2026) | Rascunho | #137 |

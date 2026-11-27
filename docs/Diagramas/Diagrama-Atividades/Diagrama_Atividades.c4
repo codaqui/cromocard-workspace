@@ -716,7 +716,7 @@ views {
     description '''
       **Ator:** Visitante, Cliente
       **Pre-condicao:** nenhuma; comprar, favoritar e adicionar a colecao pedem login.
-      **Fluxo alternativo:** visitante que seleciona Comprar, Favoritar ou Adicionar a colecao ve Entre para continuar e volta para a carta depois do login; sem anuncios ativos, a lista informa e o vendedor ve Anunciar esta carta.
+      **Fluxo alternativo:** visitante que seleciona Favoritar ou Adicionar a colecao ve Entre para continuar e volta para a carta depois do login ou do cadastro; sem anuncios ativos, a lista informa e o vendedor ve Anunciar esta carta, que leva a Criar Anuncio; carta inexistente, excluida ou em rascunho mostra Carta nao encontrada, com Voltar para o marketplace.
     '''
 
     visitante -> appWeb '1. seleciona a carta na busca, no marketplace ou na Home'
