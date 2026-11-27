@@ -2,7 +2,7 @@
 
 - **Spec:** [spec.md](spec.md), `Aprovada` em 24/11/2026 (Daniel; a validar pelo PO)
 - **Repositórios:** backend · frontend
-- **Data:** 2026-11-22, revisto em 2026-11-24 com as decisões L1–L16 · **Autor:** Daniel Andrade
+- **Data:** 2026-11-22, revisto em 2026-11-24 com as decisões L1–L17 · **Autor:** Daniel Andrade
 - **Código lido:** `develop` dos dois apps em 24/11/2026. O domínio `chat` e a feature `chat` estão vazios.
   `conversations`, `conversation_participants`, `messages`, `user_blocks` e `profiles` não estão no `schema.prisma`.
   `groups`, `group_members`, `orders` e `seller_verifications` já estão.
@@ -21,7 +21,7 @@ abre a conversa, criando-a se ainda não existir. O ponto online vem do processo
 - **Onda 0 (CCD046 T12 e T13):** servidor Socket.IO no `ws-server.ts`, com JWT no handshake, a room `user:<id>`, o
   `withAck` e o registro `socketHandlers` (backend #42), e o cliente `src/lib/socket.ts` (frontend #33). Os PRs desta
   story saem empilhados sobre eles até o merge.
-- **CCD048 (Gabriel):** `profiles.avatar_url`. Até lá, `avatarUrl` é sempre `null` e a tela mostra a inicial (L16).
+- **CCD048 (Gabriel):** `profiles.avatar_url`. Até lá, `avatarUrl` é sempre `null` e a tela mostra a inicial (L17).
 - **CCD047 (Daniel, a próxima):** a ação do escudo e o bloqueio. A tabela `user_blocks` nasce aqui, porque a busca de
   contatos já exclui os bloqueados (R13), e a CCD047 só usa.
 - **CCD080 (Lucas):** a página `/usuarios/:id`. Até lá, "Ver Perfil" leva à rota em construção.

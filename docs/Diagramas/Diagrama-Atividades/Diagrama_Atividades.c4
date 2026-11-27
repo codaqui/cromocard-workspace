@@ -716,7 +716,7 @@ views {
     description '''
       **Ator:** Visitante, Cliente
       **Pre-condicao:** nenhuma; comprar, favoritar e adicionar a colecao pedem login.
-      **Fluxo alternativo:** visitante que seleciona Comprar, Favoritar ou Adicionar a colecao ve Entre para continuar e volta para a carta depois do login; sem anuncios ativos, a lista informa e o vendedor ve Anunciar esta carta.
+      **Fluxo alternativo:** visitante que seleciona Favoritar ou Adicionar a colecao ve Entre para continuar e volta para a carta depois do login ou do cadastro; sem anuncios ativos, a lista informa e o vendedor ve Anunciar esta carta, que leva a Criar Anuncio; carta inexistente, excluida ou em rascunho mostra Carta nao encontrada, com Voltar para o marketplace.
     '''
 
     visitante -> appWeb '1. seleciona a carta na busca, no marketplace ou na Home'
@@ -1517,7 +1517,7 @@ views {
     description '''
       **Ator:** Cliente
       **Pre-condicao:** estar autenticado com a conta ativa; o anuncio deve estar ativo, com quantidade disponivel, e nao ser do proprio cliente.
-      **Fluxo alternativo:** visitante ve Entre para continuar; anuncio esgotado ou pausado mostra Indisponivel; carta esgotada antes do pagamento volta ao anuncio; sem frete para o CEP, pede outro endereco; pagamento cancelado ou nao feito em 30 minutos cancela o pedido com o motivo pagamento nao concluido e devolve a carta ao estoque; cartao recusado e tratado na pagina da Stripe.
+      **Fluxo alternativo:** visitante ve Entre para continuar; anuncio esgotado ou pausado mostra Indisponivel; carta esgotada antes do pagamento volta ao anuncio; sem frete para o CEP, pede outro endereco; pagamento cancelado (a sessao da Stripe expira na hora, ao voltar) ou nao feito em 30 minutos cancela o pedido com o motivo pagamento nao concluido e devolve a carta ao estoque; cartao recusado e tratado na pagina da Stripe; falha no calculo do frete mostra Nao foi possivel calcular o frete agora, diferente do sem frete.
     '''
 
     cliente -> appWeb '1. seleciona Comprar no detalhe do anuncio'
@@ -1719,7 +1719,7 @@ views {
     description '''
       **Ator:** Vendedor
       **Pre-condicao:** estar autenticado com perfil de Vendedor, com a conta de recebimento pronta (CCD108) e um endereco principal cadastrado.
-      **Fluxo alternativo:** valor zerado ou negativo exibe "Por favor, insira um valor valido maior que zero"; sem conta de recebimento pronta, avisa e oferece Conectar conta Stripe; sem endereco principal, pede o cadastro antes de publicar.
+      **Fluxo alternativo:** valor zerado ou negativo exibe "Por favor, insira um valor valido maior que zero"; sem conta de recebimento pronta, Criar Novo Anuncio e Criar Anuncio ficam desabilitados e a API recusa com 422 (Conecte sua conta de recebimento antes de anunciar); sem endereco principal, pede o cadastro antes de publicar.
     '''
 
     vendedor -> appWeb '1. seleciona Criar anuncio no Painel do vendedor ou Anunciar esta carta no perfil da carta'
@@ -2214,7 +2214,7 @@ views {
     description '''
       **Ator:** Vendedor
       **Pre-condicao:** estar autenticado com perfil de Vendedor.
-      **Fluxo alternativo:** saindo do cadastro sem terminar, o aviso continua e o cadastro segue de onde parou; se a Stripe pedir mais informacoes ou recusar, o aviso volta com o botao para completar e os anuncios continuam bloqueados.
+      **Fluxo alternativo:** saindo do cadastro sem terminar, mostra Termine seu cadastro na Stripe para vender com Continuar cadastro, que segue de onde parou; se a Stripe pedir mais informacoes ou recusar, mostra A Stripe precisa de mais informacoes com Completar cadastro e os anuncios continuam bloqueados; se a Stripe suspender as transferencias de uma conta pronta, o aviso volta e criar e reativar anuncios ficam bloqueados, mas os anuncios ativos continuam ativos.
     '''
 
     vendedor -> appWeb '1. acessa o Painel do vendedor sem a conta de recebimento pronta'
@@ -2224,9 +2224,12 @@ views {
     modPagamentos -> gatewayPagamento '4. cria a conta conectada (Connect Express), se ainda nao existir, e o link de cadastro'
     modPagamentos -> bancoDados '4. guarda o id da conta Stripe do vendedor'
     vendedor -> gatewayPagamento '5. preenche os dados na pagina da Stripe e volta ao CromoCard'
-    appWeb -> vendedor '6. mostra Estamos verificando sua conta na Stripe'
-    gatewayPagamento -> modPagamentos '7. avisa que a conta pode receber transferencias (webhook)'
-    modPagamentos -> bancoDados '7. marca a conta como pronta e libera a criacao de anuncios'
+    appWeb -> modPagamentos '6. consulta a conta na Stripe na volta'
+    modPagamentos -> gatewayPagamento '6. busca o estado da conta'
+    appWeb -> vendedor '6. mostra Estamos verificando sua conta na Stripe, com o selo Verificando'
+    gatewayPagamento -> modPagamentos '7. avisa que a conta mudou (webhook)'
+    modPagamentos -> gatewayPagamento '7. reconsulta o estado atual da conta'
+    modPagamentos -> bancoDados '7. grava o estado; com a conta pronta, libera a criacao de anuncios'
   }
 
   dynamic view ccd109_gerar_etiqueta_envio {

@@ -51,11 +51,12 @@
 | R16 | Anúncio esgotado ou pausado mostra "Indisponível" no lugar de "Comprar" e os outros anúncios da carta; no anúncio do próprio cliente, "Comprar" não aparece | Estado | `72`, FA 3 |
 | R17 | Se a carta esgota antes do pagamento (passo 6), o sistema informa que ela não está mais disponível, não cria o pedido e volta ao anúncio | Mensagem | `72`, FA 4; ADR-011 (`422`) |
 | R18 | Sem frete para o CEP de entrega, o checkout informa e pede outro endereço, e o cliente não segue para o pagamento | Mensagem | `72`, FA 5 |
-| R19 | Se o cliente cancela na página da Stripe ou não paga em 30 minutos, o pedido fica `CANCELED` com `cancel_reason` "pagamento não concluído" e a carta volta ao estoque (evento `checkout.session.expired`) | Regra | `72`, FA 6–7; ADR-066, item 6 (L4, L14) |
+| R19 | Se o cliente cancela na página da Stripe ou não paga em 30 minutos, o pedido fica `CANCELED` com `cancel_reason` "pagamento não concluído" e a carta volta ao estoque (evento `checkout.session.expired`). Quando o cliente volta da página da Stripe pelo `cancel_url`, a API expira a sessão na hora e o pedido é cancelado sem esperar os 30 minutos | Regra | `72`, FA 6–7; ADR-066, item 6 (L4, L14) |
 | R20 | O cliente vê "Pagamento não concluído", com "Tentar de novo"; o pedido cancelado continua em Meus pedidos | Tela | `72`, FA 7 (L6) |
 | R21 | Cartão recusado é tratado na própria página da Stripe, que permite usar outro cartão; o pedido continua `AWAITING_PAYMENT` | Regra | `72`, FA 8 |
 | R22 | A Stripe fica atrás do `PaymentProvider` e o Melhor Envio atrás do `ShippingProvider`, cada um com uma implementação falsa para os testes e o PC de cada pessoa | Regra | ADR-066, item 9; ADR-067, item 1; ADR-009 |
 | R23 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames da seção Telas); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
+| R24 | Se a cotação do frete falhar (Melhor Envio fora do ar ou com erro), a API responde `502 SHIPPING_PROVIDER_ERROR` e o checkout mostra "Não foi possível calcular o frete agora. Tente novamente em instantes.", diferente do aviso de "sem frete" (R18), e o cliente não segue para o pagamento | Mensagem | `72`, FA 9 (L12) |
 
 ## Critérios de aceite
 
@@ -81,6 +82,7 @@
 - **CA20** (R23) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1112-7631`, **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 - **CA21** (R23) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1112-7935`, **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 - **CA22** (R23) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1112-8190`, **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
+- **CA23** (R24) — **Dado** o Melhor Envio fora do ar, **quando** o cliente escolhe o endereço no checkout, **então** a API responde `502 SHIPPING_PROVIDER_ERROR` e a tela mostra "Não foi possível calcular o frete agora. Tente novamente em instantes.", sem o aviso de "sem frete" e com "Ir para o pagamento" desabilitado.
 
 ## Dados
 
@@ -129,7 +131,7 @@
 | L1 | O Figma mostra o número "#PED-88213"; o DBML não tem coluna de número do pedido (o `id` é UUID v7). Como gerar e guardar o número? (mesma pergunta da CCD077, L1) | pendente | — |
 | L2 | Reserva de 30 minutos: o DBML não tem coluna de reserva. Reservar = baixar `available_quantity` ao criar o pedido e devolver ao cancelar? O anúncio com 0 fica "esgotado", que não existe em `listing_status` (`ACTIVE`, `PAUSED`, `CLOSED`)? | pendente | — |
 | L3 | `orders.shipping_method` (obrigatório) e `orders.shipping_service` (ADR-067): o que vai em cada um? (proposta: `shipping_method` = transportadora, ex. "Correios"; `shipping_service` = id do serviço no Melhor Envio, ex. SEDEX) | pendente | — |
-| L4 | Cancelar na página da Stripe: o caso de uso cancela o pedido na hora (FA 6–7), mas a Stripe só envia `checkout.session.expired` quando a sessão expira. Expirar a sessão pela API quando o cliente volta pelo `cancel_url`? (proposta: sim) | pendente | — |
+| L4 | Cancelar na página da Stripe: o caso de uso cancela o pedido na hora (FA 6–7), mas a Stripe só envia `checkout.session.expired` quando a sessão expira. Expirar a sessão pela API quando o cliente volta pelo `cancel_url`? (proposta: sim) | Sim: ao voltar pelo `cancel_url`, a API expira a sessão na Stripe (`expireCheckoutSession`) e o pedido é cancelado na hora. Decisão do PO (Felipe, 25/11/2026, na revisão de codaqui/cromocard-backend#43) | `72`, FA 7; R19 |
 | L5 | O cliente pode voltar da Stripe antes do `checkout.session.completed` chegar, com o pedido ainda `AWAITING_PAYMENT`. O que a tela mostra enquanto espera? Não há desenho. E "Continuar comprando" (só no Figma) leva para onde? | pendente | — |
 | L6 | "Tentar de novo" cria outro pedido do mesmo anúncio (volta ao checkout)? E se o anúncio esgotou? "Voltar ao anúncio" (só no Figma) faz sentido? | pendente | — |
 | L7 | "+ Cadastrar novo endereço" no checkout: abre o formulário do Perfil (`1160-39672`, CCD048) ou um próprio do checkout? Não há desenho | pendente | — |
@@ -137,6 +139,7 @@
 | L9 | CPF: o Figma sempre mostra o bloco "2. CPF do comprador"; com CPF no cadastro, o bloco some (FP 3)? Qual validação (dígitos verificadores) e qual mensagem quando o CPF já é de outra conta (`users.cpf` é único)? | pendente | — |
 | L10 | Vendedor sem endereço principal (sem CEP de origem): o anúncio pode estar ativo? O checkout faz o quê? | pendente | — |
 | L11 | Texto do e-mail ao vendedor e se ele também recebe uma notificação no site (tipo novo em `notifications.type`, ADR-051, item 2). O caso de uso só fala em e-mail | pendente | — |
-| L12 | Melhor Envio fora do ar ou com erro: mostra o mesmo aviso de "sem frete" ou outro? | pendente | — |
+| L12 | Melhor Envio fora do ar ou com erro: mostra o mesmo aviso de "sem frete" ou outro? | Outro aviso: `502 SHIPPING_PROVIDER_ERROR` com "Não foi possível calcular o frete agora. Tente novamente em instantes.", separado do "sem frete". Decisão do PO (Felipe, 25/11/2026, na revisão de codaqui/cromocard-backend#43) | `72`, FA 9; R24; CA23 |
 | L13 | O "Entre para continuar" do anúncio usa o mesmo modal do perfil da carta (`1112-5461`)? Não há frame sobre o detalhe do anúncio | pendente | — |
 | L14 | Pagamento de pedido cancelado por expiração: `payments.status` fica `REJECTED` ou continua `PENDING`? | pendente | — |
+| L15 | A T3 (PaymentProvider) e a T4 (ShippingProvider), que são só a integração com a Stripe e o Melhor Envio atrás de interfaces, podem entrar antes da aprovação desta spec? | Sim: as duas não dependem das lacunas pendentes (L1–L3, L5–L11, L13, L14). Da T5 em diante, só depois da aprovação. Decisão do PO (Felipe, 25/11/2026, na revisão de codaqui/cromocard-backend#43) | esta tabela; tarefas T3 e T4 |

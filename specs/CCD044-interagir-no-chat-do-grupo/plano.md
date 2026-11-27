@@ -83,7 +83,9 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 ### Socket.IO — `wss://ws.cromocard.com.br` — R1, R4, R5, R9, R10
 
 - **Handshake:** `auth: { token }`; token ausente ou inválido recusa a conexão (`connect_error` `UNAUTHORIZED`). Ao
-  conectar, o socket entra em `user:<id>`.
+  conectar, o socket entra em `user:<id>`. A conexão dura até o `exp` do access token: quando ele vence, o servidor
+  desconecta (`disconnect` com o motivo `io server disconnect`), e o cliente renova o token e reconecta (revisão de
+  codaqui/cromocard-backend#42).
 - **`group:join`** `{ groupId }` → ack `{ data: { groupId } }` ou `{ error: 'NOT_GROUP_MEMBER' | 'GROUP_NOT_FOUND' }`;
   entra em `group:<id>`. **`group:leave`** `{ groupId }` sai da room.
 - **`group-message:send`** `{ groupId, content }` → ack `{ data: GroupMessage }` ou `{ error, message, details? }`:
@@ -126,7 +128,7 @@ Feature `src/features/community/chat/` (ADR-040) e o cliente do tempo real em `s
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `package.json` | `socket.io-client` (mesma major do servidor) | R1 |
-| `src/lib/socket.ts` | cliente único com `auth: { token }` do `access-token.ts`, reconexão e renovação do token no `connect_error` | R1, R5 |
+| `src/lib/socket.ts` | cliente único com `auth: { token }` do `access-token.ts`, reconexão e renovação do token no `connect_error` e no `disconnect` `io server disconnect` (token vencido; o cliente não reconecta sozinho nesse motivo) | R1, R5 |
 | `.env.example` · `public/env.js` · `src/config` | `VITE_WS_URL` (local `http://localhost:3001`) | R1 |
 | `group-chat.types.ts` · `group-chat.api.ts` · `group-chat.queries.ts` | cabeçalho e histórico (`useInfiniteQuery` por cursor) | R2, R3, R8 |
 | `hooks/useGroupChat.ts` | entra na room, envia com ack, recebe `group-message:new`, recarrega ao reconectar (L12) | R4, R5, R9, R10 |

@@ -31,13 +31,13 @@ mudou. Estado atual: [topologia.md](topologia.md).
 
 ```bash
 curl -fsS https://hml-api.cromocard.com.br/health      # {"status":"ok"}
-curl -fsS https://hml.cromocard.com.br/env.js          # window.__ENV__ = { API_URL: "...", GOOGLE_CLIENT_ID: "..." };
+curl -fsS https://hml.cromocard.com.br/env.js          # window.__ENV__ = { API_URL: "...", WS_URL: "...", GOOGLE_CLIENT_ID: "..." };
 ```
 
 | Resposta | Significado |
 |---|---|
 | `hml-api /health` = 200 | API de hml no ar, túnel funcionando |
-| `hml.cromocard.com.br` = 200 e `/env.js` com a `API_URL` | Frontend de hml no ar |
+| `hml.cromocard.com.br` = 200 e `/env.js` com a `API_URL` e a `WS_URL` | Frontend de hml no ar |
 | `hml.cromocard.com.br` = 502 | O `web` não está rodando: veja o último *Deploy do web em hml* do frontend |
 | `hml-ws` = 404 na raiz | Esperado: o `ws` só responde `/health` |
 
@@ -196,6 +196,16 @@ secret* do Google não é usado.
 
 O `TEAM_WEBHOOK` citado no `segredos.md` e no `infra/README.md` do backend **não é mais usado**: a equipe
 descartou os alertas automáticos em 23/10 (decisão 18 do ADR-055). Não cadastre esse secret.
+
+### `MELHOR_ENVIO_TOKEN` (cotação de frete)
+
+O token do sandbox do Melhor Envio é fixo e vale 30 dias (ADR-072). Ele é **secret** do Environment do **backend**.
+
+1. Antes de vencer, entre no painel do sandbox do Melhor Envio com a conta da plataforma, gere um token novo com
+   a permissão de cálculo de frete e anote a data de validade.
+2. Troque o secret `MELHOR_ENVIO_TOKEN` no Environment do backend e refaça o deploy do backend.
+3. Confira no checkout de homologação que o frete aparece. Token vencido faz a cotação responder
+   `502 SHIPPING_PROVIDER_ERROR`, e o log da `api` mostra a falha do Melhor Envio com o status `401`.
 
 ### `TS_AUTHKEY_OPS` (nó `cromocard-ops`)
 

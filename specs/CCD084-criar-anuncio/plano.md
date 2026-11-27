@@ -1,14 +1,14 @@
 # Plano — CCD084 Criar Anúncio
 
-> Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
+> Revisto em 24/11/2026 com as lacunas L1–L13 decididas pelo PO e com a base do marketplace (Onda 0) já no `develop`.
 
-- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L13 pendentes)
+- **Spec:** [spec.md](spec.md), aprovada em 24/11/2026 (Felipe Consulim, PO), lacunas L1–L13 decididas
 - **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
 - **Data:** 2026-11-22 · **Autor:** Daniel Andrade
 
 ## Solução
 
-"Criar anúncio" (Painel do vendedor) e "Anunciar esta carta" (perfil da carta) consultam
+"Criar anúncio" (Painel do vendedor), "Anunciar esta carta" (perfil da carta) e "Anunciar repetida" (Início, só `SELLER`) consultam
 `GET /api/v1/me/listings/eligibility`. Sem conta Stripe pronta, abre o aviso bloqueado; sem endereço principal, o pedido
 de cadastro do endereço; com os dois, o modal "Criar anúncio". O vendedor busca a carta no catálogo, escolhe a condição,
 informa preço, quantidade, descrição e até 4 fotos (enviadas antes pelo `POST /api/v1/uploads`), vê a taxa de 5% e o
@@ -16,6 +16,9 @@ líquido e publica com `POST /api/v1/me/listings`, que grava `listings` `ACTIVE`
 
 ## Dependências
 
+- **Base do marketplace (Onda 0, backend #44):** `card_conditions` com o seed das 5 condições, `listings` com
+  `condition_id`, `listing_photos` e `users.stripe_account_status` já estão no `develop`. Esta story não cria tabela.
+- **CCD007 (Início):** o botão "Anunciar repetida", hoje com `underConstructionRoute`, passa a abrir este fluxo (L9, R2).
 - **CCD108:** `users.stripe_account_status` e `connectedAccountsService.assertReady` (R9), o Painel do vendedor
   (`/vendedor`, grupo "Vendedor" do menu) e o aviso de conectar a conta.
 - **CCD106 (Salvar Rascunho de Carta):** cria `cards.status` (`card_status`: `DRAFT`, `ACTIVE`); a busca filtra por ele
@@ -34,23 +37,27 @@ líquido e publica com `POST /api/v1/me/listings`, que grava `listings` `ACTIVE`
 
 | Tabela | Já no `schema.prisma`? | Migration | Observação |
 |---|---|---|---|
-| `card_conditions` | não | `create_card_conditions_table` | copiada do DBML; seed Mint, Near Mint, Ótimo, Bom, Regular (`sort_order` 1–5) |
-| `listings` | não | `create_listings_table` | copiada do DBML, enum `listing_status` (`ACTIVE`, `PAUSED`, `CLOSED`), FKs para `users`, `cards`, `card_conditions` |
-| `listing_photos` | não | `create_listing_photos_table` | copiada do DBML, FK para `listings` |
+| `card_conditions` | sim (#44) | — | seed Mint, Near Mint, Ótimo, Bom, Regular (`sort_order` 1–5) já existe |
+| `listings` | sim (#41 e #44) | — | enum `listing_status`, `condition_id` opcional no banco |
+| `listing_photos` | sim (#44) | — | FK para `listings`, `sort_order` default 0 |
 | `cards` | sim | — (status vem da CCD106) | `status`, `deleted_at`, `front_image_url` |
-| `users` · `addresses` | sim | — (Stripe vem da CCD108) | `stripe_account_status`; `is_primary`, `deleted_at` |
+| `users` · `addresses` | sim | — (#44 criou as colunas Stripe; a CCD108 as preenche) | `stripe_account_status`; `is_primary`, `deleted_at` |
 
-Sem coluna nova: a condição obrigatória (L5) fica na validação, sem mudar o DBML. A quantidade é inteira de 1 a 99 (depende
-da L10). Dois anúncios iguais do mesmo vendedor são permitidos (depende da L13).
+Sem tabela nem coluna nova. A T3 cria a migration `insert_card_conditions`, que grava as 5 condições com os mesmos ids do seed, para
+existirem também em homologação e produção, onde o seed não roda. A condição obrigatória (L5) fica na validação, sem mudar o DBML. A quantidade é inteira de 1 a
+99 (L10). Dois anúncios iguais do mesmo vendedor são permitidos (L13).
 
 ## Regras
 
 - **Taxa e líquido** (R6): `platformFee = floor(price × 5) / 100` em centavos (`floor(priceCents × 0,05)`), `net = price −
   platformFee`; R$ 1.850,00 → taxa R$ 92,50 e líquido R$ 1.757,50. A mesma função (`platform-fee.ts`) serve a CCD110 e a
-  CCD111. A tela recalcula enquanto o vendedor digita (depende da L2).
+  CCD111. A tela recalcula enquanto o vendedor digita (L2).
 - **Pode anunciar** (R9, R10): conta `READY` e endereço principal não excluído. A ordem das checagens é a da conta e
-  depois a do endereço. O credenciamento (`seller_verifications`) não entra (depende da L11).
-- **Carta do catálogo** (R4): `cards.status = ACTIVE` e `deleted_at` nulo; outra carta responde `404 CARD_NOT_FOUND`.
+  depois a do endereço. O credenciamento (`seller_verifications`) não entra (L11).
+- **Carta do catálogo** (R4): `deleted_at` nulo; outra carta responde `404 CARD_NOT_FOUND`. O filtro `cards.status = ACTIVE`
+  entra quando a CCD106 criar a coluna (L15).
+- **Conta pronta** (R9): `users.stripe_account_status = READY`, lido direto do usuário; quando a CCD108 trouxer o
+  `connectedAccountsService.assertReady`, a checagem passa a usá-lo (L14).
 - **Fotos** (R8): até 4 URLs devolvidas pelo upload, gravadas com `sort_order` 0–3 na ordem do corpo. Sem foto, o anúncio
   usa `cards.front_image_url` (quem mostra é o detalhe da CCD079).
 
@@ -81,8 +88,8 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 ### `POST /api/v1/uploads` (existente) — R8
 
 - Muda só o acesso, para `authorize('ADMIN', 'SELLER')`, e a pasta, que ganha `listings`. O limite de 4 MB e PNG, JPG ou
-  WEBP já estão no `uploads.validator.ts` (`400 VALIDATION_ERROR` / `FILE_TOO_LARGE` / `UNSUPPORTED_FILE_TYPE`, os erros
-  que o domínio já usa).
+  WEBP já estão no domínio (`400 VALIDATION_ERROR`, `413 FILE_TOO_LARGE` e `415 UNSUPPORTED_FILE_TYPE`, os erros que o
+  domínio já usa, ADR-050).
 
 ### `POST /api/v1/me/listings` — R1, R3–R10
 
@@ -91,7 +98,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 
   ```json
   { "cardId": "uuid", "conditionId": "uuid", "price": "1850.00", "availableQuantity": 1,
-    "description": "string até 2000", "photoUrls": ["https://…"] }
+    "description": "opcional, até 2000", "photoUrls": ["https://…"] }
   ```
 
 - **Sucesso:** `201`
@@ -117,8 +124,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/schema.prisma` + as três migrations | `CardCondition`, `Listing`, `ListingPhoto`, enum `ListingStatus` | R3, R7, R8 |
-| `database/seeds/data/card-conditions.json` · `listings.json` · `marketplace.seed.ts` | condições e anúncios de exemplo, com e sem foto | R3, R7, R8 |
+| `database/seeds/data/marketplace.json` · `marketplace.seed.ts` | fotos de exemplo (`listing_photos`) em parte dos anúncios do seed, para ter anúncio com e sem foto | R8 |
 | `src/domains/marketplace/shared/platform-fee.ts` (+ `.spec.ts`) | taxa de 5% arredondada para baixo e líquido | R6 |
 | `src/domains/marketplace/listings/seller-listings.{validator,repository,service,controller,routes,swagger,errors}.ts` + `seller-listings.module.ts` (`basePath: '/me/listings'`) | elegibilidade e criação | R1, R3, R5–R10 |
 | `src/domains/catalog/public-cards.{validator,repository,controller,routes,swagger}.ts` + módulo (`basePath: '/cards'`) e `card-conditions` (`basePath: '/card-conditions'`) | busca do catálogo para o vendedor e lista das condições | R3, R4 |
@@ -133,14 +139,15 @@ Feature `src/features/marketplace/listings/` (a mesma da CCD079), no modelo de `
 |---|---|---|
 | `listings.{types,schemas,labels,api,queries}.ts` | tipos, schema Zod do formulário (preço > 0 com a mensagem do R5, quantidade 1–99, até 4 fotos), textos e chamadas | R3, R5, R7–R10 |
 | `listings.fee.ts` (+ `.spec.ts`) | taxa e líquido para a tela, com a mesma regra do backend | R6 |
-| `components/CardCatalogPicker/` | busca da carta com a ajuda "Identificada no catálogo oficial <categoria> • <álbum>" (L6) | R3, R4 |
+| `components/CardCatalogPicker/` | busca da carta com a ajuda "Identificada no catálogo oficial <categoria> • <álbum>" (L6) | R3, R4, R12 |
 | `components/ListingPhotosField/` | os 2 espaços do frame e, preenchidos, mais até 4 no mesmo estilo (L1); erro de arquivo recusado | R8 |
 | `components/ListingFeeSummary/` | "Taxa  (5%):" e "Você recebe líquido:" | R6 |
-| `components/CreateListingModal/` | modal do frame `282-4482`: título, subtítulo, campos, "Cancelar" e "Publicar anúncio" em carregamento (CA10); rodapé conforme a L3; sem o campo sem rótulo (L4) | R3, R5–R8, R11 |
+| `components/CreateListingModal/` | modal do frame `282-4482`: título, subtítulo, campos, "Cancelar" e "Publicar anúncio" em carregamento (CA10); sem o rodapé "Vault / Escrow" (L3) e sem o campo sem rótulo (L4) | R3, R5–R8, R11, R12 |
 | `components/ListingBlockedDialog/` | aviso do frame `1112-10828` com "Agora não" (L8) e "Conectar conta Stripe", que usa o link da CCD108 | R9, R11 |
 | `components/PrimaryAddressRequiredDialog/` | pedido do endereço principal no estilo do aviso bloqueado, com "Cadastrar endereço" para o Perfil (L12) | R10 |
 | `hooks/useCreateListingFlow.ts` | consulta a elegibilidade e abre o aviso, o pedido de endereço ou o modal | R2, R9, R10 |
-| `pages/SellerOverviewPage/` (CCD108) · perfil da carta (CCD030) | botões "Criar Novo Anúncio"/"Criar Anúncio" habilitados (L7) e "Anunciar esta carta" só para `SELLER`, com a carta escolhida | R2 |
+| `pages/SellerOverviewPage/` (CCD108) · perfil da carta (CCD030) | botões "Criar Novo Anúncio"/"Criar Anúncio" desabilitados sem a conta `READY` (L7; já feitos na CCD108) e "Anunciar esta carta" só para `SELLER`, com a carta escolhida | R2 |
+| `features/collection` (Início, CCD007) | "Anunciar repetida" só para `SELLER`, abrindo o fluxo com a carta escolhida, no lugar do `underConstructionRoute` (L9) | R2 |
 
 - **Estados:** busca carregando e sem resultado; erro da API no modal, com os campos preenchidos (CA10).
 - **Componentes reaproveitados de `src/components/`:** `Modal`, `OverlayDialog`, `TextField`, `Select`, `Textarea`,
@@ -162,6 +169,9 @@ Feature `src/features/marketplace/listings/` (a mesma da CCD079), no modelo de `
 | CA9 | `401` sem token; `403` para `CUSTOMER` e `ADMIN` | integração |
 | CA10 | botão em carregamento; erro mantém o formulário preenchido | `CreateListingModal.spec.tsx` |
 | CA11, CA12 | print em 1280 px igual aos frames `282-4482` e `1112-10828`, sem quebra em 375/768/1024 px | revisão visual (`/cromocard-revisor`) |
+| CA13 | sem condição, quantidade 0 e 100: erro no campo; API `400 VALIDATION_ERROR` | `listings.schemas.spec.ts` · `seller-listings.validator.spec.ts` · integração |
+| CA14 | "Anunciar repetida" abre com a carta escolhida para `SELLER` e não aparece para `CUSTOMER` | `useCreateListingFlow.spec.tsx` · spec da Início (CCD007) |
+| CA15 | ajuda "Identificada no catálogo oficial Pokémon TCG • Shining Fates" | `CardCatalogPicker.spec.tsx` |
 
 ## Decisões técnicas
 

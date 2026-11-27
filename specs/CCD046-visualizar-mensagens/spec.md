@@ -93,7 +93,7 @@
 | Mensagens - nova conversa | [1160-34999](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-34999) | R13 | ✅ Bate depois da L5 (sem o aviso de desconhecidos, tirado do Figma) |
 
 - **Ajustes no Figma em 24/11/2026:** saíram dos três frames o botão de filtros, "Ver Arquivadas", "Visto há 3h", as reações, "Concluído", o aviso de desconhecidos, o ✓✓ de leitura, o botão de emoji e textos escondidos de trocas e avaliações.
-- **Diferença aceita:** a foto vira a inicial do nome até a CCD048 criar `profiles` (L16).
+- **Diferença aceita:** a foto vira a inicial do nome até a CCD048 criar `profiles` (L17).
 - **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R7 erro ao carregar; estado carregando (L14); aviso de envio que falhou (R18).
 
 ## Fora do escopo
@@ -124,4 +124,5 @@
 | L13 | Quando a mensagem passa a lida | Ao abrir a conversa; com ela aberta, a nova já entra lida | `46`, FP 8 e FP 10; R5 |
 | L14 | Ordem, carga e carregando | Lista pela última mensagem; 30 mensagens por vez, as anteriores ao rolar para cima; `LoadingState` | `46`, FP 3 e FP 7; R3, R4 |
 | L15 | Papéis do chat pessoal | `CUSTOMER` e `SELLER`; `ADMIN` recebe `403` | `46`, Atores; R1 |
-| L16 | A foto vem de `profiles`, que só chega com a CCD048 (Onda 0 do Gabriel) | Inicial do nome até lá; a API passa a mandar `avatarUrl` quando `profiles` existir | R19 |
+| L16 | A T12 (servidor Socket.IO autenticado por JWT) e a T13 (cliente Socket.IO e `VITE_WS_URL`), a base da Onda 0, podem entrar antes da aprovação desta spec? | Sim (PO, 25/11/2026, nas revisões de codaqui/cromocard-backend#42 e codaqui/cromocard-frontend#33): as duas não dependem de nenhuma lacuna pendente. O resto da spec só entra depois da aprovação | esta tabela; plano da CCD044 (handshake) |
+| L17 | A foto vem de `profiles`, que só chega com a CCD048 (Onda 0 do Gabriel) | Inicial do nome até lá; a API passa a mandar `avatarUrl` quando `profiles` existir | R19 |

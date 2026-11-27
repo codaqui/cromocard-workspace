@@ -1,15 +1,18 @@
 # Plano — CCD106 Salvar Rascunho de Carta
 
 - **Spec:** [spec.md](spec.md), aprovada em 2026-10-22
-- **Data:** 2026-10-22 · **Autor:** Daniel Andrade
+- **Data:** 2026-10-22 · **Autor:** Daniel Andrade · revisto em 2026-11-26 (dependência da CCD030)
 
 ## Solução
 
-Migration com status e ano; o catálogo (CCD061) aceita rascunho com validação mínima, publica com a validação completa, esconde rascunhos das consultas públicas e ganha verso padrão, aviso de duplicata e tamanho mínimo da imagem.
+Migration com o ano (o `status` vem da CCD030); o catálogo (CCD061) aceita rascunho com validação mínima, publica com a validação completa, esconde rascunhos das consultas públicas e ganha verso padrão, aviso de duplicata e tamanho mínimo da imagem.
 
 ## Dependências
 
 - CCD061 (catálogo e formulário de carta) e a fundação (`/uploads`).
+- **CCD030 (Visualizar Detalhes, PR codaqui/cromocard-backend#47):** começar só depois do merge dela no `develop`. Ela já cria
+  `cards.status` e o enum `card_status` (`DRAFT`, `ACTIVE`, padrão `ACTIVE`) na migration `add_status_to_cards_table`, e o
+  perfil público da carta (`GET /cards/:id` e `GET /cards/:id/listings`) já responde `404` para carta `DRAFT`.
 
 ## Dados e migrations
 
@@ -17,7 +20,7 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Tabela | Migration | O que muda | Requisitos |
 |---|---|---|---|
-| `cards` | `add_status_and_release_year_to_cards_table` | `status`, `release_year` e o enum `card_status` | R2, R8 |
+| `cards` | `add_release_year_to_cards_table` | `release_year`; o `status` e o enum `card_status` já existem (CCD030), sem migration nova | R2, R8 |
 | `global_settings` | — (seed) | chave `catalog.default_backs` | R9 |
 
 ## Contrato da API
@@ -34,9 +37,9 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/schema.prisma` + migration · seed | colunas, enum e verso padrão | R2, R8, R9 |
+| `database/schema.prisma` + migration · seed | `releaseYear` e verso padrão; `status`/`CardStatus` já vêm da CCD030 | R2, R8, R9 |
 | `cards.validator.ts` · `catalog.service.ts` + `.spec.ts` | rascunho, publicar, verso padrão, duplicatas e auditoria | R2, R5, R6, R9, R10 |
-| `catalog.repository.ts` (consultas públicas) | só `ACTIVE` | R3 |
+| `catalog.repository.ts` (consultas públicas) | só `ACTIVE`; o perfil público da carta (`src/domains/catalog/cards/`, CCD030) já filtra e fica de fora | R3 |
 | `uploads` (fundação) | tamanho mínimo para cartas | R11 |
 | routes · swagger | rotas acima | R1 |
 
@@ -58,7 +61,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 
 ## Decisões técnicas
 
-- As consultas públicas do catálogo filtram `status = ACTIVE` no repository, num único ponto.
+- As consultas públicas do catálogo filtram `status = ACTIVE` no repository, num único ponto. O perfil público da carta
+  já faz isso no `cards.repository.ts` da CCD030 (`publicWhere`): reaproveite a mesma regra em vez de duplicar.
 
 ## Revisão de 12/11/2026 (L5, L6)
 
