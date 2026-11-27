@@ -77,11 +77,14 @@
 |---|---|---|---|
 | Mensagens — conversas | [1160-32980](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-32980) | R3, R5, R6 | ✅ A conversa aberta é a da CCD046; o texto sugerido entra no campo (L1) |
 | Detalhe do anúncio | [1112-5772](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5772) | R2, R8, R9, R10 | ✅ O botão "Entrar em contato" (`1344:381`) entrou no quadro do vendedor, à esquerda de "⚑ Denunciar anúncio", no estilo de "Favoritar", em 27/11/2026 (L1). A página é da CCD079/CCD080 (L10) |
+| Aviso de vendedor indisponível | [1345-381](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1345-381) | R8 | ✅ Desenhado em 27/11/2026: aviso logo abaixo do quadro do vendedor, com o estilo de erro do site |
+| Aviso de contato bloqueado | [1345-649](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1345-649) | R9 | ✅ Desenhado em 27/11/2026, no mesmo estilo |
+| Aviso de erro ao abrir a conversa | [1345-917](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1345-917) | CA6 | ✅ Desenhado em 27/11/2026, no mesmo estilo |
 | Entre para continuar | [1112-5461](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5461) | R2 | ✅ O mesmo aviso de Comprar e Favoritar (L7) |
 
 - Textos de `1160-32980`: "Dica de segurança", "Nunca pague por Pix ou link fora da CromoCard. Compre pelo anúncio no marketplace: o pagamento fica retido até a entrega.", "Digite sua mensagem para @marcos_tcg...", "Enviar", "Faça compras e pagamentos só pelo marketplace da CromoCard."
 - Textos de `1112-5772` no quadro do vendedor: "tiago_trocas", "São Paulo - SP", "⚑ Denunciar anúncio".
-- **O que falta no Figma** (implementar mesmo assim, no estilo da tela): os avisos de vendedor indisponível (R8), de bloqueio feito pelo cliente (R9) e de erro ao abrir a conversa (CA6), abaixo do botão, no quadro do vendedor.
+- **O que falta no Figma:** nada. O botão e os três avisos foram desenhados em 27/11/2026, a partir da tela pronta.
 
 ## Fora do escopo
 
