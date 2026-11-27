@@ -41,17 +41,17 @@
 | R6 | Bloquear grava `user_blocks` (`blocker_id` = usuário, `blocked_id` = contato); bloquear de novo quem já foi desbloqueado restaura a linha | Regra | `47`, FP 8; DBML `user_blocks` (`blocker_id`, `blocked_id` únicos); ADR-015, item 7 |
 | R7 | Com bloqueio ativo, nenhum dos dois envia mensagem na conversa: a service recusa o envio | Regra | user story ("Ele não poderá mais te enviar mensagens", `1160-34298`); ADR-012, Persistência primeiro; ADR-007, Contexto (L6) |
 | R8 | Depois de bloquear, a conversa continua na lista e o campo de digitação dá lugar a "Você bloqueou @<nome de usuário>. Para conversar de novo, desbloqueie em Configurações › Privacidade." com o botão "Desbloquear" | Estado | `47`, FP 12 (L8); Figma `1160-37184` |
-| R9 | Denunciar grava `reports` com `reporter_id` = usuário, `target_user_id` = contato, `target_type = USER`, `reason`, `description` e `status = PENDING`, com os prints em `report_evidences` (R16), tudo na mesma transação | Regra | `47`, FP 10 (L7); DBML `reports`, `report_evidences`; ADR-032, ADR-072 |
+| R9 | Denunciar grava `reports` com `reporter_id` = usuário, `target_user_id` = contato, `target_type = USER`, `reason`, `description` e `status = PENDING`, com os prints em `report_evidences` (R16), tudo na mesma transação | Regra | `47`, FP 10 (L7); DBML `reports`, `report_evidences`; ADR-032, ADR-073 |
 | R10 | Ao concluir, o modal fecha e o aviso confirma a ação: "Contato bloqueado" ("Ele não poderá mais te enviar mensagens."), "Contato bloqueado e denunciado" ("A moderação vai analisar a conversa.") ou "Denúncia enviada" ("A moderação vai analisar a conversa.") | Mensagem | `47`, FP 11 (L5); Figma `1160-37184` |
 | R11 | "Cancelar" ou o "✕" fecha o modal sem bloquear nem denunciar | Ação | `47`, FA 1–2 |
 | R12 | Contato já bloqueado: o aviso da conversa tem o botão "Desbloquear", e o escudo abre o modal informando que o contato está bloqueado, com "Desbloquear" | Estado | `47`, FA 9 (L8) |
 | R13 | Desbloquear preenche `user_blocks.deleted_at`; a conversa volta a aceitar mensagens | Ação | `47`, FA 3; ADR-015, itens 1 e 2 |
 | R14 | "Contatos bloqueados": a API devolve os contatos bloqueados com o total ("1 contato bloqueado"), e o modal "Contatos bloqueados" lista cada um com "Desbloquear", pronto para a linha de Configurações › Privacidade, que entra com a CCD051 | Tela | `47`, FA 9 (L9); Figma `1160-41305` |
 | R15 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (`1160-32980`, `1160-34298`, `1160-37184`); ADR-060, itens 1 e 5; ADR-070; `CLAUDE.md`, Figma |
-| R16 | Nas opções com denúncia, o usuário envia de 1 a 3 prints da conversa como evidência, obrigatórios: PNG, JPG ou WEBP até 4 MB cada; sem print, a tela pede "Envie pelo menos um print da conversa." e a API responde `400`; fora do formato, do tamanho ou acima de 3, a tela informa o limite e a API recusa | Campo | `47`, FP 5 e FA 3–6 (L3); ADR-072; ADR-050 |
+| R16 | Nas opções com denúncia, o usuário envia de 1 a 3 prints da conversa como evidência, obrigatórios: PNG, JPG ou WEBP até 4 MB cada; sem print, a tela pede "Envie pelo menos um print da conversa." e a API responde `400`; fora do formato, do tamanho ou acima de 3, a tela informa o limite e a API recusa | Campo | `47`, FP 5 e FA 3–6 (L3); ADR-073; ADR-050 |
 | R17 | Para o contato bloqueado, o campo de digitação da conversa dá lugar a "@<nome de usuário> bloqueou você. Vocês não podem mais trocar mensagens.", e quem o bloqueou não aparece no "Nova conversa" dele (CCD046) | Estado | `47`, FA 11 (L6) |
 | R18 | Com uma denúncia `PENDING` do usuário contra o mesmo contato, uma nova denúncia é recusada (`409`) e a tela informa "Você já denunciou este contato. A moderação está analisando."; com a anterior resolvida ou dispensada, pode denunciar de novo | Regra | `47`, FA 7–8 (L11) |
-| R19 | Na Fila de moderação da Gestão de Comunidade (CCD062), as denúncias do chat entram com as de grupo e no contador "Denúncias pendentes": o card mostra o autor (idade da conta e advertências), "Origem: Chat pessoal • Denunciado por @<usuário>", o motivo, a descrição e as miniaturas dos prints, que abrem em tamanho maior; as ações são "Dispensar Denúncia" (com motivo) e "Aplicar sanção ao autor" (CCD099), que resolve a denúncia; "Golpe / pagamento externo" e "Assédio" entram no filtro Críticos e "Spam" no filtro Spam; o subtítulo da fila vira "Mensagens dos grupos e do chat pessoal denunciadas pelos membros." | Tela | `62`, FP 10–13 (L7); ADR-072; Figma `220-3524` |
+| R19 | Na Fila de moderação da Gestão de Comunidade (CCD062), as denúncias do chat entram com as de grupo e no contador "Denúncias pendentes": o card mostra o autor (idade da conta e advertências), "Origem: Chat pessoal • Denunciado por @<usuário>", o motivo, a descrição e as miniaturas dos prints, que abrem em tamanho maior; as ações são "Dispensar Denúncia" (com motivo) e "Aplicar sanção ao autor" (CCD099), que resolve a denúncia; "Golpe / pagamento externo" e "Assédio" entram no filtro Críticos e "Spam" no filtro Spam; o subtítulo da fila vira "Mensagens dos grupos e do chat pessoal denunciadas pelos membros." | Tela | `62`, FP 10–13 (L7); ADR-073; Figma `220-3524` |
 | R20 | Se o bloqueio ou a denúncia falhar, o modal continua aberto com o que foi preenchido e informa o erro | Mensagem | `47`, FA 12 |
 
 ## Critérios de aceite
@@ -83,7 +83,7 @@
 | `user_blocks` | `blocker_id`, `blocked_id`, `deleted_at` | `(blocker_id, blocked_id)` único; desbloquear = soft delete, bloquear de novo restaura (ADR-015) |
 | `reports` | `reporter_id`, `target_user_id`, `target_type` (`report_target_type`: `USER`, `PROFILE`…), `reason`, `description`, `status` (`report_status`, default `PENDING`) | `reason` obrigatório (90); `description` até 500; sem `deleted_at` de negócio (ADR-015, item 4) |
 | `conversation_participants` | `conversation_id`, `user_id` | confere que há conversa com o contato (R1) |
-| `report_evidences` | `report_id`, `url`, `sort_order` | tabela nova (ADR-072): de 1 a 3 prints por denúncia do chat (L3) |
+| `report_evidences` | `report_id`, `url`, `sort_order` | tabela nova (ADR-073): de 1 a 3 prints por denúncia do chat (L3) |
 | `messages` | — | a denúncia não anexa mensagens (L3) |
 
 ## Telas (Figma)
@@ -103,7 +103,7 @@
 ## Fora do escopo
 
 - "Remover contato" (L1): não existe; o caso de uso 47 passou a bloquear ou denunciar.
-- Anexar as mensagens da conversa à denúncia (L3): a evidência é o print do usuário (ADR-072).
+- Anexar as mensagens da conversa à denúncia (L3): a evidência é o print do usuário (ADR-073).
 - A linha "Contatos bloqueados" em Configurações › Privacidade e a página de Configurações — CCD051 (L9).
 - Denunciar uma mensagem específica do chat pessoal ("Denunciar mensagem" no menu da mensagem) — L2 da CCD045.
 - Denunciar mensagem de grupo — CCD040. Denunciar perfil pela página pública — CCD050. Denunciar usuário pelo painel do vendedor — CCD090.
@@ -115,7 +115,7 @@
 |---|---|---|---|
 | L1 | O caso de uso diz "bloquear ou remover o contato"; a user story e o Figma dizem "bloquear ou denunciar". O DBML não tem tabela de contatos. "Remover contato" existe? O que faria (esconder a conversa)? Ajustar o `47`, FP 5? | Bloquear ou denunciar, como a user story e o Figma; "remover contato" não existe. Decisão do Daniel (26/11/2026) | `47`, Finalidade e FP 3 |
 | L2 | O `47` não fala de denúncia; a user story fala. Registrar a denúncia no caso de uso (passos e motivos)? | Sim: os passos da denúncia (motivos, descrição, prints) entram no caso de uso | `47`, FP 5–11 e FA 3–8 |
-| L3 | Só no Figma: "Anexar as últimas 20 mensagens". O DBML não tem onde guardar as mensagens anexadas (`reports` não aponta para `messages`). Faz sentido implementar? | A evidência é o print do usuário: de 1 a 3, obrigatórios, PNG, JPG ou WEBP até 4 MB, na tabela nova `report_evidences`; "Anexar as últimas 20 mensagens" sai do Figma. Decisão do Daniel | `47`, FP 5 e FA 3–6; ADR-072; DER; R16 |
+| L3 | Só no Figma: "Anexar as últimas 20 mensagens". O DBML não tem onde guardar as mensagens anexadas (`reports` não aponta para `messages`). Faz sentido implementar? | A evidência é o print do usuário: de 1 a 3, obrigatórios, PNG, JPG ou WEBP até 4 MB, na tabela nova `report_evidences`; "Anexar as últimas 20 mensagens" sai do Figma. Decisão do Daniel | `47`, FP 5 e FA 3–6; ADR-073; DER; R16 |
 | L4 | Os motivos são fixos ("Golpe / pagamento externo", "Assédio", "Spam", "Perfil falso")? Como ficam gravados em `reports.reason` (texto da tela ou código)? Mesma lista da CCD050? | Os 4 motivos do Figma, uma escolha só, gravados com o texto da tela em `reports.reason`; cada story de denúncia tem a sua lista | `47`, FP 5; R4 |
 | L5 | Texto do botão e do aviso de sucesso para "Somente bloquear" e "Somente denunciar" (o frame só mostra "Bloquear e denunciar") | Botão e aviso conforme a opção: "Bloquear" / "Contato bloqueado" ("Ele não poderá mais te enviar mensagens."); "Bloquear e denunciar" / "Contato bloqueado e denunciado"; "Denunciar" / "Denúncia enviada" ("A moderação vai analisar a conversa.") | `47`, FP 7 e FP 11; R5, R10 |
 | L6 | O que o contato bloqueado vê ao tentar enviar? Ele pode começar uma conversa nova com quem o bloqueou? | O bloqueado é avisado: "@<usuário> bloqueou você. Vocês não podem mais trocar mensagens." no lugar do campo; ele não acha quem o bloqueou no "Nova conversa" (CCD046) | `47`, FA 11; R17 |

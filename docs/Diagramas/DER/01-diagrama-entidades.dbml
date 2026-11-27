@@ -396,6 +396,9 @@ Table price_history [headercolor: #2E7D5B] {
   created_at     timestamptz   [not null]
   updated_at     timestamptz   [not null]
   deleted_at     timestamptz
+  indexes {
+    (card_id, source, reference_date)
+  }
 }
 
 // =====================================================================
@@ -592,6 +595,9 @@ Table listings [headercolor: #A63D5F] {
   created_at         timestamptz    [not null]
   updated_at         timestamptz    [not null]
   deleted_at         timestamptz
+  indexes {
+    (card_id, status, price)
+  }
 }
 
 Table listing_photos [headercolor: #A63D5F] {

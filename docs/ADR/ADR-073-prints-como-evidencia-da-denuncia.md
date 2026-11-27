@@ -1,4 +1,4 @@
-# ADR-072 — Prints como evidência da denúncia do chat pessoal
+# ADR-073 — Prints como evidência da denúncia do chat pessoal
 
 - **Status:** Proposto (aguardando validação do PO)
 - **Data:** 2026-11-26

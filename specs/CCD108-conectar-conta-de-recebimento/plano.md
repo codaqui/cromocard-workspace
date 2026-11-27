@@ -116,17 +116,18 @@ Convenções do ADR-011: `/api/v1`, `{ data }`, JSON camelCase, erros `{ error, 
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/routes/paths.ts` | `seller: { overview: '/vendedor', stripeReturn: '/vendedor/stripe/retorno', stripeRefresh: '/vendedor/stripe/renovar' }` | R2–R4, R7 |
-| `src/app/layouts/SiteShell/siteMenu.ts` · `SiteShell.tsx` | divisória com o grupo "Vendedor" e o item "Visão geral", só para `SELLER` | R2 |
-| `src/features/marketplace/marketplace.routes.ts` · `src/app/router.tsx` | rotas do vendedor dentro de `RequireRole role="SELLER"` | R1 |
-| `src/features/marketplace/seller-account/seller-account.{types,api,queries,labels}.ts` | estado da conta, link de cadastro, refresh e os textos do aviso | R2–R8 |
+| `src/routes/paths.ts` | `seller: { overview: '/vendedor', stripeReturn: '/vendedor/stripe/retorno', stripeRefresh: '/vendedor/stripe/renovar', store: '/vendedor/loja' }` | R2–R4, R7, R12 |
+| `src/app/layouts/SiteShell/siteMenu.ts` · `SiteShell.tsx` | divisória com o grupo "Vendedor" (`role="group"`) e o item "Visão geral", e o "Criar Anúncio" do topo, só para `SELLER` | R2 |
+| `src/features/marketplace/marketplace.routes.ts` · `src/app/router.tsx` | rotas do vendedor dentro de `RequireRole role="SELLER"`, com a loja pública em construção (CCD080) | R1, R12 |
+| `src/features/marketplace/seller-account/seller-account.{types,api,queries,labels,status}.ts` | estado da conta, link de cadastro (só sai do app para a Stripe em HTTPS ou para o próprio app), refresh, conta pronta e os textos do aviso | R2–R8 |
 | `components/StripeAccountNotice/` | aviso "Conecte sua conta de recebimento para vender" (frame `1112-9866`) e "Estamos verificando sua conta na Stripe" com o selo "Verificando" (frame `1112-10347`); cadastro não terminado e pedido de informação no mesmo estilo (L4); ajudas da L1; botão em carregamento e erro (CA9) | R2, R4, R7, R8, R10 |
-| `pages/SellerOverviewPage/` | Visão geral do vendedor com o aviso no topo; as métricas entram com a CCD092 e a CCD093 | R2 |
-| `pages/StripeReturnPage/` · `pages/StripeRefreshPage/` | volta: chama o refresh e leva a `/vendedor`; renovação: pede outro link e redireciona | R4, R7 |
+| `pages/SellerOverviewPage/` | Visão geral do vendedor com o aviso no topo e "Ver Loja Pública" (L8); as métricas entram com a CCD092 e a CCD093 | R2, R12 |
+| `pages/StripeReturnPage/` · `pages/StripeRefreshPage/` | volta: chama o refresh e leva a `/vendedor`; renovação: pede outro link e redireciona, ou volta a `/vendedor` com o erro do CA9. Um só POST por visita (`src/hooks/useRunOnce.ts`), mesmo no `StrictMode` | R4, R7 |
 
 - **Estados:** carregando, erro e vazio com `LoadingState` e `ErrorState`.
-- **Componentes reaproveitados de `src/components/`:** `Button`, `Badge`, `Icon`, `Toast`, `LoadingState`, `ErrorState`.
-- "Criar Novo Anúncio" e "Criar Anúncio" do topo ficam desabilitados até `READY` (L2), com o motivo no `title`; a ação deles é da CCD084.
+- **Componentes reaproveitados de `src/components/`:** `Button`, `Icon`, `Toast`, `LoadingState`, `ErrorState`. O selo
+  "Verificando" fica no CSS do aviso, e não no `Badge`, para manter o raio e a caixa alta do frame `1112-10347`.
+- "Criar Novo Anúncio" e "Criar Anúncio" do topo ficam desabilitados até `READY` (L2), com o motivo no `title` e ligado por `aria-describedby`; a ação deles é da CCD084.
 
 ## Testes
 

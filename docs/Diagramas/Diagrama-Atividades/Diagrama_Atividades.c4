@@ -716,7 +716,7 @@ views {
     description '''
       **Ator:** Visitante, Cliente
       **Pre-condicao:** nenhuma; comprar, favoritar e adicionar a colecao pedem login.
-      **Fluxo alternativo:** visitante que seleciona Comprar, Favoritar ou Adicionar a colecao ve Entre para continuar e volta para a carta depois do login; sem anuncios ativos, a lista informa e o vendedor ve Anunciar esta carta.
+      **Fluxo alternativo:** visitante que seleciona Favoritar ou Adicionar a colecao ve Entre para continuar e volta para a carta depois do login ou do cadastro; sem anuncios ativos, a lista informa e o vendedor ve Anunciar esta carta, que leva a Criar Anuncio; carta inexistente, excluida ou em rascunho mostra Carta nao encontrada, com Voltar para o marketplace.
     '''
 
     visitante -> appWeb '1. seleciona a carta na busca, no marketplace ou na Home'
@@ -1517,7 +1517,7 @@ views {
     description '''
       **Ator:** Cliente
       **Pre-condicao:** estar autenticado com a conta ativa; o anuncio deve estar ativo, com quantidade disponivel, e nao ser do proprio cliente.
-      **Fluxo alternativo:** visitante ve Entre para continuar; anuncio esgotado ou pausado mostra Indisponivel; carta esgotada antes do pagamento volta ao anuncio; sem frete para o CEP, pede outro endereco; pagamento cancelado ou nao feito em 30 minutos cancela o pedido com o motivo pagamento nao concluido e devolve a carta ao estoque; cartao recusado e tratado na pagina da Stripe.
+      **Fluxo alternativo:** visitante ve Entre para continuar; anuncio esgotado ou pausado mostra Indisponivel; carta esgotada antes do pagamento volta ao anuncio; sem frete para o CEP, pede outro endereco; pagamento cancelado (a sessao da Stripe expira na hora, ao voltar) ou nao feito em 30 minutos cancela o pedido com o motivo pagamento nao concluido e devolve a carta ao estoque; cartao recusado e tratado na pagina da Stripe; falha no calculo do frete mostra Nao foi possivel calcular o frete agora, diferente do sem frete.
     '''
 
     cliente -> appWeb '1. seleciona Comprar no detalhe do anuncio'

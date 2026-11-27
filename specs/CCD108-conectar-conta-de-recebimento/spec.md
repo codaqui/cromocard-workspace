@@ -43,6 +43,7 @@
 | R8 | Se a Stripe pede mais informações ou recusa a conta, o painel mostra "A Stripe precisa de mais informações" com o botão "Completar cadastro", e os anúncios continuam bloqueados | Estado | `108`, FA 3 (L3, L4); `84`, FA 3–4 |
 | R9 | A Stripe fica atrás do `PaymentProvider`, com uma implementação falsa para os testes | Regra | ADR-066, item 9; ADR-009 |
 | R11 | Se a Stripe suspende as transferências de uma conta `READY`, o estado volta a `PENDING`, o aviso volta e só criar e reativar anúncio ficam bloqueados; os anúncios ativos continuam ativos | Regra | `108`, FA 4 (L7) |
+| R12 | O Painel do vendedor tem "Ver Loja Pública" ao lado de "Criar Novo Anúncio", que leva à loja pública do próprio vendedor (CCD080); até a CCD080 existir, a rota mostra a página em construção | Tela | Figma (frames `1112-9866`, `1112-10347`) (L8) |
 | R10 | Cada tela desta user story fica igual ao seu frame do Figma (seção **Telas (Figma)**): layout, medidas, espaçamentos, cores, tipografia, ícones, imagens, textos e estados | Fidelidade | Figma (frames `1112-9866`, `1112-10347`); ADR-060, itens 1 e 5; `CLAUDE.md`, Figma |
 
 ## Critérios de aceite
@@ -57,6 +58,7 @@
 - **CA8** (R1) — **Dado** um visitante sem login, **quando** chama a conexão, **então** recebe `401`; **dado** um `CUSTOMER` ou `ADMIN`, recebe `403`.
 - **CA9** (R3) — **Dado** a Stripe fora do ar, **quando** o vendedor seleciona "Conectar conta Stripe", **então** vê uma mensagem de erro, continua no painel e pode tentar de novo; o botão mostra o carregamento enquanto espera.
 - **CA12** (R11) — **Dado** uma conta `READY` com um anúncio ativo, **quando** chega um `account.updated` com as transferências suspensas, **então** o estado passa a `PENDING`, o painel volta a mostrar o aviso, o anúncio continua `ACTIVE` e `assertReady` lança `422`.
+- **CA13** (R12) — **Dado** um vendedor no Painel do vendedor, **quando** seleciona "Ver Loja Pública", **então** vai para a loja pública dele (`/vendedor/loja`), em construção até a CCD080.
 - **CA10** (R10) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1112-9866` (conectar conta de recebimento), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 - **CA11** (R10) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é comparado lado a lado com o print do frame `1112-10347` (conta em verificação), **então** não há diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem horizontal.
 
@@ -70,15 +72,17 @@
 
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
-| Painel Vendedor - conectar conta de recebimento | [1112-9866](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-9866) | R2, R3, R7 | ✅ Bate (salvo L1, L2) |
-| Painel Vendedor - conta de recebimento em verificação | [1112-10347](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-10347) | R4 | ✅ Bate |
+| Painel Vendedor - conectar conta de recebimento | [1112-9866](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-9866) | R2, R3, R7, R12 | ✅ Bate (salvo L1, L2, L8) |
+| Painel Vendedor - conta de recebimento em verificação | [1112-10347](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-10347) | R4, R12 | ✅ Bate (salvo L8) |
 
 - Conectar: aviso "Conecte sua conta de recebimento para vender", ajuda "O cadastro é feito na própria Stripe e leva poucos
   minutos. Sem a conta pronta, não é possível publicar anúncios." e o botão "Conectar conta Stripe"; "Criar Novo Anúncio" e
   "Criar Anúncio" do topo aparecem desabilitados (L2 e CCD084, L7).
 - Verificação: "Estamos verificando sua conta na Stripe", selo "Verificando" e "Você poderá publicar anúncios assim que a
   Stripe liberar a conta. Isso costuma levar poucos minutos."
-- **Só no Figma**, decidido implementar: ajuda abaixo do aviso nos dois frames (L1).
+- **Só no Figma**, decidido implementar: ajuda abaixo do aviso nos dois frames (L1) e "Ver Loja Pública" no topo da Visão
+  geral (L8).
+- **Só no Figma**, decidido não implementar: "Exportar Fiscal/CSV" e "• Sincronizado há 2 min" no topo dos dois frames (L8).
 - **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R7 "Termine seu cadastro na Stripe para vender" com
   "Continuar cadastro"; R8 "A Stripe precisa de mais informações" com "Completar cadastro" (L4); o erro ao falar com a Stripe.
 
@@ -88,6 +92,8 @@
 - O aviso "Conecte sua conta de recebimento antes de anunciar" ao criar anúncio — CCD084.
 - Transferir o valor das vendas para a conta conectada — CCD110 e CCD111.
 - Saque via Pix e dados bancários no CromoCard — fora do MVP (`escopo-adicional.md`, 20/11/2026).
+- "Exportar Fiscal/CSV" e "• Sincronizado há 2 min" do topo dos frames `1112-9866` e `1112-10347` — o painel lê a API na hora (L8).
+- A loja pública do vendedor — CCD080 (aqui só o botão "Ver Loja Pública" e a rota em construção, L8).
 
 ## Lacunas e decisões
 
@@ -100,3 +106,4 @@
 | L5 | Como o sistema sabe que o vendedor voltou da Stripe e que está em verificação? (proposta: a volta (`return_url`) consulta a conta na Stripe e grava `VERIFYING` se os dados foram enviados; o link vencido (`refresh_url`) gera outro link) | A volta (`return_url`) chama o refresh, que consulta a conta e grava `VERIFYING` ou `PENDING`; o link vencido (`refresh_url`) gera outro link. O `account.updated` marca `READY`. Decisão de Daniel Andrade em 24/11/2026 | `108`, FP 6; R4; plano.md, Regras |
 | L6 | A idempotência por id do evento (ADR-066, item 6) precisa guardar os ids processados, e o DBML não tem tabela para isso. (proposta: o `account.updated` é idempotente por natureza, porque só grava o estado atual; sem tabela nova) | Revista pelo PO: o `account.updated` só dispara a reconsulta da conta na Stripe (`getConnectedAccount`), e o estado gravado é o atual; sem tabela nova, e o id do evento vai para o log. Decisão do PO (Felipe Consulim) em 25/11/2026, na revisão do backend #45, no lugar da proposta de Daniel Andrade de 24/11/2026 (gravar o estado que veio no evento) | R6, CA5; plano.md, Regras e Decisões técnicas; ADR-071 |
 | L7 | Se a Stripe tira a permissão de transferência de uma conta já pronta, os anúncios ativos são pausados? (proposta: não; o status volta a `PENDING`, o aviso volta e só a criação e a reativação ficam bloqueadas) | Não pausa os ativos: o estado volta a `PENDING`, o aviso volta e só criar e reativar ficam bloqueados. Decisão de Daniel Andrade em 24/11/2026 | `108`, FA 4; R11, CA12 |
+| L8 | O topo dos frames `1112-9866` e `1112-10347` tem "Exportar Fiscal/CSV", "• Sincronizado há 2 min" e "Ver Loja Pública", que a documentação não traz. Faz sentido implementar? | "Exportar Fiscal/CSV" e "Sincronizado": não (fora do escopo; o painel lê a API na hora). "Ver Loja Pública": sim, ao lado de "Criar Novo Anúncio", levando à loja pública do vendedor (CCD080), em construção até lá. Decisão do PO (Felipe, 25/11/2026), na revisão do frontend codaqui/cromocard-frontend#34 | `108`, FP 2; R12, CA13; Fora do escopo |

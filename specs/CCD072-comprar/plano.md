@@ -52,7 +52,7 @@ transação, o backend confere o anúncio, baixa uma unidade (reserva), grava o 
   pedido; já usado por outra conta → `409 CPF_IN_USE` (mensagem depende da L9).
 - **Cotação** (R8): origem = CEP do endereço principal do vendedor; pacote 16 × 11 × 2 cm, 100 g, valor declarado = preço;
   só Correios e Jadlog. Vendedor sem endereço principal → `422 SELLER_WITHOUT_ADDRESS` (depende da L10); provider com erro
-  → `502 SHIPPING_PROVIDER_ERROR` (texto depende da L12).
+  → `502 SHIPPING_PROVIDER_ERROR` com "Não foi possível calcular o frete agora. Tente novamente em instantes." (R24, L12).
 - **Criar o pedido** (R5, R10, R17): o backend cota de novo e usa o preço do serviço escolhido, nunca o valor vindo da tela.
   A reserva é um `updateMany` em `listings` com `available_quantity > 0` e `status = ACTIVE` (baixa 1); zero linhas →
   `422 LISTING_UNAVAILABLE` e nada é gravado. `quantity = 1`; `items_amount` = preço; `total_amount` = preço + frete;
@@ -61,7 +61,7 @@ transação, o backend confere o anúncio, baixa uma unidade (reserva), grava o 
   `success_url` e `cancel_url` para `/pedidos/:id/pagamento`. Se a Stripe falha, a transação desfaz pedido e reserva.
 - **`checkout.session.completed`** (R12): pedido `AWAITING_PAYMENT` → `PAID` com `paid_at`; pagamento → `APPROVED` com
   `charge_id` e `paid_at`; e-mail ao vendedor (texto depende da L11).
-- **`checkout.session.expired`** e volta pelo `cancel_url` (R19): o `cancel_url` expira a sessão pela API (depende da L4);
+- **`checkout.session.expired`** e volta pelo `cancel_url` (R19): o `cancel_url` expira a sessão pela API (L4);
   o evento leva o pedido a `CANCELED` com `cancel_reason = 'pagamento não concluído'` e devolve a unidade; o pagamento
   continua `PENDING` (depende da L14).
 - **Idempotência** (R13): cada transição é um `updateMany` condicionado ao status atual (`AWAITING_PAYMENT`); evento
@@ -86,7 +86,7 @@ OrderResult = { id, code, status, cardName, totalAmount, cancelReason, listingId
 | Método e caminho | Acesso | Entrada | Sucesso | Erros | Requisitos |
 |---|---|---|---|---|---|
 | `GET /api/v1/listings/:id/checkout` | `authenticate` + `authorize('CUSTOMER', 'SELLER')` | — | `200` `{ data: Checkout }` | `401`, `403 ACCOUNT_INACTIVE`, `404 LISTING_NOT_FOUND`, `422 LISTING_UNAVAILABLE`, `422 OWN_LISTING` | R1–R4, R6, R7 |
-| `POST /api/v1/listings/:id/shipping-quotes` | igual | `{ addressId }` | `200` `{ data: ShippingOption[] }` | `400 VALIDATION_ERROR`, `404 ADDRESS_NOT_FOUND`, `422 NO_SHIPPING_AVAILABLE`, `422 SELLER_WITHOUT_ADDRESS` (L10), `502 SHIPPING_PROVIDER_ERROR` (L12) | R8, R18 |
+| `POST /api/v1/listings/:id/shipping-quotes` | igual | `{ addressId }` | `200` `{ data: ShippingOption[] }` | `400 VALIDATION_ERROR`, `404 ADDRESS_NOT_FOUND`, `422 NO_SHIPPING_AVAILABLE`, `422 SELLER_WITHOUT_ADDRESS` (L10), `502 SHIPPING_PROVIDER_ERROR` (L12) | R8, R18, R24 |
 | `POST /api/v1/orders` | igual | `{ listingId, addressId, shippingServiceId, cpf? }` | `201` `{ data: { order: OrderResult, checkoutUrl } }` | `400 VALIDATION_ERROR` (CPF ausente ou inválido), `403`, `404`, `409 CPF_IN_USE` (L9), `422 LISTING_UNAVAILABLE`, `422 OWN_LISTING`, `422 NO_SHIPPING_AVAILABLE`, `502 PAYMENT_PROVIDER_ERROR` | R1, R2, R5, R7, R9–R11, R17 |
 | `GET /api/v1/orders/:id` | `authenticate` (só o comprador) | — | `200` `{ data: OrderResult }` | `401`, `404 ORDER_NOT_FOUND` | R14, R20 |
 | `POST /api/v1/orders/:id/cancel-checkout` | igual | — | `200` `{ data: OrderResult }` | `401`, `404`, `409 ORDER_NOT_AWAITING_PAYMENT` | R19, R20 |
@@ -96,12 +96,12 @@ OrderResult = { id, code, status, cardName, totalAmount, cancelReason, listingId
 
 | Arquivo | O que faz | Requisitos |
 |---|---|---|
-| `payment/payment.provider.ts` | interface `PaymentProvider`: `createCheckoutSession`, `expireCheckoutSession`, `parseWebhookEvent(rawBody, signature)` → `{ id, type, sessionId, chargeId? }` | R11–R13, R19, R22 |
-| `payment/stripe.payment-provider.ts` + `.spec.ts` | SDK `stripe`, com `STRIPE_SECRET_KEY` e `STRIPE_WEBHOOK_SECRET` | R11–R13, R19 |
+| `payment/payment.provider.ts` | interface `PaymentProvider`: `createCheckoutSession`, `expireCheckoutSession`, `parseWebhookEvent(rawBody, signature)` → `Promise<{ id, type: 'completed' \| 'expired' \| 'ignored', sessionId?, orderId?, chargeId? }>`; `ignored` traz só o `id`, e `chargeId` é a cobrança `ch_…` (ADR-066, item 8) | R11–R13, R19, R22 |
+| `payment/stripe.payment-provider.ts` + `.spec.ts` | SDK `stripe`, com `STRIPE_SECRET_KEY` e `STRIPE_WEBHOOK_SECRET`, versão da API fixa e tempo limite de 10 s; checkout só com cartão (`allowed_payment_method_types: ['card']`, ADR-066, item 1), e os eventos `async_payment_*` são ignorados; no `completed` pago, busca o `latest_charge` do PaymentIntent | R11–R13, R19 |
 | `payment/fake.payment-provider.ts` | guarda as sessões em memória; a `checkoutUrl` é a `success_url`; no PC dispara `completed` no mesmo handler do webhook; nos testes o evento é disparado pelo teste | R22 |
 | `payment/payment.factory.ts` | escolhe pelo `PAYMENT_DRIVER` (`fake` ou `stripe`) | R22 |
-| `shipping/shipping.provider.ts` | interface `ShippingProvider`: `quote({ fromZipCode, toZipCode, package, declaredValue })` → `ShippingOption[]` | R8, R22 |
-| `shipping/melhor-envio.shipping-provider.ts` + `.spec.ts` | `POST /api/v2/me/shipment/calculate`, com `MELHOR_ENVIO_TOKEN` e `MELHOR_ENVIO_BASE_URL` (sandbox em homologação); filtra Correios e Jadlog e descarta os serviços com erro | R8, R18 |
+| `shipping/shipping.provider.ts` | interface `ShippingProvider`: `quote({ fromZipCode, toZipCode, package, declaredValueInCents })` → opções com `priceInCents`; a API da T5 converte para `price` em string decimal (ADR-011) sem ponto flutuante | R8, R22 |
+| `shipping/melhor-envio.shipping-provider.ts` + `.spec.ts` | `POST /api/v2/me/shipment/calculate`, com `MELHOR_ENVIO_TOKEN` e `MELHOR_ENVIO_BASE_URL` (sandbox em homologação); filtra Correios e Jadlog e descarta os serviços com erro; tempo limite de 10 s, e falha vira `502 SHIPPING_PROVIDER_ERROR` (L12) | R8, R18, R24 |
 | `shipping/fake.shipping-provider.ts` | frete fixo de Correios e Jadlog; CEPs de uma lista de teste sem frete (CA10) | R22 |
 | `shipping/shipping.factory.ts` | escolhe pelo `SHIPPING_DRIVER` (`fake` ou `melhor-envio`) | R22 |
 | `src/config/env.ts` | as variáveis acima; em produção, `fake` é recusado | R22 |
@@ -129,7 +129,7 @@ Feature `src/features/marketplace/orders/`, no modelo de `src/features/users/` (
 | `pages/CheckoutPage/` | "COMPRA", "Checkout", blocos 1–3 e o resumo, frames `1112-7309` e `1112-7631`; carregando da cotação (CA15) | R4–R9, R17, R18, R23 |
 | `components/AddressSelector/` | endereços do cliente, principal marcado, "+ Cadastrar novo endereço" com o formulário da CCD048 (depende da L7) | R6, R18 |
 | `components/BuyerCpfField/` | bloco "2. CPF do comprador", só com `cpfRequired` (depende da L9) | R7 |
-| `components/ShippingOptions/` · `OrderSummary/` | opções com preço e prazo, aviso sem frete, resumo carta + frete = total, botão "Ir para o pagamento" desabilitado sem frete | R4, R8, R9, R18 |
+| `components/ShippingOptions/` · `OrderSummary/` | opções com preço e prazo, aviso sem frete, aviso de erro da cotação (`502`), resumo carta + frete = total, botão "Ir para o pagamento" desabilitado sem frete ou com erro | R4, R8, R9, R18, R24 |
 | `pages/PaymentResultPage/` | "Pagamento confirmado" (`1112-7935`) e "Pagamento não concluído" com "Tentar de novo" (`1112-8190`); espera pelo webhook (depende da L5); chama `cancel-checkout` na volta pelo `cancel_url` | R14, R19, R20, R23 |
 | `src/features/marketplace/listings/components/ListingPurchasePanel/` (CCD079) | "Comprar" leva ao checkout; visitante abre o `LoginToContinueModal` e volta ao anúncio; `isOwner` esconde o botão | R3, R15, R16, R23 |
 | `orders.routes.ts` · `src/routes/paths.ts` · `app/router.tsx` | `/anuncios/:id/checkout` e `/pedidos/:id/pagamento` com `RequireAuth` | R1, R3 |
@@ -151,6 +151,7 @@ Feature `src/features/marketplace/orders/`, no modelo de `src/features/users/` (
 | CA8 | próprio, pausado ou esgotado → `422`, nenhum pedido | integração |
 | CA9 | duas compras da última unidade: uma cria o pedido, a outra recebe `422` e volta ao anúncio | integração (`Promise.all`) · `CheckoutPage.spec.tsx` |
 | CA10 | CEP sem frete: aviso, frete "—", botão sem seguir | `fake.shipping-provider` · `ShippingOptions.spec.tsx` |
+| CA23 | Melhor Envio fora do ar: `502 SHIPPING_PROVIDER_ERROR`, aviso de erro diferente do "sem frete", botão sem seguir | `melhor-envio.shipping-provider.spec.ts` · `checkout.service.spec.ts` · integração · `ShippingOptions.spec.tsx` |
 | CA11 | `expired` e `cancel-checkout` → `CANCELED`, unidade devolvida, tela "Pagamento não concluído" | `payments.service.spec.ts` · integração · `PaymentResultPage.spec.tsx` |
 | CA12 | cartão recusado não muda o pedido | `payments.service.spec.ts` (evento ignorado) |
 | CA13 | `401`, `403` suspenso, `SELLER` compra | integração · `tests/unit/orders-routes.spec.ts` |
@@ -166,4 +167,5 @@ Feature `src/features/marketplace/orders/`, no modelo de `src/features/users/` (
 - O frete é cotado de novo no `POST /orders`: o total gravado nunca depende de um valor vindo do navegador.
 - A sessão da Stripe é criada dentro da transação do pedido, depois das escritas e antes do commit; se ela falha, nada fica
   gravado. Se o commit falha depois da sessão criada, a sessão expira sozinha em 30 minutos e o webhook não acha o pedido.
-- O token do Melhor Envio vem do secret do ambiente (ADR-067, item 2); a renovação automática não é requisito desta spec.
+- O token do Melhor Envio é fixo, vem do secret do ambiente e é renovado à mão antes de vencer (ADR-072, que substitui
+  parcialmente o item 2 do ADR-067); a renovação automática fica para quando houver produção.

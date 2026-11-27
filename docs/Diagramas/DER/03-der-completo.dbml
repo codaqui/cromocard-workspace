@@ -404,6 +404,9 @@ Table price_history [headercolor: #2E7D5B] {
   created_at     timestamptz   [not null, default: `now()`]
   updated_at     timestamptz   [not null, default: `now()`]
   deleted_at     timestamptz
+  indexes {
+    (card_id, source, reference_date) [note: 'Media de vendas da carta (CCD030)']
+  }
 }
 
 // =====================================================================
@@ -600,6 +603,9 @@ Table listings [headercolor: #A63D5F] {
   created_at         timestamptz    [not null, default: `now()`]
   updated_at         timestamptz    [not null, default: `now()`]
   deleted_at         timestamptz
+  indexes {
+    (card_id, status, price) [note: 'Anuncios ativos da carta pelo menor preco (CCD030)']
+  }
 }
 
 Table listing_photos [headercolor: #A63D5F] {
@@ -747,7 +753,7 @@ Table report_evidences [headercolor: #5A5A66] {
   created_at timestamptz  [not null, default: `now()`]
   updated_at timestamptz  [not null, default: `now()`]
   deleted_at timestamptz
-  Note: 'Prints que comprovam a denuncia (1 a 3 por denuncia do chat pessoal, CCD047; ADR-072).'
+  Note: 'Prints que comprovam a denuncia (1 a 3 por denuncia do chat pessoal, CCD047; ADR-073).'
 }
 
 Table catalog_requests [headercolor: #5A5A66] {

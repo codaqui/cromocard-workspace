@@ -23,14 +23,14 @@ BackOffice passa a mostrar as denúncias do chat, com os prints, "Dispensar Den�
   branches desta spec saem empilhadas sobre elas.
 - **CCD062** (na `develop`): a Fila de moderação, estendida aqui (L7; CCD062 L9).
 - **CCD099** (na `develop`): a sanção ao usuário, chamada pelo card do chat.
-- **ADR-050:** upload com `multer` e `StorageProvider`. **ADR-072:** `report_evidences`.
+- **ADR-050:** upload com `multer` e `StorageProvider`. **ADR-073:** `report_evidences`.
 - **CCD051** (Gabriel): a linha "Contatos bloqueados" em Configurações usa o modal e a rota desta spec (L9).
 
 ## Dados
 
 | Tabela | Já no `schema.prisma`? | Migration | Observação | Requisitos |
 |---|---|---|---|---|
-| `report_evidences` | não | `create_report_evidences_table` | copiada do DBML (ADR-072): `report_id` (FK), `url`, `sort_order` | R9, R16, R19 |
+| `report_evidences` | não | `create_report_evidences_table` | copiada do DBML (ADR-073): `report_id` (FK), `url`, `sort_order` | R9, R16, R19 |
 | `reports` | sim | — | `target_type = USER`, `target_user_id`, `reason` (texto do motivo), `description`, `status = PENDING` | R9, R18 |
 | `user_blocks` | sim (CCD046) | — | bloquear restaura a linha com `deleted_at`; desbloquear preenche `deleted_at` | R6, R13 |
 

@@ -8,7 +8,7 @@
 ## Backend — `apps/cromocard-backend`, branch `feature/1231-moderar-contatos-privados`
 
 - [x] **T1** · Criar migration create_report_evidences_table e o seed da denúncia do chat — R9, R16, R19 · AB#1232
-  - Pronto quando: a tabela existe como no DBML (ADR-072) e o seed tem a denúncia da Ana contra a Carla com um print.
+  - Pronto quando: a tabela existe como no DBML (ADR-073) e o seed tem a denúncia da Ana contra a Carla com um print.
 - [x] **T2** · Criar validator e erros do bloqueio e da denúncia — R1, R4, R16, R18 · AB#1233
   - Pronto quando: os schemas recusam motivo fora da lista, `description` acima de 500 e `userId` que não é UUID.
 - [x] **T3** · Criar repository e service de bloquear, denunciar e desbloquear — R1, R3, R6, R9, R13, R14, R16, R18 · CA1–CA3, CA8, CA17 · AB#1234
