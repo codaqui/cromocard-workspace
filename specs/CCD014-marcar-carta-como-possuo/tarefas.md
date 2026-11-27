@@ -17,10 +17,8 @@
   - Pronto quando: a rota aparece no `/docs` e `tests/integration/collection-card-marking.spec.ts` cobre CA1–CA3, CA5,
     CA6 e CA8.
 - [ ] **T5** · Ligar a carta usada em coleções na exclusão do catálogo — R12 · CA9 · AB#1033
-  - Entregue pela CCD007 (backend #48): o `catalog.module.ts` injeta o `collectionService` como `CardUsage`, e o
-    `tests/integration/catalog-card-usage.spec.ts` cobre a exclusão bloqueada. A caixa é marcada no fechamento da CCD007.
-  - Pronto quando: o `catalog.module.ts` injeta a `CardUsage` do domínio `collection` e o teste de integração cobre o
-    CA9 (exclusão bloqueada com o erro da CCD061).
+  - Pronto quando: o `catalog.module.ts` injeta a `PrismaCardUsage` e o teste de integração cobre o CA9 (exclusão
+    bloqueada com o erro da CCD061).
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/120-marcar-carta-como-possuo`
 
