@@ -5,7 +5,7 @@
 //  usuario e comportamento (metodos) de cada classe. Ver ADR-035, ADR-036 e
 //  ADR-037 em docs/ADR/ para o racional de cada decisao de modelagem.
 //
-//  48 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
+//  49 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
 //  Usuario + 26 enumeracoes, organizados nos mesmos 8 modulos do DER.
 //  Identificadores sao UUID v7 (ADR-014). As colunas de tempo created_at,
 //  updated_at e deleted_at existem em toda tabela (ADR-015/ADR-016) e so
@@ -950,6 +950,20 @@ model {
     }
   }
 
+  evidenciaDenuncia = class "EvidenciaDenuncia" {
+    metadata {
+      observacoes """Print que comprova a denúncia do chat pessoal (1 a 3 por denúncia, CCD047; ADR-073). A url é a chave do arquivo no storage privado (ADR-068)."""
+      atributos """
+        - id: UUID
+        - url: String
+        - ordem: Integer
+      """
+      metodos """
+        + anexar()
+      """
+    }
+  }
+
   solicitacaoCadastro = class "SolicitacaoCadastro" {
     metadata {
       atributos """
@@ -1259,6 +1273,7 @@ model {
   denuncia -> anuncio "0..1 -- N : alvo (conforme tipo)"
   denuncia -> usuario "0..1 -- N : alvo (conforme tipo)"
   denuncia -> mensagemGrupo "0..1 -- N : alvo (conforme tipo)"
+  evidenciaDenuncia -> denuncia "N -- 1 : compõe"
   solicitacaoCadastro -> usuario "N -- 1 : solicitante"
   solicitacaoCadastro -> administrador "0..1 -- N : avaliado por"
   solicitacaoCadastro -> carta "0..1 -- 1 : item criado"
@@ -1345,7 +1360,7 @@ views {
 
   view modulo8_moderacao_administracao {
     title "Módulo 8 - Moderação e Administração"
-    include denuncia, solicitacaoCadastro, logAuditoria, configuracaoGlobal,
+    include denuncia, evidenciaDenuncia, solicitacaoCadastro, logAuditoria, configuracaoGlobal,
       verificacaoVendedor, documentoVendedor, notaVerificacao, advertenciaUsuario,
       votoSolicitacao, exportacaoRelatorio,
       usuario, cliente, vendedor, administrador, endereco, anuncio, mensagemGrupo, carta, album,
@@ -1355,7 +1370,7 @@ views {
   }
 
   view visao_geral_completa {
-    title "Visão Geral - Diagrama de Classes CromoCard (48 classes)"
+    title "Visão Geral - Diagrama de Classes CromoCard (49 classes)"
     description "Uso apenas para conferência - denso demais para apresentação/projeção. Use as views por módulo para a banca."
     include *
     autoLayout LeftRight

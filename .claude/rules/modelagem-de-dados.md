@@ -7,7 +7,7 @@ paths:
 
 # Modelo de dados — DER, diagrama de classes e `schema.prisma`
 
-- **Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (49 tabelas, 86 FKs, 27 enums). O
+- **Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 87 FKs, 27 enums). O
   `01-diagrama-entidades.dbml` e o `02-diagrama-relacionamentos.dbml` são recortes dele: **mantenha os três `.dbml`
   sincronizados** ao alterar o modelo e tire de novo os prints `.png` no dbdiagram.io (passo a passo no `README.md` do DER).
 - O diagrama de classes (`docs/Diagramas/Diagrama-de-Classe/cromocard-diagrama-classes.v2.c4`) é 1:1 com o DER

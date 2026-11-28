@@ -3,7 +3,7 @@
 Modelo de dados derivado dos **Casos de Uso / User Stories** em `../../Casos-De-Uso/`
 e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + PostgreSQL).
 
-**49 entidades organizadas em 8 modulos, 86 chaves estrangeiras e 27 enums.** Em 28/11/2026 entrou `notification_preferences`, com o enum `notification_event` (ADR-074). Em 22/11/2026 sairam `offers`, `reviews` e o enum `offer_status`, junto com as CCD070, CCD081 e CCD089 (ADR-069). Nomes de tabelas, colunas e
+**50 entidades organizadas em 8 modulos, 87 chaves estrangeiras e 27 enums.** Em 28/11/2026 entrou `notification_preferences`, com o enum `notification_event` (ADR-074). Em 22/11/2026 sairam `offers`, `reviews` e o enum `offer_status`, junto com as CCD070, CCD081 e CCD089 (ADR-069). Nomes de tabelas, colunas e
 enums em **ingles** (glossario PT → EN no fim deste arquivo). O DER e escrito em DBML para o
 [dbdiagram.io](https://dbdiagram.io/d); cada diagrama tem o `.dbml` e o print tirado do site.
 
@@ -40,7 +40,7 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | 5 | Chat Pessoal | ciano `#2A7B8C` | conversations, conversation_participants, messages, user_blocks |
 | 6 | Marketplace | vinho `#A63D5F` | listings, listing_photos, orders, payments |
 | 7 | Notificacoes e Favoritos | dourado `#B08A2E` | favorites, price_alerts, notifications, global_notifications, notification_preferences |
-| 8 | Moderacao e Administracao | cinza `#5A5A66` | reports, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
+| 8 | Moderacao e Administracao | cinza `#5A5A66` | reports, report_evidences, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
 
 ## Rastreabilidade (entidade -> casos de uso principais)
 
@@ -70,6 +70,7 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `user_warnings` | 99 Aplicar Sancao a Usuario |
 | `catalog_request_votes` | 103 Votar em Solicitacao de Catalogo |
 | `report_exports` | 107 Consultar Historico de Relatorios |
+| `report_evidences` | 47 Moderar Contatos Privados, 62 Gestao de Comunidade |
 
 ## Convencoes
 

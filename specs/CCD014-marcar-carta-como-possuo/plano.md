@@ -12,15 +12,17 @@ Cada carta do detalhe do álbum (CCD013) ganha os marcadores "Possuo", "Falta" e
 tela na hora (otimista, depende da L9) e chama `PUT /api/v1/collections/me/cards/:cardId/status`, que aplica a transição
 de status e quantidade, restaura a linha excluída se houver, recalcula `user_albums.progress_percentage` na mesma
 transação e devolve a carta e o progresso. Esta story cria a regra de estado da carta (`collection-card-state.ts`) e o
-recálculo do progresso (`collection-progress.ts`), que a CCD017 e a CCD018 reaproveitam, e liga a `CardUsage` que a
-CCD061 deixou pendente.
+recálculo do progresso (`collection-progress.ts`), que a CCD017 e a CCD018 reaproveitam. A `CardUsage` que a CCD061
+deixou pendente já chega ligada pela CCD007; esta story só confirma, de ponta a ponta, que a carta marcada bloqueia a
+exclusão (CA9).
 
 ## Dependências
 
-- **CCD007**: domínio `collection` e a tabela `collection_cards`.
+- **CCD007**: domínio `collection`, a tabela `collection_cards` e a trava "carta usada em coleções" do catálogo (o
+  `catalog.module.ts` recebe o `collectionService` como `CardUsage`; codaqui/cromocard-backend#48).
 - **CCD013**: a página do detalhe, o `AlbumCardTile`, o `AlbumCardRow` e as queries das cartas e do cabeçalho.
-- **CCD061**: a interface `CardUsage` (`isCardInCollections(cardId)`) no `catalog.service.ts`, hoje sem implementação
-  no `catalog.module.ts`, e o modal "Não é possível excluir esta carta" (R12).
+- **CCD061**: a interface `CardUsage` (`cardIdsInCollections(ids)`, em `catalog.ports.ts`, desde a CCD105) e o modal
+  "Não é possível excluir esta carta" (R12).
 - **CCD106**: `cards.status`, para só marcar carta `ACTIVE` (dependência herdada da CCD013).
 
 ## Dados
@@ -48,7 +50,8 @@ Estado da carta (`collection-card-state.ts`, depende da L4–L7), com "atual" = 
   cliente; senão `404`. Carta avulsa (`album_id` nulo) também `404`.
 - **Progresso** (R9, depende da L8): `cartas OWNED ou DUPLICATE do álbum / albums.total_cards × 100`, com 2 casas;
   `total_cards = 0` grava 0 (a CCD019 mostra "Progresso indisponível").
-- **Carta usada em coleções** (R12): existe `collection_cards` sem `deleted_at` com o `card_id`.
+- **Carta usada em coleções** (R12): existe `collection_cards` sem `deleted_at` com o `card_id`, de qualquer status,
+  numa coleção sem `deleted_at` (regra implementada pela CCD007).
 - **Só no detalhe** (depende da L10): o Início (CCD007) só mostra o status.
 
 ## Contrato da API
@@ -96,8 +99,6 @@ Domínio `src/domains/collection/`.
 | `collection-progress.ts` + `.spec.ts` | `recalculateAlbumProgress(tx, collectionId, albumId)` e as contagens do álbum | R9 |
 | `collection-cards-marking.repository.ts` | carta válida da coleção, linha atual, `upsert` restaurando `deleted_at` | R1, R3 |
 | `collection-cards-marking.service.ts` + `.spec.ts` | transação: lê, aplica o estado, grava, recalcula, devolve | R1–R9 |
-| `collection-card-usage.ts` | `PrismaCardUsage implements CardUsage` | R12 |
-| `catalog.module.ts` (CCD061) | passa `cardUsage: new PrismaCardUsage(prisma)` ao `CatalogService` | R12 |
 | `collection.errors.ts` | `COLLECTION_CARD_NOT_FOUND`, `CARD_STATUS_UNCHANGED` | R1, R5, R6 |
 | `collection.validator.ts` · `.controller.ts` · `.routes.ts` · `.swagger.ts` | body e a rota `PUT /me/cards/:cardId/status` | R1 |
 | `tests/integration/collection-card-marking.spec.ts` | rota de ponta a ponta e a exclusão bloqueada no catálogo | CA1–CA3, CA5, CA6, CA8, CA9 |
@@ -138,5 +139,7 @@ Feature `src/features/collection/`.
 - A regra de estado é uma função pura com a tabela de transições, testada sozinha, e usada também pela CCD017 e pela
   CCD018; o frontend tem uma cópia só para a atualização otimista, e a resposta da API sempre prevalece.
 - Status, quantidade e progresso são gravados numa transação, para o progresso nunca ficar diferente das marcações.
-- A `CardUsage` é implementada no domínio `collection` e injetada no catálogo: o catálogo continua sem ler tabela de
-  outro domínio (ADR-001), como a CCD061 planejou.
+- A `CardUsage` é implementada no domínio `collection` e injetada no catálogo, como a CCD061 planejou: o catálogo
+  continua sem ler tabela de outro domínio (ADR-001). Ela entrou na CCD007, que cria `collection_cards`, pela
+  `collectionService` exportada no `collection.module.ts` (o domínio só usa a service do outro), em vez da
+  `PrismaCardUsage` que este plano previa. Revisão de código do backend #48, 26/11/2026.

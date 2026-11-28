@@ -36,7 +36,7 @@ quando uma notificação é criada.
 
 ## Consequências
 
-- O DER fica com 49 tabelas, 86 FKs e 27 enums, nos três formatos e no diagrama de classes.
+- O DER fica com 50 tabelas, 87 FKs e 27 enums (com a `report_evidences` do ADR-073), nos três formatos e no diagrama de classes.
 - Toda story que cria um tipo novo de notificação diz a qual evento ele pertence.
 - A tela Configurações passa a existir com os blocos de aviso (CCD053); a CCD051 e a CCD052 acrescentam o resto.
 
