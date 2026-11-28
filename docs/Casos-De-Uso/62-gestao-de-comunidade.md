@@ -1,6 +1,6 @@
 | Nome do Caso de Uso | Gestão de Comunidade |
 |---|---|
-| Finalidade/Objetivo | Permitir que o administrador suspenda, reative e exclua grupos da comunidade e modere as mensagens denunciadas. |
+| Finalidade/Objetivo | Permitir que o administrador suspenda, reative e exclua grupos da comunidade e modere as mensagens de grupo e os contatos do chat pessoal denunciados. |
 | Atores | Administrador |
 | Pré Condições | O administrador deve estar autenticado e possuir permissão para gerenciar grupos. |
 
@@ -17,9 +17,9 @@
 | 7. O administrador confirma a operação. |  |
 |  | 8. O sistema registra a alteração e o motivo no log de auditoria. O grupo suspenso some de Explorar e fica só para leitura dos membros; o grupo excluído some para todos. |
 |  | 9. O sistema atualiza a lista de grupos e confirma a operação. |
-| 10. O administrador abre a fila de mensagens denunciadas. |  |
-|  | 11. O sistema apresenta cada denúncia pendente com o autor (idade da conta e advertências anteriores), o grupo, a mensagem, a categoria, a descrição da denúncia, quem denunciou e quando, e permite filtrar por gravidade. |
-| 12. O administrador remove a mensagem, remove a mensagem e adverte o autor, ou dispensa a denúncia, informando o motivo; ou escolhe aplicar uma sanção ao autor (caso de uso 99). |  |
+| 10. O administrador abre a fila de moderação. |  |
+|  | 11. O sistema apresenta cada denúncia pendente com o autor (idade da conta e advertências anteriores), a origem, a categoria, a descrição da denúncia, quem denunciou e quando, e permite filtrar por gravidade. Na denúncia de mensagem de grupo, a origem é o grupo e o card mostra a mensagem; na denúncia do chat pessoal, a origem é "Chat pessoal" e o card mostra os prints enviados como evidência, que abrem em tamanho maior. Nas denúncias do chat pessoal, "Golpe / pagamento externo" e "Assédio" entram no filtro Críticos e "Spam" no filtro Spam; "Perfil falso" não entra em nenhum filtro de gravidade e aparece só na fila completa. |
+| 12. O administrador remove a mensagem, remove a mensagem e adverte o autor, ou dispensa a denúncia, informando o motivo; ou escolhe aplicar uma sanção ao autor (caso de uso 99). Na denúncia do chat pessoal, as opções são dispensar a denúncia ou aplicar uma sanção ao autor. |  |
 |  | 13. O sistema remove a mensagem (quando for o caso), marca a denúncia como resolvida ou dispensada com o moderador e a data, e registra a ação no log de auditoria. |
 
 ### Fluxo Alternativo

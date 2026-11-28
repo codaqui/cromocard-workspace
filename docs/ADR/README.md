@@ -93,6 +93,7 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [070](ADR-070-fidelidade-ao-figma-obrigatoria-na-spec.md) | Processo | Fidelidade ao Figma obrigatória na spec: requisito `Fidelidade` e critério de aceite por frame, em 1280 px lado a lado e adaptado em 375, 768 e 1024 px (complementa o 060) | Proposto |
 | [071](ADR-071-webhook-da-conta-conectada-reconsulta-a-stripe.md) | Backend | O `account.updated` da Stripe reconsulta a conta conectada e grava o estado atual, sem tabela de eventos (complementa o 066) | Proposto |
 | [072](ADR-072-token-fixo-do-melhor-envio-no-sandbox.md) | Backend | Token fixo do Melhor Envio no sandbox, renovado à mão antes de vencer (substitui parcialmente o item 2 do 067) | Proposto |
+| [073](ADR-073-prints-como-evidencia-da-denuncia.md) | Backend | A denúncia do chat pessoal leva de 1 a 3 prints obrigatórios, na tabela `report_evidences`, com as regras de upload do ADR-050, no storage privado do ADR-068 (complementa o 032, o 050 e o 068) | Aceito |
 
 ## Modelo
 
