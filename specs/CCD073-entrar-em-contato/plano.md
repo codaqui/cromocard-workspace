@@ -1,98 +1,90 @@
 # Plano — CCD073 Entrar em Contato
 
-> Plano feito com a spec em Rascunho, a pedido do Daniel (22/11/2026): revisar depois que o PO decidir as lacunas.
+> **Fase MVP** desde 22/11/2026 (ADR-069). Plano refeito em 27/11/2026 com as decisões L1, L2 e L4–L10 da spec.
 
-> **Fase MVP** desde 22/11/2026 (ADR-069).
-
-- **Spec:** [spec.md](spec.md), em Rascunho (lacunas L1–L8 pendentes)
-- **Repositórios:** backend · frontend (lidos da branch `feature/336-remove-tipo-categoria` dos dois apps)
-- **Data:** 2026-11-22 · **Autor:** Daniel Andrade
+- **Spec:** [spec.md](spec.md), Aprovada
+- **Repositórios:** backend · frontend, empilhados sobre o chat pessoal (`feature/1208-responder-mensagem-especifica`,
+  CCD045, que já traz a CCD046 e a CCD047)
+- **Data:** 2026-11-22 (refeito em 2026-11-27) · **Autor:** Daniel Andrade
 
 ## Solução
 
-"Entrar em contato" no detalhe do anúncio abre uma caixa de mensagem (desenho depende da L1). Enviar chama
-`POST /api/v1/listings/:id/contact`: o backend confere o anúncio, o vendedor e o bloqueio, cria ou reabre a conversa
-daquele anúncio entre os dois, grava a mensagem e só depois emite a mensagem na room da conversa e a notificação ao
-vendedor (ADR-012). O cliente é levado à conversa em Mensagens.
+"Entrar em contato" chama `POST /api/v1/listings/:id/contact`. O backend confere o anúncio, o dono e o vendedor,
+reaproveita a conversa direta que já existe entre os dois ou cria uma (a mesma regra da Nova conversa da CCD046) e
+devolve o id. O frontend leva o cliente a `/mensagens?conversa=<id>` com o texto sugerido no estado da navegação, e a
+conversa abre com o campo preenchido. O envio é o da CCD046 (`message:send`), que já grava antes de emitir e entrega em
+tempo real ao vendedor.
+
+O botão é o componente `ContactSellerButton` da feature `chat`, exportado pelo `index.ts`. A página do anúncio
+(CCD079/CCD080) monta o botão no quadro do vendedor quando existir (L10).
 
 ## Dependências
 
-- **CCD045 / CCD046** (lote Chat): tabelas `conversations`, `conversation_participants`, `messages` e `user_blocks`, a tela
-  Mensagens (`/mensagens/:conversationId`) e o evento de mensagem nova na room `conversation:<id>`.
-- **CCD044**: servidor Socket.IO autenticado por JWT.
-- **CCD053**: `notificationsService.notify` (aviso ao vendedor, tipo novo `NEW_MESSAGE`, depende da L4 da CCD053).
-- **CCD047**: bloqueio de contatos e o aviso "Você bloqueou…" (`1160-37184`).
-- **CCD079**: detalhe do anúncio (`/anuncios/:id`) e `isOwner`.
-- **CCD055**: `LoginToContinueModal` para o visitante (depende da L7).
+- **CCD045 / CCD046 / CCD047** (PRs #49, #51, #52 e #36, #37, #38): conversas, envio em tempo real, a regra
+  `reachableBy` e o bloqueio. Os PRs desta story saem empilhados sobre a `feature/1208-responder-mensagem-especifica`.
+- **CCD079 / CCD080** (Lucas): a página do anúncio, que monta o botão. **CCD030** (Lucas): o aviso "Entre para
+  continuar", que a página passa para o botão como `onLoginRequired`.
+- **CCD053**: o aviso no sino (`NEW_MESSAGE`), fora desta story (L9).
 
 ## Dados
 
-| Tabela | Já no `schema.prisma`? | Migration | Observação |
-|---|---|---|---|
-| `listings` | da CCD097 (ADR-054) | — | `seller_id`, `status`, `deleted_at` (R1, R4) |
-| `conversations` · `conversation_participants` · `messages` · `user_blocks` | da CCD045/CCD046 | — | `listing_id` da conversa (R5), mensagem (R6), bloqueio nos dois sentidos (R9) |
-| `notifications` | sim | — | aviso ao vendedor pela CCD053 (R7) |
+Nenhuma migration. Usa `listings` (já no `schema.prisma`, ADR-054), `users`, `conversations` (direta, `listing_id`
+nulo), `conversation_participants` e `user_blocks`.
 
 ## Regras
 
-- **Anúncio** (R1): inexistente ou excluído → `404 LISTING_NOT_FOUND`; não `ACTIVE` → `422 LISTING_UNAVAILABLE`; o
-  próprio anúncio → `422 OWN_LISTING` e o botão não aparece (depende da L8).
-- **Vendedor indisponível** (R8): `users.status` diferente de `ACTIVE` ou conta excluída → `422 SELLER_UNAVAILABLE`
-  (depende da L4).
-- **Bloqueio** (R9): `user_blocks` ativo em qualquer sentido → `403 CONTACT_BLOCKED`; nada é gravado.
-- **Conversa** (R5): uma por anúncio e par de usuários; existindo, a mensagem vai para ela (CA2); conversa entre os dois
-  sem anúncio ou de outro anúncio não é reaproveitada (depende da L5).
-- **Persistência primeiro** (R6, R7): conversa e mensagem numa transação; a emissão e a notificação só depois do commit.
-- Conteúdo: o mesmo validator de mensagem da CCD046 (texto obrigatório, mesmo tamanho máximo).
+Na ordem em que são conferidas, para a mensagem de erro ser a mais útil:
+
+1. Anúncio inexistente ou excluído → `404 LISTING_NOT_FOUND`.
+2. Anúncio de quem pede → `422 OWN_LISTING` (R1, L8).
+3. Anúncio não `ACTIVE` → `422 LISTING_UNAVAILABLE` (R1).
+4. Cliente bloqueou o vendedor (`user_blocks` ativo com `blocker_id` = cliente) → `403 CONTACT_BLOCKED` (R9).
+5. Vendedor fora da regra `reachableBy` da CCD046 (excluído, não `ACTIVE`, `ADMIN` ou que bloqueou o cliente) →
+   `422 SELLER_UNAVAILABLE` (R8, L4, L6).
+6. Conversa direta entre os dois: existe → devolve (`created: false`, `200`); não existe → cria (`created: true`, `201`)
+   (R5, L5).
 
 ## Contrato da API
 
-### `POST /api/v1/listings/:id/contact` — R1–R9
+### `POST /api/v1/listings/:id/contact` — R1, R4, R5, R8, R9
 
 - **Acesso:** `authenticate` + `authorize('CUSTOMER', 'SELLER')`
-- **Entrada:** `{ "content": "A carta tem marcas no verso?" }`
-- **Sucesso:** `201` `{ data: { conversationId, message: { id, content, authorId, createdAt }, created: boolean } }`
+- **Entrada:** `:id` UUID do anúncio, sem corpo
+- **Sucesso:** `201` (criada) ou `200` (já existia) `{ data: { conversationId: string, created: boolean } }`
 - **Erros:**
 
   | Status | `error` | Quando | Requisito |
   |---|---|---|---|
-  | 400 | `VALIDATION_ERROR` | conteúdo vazio ou longo demais | R3 |
+  | 400 | `VALIDATION_ERROR` | `:id` não é UUID | R1 |
   | 401 | `UNAUTHORIZED` | sem token | R1 |
-  | 403 | `CONTACT_BLOCKED` | bloqueio em qualquer sentido | R9 |
+  | 403 | `FORBIDDEN` | `ADMIN` | R1 |
+  | 403 | `CONTACT_BLOCKED` | o cliente bloqueou o vendedor | R9 |
   | 404 | `LISTING_NOT_FOUND` | anúncio inexistente ou excluído | R1 |
-  | 422 | `LISTING_UNAVAILABLE` · `OWN_LISTING` · `SELLER_UNAVAILABLE` | anúncio não ativo, próprio (L8) ou vendedor indisponível (L4) | R1, R8 |
+  | 422 | `OWN_LISTING` · `LISTING_UNAVAILABLE` · `SELLER_UNAVAILABLE` | próprio, não ativo, vendedor indisponível ou que bloqueou o cliente | R1, R8 |
 
 ## Backend — `apps/cromocard-backend`
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/domains/marketplace/listings/listing-contact.{validator,service,controller,routes,swagger}.ts` + `.service.spec.ts` | regras acima, usando o repository de conversas da CCD046 | R1–R9 |
-| `src/domains/chat/conversations.repository.ts` (CCD046) | `findByListingAndParticipants`, `createForListing` | R5 |
-| `src/domains/chat/messages.publisher.ts` (CCD046) | reaproveitado para emitir a mensagem nova | R7 |
-| `listings.module.ts` (CCD079) | registra a rota | R2 |
+| `src/domains/chat/listing-contact.service.ts` + `.spec.ts` | regras 1–6, usando o repository do chat e o `isReachable` dos contatos | R1, R4, R5, R8, R9 |
+| `src/domains/chat/chat.repository.ts` | `findListingForContact(id)` (vendedor, status e exclusão) e `hasBlocked(blockerId, blockedId)` | R1, R9 |
+| `src/domains/chat/chat.errors.ts` | `ListingNotFoundError`, `OwnListingError`, `ListingUnavailableError`, `ContactBlockedByYouError`, `SellerUnavailableError` | R1, R8, R9 |
+| `src/domains/chat/listing-contact.{controller,routes,swagger}.ts` e `chat.module.ts` | rota com o `listingIdParamSchema` | R1 |
+| `tests/integration/chat/listing-contact.spec.ts` | `201`, `200` sem conversa nova, `401`, `403`, `404` e os três `422` | CA1–CA5 |
 
 ## Frontend — `apps/cromocard-frontend`
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `src/features/marketplace/listings/listing-contact.{api,queries,labels}.ts` | chamada e textos (vendedor indisponível depende da L4; bloqueado pelo vendedor, da L6) | R3, R8, R9 |
-| `components/ContactSellerButton/` · `ContactSellerDialog/` | "Entrar em contato" e a caixa da mensagem no estilo do detalhe do anúncio (sem frame, depende da L1); erro mantém o texto digitado | R2, R3, R8, R9 |
-| `ListingPurchasePanel` (CCD079) | monta o botão; escondido para o dono (L8) e com "Entre para continuar" para o visitante (L7) | R1, R2 |
-| tela Mensagens (CCD046) | abre a conversa criada, frame `1160-32980`; aviso de bloqueio, frame `1160-37184` | R5, R6, R9, R10 |
+| `src/features/chat/listing-contact.api.ts` + `.spec.ts` | `contactSeller(listingId)` | R1 |
+| `src/features/chat/chat.labels.ts` | textos do botão, dos avisos (R8, R9, CA6) e o texto sugerido | R3, R8, R9 |
+| `src/features/chat/components/ContactSellerButton/` + `.spec.tsx` | botão no estilo de "Favoritar", escondido para o dono, `onLoginRequired` para o visitante, aviso abaixo do botão, e a ida para Mensagens com o texto sugerido | R2, R3, R8, R9, R11 |
+| `src/features/chat/index.ts` | exporta o `ContactSellerButton` | R11 |
+| `MessagesPage` · `ConversationView` · `MessageComposer` | o campo começa com o texto do estado da navegação, uma vez, na conversa indicada | R3 |
 
-## Testes
+## Testes e validação
 
-| Critério | O que o teste verifica | Onde |
-|---|---|---|
-| CA1 | conversa com `listing_id` e os dois participantes, mensagem gravada, emissão e notificação ao vendedor | `listing-contact.service.spec.ts` · `tests/integration/listing-contact.spec.ts` |
-| CA2 | segunda mensagem na mesma conversa (`created: false`) | service · integração |
-| CA3 | vendedor indisponível → `422`, nada gravado | service |
-| CA4 | bloqueio nos dois sentidos → `403`, aviso na tela | service · `ContactSellerDialog.spec.tsx` |
-| CA5 | `401`; pausado `422`; excluído `404` | integração |
-| CA6 | falha ao gravar: nada emitido, texto mantido | service (publisher falso) · `ContactSellerDialog.spec.tsx` |
-| CA7, CA8 | print em 1280 px igual aos frames `1160-32980` e `1160-37184`; sem quebra em 375/768/1024 px | validação no navegador do `/cromocard-desenvolver` (ADR-060, item 5) |
-
-## Decisões técnicas
-
-- O contato pelo anúncio é uma rota REST, e não o `message:send` do socket, porque cria a conversa e precisa responder
-  com erros de negócio antes de existir a room; as mensagens seguintes usam o fluxo da CCD046.
+- Backend: `listing-contact.service.spec.ts` (cada regra) e a integração com o PostgreSQL.
+- Frontend: `ContactSellerButton.spec.tsx` (dono, visitante, sucesso, os três avisos) e o campo preenchido em Mensagens.
+- Navegador: sem a página do anúncio, o botão é validado numa página de teste local, fora do commit, no estilo do quadro
+  do vendedor de `1112-5772`, em 375, 768, 1024 e 1280 px; a conversa aberta é comparada com `1160-32980`.
