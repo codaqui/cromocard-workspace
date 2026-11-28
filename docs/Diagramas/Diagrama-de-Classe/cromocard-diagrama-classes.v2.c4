@@ -929,7 +929,7 @@ model {
 
   evidenciaDenuncia = class "EvidenciaDenuncia" {
     metadata {
-      observacoes """Print que comprova a denúncia do chat pessoal (1 a 3 por denúncia, CCD047; ADR-073)."""
+      observacoes """Print que comprova a denúncia do chat pessoal (1 a 3 por denúncia, CCD047; ADR-073). A url é a chave do arquivo no storage privado (ADR-068)."""
       atributos """
         - id: UUID
         - url: String
