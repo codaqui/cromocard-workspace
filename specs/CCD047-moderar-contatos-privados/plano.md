@@ -23,14 +23,14 @@ BackOffice passa a mostrar as denúncias do chat, com os prints, "Dispensar Den�
   branches desta spec saem empilhadas sobre elas.
 - **CCD062** (na `develop`): a Fila de moderação, estendida aqui (L7; CCD062 L9).
 - **CCD099** (na `develop`): a sanção ao usuário, chamada pelo card do chat.
-- **ADR-050:** upload com `multer` e `StorageProvider`. **ADR-073:** `report_evidences`.
+- **ADR-050:** upload com `multer` e `StorageProvider`. **ADR-068:** storage privado (`visibility: 'private'`, `read(key)`). **ADR-073:** `report_evidences`.
 - **CCD051** (Gabriel): a linha "Contatos bloqueados" em Configurações usa o modal e a rota desta spec (L9).
 
 ## Dados
 
 | Tabela | Já no `schema.prisma`? | Migration | Observação | Requisitos |
 |---|---|---|---|---|
-| `report_evidences` | não | `create_report_evidences_table` | copiada do DBML (ADR-073): `report_id` (FK), `url`, `sort_order` | R9, R16, R19 |
+| `report_evidences` | não | `create_report_evidences_table` | copiada do DBML (ADR-073): `report_id` (FK), `url` (chave no storage privado, ADR-068), `sort_order` | R9, R16, R19 |
 | `reports` | sim | — | `target_type = USER`, `target_user_id`, `reason` (texto do motivo), `description`, `status = PENDING` | R9, R18 |
 | `user_blocks` | sim (CCD046) | — | bloquear restaura a linha com `deleted_at`; desbloquear preenche `deleted_at` | R6, R13 |
 
@@ -45,7 +45,7 @@ o CA18; o bloqueio ana-bloqueia-gabriela (CCD046) serve ao CA9 e ao CA16.
   bloqueado: responde o mesmo bloqueio, sem erro.
 - **Denunciar** (R9, R16, R18): motivo um dos 4 textos (L4), `description` até 500, de 1 a 3 prints PNG, JPG ou WEBP até
   4 MB (`413` acima). Com denúncia `PENDING` do usuário contra o contato: `409 REPORT_ALREADY_PENDING`. Os prints sobem
-  para `report-evidences/` antes da transação; se a transação falhar, os arquivos enviados são apagados do storage.
+  para o storage privado (ADR-068, pasta `report-evidences/`) antes da transação; se a transação falhar, os arquivos enviados são apagados do storage.
 - **Bloquear e denunciar**: o mesmo pedido da denúncia com `block = true`; bloqueio, denúncia e evidências na mesma
   transação.
 - **Envio no chat** (R7): `chatService.sendMessage` recusa com `422 CONTACT_BLOCKED` quando há `user_blocks` ativo em
@@ -98,7 +98,8 @@ Convenções do ADR-011. `ContactReportReason = 'Golpe / pagamento externo' | 'A
 |---|---|---|
 | `GET /me/conversations` e `POST /me/conversations` (CCD046) | cada conversa ganha `block: 'BY_ME' \| 'BY_CONTACT' \| null` | R8, R12, R17 |
 | `message:send` (CCD046) | ack de erro `{ error: 'CONTACT_BLOCKED', message }` com bloqueio ativo (o ack do socket não leva status) | R7 |
-| `GET /admin/community/reports` (CCD062) | inclui as denúncias `USER` com print; cada item ganha `origin: 'GROUP' \| 'CHAT'`, `reporterUsername`, `reportedUser` (`id`, `name`, `username`, `accountAgeDays`, `warnings`; só no chat) e `evidences` (lista de URLs); `message` nula na do chat | R19 |
+| `GET /admin/community/reports` (CCD062) | inclui as denúncias `USER` com print; cada item ganha `origin: 'GROUP' \| 'CHAT'`, `reporterUsername`, `reportedUser` (`id`, `name`, `username`, `accountAgeDays`, `warnings`; só no chat) e `evidences` (lista de `{ id }`, cada print baixado pela rota abaixo, nunca uma URL pública); `message` nula na do chat | R19 |
+| `GET /api/v1/admin/community/reports/:id/evidences/:evidenceId` (nova) | só `ADMIN` (`401`/`403`); `200` com o arquivo do storage privado (`read(key)`, `Content-Type` da imagem); `404 EVIDENCE_NOT_FOUND` se o print não existe ou não é da denúncia; o frontend baixa com o token e mostra como `blob` (L13) | R19 |
 | `GET /admin/community/summary` (CCD062) | "Denúncias pendentes" conta as do chat | R19 |
 | `POST /admin/community/reports/:id/dismiss` (CCD062) | aceita a denúncia do chat | R19 |
 | Sanção da CCD099 (`POST /users/:id/warn`, `/suspend`, `/block`) | as três aceitam `reportId` (antes só a advertência) e resolvem a denúncia do chat na mesma transação | R19 |

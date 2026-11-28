@@ -211,7 +211,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD044](CCD044-interagir-no-chat-do-grupo/spec.md) | Interagir no Chat do Grupo | MVP | Rascunho | #147 |
 | [CCD045](CCD045-responder-mensagem-especifica/spec.md) | Responder Mensagem Específica | MVP | Rascunho | #1208 |
 | [CCD046](CCD046-visualizar-mensagens/spec.md) | Visualizar Mensagens | MVP | Planejada | #1217 |
-| [CCD047](CCD047-moderar-contatos-privados/spec.md) | Moderar Contatos Privados | MVP | Em implementação | #1231 |
+| [CCD047](CCD047-moderar-contatos-privados/spec.md) | Moderar Contatos Privados | MVP | Planejada | #1231 |
 | [CCD048](CCD048-editar-dados-do-perfil/spec.md) | Editar Dados do Perfil | MVP | Rascunho | #1242 |
 | [CCD049](CCD049-exibir-vitrine-de-conquistas/spec.md) | Exibir Vitrine de Conquistas | MVP | Rascunho | #1254 |
 | [CCD050](CCD050-denunciar-perfil/spec.md) | Denunciar Perfil | MVP | Rascunho | #1265 |
