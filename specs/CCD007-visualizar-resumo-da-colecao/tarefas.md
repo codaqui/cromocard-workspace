@@ -18,7 +18,7 @@
     ao DBML, com os índices únicos, e o `prisma migrate dev` não acusa diferença.
 - [ ] **T2** · Ligar os preços de price_history ao resumo da coleção — R7 · CA3 · AB#972
   - A migration saiu: a CCD097 (backend #41) já criou `price_history`.
-  - Pronto quando: as implementações Prisma de `CollectionPrices` e de `ListingPrices` estão ligadas no
+  - Pronto quando: a implementação Prisma de `CollectionPrices` está ligada no
     `collection.module.ts`, o seed tem o histórico de preços dos últimos 60 dias e os anúncios ativos, e o teste de
     integração cobre o CA3.
 - [ ] **T3** · Criar seed da coleção de exemplo com histórico de preços — R3–R8 · CA1, CA3, CA8 · AB#973

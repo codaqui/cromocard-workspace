@@ -51,11 +51,13 @@ e os anúncios ativos do "Menor anúncio".
 
 ## Regras
 
-- **Coleção** (L2): `findOrCreateByUserId` faz `upsert` em `collections.user_id` com `is_public = false`; se a
-  linha existir com `deleted_at`, o `upsert` a restaura (`deleted_at = NULL`), como pede o ADR-015.
+- **Coleção** (L2): `findOrCreateByUserId` lê `collections` por `user_id` e só cria (`is_public = false`) quando a
+  linha não existe; a leitura não grava nada. Duas leituras ao mesmo tempo: quem perde a corrida no índice único lê a
+  coleção criada pela outra. A coleção excluída não volta ao ser lida (o ADR-015 restaura ao re-adicionar): responde
+  `404 COLLECTION_NOT_FOUND`. Revisão do codaqui/cromocard-backend#48, 27/11/2026.
 - **Álbuns ativos** (R3): `user_albums` sem `deleted_at`, de `albums` sem `deleted_at`.
 - **Cartas** (R4, L3): total = soma de `albums.total_cards` dos álbuns ativos; possuo = cartas desses álbuns
-  com status `OWNED` ou `DUPLICATE`; faltantes = total − possuo; repetidas = soma de `quantity − 1` das `DUPLICATE`.
+  com status `OWNED` ou `DUPLICATE`; faltantes = total − possuo; repetidas = soma de `quantity − 1` das `DUPLICATE` (`extraCopies`).
 - **Percentual médio** (R5, L4): média de `progress_percentage` dos álbuns ativos, com 2 casas; sem álbum, 0.
 - **Valor estimado** (R7, L5): uma vez por carta possuída (`OWNED` ou `DUPLICATE`); preço médio = média de
   `price_history.price` com `reference_date` nos últimos 30 dias; sem preço, zero. Variação = valor de hoje contra o
@@ -63,7 +65,9 @@ e os anúncios ativos do "Menor anúncio".
 - **Álbum em destaque** (R12, L7): o favorito (`is_favorite`); sem favorito, o álbum da `collection_cards` com o
   `updated_at` mais recente; sem marcação, o álbum adicionado por último; sem álbum, `null`.
 - **Principais itens** (R8, L6): cartas dos álbuns ativos; carta sem linha em `collection_cards` conta como
-  faltante; ordem padrão "maior valor" (preço médio, e para faltante o menor anúncio, sem preço no fim); 8 por página.
+  faltante; ordem "maior valor" (preço médio, e para faltante o menor anúncio, sem preço no fim, desempate pelo nome);
+  8 por página. As abas contam as cartas que a grade lista (L13, L14): "Repetidas" conta cartas `DUPLICATE`
+  (`duplicateCards`), diferente do card do resumo, que soma as cópias extras.
 - **Carta usada em coleções** (CCD061 FA 5, CCD105 R10): a carta tem marcação em `collection_cards` sem `deleted_at`,
   de qualquer status, numa coleção sem `deleted_at`.
 - **Saudação** (R13, L9): primeiro nome de `users.name` e mês e ano de `users.created_at`.
@@ -84,7 +88,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
       "collector": { "firstName": "Daniel", "memberSince": "2026-10-01" },
       "activeAlbums": 4,
       "averageProgress": 69.7,
-      "cards": { "total": 264, "owned": 184, "missing": 80, "duplicates": 28 },
+      "cards": { "total": 264, "owned": 184, "missing": 80, "extraCopies": 28 },
       "estimatedValue": { "amount": "1234.50", "variationPercent": 14.2 },
       "featuredAlbum": { "albumId": "uuid", "title": "Copa do Mundo 2026", "coverUrl": "https://…",
         "ownedCards": 43, "totalCards": 54, "progressPercentage": 79.63 } } }
@@ -104,7 +108,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
 
 - **Acesso:** `authenticate` + `authorize('CUSTOMER', 'SELLER')`
 - **Entrada (query):** `status` (`OWNED` · `MISSING` · `DUPLICATE`, opcional = todas), `q` (trecho do nome, opcional),
-  `categoryId` (uuid, opcional), `sort` (`value_desc`, padrão), `page` (padrão 1), `pageSize` (padrão 8, máximo 48)
+  `categoryId` (uuid, opcional), `page` (padrão 1), `pageSize` (padrão 8, máximo 48); a ordem é sempre o maior valor
   (L6)
 - **Sucesso:** `200`
 
@@ -113,14 +117,18 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
       "album": { "id": "uuid", "title": "Destinos Brilhantes" }, "category": { "id": "uuid", "name": "Pokémon" },
       "status": "DUPLICATE", "quantity": 2, "averagePrice": "180.00", "lowestListingPrice": null } ],
     "meta": { "page": 1, "pageSize": 8, "total": 264, "totalPages": 33,
-      "counts": { "all": 264, "owned": 184, "missing": 80, "duplicates": 28 },
+      "counts": { "all": 264, "owned": 184, "missing": 80, "duplicateCards": 28 },
       "categories": [ { "id": "uuid", "name": "Pokémon" } ] } }
   ```
 
   `lowestListingPrice` só vem na carta `MISSING` (L6); `averagePrice` vem em todas, `null` sem preço nos últimos 30 dias;
-  a carta `MISSING` vem com `quantity: 0`; `categories` são as dos álbuns ativos, para os filtros.
+  a carta `MISSING` vem com `quantity: 0`; `categories` são as dos álbuns ativos, para os filtros. `counts` são as
+  cartas que cada aba lista (L13, L14): com o catálogo completo, `all` bate com o `cards.total` do resumo, mas
+  `duplicateCards` conta cartas e não as cópias extras (no seed os dois dão 28, porque cada repetida tem 2 cópias;
+  uma carta com 3 cópias soma 1 em `duplicateCards` e 2 em `extraCopies`).
 
-- **Erros:** `400 VALIDATION_ERROR` (query inválida), `401`, `403` (R1).
+- **Erros:** `400 VALIDATION_ERROR` (query inválida), `401`, `403` (R1) e `404 COLLECTION_NOT_FOUND` (coleção
+  excluída, L2).
 
 ## Backend — `apps/cromocard-backend`
 
@@ -131,11 +139,10 @@ Domínio `src/domains/collection/`, no modelo de `src/domains/users/` (ADR-004),
 |---|---|---|
 | `database/schema.prisma` + 3 migrations | modelos `Collection`, `UserAlbum` e `CollectionCard` e o enum `CollectionCardStatus`, com as relações em `User`, `Album` e `Card` | R3, R4, R7 |
 | `database/seeds/collection.seed.ts` · `data/collection.json` | coleção de exemplo com os dados do frame, o histórico de preços e os anúncios ativos (T3) | CA1, CA3, CA8 |
-| `collection.repository.ts` | `findOrCreateByUserId` (restaura a coleção excluída), álbuns ativos, marcações por álbum e cartas possuídas | R1, R3–R5, R7, R9 |
+| `collection.repository.ts` | `findOrCreateByUserId` (lê e só cria quando não existe; a excluída responde `404`), álbuns ativos, marcações por álbum e cartas possuídas | R1, R3–R5, R7, R9 |
 | `collection-prices.ts` | interface `CollectionPrices` (`averagePrices(cardIds, range)`), em centavos | R7 (L5) |
 | `collection-prices.repository.ts` | implementação Prisma de `CollectionPrices`: preço médio por carta numa janela de datas (`$queryRaw` com `AVG` agrupado por `card_id`) (T2) | R7 |
-| `collection-cards.repository.ts` | cartas dos álbuns ativos com status e filtros (`rank`: id e status de todas, por nome), dados das cartas da página (`findRows`), contagem por status, categorias e as cartas marcadas em coleções (`findCardIdsInCollections`) | R8 |
-| `collection-listing-prices.ts` · `collection-listing-prices.repository.ts` | interface `ListingPrices` (`lowestActivePrice(cardIds)`) e a implementação Prisma: o menor anúncio `ACTIVE` não excluído por carta (T2) | R8 (L6) |
+| `collection-cards.repository.ts` | página da grade ordenada pelo maior valor no banco, com filtros, preço médio e menor anúncio `ACTIVE` da faltante (`findPage`), contagem por aba (L13, L14), categorias e as cartas marcadas em coleções (`findCardIdsInCollections`) | R8 (L6) |
 | `collection.service.ts` + `.spec.ts` | resumo, valor estimado e variação, álbum em destaque, saudação, lista paginada e `cardIdsInCollections` para o catálogo; a query da lista é tipada pelo `z.infer` do validator (ADR-006) | R3–R9 |
 | `collection.validator.ts` | query da lista; não há `collection.errors.ts`, porque o domínio não tem erro próprio (os `400`, `401` e `403` são os compartilhados) | R8 |
 | `collection.controller.ts` · `collection.routes.ts` · `collection.swagger.ts` · `collection.module.ts` | as 2 rotas, com `authenticate` + `authorize('CUSTOMER', 'SELLER')` | R1 |
@@ -186,19 +193,23 @@ Meta de 90% de cobertura nos arquivos alterados (ADR-060).
 
 - O domínio `collection` concentra coleção, álbuns da coleção e marcações: as CCD008 a CCD018 só acrescentam rotas e
   métodos a ele, sem módulo novo.
-- O catálogo não lê tabela de outro domínio (ADR-001); do mesmo jeito, o service da coleção não lê `listings` nem
-  `price_history` direto: recebe as interfaces `ListingPrices` (L6) e `CollectionPrices` (L5) pelo construtor, e o
-  `collection.module.ts` injeta as implementações Prisma (T2). Os preços circulam em centavos e viram string com 2 casas
+- O catálogo não lê tabela de outro domínio (ADR-001); do mesmo jeito, o service da coleção não lê `price_history`
+  direto: recebe a interface `CollectionPrices` (L5) pelo construtor, e o `collection.module.ts` injeta a implementação
+  Prisma (T2). A exceção é a grade, que lê `listings` no repository (ver abaixo). Os preços circulam em centavos e viram string com 2 casas
   só na resposta, numa função só do service.
 - A trava "carta já usada em coleções" do catálogo (CCD061 FA 5) passa a valer nesta story, porque é ela que cria
   `collection_cards`: sem isso, o admin conseguiria excluir uma carta marcada na coleção de um cliente. Pela regra do
   backend (o domínio só usa a service exportada pelo `.module.ts` do outro), o `catalog.module.ts` recebe o
   `collectionService`, que implementa a `CardUsage`, em vez da `PrismaCardUsage` que o plano da CCD014 previa.
   Revisão de código de 26/11/2026; a T5 da CCD014 (AB#1033) fica coberta.
-- O preço médio é calculado no banco (`$queryRaw` com `AVG` e `GROUP BY card_id`), para não carregar o histórico inteiro
-  na memória. A ordem por valor fica no service (revisto na T6, 25/11/2026): como os preços entram pelas interfaces
-  `CollectionPrices` e `ListingPrices`, a consulta das cartas não junta `price_history` nem `listings`. O service busca o
-  id e o status das cartas da aba, pede um preço por carta às interfaces, ordena (sem preço vai para o fim) e só então
-  carrega os dados das 8 cartas da página.
+- O preço médio é calculado no banco (`$queryRaw` com `AVG`), para não carregar o histórico inteiro na memória.
+- A grade ordena e pagina no banco, numa query só (`LEFT JOIN LATERAL` em `price_history` e `listings`,
+  `ORDER BY valor DESC NULLS LAST, nome, id` com `LIMIT/OFFSET`), para o custo de cada página seguir o `pageSize` e não
+  o número de cartas dos álbuns do cliente. Revisão do codaqui/cromocard-backend#48, 27/11/2026, decidido pelo PO; isso
+  substitui a ordem no service da T6 (25/11/2026), que buscava todas as cartas da aba a cada página.
+- Por isso, o `PrismaCollectionCardsRepository` lê `listings` (do marketplace) no SQL da grade, e a interface
+  `ListingPrices` saiu. Quando o marketplace ganhar uma service de anúncios, a regra "anúncio ativo" vai para lá e é
+  injetada no `collection.module.ts`, como o catálogo fez com a `CardUsage`. O valor estimado do resumo continua
+  pela interface `CollectionPrices`.
 - A coleção nascer na primeira leitura (L2) é uma regra de negócio decidida pelo PO em 23/11/2026; o caso de uso 07 só
   descreve o resumo, e a regra fica registrada na spec.
