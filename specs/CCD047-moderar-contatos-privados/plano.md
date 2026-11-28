@@ -42,7 +42,7 @@ o CA18; o bloqueio ana-bloqueia-gabriela (CCD046) serve ao CA9 e ao CA16.
 - **Contato** (R1): o `userId` tem de ser o outro participante de uma conversa do usuário; senão `404 CONTACT_NOT_FOUND`.
   Igual ao do usuário: `400 CANNOT_MODERATE_SELF`. Papéis `CUSTOMER` e `SELLER` (`403` para o `ADMIN`).
 - **Bloquear** (R6): `upsert` no único `(blocker_id, blocked_id)`; a linha com `deleted_at` volta a `NULL` (CA8). Já
-  bloqueado: responde o mesmo bloqueio, sem erro.
+  bloqueado: responde `201` com o mesmo bloqueio, sem erro (idempotente).
 - **Denunciar** (R9, R16, R18): motivo um dos 4 textos (L4), `description` até 500, de 1 a 3 prints PNG, JPG ou WEBP até
   4 MB (`413` acima). Com denúncia `PENDING` do usuário contra o contato: `409 REPORT_ALREADY_PENDING`. Os prints sobem
   para o storage privado (ADR-068, pasta `report-evidences/`) antes da transação; se a transação falhar, os arquivos enviados são apagados do storage.
@@ -69,12 +69,15 @@ Convenções do ADR-011. `ContactReportReason = 'Golpe / pagamento externo' | 'A
 
 ### `DELETE /api/v1/me/blocks/:userId` — R12, R13
 
+- **Acesso:** `authenticate` + `authorize('CUSTOMER', 'SELLER')`
 - **Sucesso:** `204` · **Erros:** `400 VALIDATION_ERROR` · `401` · `403` · `404 BLOCK_NOT_FOUND` (sem bloqueio ativo)
 
 ### `GET /api/v1/me/blocks` — R14
 
+- **Acesso:** `authenticate` + `authorize('CUSTOMER', 'SELLER')`
 - **Entrada:** `page`, `pageSize` (padrão 20)
 - **Sucesso:** `200` `{ "data": [{ "userId", "name", "username", "avatarUrl", "blockedAt" }], "meta": { "page", "pageSize", "total", "totalPages" } }`
+- **Erros:** `400 VALIDATION_ERROR` · `401` · `403`
 
 ### `POST /api/v1/me/contact-reports` — R1, R4, R9, R16, R18
 
@@ -145,7 +148,17 @@ Convenções do ADR-011. `ContactReportReason = 'Golpe / pagamento externo' | 'A
 | CA17 | `409 REPORT_ALREADY_PENDING` e a nova depois de dispensada | integração · `ContactModerationDialog.spec.tsx` |
 | CA18 | card do chat na fila, gravidade, dispensar e sanção resolvendo | `community-admin.service.spec.ts` · integração · `ReportCard.spec.tsx` |
 | CA19 | erro mantém o modal | `ContactModerationDialog.spec.tsx` |
-| CA11–CA13 | prints iguais aos frames `1160-32980`, `1160-34298`, `1160-37184`; 320–1920 px | navegador |
+| CA11–CA13 | prints em 1280 px lado a lado com os frames `1160-32980`, `1160-34298` e `1160-37184`; adaptados em 375, 768 e 1024 px (ADR-070) | navegador |
+
+## Decisões técnicas
+
+- **Prints no storage privado (ADR-068, L13):** a coluna `report_evidences.url` guarda a chave do arquivo; o print só sai
+  pela rota autenticada `GET /api/v1/admin/community/reports/:id/evidences/:evidenceId` (`ADMIN`), e o frontend o
+  baixa com o token e mostra como `blob`. Evidência em tabela própria, e não em coluna JSON (ADR-073).
+- **Bloqueio na conversa:** a rota HTTP responde `422 CONTACT_BLOCKED`; o socket não tem status, e o ack do
+  `message:send` leva `{ error: 'CONTACT_BLOCKED', message }` (mesmo código).
+- **Sanção pela fila:** `/suspend` e `/block` da CCD099 passam a aceitar `reportId`, como a advertência já aceitava; a
+  extensão está registrada no plano da CCD099.
 
 ## Dependências e riscos
 

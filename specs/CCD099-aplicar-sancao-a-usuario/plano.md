@@ -29,6 +29,11 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 | `POST /api/v1/users/:id/warn` | `{ reason, reportId? }` (`reason` até 255, L9) | `201` | `400`, `404`, `422` | R4, R7 |
 | `POST /api/v1/users/:id/suspend` (CCD059) | acrescenta `days` obrigatório: 3, 7, 15 ou 30 (L10) | `200` | `400`, `404`, `409`, `422` | R5, R7 |
 | `POST /api/v1/users/:id/block` | `{ reason }` | `200` | `400`, `404`, `409`, `422` | R6, R7 |
+
+> Estendido pela CCD047 (L7, R19; validado pelo PO em 28/11/2026): `/suspend` e `/block` também aceitam `reportId` e,
+> com a denúncia do chat pessoal, resolvem a denúncia na mesma transação. Contrato em
+> `specs/CCD047-moderar-contatos-privados/plano.md`.
+
 | `POST /api/v1/users/:id/reactivate` (CCD059) | aceita também `BLOCKED` | `200` | `404`, `409` | R10 |
 | `POST /api/v1/admin/community/reports/:id/remove-and-warn` | `{ reason }` (até 255, L9); remove, adverte e registra numa transação só | `200` | `400`, `404`, `409`, `422` | R8 |
 | `POST /api/v1/admin/community/groups/:id/warn` | `{ reason }` | `200` | `400`, `404`, `409` | R12 |
