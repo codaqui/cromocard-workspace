@@ -4,8 +4,8 @@
 
 - **Spec:** [spec.md](spec.md), Aprovada
 - **Repositórios:** backend · frontend, a partir da `develop` (que já tem o Socket.IO autenticado da CCD046 T12/T13 e o
-  domínio `notifications` da CCD060). A ligação da `NEW_MESSAGE` (T14) sai empilhada no chat pessoal
-  (`feature/1366-entrar-em-contato`), porque o chat ainda não está na `develop`.
+  domínio `notifications` da CCD060). A ligação da `NEW_MESSAGE` (T14) ia sair empilhada no chat pessoal, mas o chat
+  (#49) entrou na `develop` durante a implementação e a T14 foi feita na mesma branch.
 - **Data:** 2026-11-22, refeito em 2026-11-28 · **Autor:** Daniel Andrade
 
 ## Solução
@@ -22,7 +22,7 @@ sino +1). As preferências ficam em `/configuracoes`, que nasce só com os bloco
 
 - **CCD046 T12/T13** (na `develop`): servidor Socket.IO com JWT e a room `user:<id>`; `src/lib/socket.ts` no front.
 - **CCD060** (na `develop`): `src/domains/notifications/`, `notify()` mínimo e o disparo global em lotes.
-- **Chat pessoal** (PRs #49 → #51 → #52 → #54): só a T14 (`NEW_MESSAGE`) depende dele.
+- **Chat pessoal** (#49, já na `develop`): só a T14 (`NEW_MESSAGE`) depende dele. O link `/mensagens?conversa=<id>` abre a conversa quando a tela de mensagens do frontend (PR #36 e seguintes) entrar.
 - **CCD054**: "Marcar todas como lidas" e excluir; aqui o botão aparece sem ação (L14).
 - **CCD051/CCD052**: acrescentam Conta e segurança, Privacidade e Excluir conta à página de Configurações (L15).
 
@@ -30,7 +30,6 @@ sino +1). As preferências ficam em `/configuracoes`, que nasce só com os bloco
 
 | Tabela | Já no `schema.prisma`? | Migration | Observação |
 |---|---|---|---|
-| `notifications` | sim | `add_notifications_user_index` | índice (`user_id`, `deleted_at`, `created_at` desc, `id` desc) para a lista por cursor |
 | `notification_preferences` | não | `create_notification_preferences_table` | copiada do DBML, com o enum `notification_event` e o único (`user_id`, `event`) (ADR-074) |
 | `socket_io_attachments` | não | `create_socket_io_attachments_table` | técnica (ADR-075): `id bigserial`, `created_at`, `payload bytea`; no Prisma com `@@ignore` |
 
@@ -96,19 +95,20 @@ Domínio `src/domains/notifications/`, no modelo de `src/domains/users/` (ADR-00
 
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
-| `database/schema.prisma` + 3 migrations | `NotificationPreference`, enum `NotificationEvent`, índice de `notifications`, `SocketIoAttachment` (`@@ignore`) | R11, R14; ADR-075 |
+| `database/schema.prisma` + 3 migrations | `NotificationPreference`, enum `NotificationEvent`, `SocketIoAttachment` (`@@ignore`); sem índice novo, porque o DBML não declara índices comuns | R11, R14; ADR-075 |
 | `notification-types.ts` + `.spec.ts` | `NOTIFICATION_TYPES` com categoria e evento; `categoryOf`, `eventOf` | R15, R20, R21 |
 | `notifications.repository.ts` | `listByUser` (cursor, filtro), `countByUser`, `markAsRead`, `create` devolvendo a notificação, `hasUnreadWithLink` | R2–R6, R13–R15 |
 | `notification-preferences.repository.ts` · `notification-preferences.service.ts` + `.spec.ts` | ler, gravar (upsert), restaurar; `allowsInApp(userId, type)` | R11, R21 |
 | `notification.publisher.ts` + `.spec.ts` | `NotificationPublisher` com `SocketEmitter` injetado: emite `notification:new` nas rooms `user:<id>` | R9, R18 |
-| `src/lib/socket-emitter.ts` | emitter do `@socket.io/postgres-emitter` com um `pg.Pool` do `DATABASE_URL` | R9; ADR-075 |
+| `src/lib/socket-emitter.ts` | `PostgresSocketEmitter` próprio (`pg_notify` no formato do adapter) com um `pg.Pool` do `DATABASE_URL`, e o adapter do `ws` | R9; ADR-075 |
+| `src/lib/transaction.ts` | `afterCommit(tx, cb)`: publica só depois do commit | R9; ADR-012 |
 | `src/socket/socket-server.ts` | `io.adapter(createAdapter(pool))` | R9; ADR-075 |
 | `notifications.service.ts` + `.spec.ts` | `list`, `markAsRead`, `notify` (preferência → grava → publica) | R1–R6, R9, R13–R15, R21 |
 | `global-notifications.repository.ts` · `.service.ts` | ignora destinatários com `ALL` desligado e publica para os gravados | R10, R18, R21 |
 | `catalog-requests.service.ts` · `seller-verifications.service.ts` · `pending-notice.service.ts` | usam as constantes de tipo | R20 |
 | `notifications.{validator,errors,controller,routes,swagger}.ts` · `notifications.module.ts` · `src/routes.ts` | rotas `/notifications` e `/me/notification-preferences` | R1 |
 | `database/seeds/` | notificações do cliente do seed: lidas e não lidas, com e sem link, uma `GLOBAL`, uma `NEW_MESSAGE` | R2–R5 |
-| T14, no chat: `chat.service.ts` | `notify` com `NEW_MESSAGE` ao gravar a mensagem, uma por conversa | R13 |
+| T14, no chat: `chat.service.ts` · `new-message.notification.ts` | `notifyNewMessage` depois de gravar a mensagem; `notifyOnce` não grava outra `NEW_MESSAGE` da conversa enquanto a anterior não for lida | R13 |
 
 ## Frontend — `apps/cromocard-frontend`
 
@@ -139,7 +139,7 @@ Feature `src/features/notifications/`, no modelo de `src/features/users/` (ADR-0
 | CA7 | `GLOBAL` aparece com o rótulo "Aviso da plataforma" | integração · `NotificationItem.spec.tsx` |
 | CA8, CA23 | grava, lê e restaura a preferência; `notify` respeita o site | `notification-preferences.service.spec.ts` · integração · `NotificationSettingsPage.spec.tsx` |
 | CA9 | `401`, `403` do `ADMIN` e `404` da notificação de outro usuário | integração |
-| CA16 | uma `NEW_MESSAGE` por conversa não lida | `chat.service.spec.ts` (T14) |
+| CA16 | uma `NEW_MESSAGE` por conversa não lida | `chat.service.spec.ts` · `notifications.service.spec.ts` · `tests/integration/chat/new-message-notification.spec.ts` (T14) |
 | CA19 | contador e popup do sino | `NotificationBell.spec.tsx` |
 | CA11–CA15, CA24 | prints em 1280 px iguais aos frames e sem quebra em 375/768/1024 px | validação no navegador (ADR-060, item 5) |
 
