@@ -22,7 +22,7 @@ quando uma notificação é criada.
    (soft delete das linhas).
 3. **Cada tipo de notificação aponta para um evento** no enum de tipos do domínio `notifications` (ADR-051, item 2):
    `NEW_MESSAGE` → `DIRECT_MESSAGES`, `CATALOG_REQUEST` → `CATALOG_REQUESTS`; os tipos de pedido, repasse, convite e
-   lançamento de álbum entram com as stories que os criam. `GLOBAL`, `SELLER_PENDING` e `SELLER_REVIEW` não têm evento:
+   lançamento de álbum entram com as stories que os criam. `GLOBAL`, `SELLER_PENDING`, `SELLER_REVIEW` e `USER_WARNED` não têm evento:
    são avisos da plataforma e da conta, e só a chave geral os desliga.
 4. **O `notify()` respeita o site.** Com o canal do site desligado (no evento ou na chave geral), a notificação não é
    gravada nem emitida pelo Socket.IO. O e-mail continua com a story que manda e-mail, que lê a mesma preferência antes

@@ -15,8 +15,11 @@ só para ter mais de uma instância do `ws`.
 
 ## Decisão
 
-1. **Adapter do PostgreSQL.** O `ws` usa `@socket.io/postgres-adapter` e a `api` usa `@socket.io/postgres-emitter`.
-   Os dois falam pelo `LISTEN/NOTIFY` do PostgreSQL que o projeto já tem, no canal `socket.io`.
+1. **Adapter do PostgreSQL.** O `ws` usa `@socket.io/postgres-adapter`, e a `api` publica com um emitter próprio
+   (`PostgresSocketEmitter`, em `src/lib/socket-emitter.ts`), que faz `pg_notify` no formato do adapter. Os dois falam
+   pelo `LISTEN/NOTIFY` do PostgreSQL que o projeto já tem, no canal `socket.io#/`. O `@socket.io/postgres-emitter`
+   0.1.1 ficou de fora porque não envia o namespace na mensagem, e o adapter 0.5 descarta o que chega sem ele (testado
+   na integração).
 2. **A `api` emite pela room.** Um `NotificationPublisher` no domínio `notifications` recebe o emitter por injeção e
    emite `notification:new` nas rooms `user:<id>` depois de gravar (persistência primeiro, ADR-012). No `ws`, o mesmo
    publisher usa o próprio `io`.
@@ -25,7 +28,8 @@ só para ter mais de uma instância do `ws`.
    antigas a cada 30 s. Ela não é dado de negócio: fica fora do DER, como a `_prisma_migrations`, e é exceção ao soft
    delete (ADR-015) e ao UUID v7 (ADR-014).
 4. **Falha não derruba a gravação.** Se o emitter falhar, a notificação continua gravada e aparece ao abrir a central;
-   o erro vai para o log.
+   o erro vai para o log. O evento sai só depois do commit da transação que gravou a notificação (`afterCommit`, em
+   `src/lib/transaction.ts`), e eventos acima de 8 KB são recusados pelo emitter, porque é o limite do `pg_notify`.
 
 ## Alternativas consideradas
 
@@ -37,8 +41,10 @@ só para ter mais de uma instância do `ws`.
 ## Consequências
 
 - O `ws` pode ter mais de uma instância sem mudança, porque o adapter já sincroniza as rooms.
-- O pool do `pg` usado pelo adapter conta nas conexões do PostgreSQL: uma conexão fixa para o `LISTEN` no `ws` e as do
-  emitter na `api`.
+- O pool do `pg` usado pelo adapter conta nas conexões do PostgreSQL: uma conexão fixa para o `LISTEN` no `ws` e até
+  duas do emitter na `api`.
+- O emitter próprio depende do formato interno do adapter (`uid`, `nsp`, `type`, `data`): ao atualizar o
+  `@socket.io/postgres-adapter`, o teste de integração do tempo real precisa continuar verde.
 - Testes de integração do tempo real rodam com o adapter contra o PostgreSQL de teste.
 
 ## Referências
