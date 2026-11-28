@@ -37,3 +37,5 @@
 |  | 10. O sistema remove o bloqueio e a conversa volta a aceitar mensagens. |
 |  | 11. Para o contato bloqueado, o campo de digitação da conversa dá lugar a "@<usuário> bloqueou você. Vocês não podem mais trocar mensagens.", e quem o bloqueou não aparece no "Nova conversa" dele. |
 |  | 12. Se o envio do bloqueio ou da denúncia falhar, o sistema mantém o modal aberto com o que foi preenchido e informa o erro. |
+| 13. O usuário abre "Contatos bloqueados" (em Configurações › Privacidade, que entra com o caso de uso 51). |  |
+|  | 14. O sistema mostra o total ("1 contato bloqueado") e cada contato bloqueado com "Desbloquear"; ao desbloquear, o contato sai da lista e a conversa volta a aceitar mensagens. |

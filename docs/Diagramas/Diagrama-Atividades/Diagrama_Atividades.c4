@@ -1035,7 +1035,8 @@ views {
       **Fluxo alternativo:** ao cancelar, o modal fecha sem bloquear nem denunciar; denuncia sem
       motivo ou sem print e recusada; print fora do formato, acima de 4 MB ou mais de 3 e recusado;
       denuncia repetida com outra pendente e recusada; "Desbloquear" na conversa remove o bloqueio;
-      o contato bloqueado ve o aviso no lugar do campo; se o envio falhar, o modal fica aberto com o erro.
+      o contato bloqueado ve o aviso no lugar do campo; se o envio falhar, o modal fica aberto com o erro;
+      a lista Contatos bloqueados mostra o total e Desbloquear em cada contato.
     '''
 
     cliente -> appWeb '1. abre a conversa com o contato e seleciona o escudo'
