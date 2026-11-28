@@ -5,7 +5,7 @@
 //  usuario e comportamento (metodos) de cada classe. Ver ADR-035, ADR-036 e
 //  ADR-037 em docs/ADR/ para o racional de cada decisao de modelagem.
 //
-//  47 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
+//  48 classes (uma por tabela do DER, menos refresh_tokens) + 3 subclasses de
 //  Usuario + 26 enumeracoes, organizados nos mesmos 8 modulos do DER.
 //  Identificadores sao UUID v7 (ADR-014). As colunas de tempo created_at,
 //  updated_at e deleted_at existem em toda tabela (ADR-015/ADR-016) e so
@@ -896,6 +896,29 @@ model {
     }
   }
 
+  preferenciaNotificacao = class "PreferenciaNotificacao" {
+    metadata {
+      atributos """
+        - id: UUID
+        - evento: EventoNotificacao
+        - noSite: Boolean
+        - porEmail: Boolean
+        - dataCriacao: DateTime
+      """
+      metodos """
+        + salvar()
+        + restaurarPadroes()
+      """
+      observacoes """Uma por usuário e evento; ALL guarda as chaves gerais dos canais. Sem registro, os dois canais ficam ligados (EA-053-01, CCD053; ADR-074)."""
+    }
+  }
+
+  eventoNotificacao = enumeracao "EventoNotificacao" {
+    metadata {
+      valores """ALL, ORDER_UPDATES, PAYOUT_RELEASED, GROUP_INVITES, DIRECT_MESSAGES, CATALOG_RELEASES, CATALOG_REQUESTS"""
+    }
+  }
+
   tipoFavorito = enumeracao "TipoFavorito" {
     metadata {
       valores """ALBUM, CARTA, GRUPO"""
@@ -1226,6 +1249,7 @@ model {
   notificacaoGlobal -> administrador "N -- 1"
   notificacao -> usuario "N -- 1"
   notificacao -> notificacaoGlobal "0..1 -- N : originada de"
+  preferenciaNotificacao -> usuario "N -- 1"
 
   // =====================================================================
   // RELACOES - MODULO 8
@@ -1314,7 +1338,7 @@ views {
 
   view modulo7_notificacoes_favoritos {
     title "Módulo 7 - Notificações e Favoritos"
-    include favorito, alertaPreco, notificacaoGlobal, notificacao, usuario,
+    include favorito, alertaPreco, notificacaoGlobal, notificacao, preferenciaNotificacao, eventoNotificacao, usuario,
       administrador, album, carta, grupo, tipoFavorito, statusDisparo
     autoLayout LeftRight
   }
@@ -1331,7 +1355,7 @@ views {
   }
 
   view visao_geral_completa {
-    title "Visão Geral - Diagrama de Classes CromoCard (47 classes)"
+    title "Visão Geral - Diagrama de Classes CromoCard (48 classes)"
     description "Uso apenas para conferência - denso demais para apresentação/projeção. Use as views por módulo para a banca."
     include *
     autoLayout LeftRight

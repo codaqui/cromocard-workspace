@@ -3,7 +3,7 @@
 Modelo de dados derivado dos **Casos de Uso / User Stories** em `../../Casos-De-Uso/`
 e alinhado aos diagramas C4 em `../Diagramas-C4/` (API Node.js + Prisma + PostgreSQL).
 
-**48 entidades organizadas em 8 modulos, 85 chaves estrangeiras e 26 enums.** Em 22/11/2026 sairam `offers`, `reviews` e o enum `offer_status`, junto com as CCD070, CCD081 e CCD089 (ADR-069). Nomes de tabelas, colunas e
+**49 entidades organizadas em 8 modulos, 86 chaves estrangeiras e 27 enums.** Em 28/11/2026 entrou `notification_preferences`, com o enum `notification_event` (ADR-074). Em 22/11/2026 sairam `offers`, `reviews` e o enum `offer_status`, junto com as CCD070, CCD081 e CCD089 (ADR-069). Nomes de tabelas, colunas e
 enums em **ingles** (glossario PT → EN no fim deste arquivo). O DER e escrito em DBML para o
 [dbdiagram.io](https://dbdiagram.io/d); cada diagrama tem o `.dbml` e o print tirado do site.
 
@@ -39,7 +39,7 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | 4 | Comunidade (Grupos) | laranja `#C2703D` | groups, group_members, group_join_requests, group_messages, polls, poll_options, poll_votes |
 | 5 | Chat Pessoal | ciano `#2A7B8C` | conversations, conversation_participants, messages, user_blocks |
 | 6 | Marketplace | vinho `#A63D5F` | listings, listing_photos, orders, payments |
-| 7 | Notificacoes e Favoritos | dourado `#B08A2E` | favorites, price_alerts, notifications, global_notifications |
+| 7 | Notificacoes e Favoritos | dourado `#B08A2E` | favorites, price_alerts, notifications, global_notifications, notification_preferences |
 | 8 | Moderacao e Administracao | cinza `#5A5A66` | reports, catalog_requests, audit_logs, global_settings, seller_verifications, seller_documents, seller_verification_notes, user_warnings, catalog_request_votes, report_exports |
 
 ## Rastreabilidade (entidade -> casos de uso principais)
@@ -61,6 +61,7 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `favorites` | 55 Favoritar Album, 56 Favoritar Carta, 57 Favoritar Grupo |
 | `price_alerts` | Configurar Alertas de Preco (futuro) |
 | `notifications`, `global_notifications` | 53 Visualizar Notificacoes, 54 Limpar Central, 60 Disparar Notificacao Global, 100 Agendar e 101 Segmentar Notificacao Global |
+| `notification_preferences` | 53 Visualizar Notificacoes (EA-053-01, preferencias de aviso) |
 | `reports` | 40 Denunciar Mensagem, 47 Moderar Contatos, 50 Denunciar Perfil, 62 Gestao de Comunidade, 82 Denunciar Anuncio, 83 Denunciar Vendedor, 90 Denunciar Usuario, 99 Aplicar Sancao |
 | `catalog_requests` | 10 Solicitar Album, 21/23 Solicitar Cadastro da Carta, 64 Aprovar Solicitacoes, 103 Votar em Solicitacao de Catalogo |
 | `audit_logs` | 65 Log de Auditoria Admin, 102 Exportar Log de Auditoria |
@@ -132,6 +133,7 @@ O `03-der-completo.dbml` e a fonte da verdade; o 01 e o 02 sao recortes dele e m
 | `alerta_preco` | `price_alerts` |
 | `notificacao` | `notifications` |
 | `notificacao_global` | `global_notifications` |
+| `preferencia_notificacao` | `notification_preferences` |
 | `denuncia` | `reports` |
 | `solicitacao_cadastro` | `catalog_requests` |
 | `log_auditoria` | `audit_logs` |
