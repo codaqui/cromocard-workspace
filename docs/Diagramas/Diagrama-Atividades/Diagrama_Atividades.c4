@@ -1030,25 +1030,27 @@ views {
   dynamic view ccd047_moderar_contatos_privados {
     title 'CCD047 - Moderar Contatos Privados'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar autenticado e possuir pelo menos um contato ou conversa privada.
-      **Fluxo alternativo:** se o usuario cancelar a confirmacao, o sistema mantem o contato
-      sem alteracoes; se o contato ja estiver bloqueado, o sistema informa o status atual e
-      disponibiliza a opcao de desbloqueio.
+      **Ator:** Cliente ou Vendedor
+      **Pre-condicao:** estar autenticado e ter uma conversa pessoal com o contato.
+      **Fluxo alternativo:** ao cancelar, o modal fecha sem bloquear nem denunciar; denuncia sem
+      motivo ou sem print e recusada; print fora do formato, acima de 4 MB ou mais de 3 e recusado;
+      denuncia repetida com outra pendente e recusada; "Desbloquear" na conversa remove o bloqueio;
+      o contato bloqueado ve o aviso no lugar do campo; se o envio falhar, o modal fica aberto com o erro.
     '''
 
-    cliente -> appWeb '1. acessa seus contatos ou conversas privadas'
-    appWeb -> modChatPessoal '2. solicita os contatos e opcoes de gerenciamento'
-    modChatPessoal -> bancoDados '2. consulta os contatos do usuario'
-    appWeb -> cliente '2. apresenta os contatos e as opcoes de gerenciamento'
-    cliente -> appWeb '3. seleciona um contato'
-    appWeb -> cliente '4. exibe as opcoes de moderacao disponiveis'
-    cliente -> appWeb '5. seleciona uma acao, como bloquear ou remover o contato'
-    appWeb -> cliente '6. solicita a confirmacao da acao'
-    cliente -> appWeb '7. confirma a acao'
-    appWeb -> modChatPessoal '7. envia a acao de moderacao'
-    modChatPessoal -> bancoDados '8. aplica a alteracao'
-    appWeb -> cliente '8. atualiza a lista de contatos'
+    cliente -> appWeb '1. abre a conversa com o contato e seleciona o escudo'
+    appWeb -> cliente '2. abre o modal Bloquear ou denunciar com os dados do contato'
+    appWeb -> cliente '3. apresenta Somente bloquear, Bloquear e denunciar e Somente denunciar'
+    cliente -> appWeb '4. escolhe uma opcao'
+    appWeb -> cliente '5. nas opcoes com denuncia, pede o motivo, a descricao opcional e de 1 a 3 prints'
+    cliente -> appWeb '6. preenche o que a opcao pede'
+    appWeb -> cliente '7. mostra Cancelar e o botao da opcao'
+    cliente -> appWeb '8. seleciona o botao da opcao'
+    appWeb -> modChatPessoal '9. envia o bloqueio e/ou a denuncia com os prints'
+    modChatPessoal -> bancoDados '9. registra o bloqueio; nenhum dos dois envia mensagem na conversa'
+    modChatPessoal -> bancoDados '10. registra a denuncia pendente e os prints no storage privado'
+    appWeb -> cliente '11. fecha o modal e confirma a acao'
+    appWeb -> cliente '12. troca o campo de digitacao pelo aviso de contato bloqueado com Desbloquear'
   }
 
   // ---------------------------------------------------------------
@@ -1361,10 +1363,11 @@ views {
     backofficeApp -> modAdministracao '7. envia a acao e o motivo'
     modAdministracao -> bancoDados '8. registra a alteracao e o motivo no log de auditoria'
     backofficeApp -> administrador '9. atualiza a lista de grupos e confirma a operacao'
-    administrador -> backofficeApp '10. abre a fila de mensagens denunciadas'
-    backofficeApp -> modAdministracao '11. solicita as denuncias pendentes'
-    modAdministracao -> bancoDados '11. consulta autor, grupo, texto, motivo e quem denunciou'
-    administrador -> backofficeApp '12. remove a mensagem ou dispensa a denuncia, informando o motivo'
+    administrador -> backofficeApp '10. abre a fila de moderacao'
+    backofficeApp -> modAdministracao '11. solicita as denuncias pendentes de grupos e do chat pessoal'
+    modAdministracao -> bancoDados '11. consulta autor, origem, motivo, descricao, quem denunciou e os prints do chat'
+    backofficeApp -> administrador '11. apresenta as denuncias com filtro por gravidade e os prints do chat'
+    administrador -> backofficeApp '12. remove a mensagem, adverte, dispensa ou aplica sancao ao autor, com o motivo'
     backofficeApp -> modAdministracao '13. envia a decisao'
     modAdministracao -> bancoDados '13. remove a mensagem, resolve ou dispensa a denuncia e grava o log de auditoria'
   }
