@@ -6,7 +6,7 @@
 - **Caso de uso:** [30-visualizar-detalhes.md](../../docs/Casos-De-Uso/30-visualizar-detalhes.md)
 - **Atores:** Visitante, Cliente · **Pré-condições:** nenhuma; comprar, favoritar e adicionar à coleção pedem login
 - **Data:** 2026-11-21 (revisada em 2026-11-23) · **Autor:** Daniel Andrade
-- **Aprovação:** Lucas Oliveira Lima, pelo PO, em 23/11/2026; reaprovada em 24/11/2026 com as L9 (revista), L18 e L19, e em 26/11/2026 com a L20
+- **Aprovação:** Lucas Oliveira Lima, pelo PO, em 23/11/2026; reaprovada em 24/11/2026 com as L9 (revista), L18 e L19, em 26/11/2026 com a L20 e em 27/11/2026 com a L21
 
 ## Objetivo
 
@@ -42,7 +42,7 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | R5 | O perfil mostra os dados de identificação da carta, pelas regras da CCD031 | Tela | `30`, FP 2 |
 | R6 | O perfil mostra o histórico de preços, pelas regras da CCD075 | Tela | `30`, FP 2; `75`, FP 2–4 |
 | R7 | "Anúncios disponíveis (<n>)" lista os anúncios com vendedor, condição, preço e "Ver anúncio", ordenados pelo menor preço | Tela | `30`, FP 2; Figma `1112-4615` (L3, L5) |
-| R8 | Só os anúncios ativos (`listing_status` = `ACTIVE`, não excluídos) entram na lista, na contagem e no menor anúncio | Regra | `30`, FP 2 ("anúncios ativos"); DBML `listings.status`; ADR-015, item 5 |
+| R8 | Só os anúncios ativos (`listing_status` = `ACTIVE`, não excluídos) de vendedor ativo (`user_status` = `ACTIVE`, não excluído) entram na lista, na contagem e no menor anúncio | Regra | `30`, FP 2 ("anúncios ativos"; vendedor ativo pela L21); DBML `listings.status` e `users.status`; ADR-015, item 5 |
 | R9 | "Ver anúncio" abre o detalhe do anúncio, de onde parte a compra | Ação | `30`, FP 4–5 |
 | R10 | Ao visitante, o perfil mostra "Ainda não tem conta? Você pode ver tudo nesta página; para comprar, favoritar ou adicionar à coleção, basta entrar."; o cliente logado não vê o aviso | Mensagem | `30`, Pré-condições; Figma `1112-4615` |
 | R11 | O visitante que seleciona "Adicionar à coleção" ou "Favoritar" vê o modal "Entre para continuar", com "Faça login para continuar. É rápido e grátis.", "Continuar com Google", "Entrar com e-mail e senha", "Criar conta grátis" e "Ao continuar, você aceita os Termos de Uso e a Política de Privacidade."; depois do login, volta para a carta | Ação | `30`, FA 1–2; Figma `1112-5461` (L11) |
@@ -57,8 +57,8 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 ## Critérios de aceite
 
 - **CA1** (R1–R7) — **Dado** uma carta com 4 anúncios ativos, **quando** um visitante a seleciona na busca, **então** vê
-  as imagens, o preço médio de mercado, o menor anúncio, "4" em anúncios ativos, os dados de identificação, o histórico de
-  preços e "Anúncios disponíveis (4)".
+  as imagens, o preço médio de mercado, o menor anúncio, "4" em anúncios ativos, os dados de identificação, o bloco do
+  histórico de preços (o gráfico e os períodos são da CCD075) e "Anúncios disponíveis (4)".
 - **CA2** (R7, R8) — **Dado** uma carta com anúncios ativos de R$ 1.980, R$ 1.750 e R$ 2.390 e um pausado de R$ 1.500,
   **quando** o ator abre o perfil, **então** a lista mostra os três ativos na ordem R$ 1.750, R$ 1.980, R$ 2.390, o menor
   anúncio é R$ 1.750 e o pausado não aparece.
@@ -76,12 +76,13 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 - **CA8** (R13) — **Dado** uma carta em rascunho, **quando** o ator abre o endereço dela, **então** a API responde `404`.
 - **CA9** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é
   comparado lado a lado com o print do frame `1112-4615`, **então** não há diferença de layout, medida, espaçamento, cor,
-  fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem
+  fonte, texto, ícone ou imagem, salvo as diferenças aceitas em **Telas (Figma)** (L3, L5, L6 e L15); e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem
   horizontal.
-- **CA10** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o período "1 ano"
+- ~~**CA10** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o período "1 ano"
   escolhido, **quando** o print dela é comparado lado a lado com o print do frame `1112-5038`, **então** não há diferença de
   layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem
-  quebra, corte nem rolagem horizontal.
+  quebra, corte nem rolagem horizontal.~~ Saiu desta spec: o gráfico e o período "1 ano" são da CCD075 (**Fora do
+  escopo**), e o frame `1112-5038` é conferido lá. Revisão do codaqui/cromocard-frontend#35, 27/11/2026.
 - **CA11** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o modal "Entre para
   continuar" aberto, **quando** o print dela é comparado lado a lado com o print do frame `1112-5461`, **então** não há
   diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se
@@ -114,7 +115,7 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
 | Público - Perfil da carta | [1112-4615](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-4615) | R1–R10, R15–R18 | ✅ Bate, com diferenças decididas: a lista não mostra a cidade do vendedor (L5), o select só tem "Menor preço" (L3) e o subtítulo não tem o país (L6) |
-| Público - Perfil da carta - 1 ano | [1112-5038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5038) | R6 | ✅ Bate (o período é da CCD075) |
+| Público - Perfil da carta - 1 ano | [1112-5038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5038) | R6 | Fora desta spec: o gráfico e o período "1 ano" são da CCD075 (CA10 saiu) |
 | Público - Entre para continuar | [1112-5461](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5461) | R11 | ✅ Bate |
 
 - **Diferenças com o Figma** (decisão em Lacunas e decisões): perfil — imagens: o FP 2 pede frente, verso e detalhe; o
@@ -160,3 +161,4 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | L18 | O login com Google (CCD004) ainda não existe: para onde vai "Continuar com Google" no modal? | Para a rota em construção `/login/google` (`underConstructionRoute`, CCD004), como no Figma; e-mail e senha e cadastro seguem voltando para a carta | `30-visualizar-detalhes.md` (24/11/2026), FA 2 |
 | L19 | Até quando vale a carta guardada pela L16, se a pessoa desiste do cadastro? | 30 minutos; depois disso o login segue o destino padrão do papel | esta spec, R11 |
 | L20 | O título "Anúncios disponíveis (<n>)" usa a contagem do perfil ou o total da lista? Com o perfil em cache dizendo 0, a lista nem era consultada | A lista é sempre consultada e o total dela manda no título e no estado vazio; a contagem do perfil só aparece enquanto a lista carrega | esta spec e `plano.md` (26/11/2026), revisão da CCD030 |
+| L21 | O anúncio `ACTIVE` de um vendedor suspenso, bloqueado ou excluído aparece na lista, na contagem e no menor anúncio? (apontado na revisão do PR codaqui/cromocard-backend#47) | Não aparece: o comprador não consegue concluir a compra com esse vendedor. Só contam os anúncios de vendedor `ACTIVE` e não excluído | `30-visualizar-detalhes.md` (27/11/2026), FP 2; R8 |

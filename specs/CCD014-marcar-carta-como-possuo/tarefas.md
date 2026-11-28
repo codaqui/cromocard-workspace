@@ -17,8 +17,10 @@
   - Pronto quando: a rota aparece no `/docs` e `tests/integration/collection-card-marking.spec.ts` cobre CA1–CA3, CA5,
     CA6 e CA8.
 - [ ] **T5** · Ligar a carta usada em coleções na exclusão do catálogo — R12 · CA9 · AB#1033
-  - Pronto quando: o `catalog.module.ts` injeta a `PrismaCardUsage` e o teste de integração cobre o CA9 (exclusão
-    bloqueada com o erro da CCD061).
+  - A trava já chega ligada pela CCD007 (backend #48): o `catalog.module.ts` recebe o `collectionService` como
+    `CardUsage`. Fica só a verificação de ponta a ponta com a rota de marcação.
+  - Pronto quando: `tests/integration/collection-card-marking.spec.ts` marca a carta pelo `PUT` e o `DELETE` da CCD061
+    responde `422 CARD_IN_USE` (CA9).
 
 ## Frontend — `apps/cromocard-frontend`, branch `feature/120-marcar-carta-como-possuo`
 
@@ -35,7 +37,7 @@
 
 - [ ] **T9** · Atualizar os ponteiros `apps/*` e marcar a spec como `Implementada` · AB#1037
   - Pronto quando: os PRs dos apps estão mergeados em `develop`, o índice de `specs/README.md` foi atualizado e a
-    pendência da `CardUsage` no `plano.md` da CCD061 aponta para esta story.
+    pendência da `CardUsage` no `plano.md` da CCD061 aponta para a CCD007, que a ligou.
 
 ## Cobertura
 
