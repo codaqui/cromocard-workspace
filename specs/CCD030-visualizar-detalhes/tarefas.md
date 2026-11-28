@@ -30,7 +30,7 @@
 - [x] **T8** · Criar modal Entre para continuar com retorno para a carta — R11, R14 · CA4, CA5, CA11 · AB#1113
   - Reaproveita o `LoginRequiredDialog` da CCD002 (feature `auth`); se a CCD030 entrar antes, cria o componente lá.
   - Pronto quando: `LoginRequiredDialog.spec.tsx` cobre as três saídas e o retorno; print em 1280 px igual ao frame `1112-5461` e sem quebra em 375/768/1024 px.
-- [x] **T9** · Criar página e rota /cartas/:id com o histórico de preços — R1, R2, R6, R10, R14, R15, R17 · CA1, CA4–CA6, CA9, CA10, CA12, CA14 · AB#1114
+- [x] **T9** · Criar página e rota /cartas/:id com o histórico de preços — R1, R2, R6, R10, R14, R15, R17 · CA1, CA4–CA6, CA9, CA12, CA14 · AB#1114
   - Pronto quando: `CardProfilePage.spec.tsx` cobre visitante, logado, carregando, erro e `404`; print em 1280 px igual aos frames `1112-4615` e `1112-5038` e sem quebra em 375/768/1024 px.
 - [ ] **T10** · Ligar os cartões da busca, do marketplace e da Home ao perfil da carta — R2 · CA1 · AB#1115
   - Adiada (L17): as listas ainda não existem; `cardProfilePathFor(id)` está pronto para elas.

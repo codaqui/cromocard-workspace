@@ -42,7 +42,8 @@ usar o que já existe.
 
 ## Regras
 
-- **Anúncio ativo** (R8): `status = ACTIVE` e `deleted_at` nulo; vale para a lista, a contagem e o menor anúncio.
+- **Anúncio ativo** (R8): `status = ACTIVE` e `deleted_at` nulo, de vendedor `ACTIVE` e não excluído (L21); vale para
+  a lista, a contagem e o menor anúncio.
 - **Ordem** (R7, L3): `price` asc, depois `created_at` asc; o select "Ordenar" só com "Menor preço".
 - **Página da lista** (L8): o frontend pede `pageSize=20` e mostra "Carregar mais"; o padrão do
   endpoint é 10, o mesmo da CCD079.
@@ -81,7 +82,7 @@ Convenções do ADR-011: `/api/v1`, `{ data }` / `{ data, meta }`, JSON camelCas
   usado pela CCD079). O contrato é o mesmo da CCD079.
 - **Sucesso:** `200` `{ data: ListingSummary[], meta: { page, pageSize, total, totalPages } }`, com
   `ListingSummary = { id, price, condition: { name } | null, seller: { id, username: string | null } }`; só anúncios
-  com estoque de vendedor ativo e não excluído (L12) e `condition` anulável (L13). O `username` é anulável porque a
+  com estoque (L12) de vendedor ativo e não excluído (L21) e `condition` anulável (L13). O `username` é anulável porque a
   coluna `users.username` é opcional no DER.
 - **Índices** (desempenho da lista e do perfil): `listings (card_id, status, price)` e
   `price_history (card_id, source, reference_date)`, uma migration por tabela, registrados no DER.
