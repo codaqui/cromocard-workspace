@@ -21,7 +21,7 @@ abre a conversa, criando-a se ainda não existir. O ponto online vem do processo
 - **Onda 0 (CCD046 T12 e T13):** servidor Socket.IO no `ws-server.ts`, com JWT no handshake, a room `user:<id>`, o
   `withAck` e o registro `socketHandlers` (backend #42), e o cliente `src/lib/socket.ts` (frontend #33). Os PRs desta
   story saem empilhados sobre eles até o merge.
-- **CCD048 (Gabriel):** `profiles.avatar_url`. Até lá, `avatarUrl` é sempre `null` e a tela mostra a inicial (L17).
+- **CCD048 (Gabriel):** `profiles.avatar_url`, já na `develop` do backend. A API lê a foto de lá; `avatarUrl` é `null` só para quem não tem foto, e aí a tela mostra a inicial (L17).
 - **CCD047 (Daniel, a próxima):** a ação do escudo e o bloqueio. A tabela `user_blocks` nasce aqui, porque a busca de
   contatos já exclui os bloqueados (R13), e a CCD047 só usa.
 - **CCD080 (Lucas):** a página `/usuarios/:id`. Até lá, "Ver Perfil" leva à rota em construção.

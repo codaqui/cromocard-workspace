@@ -6,7 +6,7 @@
 - **Caso de uso:** [46-visualizar-mensagens.md](../../docs/Casos-De-Uso/46-visualizar-mensagens.md)
 - **Atores:** Cliente e Vendedor · **Pré-condições:** autenticado como `CUSTOMER` ou `SELLER`
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-11-27, Felipe Consulim (PO), na revisão de codaqui/cromocard-workspace#64: L1–L15 validadas como estão (decididas por Daniel Andrade em 24/11/2026)
+- **Aprovação:** 2026-11-27, Felipe Consulim (PO), na revisão de codaqui/cromocard-workspace#64: L1–L15 validadas como estão (decididas por Daniel Andrade em 24/11/2026); L17 corrigida e aprovada por Lucas Oliveira Lima em 28/11/2026
 
 ## Objetivo
 
@@ -53,7 +53,7 @@
 | R16 | O topo da conversa mostra foto, nome, @, selo, "Ver Perfil" (perfil público do outro participante; em construção até a CCD080) e o escudo de bloquear ou denunciar (a ação é da CCD047) | Tela | `46`, FP 6 (L11); Figma `1160-32980` |
 | R17 | A conversa mostra o quadro "Dica de segurança" com "Nunca pague por Pix ou link fora da CromoCard. Compre pelo anúncio no marketplace: o pagamento fica retido até a entrega." e, abaixo do campo, "Faça compras e pagamentos só pelo marketplace da CromoCard." | Tela | `46`, FP 7 e FP 9 (L12); Figma `1160-32980` |
 | R18 | O campo "Digite sua mensagem para @<usuário>..." envia com "Enviar" ou Enter; a mensagem é gravada, aparece no fim da conversa e chega ao outro participante em tempo real; se o envio falhar, o texto fica no campo e a tela avisa | Ação | `46`, FP 11–12 e FA 2 (L5); ADR-012 |
-| R19 | Sem foto (a tabela `profiles` chega com a CCD048), o círculo mostra a inicial do nome; com `profiles`, a API passa a mandar `avatarUrl` | Tela | L17; DBML `profiles.avatar_url` |
+| R19 | A API manda a foto do outro participante (`profiles.avatar_url`, já criado pela CCD048) em `avatarUrl`; sem foto (`null`), o círculo mostra a inicial do nome | Tela | L17; DBML `profiles.avatar_url` |
 
 ## Critérios de aceite
 
@@ -93,7 +93,7 @@
 | Mensagens - nova conversa | [1160-34999](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1160-34999) | R13 | ✅ Bate depois da L5 (sem o aviso de desconhecidos, tirado do Figma) |
 
 - **Ajustes no Figma em 24/11/2026:** saíram dos três frames o botão de filtros, "Ver Arquivadas", "Visto há 3h", as reações, "Concluído", o aviso de desconhecidos, o ✓✓ de leitura, o botão de emoji e textos escondidos de trocas e avaliações.
-- **Diferença aceita:** a foto vira a inicial do nome até a CCD048 criar `profiles` (L17).
+- **Diferença aceita:** quem não tem foto (`profiles.avatar_url` nulo) aparece com a inicial do nome (L17).
 - **O que falta no Figma** (implementar mesmo assim, no estilo da tela): R7 erro ao carregar; estado carregando (L14); aviso de envio que falhou (R18).
 
 ## Fora do escopo
@@ -125,4 +125,4 @@
 | L14 | Ordem, carga e carregando | Lista pela última mensagem; 30 mensagens por vez, as anteriores ao rolar para cima; `LoadingState` (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 3 e FP 7; R3, R4 |
 | L15 | Papéis do chat pessoal | `CUSTOMER` e `SELLER`; `ADMIN` recebe `403` (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, Atores; R1 |
 | L16 | A T12 (servidor Socket.IO autenticado por JWT) e a T13 (cliente Socket.IO e `VITE_WS_URL`), a base da Onda 0, podem entrar antes da aprovação desta spec? | Sim (PO, 25/11/2026, nas revisões de codaqui/cromocard-backend#42 e codaqui/cromocard-frontend#33): as duas não dependem de nenhuma lacuna pendente. O resto da spec só entra depois da aprovação | esta tabela; plano da CCD044 (handshake) |
-| L17 | A foto vem de `profiles`, que só chega com a CCD048 (Onda 0 do Gabriel) | Inicial do nome até lá; a API passa a mandar `avatarUrl` quando `profiles` existir | R19 |
+| L17 | A foto vem de `profiles`, criada pela CCD048 (Onda 0 do Gabriel) | `profiles.avatar_url` já está na `develop` do backend: a API manda a foto em `avatarUrl` desde já, e a inicial do nome fica só para quem não tem foto. Decisão de Lucas Oliveira Lima em 28/11/2026, na revisão de codaqui/cromocard-workspace#64 | R19; plano.md, Dependências |
