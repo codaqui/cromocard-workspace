@@ -1,12 +1,12 @@
 # CCD046 — Visualizar Mensagens
 
-- **Status:** Em implementação
+- **Status:** Planejada
 - **Fase:** MVP
 - **User story:** #1217 `CCD046 - Visualizar Mensagens` (criada em 22/11/2026)
 - **Caso de uso:** [46-visualizar-mensagens.md](../../docs/Casos-De-Uso/46-visualizar-mensagens.md)
 - **Atores:** Cliente e Vendedor · **Pré-condições:** autenticado como `CUSTOMER` ou `SELLER`
 - **Data:** 2026-11-21 · **Autor:** Daniel Andrade
-- **Aprovação:** 2026-11-24, Daniel Andrade (dono do módulo no plano final); a validar pelo PO, Felipe Consulim
+- **Aprovação:** 2026-11-27, Felipe Consulim (PO), na revisão de codaqui/cromocard-workspace#64: L1–L15 validadas como estão (decididas por Daniel Andrade em 24/11/2026)
 
 ## Objetivo
 
@@ -37,7 +37,7 @@
 |---|---|---|---|
 | R1 | A área de mensagens exige login (`401` sem token) e é só de `CUSTOMER` e `SELLER` (`403` para `ADMIN`); o usuário só vê as conversas de que participa, e abrir a conversa de outra pessoa responde `404` | Permissão | `46`, Atores e Pré-condições (L15); ADR-005; ADR-012, Rooms (entrada só se participante) |
 | R2 | Página "Mensagens" (item "Mensagens" no menu do site), com o topo "MENSAGENS • Chat pessoal com outros colecionadores" e a coluna "Conversas" | Tela | `46`, FP 1–2; Figma `1160-32980` |
-| R3 | A lista mostra as conversas do usuário, da última mensagem mais recente para a mais antiga: foto (ou inicial), nome e @ do outro participante, a prévia da última mensagem (com "Você: " quando é do próprio usuário), a hora ou a data dela e a quantidade de não lidas | Tela | `46`, FP 3 (L14, L16); DBML `conversation_participants`, `messages`; Figma `1160-32980` |
+| R3 | A lista mostra as conversas do usuário, da última mensagem mais recente para a mais antiga: foto (ou inicial), nome e @ do outro participante, a prévia da última mensagem (com "Você: " quando é do próprio usuário), a hora ou a data dela e a quantidade de não lidas | Tela | `46`, FP 3 (L14, L17); DBML `conversation_participants`, `messages`; Figma `1160-32980` |
 | R4 | Selecionar uma conversa carrega as 30 mensagens mais recentes em ordem cronológica, com a separação por dia ("Hoje, 31 de Outubro"); as anteriores carregam ao rolar para cima | Ação | `46`, FP 5 e FP 7 (L14); Figma `1160-32980` |
 | R5 | As mensagens recebidas e não lidas (`is_read = false`) aparecem com o contador na lista e destacadas na conversa; abrir a conversa marca as recebidas como lidas (`is_read`, `read_at`), e a que chega com a conversa aberta já entra lida | Estado | `46`, FP 3, FP 8 e FP 10 (L13); DBML `messages.is_read`, `messages.read_at` |
 | R6 | Sem nenhuma conversa, a tela mostra "Nenhuma conversa ainda", a dica "Toque em "Nova conversa" para falar em particular com outro colecionador." e, no rodapé da lista, "Nenhuma conversa" | Estado | `46`, FA 1 (L2); Figma `1160-36236` |
@@ -53,7 +53,7 @@
 | R16 | O topo da conversa mostra foto, nome, @, selo, "Ver Perfil" (perfil público do outro participante; em construção até a CCD080) e o escudo de bloquear ou denunciar (a ação é da CCD047) | Tela | `46`, FP 6 (L11); Figma `1160-32980` |
 | R17 | A conversa mostra o quadro "Dica de segurança" com "Nunca pague por Pix ou link fora da CromoCard. Compre pelo anúncio no marketplace: o pagamento fica retido até a entrega." e, abaixo do campo, "Faça compras e pagamentos só pelo marketplace da CromoCard." | Tela | `46`, FP 7 e FP 9 (L12); Figma `1160-32980` |
 | R18 | O campo "Digite sua mensagem para @<usuário>..." envia com "Enviar" ou Enter; a mensagem é gravada, aparece no fim da conversa e chega ao outro participante em tempo real; se o envio falhar, o texto fica no campo e a tela avisa | Ação | `46`, FP 11–12 e FA 2 (L5); ADR-012 |
-| R19 | Sem foto (a tabela `profiles` chega com a CCD048), o círculo mostra a inicial do nome; com `profiles`, a API passa a mandar `avatarUrl` | Tela | L16; DBML `profiles.avatar_url` |
+| R19 | Sem foto (a tabela `profiles` chega com a CCD048), o círculo mostra a inicial do nome; com `profiles`, a API passa a mandar `avatarUrl` | Tela | L17; DBML `profiles.avatar_url` |
 
 ## Critérios de aceite
 
@@ -109,20 +109,20 @@
 
 | ID | Pergunta | Decisão | Onde foi registrada |
 |---|---|---|---|
-| L1 | A narrativa diz "dentro do grupo", mas o caso de uso e o Figma são do chat pessoal | Ajustada para "conversas pessoais com outros colecionadores" (24/11/2026, Daniel) | `user-stories.md`, `resumo-user-stories.md` |
-| L2 | Texto do estado vazio: Figma ou caso de uso? | Segue o Figma: "Nenhuma conversa ainda", a dica de "Nova conversa" e "Nenhuma conversa" no rodapé | `46`, FA 1; R6 |
-| L3 | "Buscar conversa" só no Figma | Entra: filtra pelo nome ou @ | `46`, FA 3–4; R11 |
-| L4 | Abas, "4 ativas" e botão de filtros só no Figma | Entram as abas e o selo; o botão de filtros sai (sem função) e foi tirado do Figma | `46`, FP 2 e FA 5–6; R12; Figma |
-| L5 | "Nova conversa" (`1160-34999`) e a regra de desconhecidos | Entra nesta spec, com o envio, absorvendo a user story "Conversar com Colecionador"; sem a regra de desconhecidos (conversa com qualquer usuário ativo, menos bloqueados); o aviso 🔒 foi tirado do Figma | `46`, FP 11–12 e FA 7–14; R13, R18; Figma |
-| L6 | "Ver Arquivadas" e "4 de 4 conversas listadas" | Só o rodapé com a contagem; "Ver Arquivadas" sai e foi tirado do Figma | `46`, FP 4; R12; Figma |
-| L7 | Selo "Verificado" | Vendedor com a verificação aprovada (`seller_verifications`) | `46`, FP 3; R14 |
-| L8 | Ponto online e "Visto há 3h" | Só o ponto online, pela conexão no Socket.IO, sem gravar no banco; "Visto há" sai e foi tirado do Figma | `46`, FP 3; R15; Figma |
-| L9 | Reações | Ficam fora; tiradas do Figma | Fora do escopo; Figma |
-| L10 | "Concluído" | Não entra; tirado do Figma | Fora do escopo; Figma |
-| L11 | "Ver Perfil" e escudo | Os dois aparecem: "Ver Perfil" leva ao perfil público (em construção até a CCD080) e o escudo ganha a ação na CCD047 | `46`, FP 6; R16 |
-| L12 | "Dica de segurança" e o rodapé de compras | Entram, texto fixo | `46`, FP 7 e FP 9; R17 |
-| L13 | Quando a mensagem passa a lida | Ao abrir a conversa; com ela aberta, a nova já entra lida | `46`, FP 8 e FP 10; R5 |
-| L14 | Ordem, carga e carregando | Lista pela última mensagem; 30 mensagens por vez, as anteriores ao rolar para cima; `LoadingState` | `46`, FP 3 e FP 7; R3, R4 |
-| L15 | Papéis do chat pessoal | `CUSTOMER` e `SELLER`; `ADMIN` recebe `403` | `46`, Atores; R1 |
+| L1 | A narrativa diz "dentro do grupo", mas o caso de uso e o Figma são do chat pessoal | Ajustada para "conversas pessoais com outros colecionadores" (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `user-stories.md`, `resumo-user-stories.md` |
+| L2 | Texto do estado vazio: Figma ou caso de uso? | Segue o Figma: "Nenhuma conversa ainda", a dica de "Nova conversa" e "Nenhuma conversa" no rodapé (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FA 1; R6 |
+| L3 | "Buscar conversa" só no Figma | Entra: filtra pelo nome ou @ (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FA 3–4; R11 |
+| L4 | Abas, "4 ativas" e botão de filtros só no Figma | Entram as abas e o selo; o botão de filtros sai (sem função) e foi tirado do Figma (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 2 e FA 5–6; R12; Figma |
+| L5 | "Nova conversa" (`1160-34999`) e a regra de desconhecidos | Entra nesta spec, com o envio, absorvendo a user story "Conversar com Colecionador"; sem a regra de desconhecidos (conversa com qualquer usuário ativo, menos bloqueados); o aviso 🔒 foi tirado do Figma (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 11–12 e FA 7–14; R13, R18; Figma |
+| L6 | "Ver Arquivadas" e "4 de 4 conversas listadas" | Só o rodapé com a contagem; "Ver Arquivadas" sai e foi tirado do Figma (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 4; R12; Figma |
+| L7 | Selo "Verificado" | Vendedor com a verificação aprovada (`seller_verifications`) (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 3; R14 |
+| L8 | Ponto online e "Visto há 3h" | Só o ponto online, pela conexão no Socket.IO, sem gravar no banco; "Visto há" sai e foi tirado do Figma (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 3; R15; Figma |
+| L9 | Reações | Ficam fora; tiradas do Figma (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | Fora do escopo; Figma |
+| L10 | "Concluído" | Não entra; tirado do Figma (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | Fora do escopo; Figma |
+| L11 | "Ver Perfil" e escudo | Os dois aparecem: "Ver Perfil" leva ao perfil público (em construção até a CCD080) e o escudo ganha a ação na CCD047 (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 6; R16 |
+| L12 | "Dica de segurança" e o rodapé de compras | Entram, texto fixo (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 7 e FP 9; R17 |
+| L13 | Quando a mensagem passa a lida | Ao abrir a conversa; com ela aberta, a nova já entra lida (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 8 e FP 10; R5 |
+| L14 | Ordem, carga e carregando | Lista pela última mensagem; 30 mensagens por vez, as anteriores ao rolar para cima; `LoadingState` (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, FP 3 e FP 7; R3, R4 |
+| L15 | Papéis do chat pessoal | `CUSTOMER` e `SELLER`; `ADMIN` recebe `403` (Daniel, 24/11/2026; validada pelo PO, Felipe Consulim, em 27/11/2026) | `46`, Atores; R1 |
 | L16 | A T12 (servidor Socket.IO autenticado por JWT) e a T13 (cliente Socket.IO e `VITE_WS_URL`), a base da Onda 0, podem entrar antes da aprovação desta spec? | Sim (PO, 25/11/2026, nas revisões de codaqui/cromocard-backend#42 e codaqui/cromocard-frontend#33): as duas não dependem de nenhuma lacuna pendente. O resto da spec só entra depois da aprovação | esta tabela; plano da CCD044 (handshake) |
 | L17 | A foto vem de `profiles`, que só chega com a CCD048 (Onda 0 do Gabriel) | Inicial do nome até lá; a API passa a mandar `avatarUrl` quando `profiles` existir | R19 |
