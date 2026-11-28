@@ -93,6 +93,8 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [070](ADR-070-fidelidade-ao-figma-obrigatoria-na-spec.md) | Processo | Fidelidade ao Figma obrigatória na spec: requisito `Fidelidade` e critério de aceite por frame, em 1280 px lado a lado e adaptado em 375, 768 e 1024 px (complementa o 060) | Proposto |
 | [071](ADR-071-webhook-da-conta-conectada-reconsulta-a-stripe.md) | Backend | O `account.updated` da Stripe reconsulta a conta conectada e grava o estado atual, sem tabela de eventos (complementa o 066) | Proposto |
 | [072](ADR-072-token-fixo-do-melhor-envio-no-sandbox.md) | Backend | Token fixo do Melhor Envio no sandbox, renovado à mão antes de vencer (substitui parcialmente o item 2 do 067) | Proposto |
+| [074](ADR-074-preferencias-de-aviso-por-evento.md) | Backend | Preferências de aviso por evento na tabela `notification_preferences`; o `notify()` não grava nem emite com o site desligado (complementa o 051 e o 058) | Proposto |
+| [075](ADR-075-ponte-da-api-com-o-websocket-pelo-postgresql.md) | Backend | A `api` emite eventos do Socket.IO para o `ws` pelo adapter do PostgreSQL (`LISTEN/NOTIFY`), com a tabela técnica `socket_io_attachments` (complementa o 012 e o 055) | Proposto |
 
 ## Modelo
 
