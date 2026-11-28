@@ -92,7 +92,8 @@ Cada coluna entra com esta story, numa migration própria (ADR-053, item 10).
 - Código único só entre as cartas não excluídas, com índice parcial: ADR-063 (Aceito em 20/11/2026), exceção ao item 7 do ADR-015.
 - Carta em coleções (L14): `CardUsage` é dependência obrigatória do `CatalogService` e do `CardsBulkDeleteService`, com
   `cardIdsInCollections(ids)` (uma consulta para o lote). Até a CCD014, o `catalog.module.ts` injeta
-  `noCollectionsYet`, que devolve lista vazia; a CCD014 troca pela consulta em `collection_cards`.
+  `noCollectionsYet`, que devolve lista vazia; a CCD014 troca pela consulta em `collection_cards`. **Atualizado em
+  26/11/2026:** a CCD007, que cria `collection_cards`, ligou a consulta real: o `catalog.module.ts` recebe o `collectionService` como `CardUsage` e o `noCollectionsYet` saiu (codaqui/cromocard-backend#48).
 - A exclusão em lote grava o `deleted_at` e os `audit_logs` de cada carta na mesma transação (`runInTransaction`,
   como em `seller-verifications`).
 - Os contratos que o catálogo recebe de fora (`CardUsage`, `CatalogAuditLog`) ficam em `catalog.ports.ts`.

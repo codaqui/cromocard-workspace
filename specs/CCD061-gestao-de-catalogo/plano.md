@@ -69,7 +69,8 @@ Todas com `authenticate` + `authorize('ADMIN')`, prefixo `/api/v1/admin/catalog`
   como não usada; **pendência:** a CCD014 (Marcar carta como possuo), a primeira user story que usa `collection_cards`, liga a implementação no
   `catalog.module.ts`. Decidido em 2026-10-29 com Lucas Oliveira Lima. **Atualizado pela CCD105 (L14):** a interface
   passou a `cardIdsInCollections(ids)`, obrigatória, em `catalog.ports.ts`; até a CCD014 o módulo injeta
-  `noCollectionsYet`, e a CCD014 troca pela consulta em `collection_cards`.
+  `noCollectionsYet`, e a CCD014 troca pela consulta em `collection_cards`. **Atualizado pela CCD007 (26/11/2026):**
+  a CCD007, que cria `collection_cards`, ligou a consulta real: o `catalog.module.ts` recebe o `collectionService` como `CardUsage` e o `noCollectionsYet` saiu (codaqui/cromocard-backend#48). A CCD014 só verifica, de ponta a ponta, que a marcação aciona a trava.
 - Raridades e idiomas (R6, R15): vêm do seed e não são editados, mas o formulário de carta precisa das opções. Entram
   `GET /rarities` e `GET /languages` só de leitura, e a service confere cada referência informada (álbum, categoria,
   raridade, idioma), respondendo `404` em vez do `500` do erro de chave estrangeira. Decidido em 2026-10-30 com Lucas
