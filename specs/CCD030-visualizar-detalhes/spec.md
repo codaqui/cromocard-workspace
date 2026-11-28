@@ -57,8 +57,8 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 ## Critérios de aceite
 
 - **CA1** (R1–R7) — **Dado** uma carta com 4 anúncios ativos, **quando** um visitante a seleciona na busca, **então** vê
-  as imagens, o preço médio de mercado, o menor anúncio, "4" em anúncios ativos, os dados de identificação, o histórico de
-  preços e "Anúncios disponíveis (4)".
+  as imagens, o preço médio de mercado, o menor anúncio, "4" em anúncios ativos, os dados de identificação, o bloco do
+  histórico de preços (o gráfico e os períodos são da CCD075) e "Anúncios disponíveis (4)".
 - **CA2** (R7, R8) — **Dado** uma carta com anúncios ativos de R$ 1.980, R$ 1.750 e R$ 2.390 e um pausado de R$ 1.500,
   **quando** o ator abre o perfil, **então** a lista mostra os três ativos na ordem R$ 1.750, R$ 1.980, R$ 2.390, o menor
   anúncio é R$ 1.750 e o pausado não aparece.
@@ -76,12 +76,13 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 - **CA8** (R13) — **Dado** uma carta em rascunho, **quando** o ator abre o endereço dela, **então** a API responde `404`.
 - **CA9** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame, **quando** o print dela é
   comparado lado a lado com o print do frame `1112-4615`, **então** não há diferença de layout, medida, espaçamento, cor,
-  fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem
+  fonte, texto, ícone ou imagem, salvo as diferenças aceitas em **Telas (Figma)** (L3, L5, L6 e L15); e em 375, 768 e 1024 px o mesmo design se adapta sem quebra, corte nem rolagem
   horizontal.
-- **CA10** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o período "1 ano"
+- ~~**CA10** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o período "1 ano"
   escolhido, **quando** o print dela é comparado lado a lado com o print do frame `1112-5038`, **então** não há diferença de
   layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se adapta sem
-  quebra, corte nem rolagem horizontal.
+  quebra, corte nem rolagem horizontal.~~ Saiu desta spec: o gráfico e o período "1 ano" são da CCD075 (**Fora do
+  escopo**), e o frame `1112-5038` é conferido lá. Revisão do codaqui/cromocard-frontend#35, 27/11/2026.
 - **CA11** (R14) — **Dado** a tela implementada aberta em 1280 px com os mesmos dados do frame e o modal "Entre para
   continuar" aberto, **quando** o print dela é comparado lado a lado com o print do frame `1112-5461`, **então** não há
   diferença de layout, medida, espaçamento, cor, fonte, texto, ícone ou imagem; e em 375, 768 e 1024 px o mesmo design se
@@ -114,7 +115,7 @@ O caso de uso estende a story ao visitante, que vê a página inteira.
 | Tela | Frame | Requisitos | Veredito |
 |---|---|---|---|
 | Público - Perfil da carta | [1112-4615](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-4615) | R1–R10, R15–R18 | ✅ Bate, com diferenças decididas: a lista não mostra a cidade do vendedor (L5), o select só tem "Menor preço" (L3) e o subtítulo não tem o país (L6) |
-| Público - Perfil da carta - 1 ano | [1112-5038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5038) | R6 | ✅ Bate (o período é da CCD075) |
+| Público - Perfil da carta - 1 ano | [1112-5038](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5038) | R6 | Fora desta spec: o gráfico e o período "1 ano" são da CCD075 (CA10 saiu) |
 | Público - Entre para continuar | [1112-5461](https://www.figma.com/proto/43K7rTPJQNIOroQ4j09YTP/CromoCard?node-id=1112-5461) | R11 | ✅ Bate |
 
 - **Diferenças com o Figma** (decisão em Lacunas e decisões): perfil — imagens: o FP 2 pede frente, verso e detalhe; o
