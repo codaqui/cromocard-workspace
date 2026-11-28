@@ -118,7 +118,7 @@ Ack no formato do ADR-011 (`withAck` da Onda 0).
 |---|---|---|---|---|
 | `conversation:join` | cliente → servidor | `{ conversationId }` | entra na room `conversation:<id>` só se participante; senão `{ error: 'CONVERSATION_NOT_FOUND' }` | R1, R8 |
 | `conversation:leave` | cliente → servidor | `{ conversationId }` | sai da room | R8 |
-| `message:send` | cliente → servidor | `{ conversationId, content }` | grava e só então emite; ack `{ data: Message }` ou `{ error }` (`VALIDATION_ERROR`, `CONVERSATION_NOT_FOUND`) | R18 |
+| `message:send` | cliente → servidor | `{ conversationId, content }` | grava e só então emite; ack `{ data: Message }` ou `{ error }` (`VALIDATION_ERROR`, `CONVERSATION_NOT_FOUND`, `CONVERSATION_BLOCKED`) | R18 |
 | `message:new` | servidor → cliente | `Message` | na room `conversation:<id>` e nas `user:<id>` dos participantes | R8 |
 | `presence:list` | cliente → servidor | `{ userIds }` (até 100) | ack `{ data: { online: string[] } }` | R15 |
 | `presence:changed` | servidor → cliente | `{ userId, online }` | na `user:<id>` de quem tem conversa com ele | R15 |
@@ -133,7 +133,7 @@ handlers entram em `src/socket/socket-handlers.ts` (Onda 0).
 | `database/schema.prisma` + 4 migrations | `Conversation`, `ConversationParticipant`, `Message`, `UserBlock` e as relações em `User` e `Listing` | R1, R3–R5, R9, R13 |
 | `database/seeds/chat.seed.ts` · `data/conversations.json` · `seeds/index.ts` | conversas, mensagens, bloqueio e grupos em comum | R3, R5, R9, R13 |
 | `chat.validator.ts` | `listConversationsQuerySchema`, `startConversationSchema`, `conversationIdParamSchema`, `messagesQuerySchema`, `contactsQuerySchema`, `sendMessageSchema` | R4, R11–R13, R18 |
-| `chat.errors.ts` | `ConversationNotFoundError` (404), `ContactNotFoundError` (404 `USER_NOT_FOUND`) | R1, R13 |
+| `chat.errors.ts` | `ConversationNotFoundError` (404), `ContactNotFoundError` (404 `USER_NOT_FOUND`), `ConversationBlockedError` (403 `CONVERSATION_BLOCKED`, só no socket, L18) | R1, R13, R18 |
 | `chat.repository.ts` | conversas com contato, última mensagem, não lidas e selo (uma consulta por página); totais; mensagens por cursor; participação; marcar lidas; gravar mensagem; achar ou criar conversa | R1, R3–R5, R9, R11–R14, R18 |
 | `contacts.repository.ts` | busca de contatos por `scope`, com os grupos em comum e os bloqueios | R13, R14 |
 | `chat.service.ts` + spec | `listConversations`, `startConversation`, `listMessages`, `markAsRead`, `sendMessage`, `listContacts` | R1, R3–R5, R9, R11–R14, R18 |
