@@ -36,7 +36,7 @@ recusada.
 
 Seed (L14, L15):
 - perfis no `data/users.json` (objeto `profile` de cada usuário), gravados no `seedUsers` com `upsert` pelo `user_id`, sem trocar o `id` de um perfil que já existe;
-- Ana com bio, cidade e foto; Elisa com bio e cidade; Gabriela com o portfólio `PRIVATE`;
+- Ana (`ana@cromocard.dev`), a conta dos CAs, com bio, cidade e foto; Elisa (bio e cidade) e Gabriela (portfólio `PRIVATE`) só como exemplo, sem CA (L15);
 - endereços da Ana no `data/marketplace.json`, junto dos outros: "Casa" (principal, Avenida Paulista) e "Studio Campinas" (secundário); o rótulo definitivo depende da L7;
 - a foto de exemplo só existe no banco local, como o banner e o logo do catálogo: no banco compartilhado a Ana fica sem foto.
 

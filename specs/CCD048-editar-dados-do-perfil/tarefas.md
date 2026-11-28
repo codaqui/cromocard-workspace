@@ -6,9 +6,9 @@
 
 ## Backend — `apps/cromocard-backend`, branch `feature/1242-editar-dados-do-perfil`
 
-- [x] **T1** · Criar migration create_profiles_table e o seed do perfil e dos endereços — R3, R4, R9, R11 · AB#1243
+- [ ] **T1** · Criar migration create_profiles_table e o seed do perfil e dos endereços — R3, R4, R9, R11 · AB#1243
   - Pronto quando: a tabela existe como no DBML e o seed tem a bio, a foto (só no banco local) e os dois endereços da Ana (L14).
-  - Entrou antes da aprovação da spec (L13): backend #46, com os ajustes da revisão no backend `fix/1243-seed-perfil`.
+  - Entrou antes da aprovação da spec (L13): backend #46, com os ajustes da revisão no backend #50; a T1 só fica `[x]` quando o #50 entrar na `develop`.
 - [ ] **T2** · Ampliar GET e PATCH /users/me com @, celular e bio — R1, R3–R7 · CA1–CA3, CA12 · AB#1244
   - Pronto quando: `users.service.spec.ts` e `users-profile.spec.ts` cobrem CA1–CA3 e o `401`.
 - [ ] **T3** · Criar endpoint POST /users/me/avatar — R9, R10 · CA5 · AB#1245

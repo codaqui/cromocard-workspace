@@ -53,7 +53,7 @@
 
 ## Critérios de aceite
 
-- **CA1** (R2–R4, R7) — **Dado** Ana logado, **quando** abre "Perfil", troca o texto de "Conte um pouco sobre você" e seleciona "Salvar alterações", **então** `profiles.bio` é gravado e aparece o aviso "Perfil atualizado" com "Suas alterações foram salvas.".
+- **CA1** (R2–R4, R7) — **Dado** Ana logada, **quando** abre "Perfil", troca o texto de "Conte um pouco sobre você" e seleciona "Salvar alterações", **então** `profiles.bio` é gravado e aparece o aviso "Perfil atualizado" com "Suas alterações foram salvas.".
 - **CA2** (R5) — **Dado** "Nome Completo" vazio, **quando** Ana seleciona "Salvar alterações", **então** nada é gravado, o rótulo mostra "Nome completo • informe o nome" em vermelho e a API responde `400` com o campo `name`.
 - **CA3** (R6) — **Dado** o @ `marcos_tcg` já usado por outra conta, **quando** Ana salva com ele, **então** a API responde `409` com o campo `username` e a tela indica o campo.
 - **CA4** (R8) — **Dado** alterações não salvas, **quando** Ana seleciona "Descartar", **então** os campos voltam aos valores gravados.
