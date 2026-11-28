@@ -17,7 +17,7 @@ cromocard-workspace/               (repo de documentação/workspace — branch 
 │   ├── Casos-De-Uso/              NN-nome-do-caso.md (01–111), user-stories.md, resumo-user-stories.md, escopo-adicional.md, CromoCard 1.xlsx
 │   ├── Diagramas/
 │   │   ├── DER/                   01-entidades, 02-relacionamentos, 03-der-completo (.dbml do dbdiagram.io + print .png) + README.md
-│   │   ├── Diagrama-de-Classe/    cromocard-diagrama-classes.v2.c4 (LikeC4) — 48 classes, 1:1 com o DER
+│   │   ├── Diagrama-de-Classe/    cromocard-diagrama-classes.v2.c4 (LikeC4) — 49 classes, 1:1 com o DER
 │   │   ├── Diagramas-C4/          01-contexto, 02-containers, 03-componentes (.puml + .svg)
 │   │   ├── Diagrama-Casos-de-Uso/ cromocard_casos_de_uso.puml + .svg (CCD001–CCD111)
 │   │   └── Diagrama-Atividades/   Diagrama_Atividades.c4 (LikeC4, CCD001–CCD111)
@@ -78,7 +78,7 @@ Notificações e Favoritos · Pagamentos e Pedidos · Administração.
 
 ## Modelo de dados (DER — fonte: `docs/Diagramas/DER/`)
 
-**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (49 tabelas, 86 FKs, 26 enums).
+**Fonte da verdade:** `docs/Diagramas/DER/03-der-completo.dbml` (50 tabelas, 87 FKs, 27 enums).
 As convenções (nomes em inglês, UUID v7, colunas de tempo, soft delete, alvos polimórficos, sincronia dos três
 `.dbml`) estão em `.claude/rules/modelagem-de-dados.md`.
 

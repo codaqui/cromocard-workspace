@@ -94,6 +94,8 @@ ou no texto): isso não muda a decisão e mantém os links funcionando.
 | [071](ADR-071-webhook-da-conta-conectada-reconsulta-a-stripe.md) | Backend | O `account.updated` da Stripe reconsulta a conta conectada e grava o estado atual, sem tabela de eventos (complementa o 066) | Proposto |
 | [072](ADR-072-token-fixo-do-melhor-envio-no-sandbox.md) | Backend | Token fixo do Melhor Envio no sandbox, renovado à mão antes de vencer (substitui parcialmente o item 2 do 067) | Proposto |
 | [073](ADR-073-prints-como-evidencia-da-denuncia.md) | Backend | A denúncia do chat pessoal leva de 1 a 3 prints obrigatórios, na tabela `report_evidences`, com as regras de upload do ADR-050, no storage privado do ADR-068 (complementa o 032, o 050 e o 068) | Aceito |
+| [074](ADR-074-preferencias-de-aviso-por-evento.md) | Backend | Preferências de aviso por evento na tabela `notification_preferences`; o `notify()` não grava nem emite com o site desligado (complementa o 051 e o 058) | Proposto |
+| [075](ADR-075-ponte-da-api-com-o-websocket-pelo-postgresql.md) | Backend | A `api` emite eventos do Socket.IO para o `ws` pelo adapter do PostgreSQL (`LISTEN/NOTIFY`), com a tabela técnica `socket_io_attachments` (complementa o 012 e o 055) | Proposto |
 
 ## Modelo
 

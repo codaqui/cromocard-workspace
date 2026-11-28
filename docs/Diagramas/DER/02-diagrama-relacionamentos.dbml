@@ -255,6 +255,11 @@ Table notifications [headercolor: #B08A2E] {
   global_notification_id uuid
 }
 
+Table notification_preferences [headercolor: #B08A2E] {
+  id      uuid [pk]
+  user_id uuid [not null]
+}
+
 // =====================================================================
 // MODULO 8 - MODERACAO E ADMINISTRACAO
 // =====================================================================
@@ -407,6 +412,7 @@ Ref: price_alerts.card_id              > cards.id              // monitorada
 Ref: notifications.user_id             > users.id            // recebe
 Ref: notifications.global_notification_id  > global_notifications.id // expande em
 Ref: global_notifications.admin_id        > users.id            // dispara
+Ref: notification_preferences.user_id     > users.id            // escolhe
 
 // --- 8. Moderacao e Administracao -------------------------------------
 Ref: reports.reporter_id             > users.id        // reports
@@ -495,6 +501,7 @@ TableGroup "7 - Notificacoes e Favoritos" {
   price_alerts
   notifications
   global_notifications
+  notification_preferences
 }
 
 TableGroup "8 - Moderacao e Administracao" {

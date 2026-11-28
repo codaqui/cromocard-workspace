@@ -169,6 +169,16 @@ Enum notification_dispatch_status {
   CANCELED
 }
 
+Enum notification_event {
+  ALL
+  ORDER_UPDATES
+  PAYOUT_RELEASED
+  GROUP_INVITES
+  DIRECT_MESSAGES
+  CATALOG_RELEASES
+  CATALOG_REQUESTS
+}
+
 Enum catalog_vote {
   FOR
   NEUTRAL
@@ -724,6 +734,22 @@ Table notifications [headercolor: #B08A2E] {
   deleted_at             timestamptz
 }
 
+Table notification_preferences [headercolor: #B08A2E] {
+  id         uuid               [pk, default: `uuidv7()`]
+  user_id    uuid               [not null]
+  event      notification_event [not null, note: 'ALL = chaves gerais dos canais']
+  in_app     boolean            [not null, default: true]
+  email      boolean            [not null, default: true]
+  created_at timestamptz        [not null, default: `now()`]
+  updated_at timestamptz        [not null, default: `now()`]
+  deleted_at timestamptz
+
+  indexes {
+    (user_id, event) [unique]
+  }
+  Note: 'Preferencia de aviso por evento (EA-053-01, CCD053; ADR-074). Sem linha = os dois canais ligados.'
+}
+
 // =====================================================================
 // MODULO 8 - MODERACAO E ADMINISTRACAO
 // =====================================================================
@@ -968,6 +994,7 @@ Ref: price_alerts.card_id             > cards.id
 Ref: notifications.user_id            > users.id
 Ref: notifications.global_notification_id > global_notifications.id
 Ref: global_notifications.admin_id       > users.id
+Ref: notification_preferences.user_id     > users.id
 
 // --- 8. Moderacao e Administracao -------------------------------------
 Ref: reports.reporter_id               > users.id
@@ -1056,6 +1083,7 @@ TableGroup "7 - Notificacoes e Favoritos" {
   price_alerts
   notifications
   global_notifications
+  notification_preferences
 }
 
 TableGroup "8 - Moderacao e Administracao" {

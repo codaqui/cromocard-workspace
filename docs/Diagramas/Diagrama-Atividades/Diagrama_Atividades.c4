@@ -1176,22 +1176,25 @@ views {
   dynamic view ccd053_visualizar_notificacoes {
     title 'CCD053 - Visualizar Notificacoes'
     description '''
-      **Ator:** Cliente
-      **Pre-condicao:** estar autenticado e possuir acesso a central de notificacoes.
-      **Fluxo alternativo:** sem notificacoes, exibir "Nenhuma notificacao encontrada"; se o
-      conteudo relacionado nao estiver mais disponivel, informar que nao pode ser acessado.
+      **Ator:** Cliente e Vendedor
+      **Pre-condicao:** estar autenticado como cliente ou vendedor e possuir acesso a central de notificacoes.
+      **Fluxo alternativo:** sem notificacoes, exibir "Nenhuma notificacao encontrada"; sem nao lidas, mostrar
+      "Tudo em dia!" com as lidas abaixo; conteudo indisponivel, a pagina de destino avisa e a notificacao fica lida;
+      filtro por categoria; marcar como lida pelo botao ou pelo menu; notificacao nova em qualquer tela mostra o aviso
+      flutuante e soma 1 ao sino; o sino abre as ultimas notificacoes.
     '''
 
-    cliente -> appWeb '1. acessa a central de notificacoes'
+    cliente -> appWeb '1. acessa a central pelo menu ou pelo sino'
     appWeb -> modNotificacoes '2. solicita as notificacoes do usuario'
     modNotificacoes -> bancoDados '2. consulta as notificacoes vinculadas a conta'
-    modNotificacoes -> appWeb '3. retorna as notificacoes em ordem cronologica'
-    appWeb -> cliente '3. apresenta as notificacoes'
-    cliente -> appWeb '4. seleciona uma notificacao'
+    modNotificacoes -> appWeb '3. retorna da mais recente para a mais antiga, 50 por vez, com as contagens'
+    appWeb -> cliente '3. apresenta as notificacoes agrupadas em Hoje e Anteriores'
+    cliente -> appWeb '4. seleciona uma notificacao ou o botao de acao'
     appWeb -> cliente '5. direciona para o conteudo relacionado, quando aplicavel'
     appWeb -> modNotificacoes '6. informa a leitura'
     modNotificacoes -> bancoDados '6. atualiza o status da notificacao para lida'
   }
+
 
   dynamic view ccd054_limpar_central_notificacoes {
     title 'CCD054 - Limpar Central de Notificacoes'

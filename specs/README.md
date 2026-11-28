@@ -217,7 +217,7 @@ Nome da pasta: `CCDnnn-` + o nome do arquivo do caso de uso sem o número (`14-m
 | [CCD050](CCD050-denunciar-perfil/spec.md) | Denunciar Perfil | MVP | Rascunho | #1265 |
 | [CCD051](CCD051-configurar-privacidade-e-senha/spec.md) | Configurar Privacidade e Senha | MVP | Rascunho | #1273 |
 | [CCD052](CCD052-exclusao-da-conta/spec.md) | Exclusão da Conta | MVP | Rascunho | #1284 |
-| [CCD053](CCD053-visualizar-notificacoes/spec.md) | Visualizar Notificações | MVP | Rascunho | #1294 |
+| [CCD053](CCD053-visualizar-notificacoes/spec.md) | Visualizar Notificações | MVP | Em implementação | #1294 |
 | [CCD054](CCD054-limpar-central-de-notificacoes/spec.md) | Limpar Central de Notificações | MVP | Rascunho | #1308 |
 | [CCD055](CCD055-favoritar-album/spec.md) | Favoritar Álbum | MVP | Rascunho | #1315 |
 | [CCD056](CCD056-favoritar-carta/spec.md) | Favoritar Carta | MVP | Rascunho | #1325 |
