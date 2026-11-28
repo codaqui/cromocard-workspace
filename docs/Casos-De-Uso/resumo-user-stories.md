@@ -101,7 +101,7 @@
 | Visualizar Mensagens | Como Cliente preciso visualizar minhas mensagens para acompanhar as conversas pessoais com outros colecionadores. |
 | Moderar Contatos Privados | Como Cliente preciso ter a opção de bloquear ou denunciar usuários com comportamento inadequado no chat. |
 | Visualizar Status de Leitura | Como Cliente preciso ver um indicador (ex: check azul) para saber se o colecionador já leu minha mensagem.** |
-| Conversar com Colecionador | Como Cliente preciso conversar com outros colecionadores de forma privada via chat para alinhar trocas. |
+| Conversar com Colecionador | Como Cliente preciso conversar com outros colecionadores de forma privada via chat para alinhar trocas. Desde 27/11/2026 faz parte da CCD046 Visualizar Mensagens (nova conversa e envio). |
 | Enviar Anexos e Localização | Como Cliente preciso enviar imagens, compartilhar minhas cartas e mandar minha localização no chat.** |
 
 ## 6. Perfil e Configurações

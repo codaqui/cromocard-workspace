@@ -9,12 +9,12 @@
 | Ações do Ator | Ações do Sistema |
 |---|---|
 | 1. O usuário acessa "Mensagens" no menu. |  |
-|  | 2. O sistema apresenta o topo "MENSAGENS • Chat pessoal com outros colecionadores" e a coluna "Conversas" com o total de conversas ativas ("4 ativas"), o campo "Buscar conversa" e as abas "Todas" e "Não Lidas", cada uma com a sua quantidade. |
+|  | 2. O sistema apresenta o topo "MENSAGENS • Chat pessoal com outros colecionadores" e a coluna "Conversas" com o total de conversas ativas ("N ativas"), o campo "Buscar conversa" e as abas "Todas" e "Não Lidas", cada uma com a sua quantidade. |
 |  | 3. O sistema lista as conversas do usuário, da última mensagem mais recente para a mais antiga. Cada conversa mostra a foto (ou a inicial do nome), o nome, o @, o selo "Verificado" quando o outro participante é vendedor com a verificação aprovada, o ponto verde quando ele está online, a prévia da última mensagem (com "Você: " quando é do próprio usuário), a hora ou a data dela e a quantidade de mensagens não lidas. |
 |  | 4. O sistema mostra no rodapé da lista "N de N conversas listadas". |
 | 5. O usuário seleciona uma conversa. |  |
 |  | 6. O sistema mostra no topo a foto, o nome, o @ e o selo do outro participante, o botão "Ver Perfil", que leva ao perfil público dele, e o escudo de bloquear ou denunciar (CCD047). |
-|  | 7. O sistema mostra o quadro "Dica de segurança" com "Nunca pague por Pix ou link fora da CromoCard. Compre pelo anúncio no marketplace: o pagamento fica retido até a entrega." e as 30 mensagens mais recentes da conversa em ordem cronológica, separadas por dia ("Hoje, 31 de Outubro"). As mensagens anteriores carregam quando o usuário rola para cima. |
+|  | 7. O sistema mostra o quadro "Dica de segurança" com "Nunca pague por Pix ou link fora da CromoCard. Compre pelo anúncio no marketplace: o pagamento fica retido até a entrega." e as 30 mensagens mais recentes da conversa em ordem cronológica, separadas por dia ("Hoje, <dia> de <mês>"). As mensagens anteriores carregam quando o usuário rola para cima. |
 |  | 8. O sistema destaca as mensagens recebidas que ainda não tinham sido lidas e as marca como lidas. |
 |  | 9. O sistema mostra abaixo do campo de mensagem o aviso "Faça compras e pagamentos só pelo marketplace da CromoCard.". |
 |  | 10. Quando chega uma mensagem nova, o sistema a mostra no fim da conversa aberta, já como lida, e atualiza na lista a prévia, a hora e as não lidas, sem recarregar a página. |
