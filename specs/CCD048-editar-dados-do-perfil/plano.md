@@ -34,7 +34,11 @@ recusada.
 | `users` | sim | — | `name`, `username`, `phone` editáveis; `email`, `email_verified`, `created_at` só leitura (L3) | R3, R4, R6 |
 | `addresses` | sim | — | o `label` único guarda a identificação (depende da L7: sem coluna nova até o DBML mudar) | R11–R16 |
 
-Seed: perfil com bio e dois endereços de Gabriel ("Apartamento Bela Vista" principal e "Studio Campinas" secundário).
+Seed (L14, L15):
+- perfis no `data/users.json` (objeto `profile` de cada usuário), gravados no `seedUsers` com `upsert` pelo `user_id`, sem trocar o `id` de um perfil que já existe;
+- Ana (`ana@cromocard.dev`), a conta dos CAs, com bio, cidade e foto; Elisa (bio e cidade) e Gabriela (portfólio `PRIVATE`) só como exemplo, sem CA (L15);
+- endereços da Ana no `data/marketplace.json`, junto dos outros: "Casa" (principal, Avenida Paulista) e "Studio Campinas" (secundário); o rótulo definitivo depende da L7;
+- a foto de exemplo só existe no banco local, como o banner e o logo do catálogo: no banco compartilhado a Ana fica sem foto.
 
 ## Regras
 
@@ -71,7 +75,7 @@ Address = { id, label, zipCode, street, number, complement, neighborhood, city, 
 ### `PATCH /api/v1/users/me` (já existe) — R4–R7
 
 - **Acesso:** `authenticate` + `authorize('CUSTOMER', 'SELLER')` (L2)
-- **Entrada:** `{ "name": "Gabriel Nascimento", "username": "gabriel.n", "phone": "(11) 98888-7777", "bio": "string até 300" }` (todos opcionais)
+- **Entrada:** `{ "name": "Ana Colecionadora", "username": "ana.colecionadora", "phone": "(11) 91234-5678", "bio": "string até 300" }` (todos opcionais)
 - **Sucesso:** `200` `{ "data": MyProfile }`
 - **Erros:**
 
@@ -127,7 +131,7 @@ No domínio `src/domains/users/` (o modelo), com os endereços em `src/domains/u
 | Arquivo | O que muda | Requisitos |
 |---|---|---|
 | `database/schema.prisma` + migration `create_profiles_table` | enum `Privacy`, modelo `Profile`, relação em `User` | R3, R4, R9 |
-| `database/seeds/users.seed.ts` · `data/users.json` | bio, foto e os dois endereços de Gabriel | R3, R11 |
+| `database/seeds/users.seed.ts` · `data/users.json` · `data/marketplace.json` · `sample-images.ts` | perfis da Ana, da Elisa e da Gabriela; o "Studio Campinas" da Ana; o avatar de exemplo com as outras imagens | R3, R11 |
 | `users.validator.ts` | `updateMeSchema` (`name`, `username`, `phone`, `bio`), reaproveitando `usernameSchema` e `phoneSchema` | R4, R5 |
 | `users.repository.ts` · `users.service.ts` + `users.service.spec.ts` | `findMe` com o perfil; `updateMe` com `upsert` de `profiles` e `409 USERNAME_TAKEN`; `setAvatar` | R3–R7, R9 |
 | `users.controller.ts` · `users.routes.ts` · `users.swagger.ts` | `PATCH /me` novo schema; `POST /me/avatar` com o `parseSingleFile` de `uploads.middleware.ts` | R4, R9, R10 |
